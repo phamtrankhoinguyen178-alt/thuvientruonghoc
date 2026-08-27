@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 9 - Đo tốc độ</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>⏱️ Bài 9</h1>
+    <h2>Đo tốc độ</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Đo tốc độ dùng đồng hồ bấm giây</h2>
+
+<h3>a. Dụng cụ đo</h3>
+
+<ul>
+<li>Đồng hồ bấm giây để đo thời gian chuyển động.</li>
+
+<img src="anhkhtn17.jpg" class="img" onclick="openImg(this)">
+
+<li>Thước đo quãng đường chuyển động.</li>
+<li>Ví dụ: Thước thẳng, thước cuộn, thước dây,...</li>
+</ul>
+
+<img src="anhkhtn18.jpg" class="img" onclick="openImg(this)">
+
+<h3>b. Cách đo</h3>
+
+<ul>
+<li>Dùng thước đo quãng đường <b>s</b>, xác định vạch xuất phát và vạch đích.</li>
+<li>Dùng đồng hồ bấm giây đo thời gian <b>t</b> từ lúc vật bắt đầu chuyển động đến khi qua vạch đích.</li>
+<li>Tính tốc độ theo công thức <b>v = s / t</b>.</li>
+<li>Thực hiện phép đo 3 lần để lấy giá trị trung bình.</li>
+<li>Lập bảng ghi kết quả đo và tính tốc độ trung bình.</li>
+<li>Nhận xét kết quả đo.</li>
+</ul>
+
+<h2>II. Đo tốc độ dùng đồng hồ đo thời gian hiện số và cổng quang điện</h2>
+
+<h3>a. Dụng cụ đo</h3>
+
+<ul>
+<li>Đồng hồ đo thời gian hiện số.</li>
+<li>Cổng quang điện.</li>
+<li>Thước đo quãng đường.</li>
+</ul>
+
+<h3>b. Cách đo</h3>
+
+<ul>
+<li>Xác định quãng đường <b>s</b> trên thước kim loại.</li>
+<li>Gắn cổng quang thứ nhất ở điểm đầu và cổng quang thứ hai ở điểm cuối.</li>
+<li>Khi bi sắt đi qua cổng quang thứ nhất, đồng hồ bắt đầu đo.</li>
+<li>Khi bi sắt đi qua cổng quang thứ hai, đồng hồ dừng đo.</li>
+<li>Bật đồng hồ ở chế độ A ↔ B.</li>
+<li>Thả bi sắt chuyển động qua hai cổng quang.</li>
+<li>Đọc thời gian <b>t</b> hiển thị trên đồng hồ.</li>
+<li>Tính tốc độ theo công thức <b>v = s / t</b>.</li>
+<li>Đo 3 lần, tính giá trị trung bình và nhận xét kết quả.</li>
+</ul>
+
+<h2>III. Thiết bị bắn tốc độ</h2>
+
+<p>
+Thiết bị bắn tốc độ được sử dụng để đo tốc độ của các phương tiện giao thông đường bộ.
+</p>
+
+<p>
+Thiết bị giúp lực lượng chức năng kiểm tra và xử lí các phương tiện vi phạm tốc độ.
+</p>
+
+<img src="anhkhtn19.jpg" class="img" onclick="openImg(this)">
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Tốc độ được tính theo công thức <b>v = s / t</b>.</li>
+<li>Có thể đo tốc độ bằng đồng hồ bấm giây hoặc đồng hồ đo thời gian hiện số kết hợp cổng quang điện.</li>
+<li>Đo nhiều lần và lấy giá trị trung bình giúp kết quả chính xác hơn.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

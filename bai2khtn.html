@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 2 - Nguyên tử</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:250px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="hoahoc.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🧪 Bài 2</h1>
+    <h2>Nguyên tử</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Quan niệm ban đầu về nguyên tử</h2>
+
+<p>
+Hàng ngàn năm trước, nhà thông thái Hy Lạp Đê-mô-crit cho rằng mọi vật đều được tạo nên từ những hạt vô cùng nhỏ gọi là nguyên tử.
+</p>
+
+<p>
+Đến đầu thế kỉ XIX, nhà khoa học người Anh Đan-tơn đã chứng minh rằng các chất được tạo thành từ những đơn vị chất tối thiểu gọi là nguyên tử.
+</p>
+
+<h2>II. Mô hình nguyên tử của Rơ-dơ-pho – Bo</h2>
+
+<p>
+Rơ-dơ-pho đề xuất mô hình nguyên tử gồm hạt nhân ở tâm mang điện tích dương và các electron mang điện tích âm chuyển động xung quanh.
+</p>
+
+<img src="anhkhtn3.jpg" class="img" onclick="openImg(this)">
+
+<p>
+Bo hoàn thiện mô hình này và cho rằng các electron chuyển động quanh hạt nhân theo từng lớp khác nhau.
+</p>
+
+<img src="anhkhtn4.jpg" class="img" onclick="openImg(this)">
+
+<ul>
+<li>Lớp thứ nhất chứa tối đa 2 electron.</li>
+<li>Lớp thứ hai chứa tối đa 8 electron.</li>
+<li>Các lớp xa hạt nhân hơn bị hút yếu hơn.</li>
+</ul>
+
+<h2>III. Cấu tạo nguyên tử</h2>
+
+<h3>1. Hạt nhân nguyên tử</h3>
+
+<p>
+Nguyên tử có kích thước rất nhỏ. Hạt nhân nằm ở trung tâm và được tạo bởi proton và neutron.
+</p>
+
+<ul>
+<li><b>Proton (p):</b> mang điện tích +1.</li>
+<li><b>Neutron (n):</b> không mang điện.</li>
+</ul>
+
+<img src="anhkhtn5.jpg" class="img" onclick="openImg(this)">
+
+<p>
+Số đơn vị điện tích hạt nhân được kí hiệu là Z và bằng số proton trong hạt nhân.
+</p>
+
+<p>
+Ví dụ: Helium có 2 proton nên Z = 2.
+</p>
+
+<h3>2. Vỏ nguyên tử</h3>
+
+<p>
+Vỏ nguyên tử được cấu tạo bởi các electron.
+</p>
+
+<ul>
+<li>Mỗi electron mang điện tích -1.</li>
+<li>Electron được sắp xếp thành các lớp từ trong ra ngoài.</li>
+<li>Lớp thứ nhất tối đa 2 electron.</li>
+<li>Lớp thứ hai tối đa 8 electron.</li>
+</ul>
+
+<p>
+Các electron lớp ngoài cùng quyết định tính chất hóa học của nguyên tử.
+</p>
+
+<img src="anhkhtn6.jpg" class="img" onclick="openImg(this)">
+
+<h3>Kết luận</h3>
+
+<ul>
+<li>Nguyên tử là hạt vô cùng nhỏ tạo nên các chất.</li>
+<li>Nguyên tử gồm hạt nhân mang điện tích dương và vỏ mang điện tích âm.</li>
+<li>Nguyên tử trung hòa điện nên số proton bằng số electron.</li>
+</ul>
+
+<h2>IV. Khối lượng nguyên tử</h2>
+
+<p>
+Khối lượng nguyên tử bằng tổng khối lượng proton, neutron và electron.
+</p>
+
+<p>
+Đơn vị khối lượng nguyên tử được viết tắt là <b>amu</b>.
+</p>
+
+<ul>
+<li>1 proton ≈ 1 amu.</li>
+<li>1 neutron ≈ 1 amu.</li>
+<li>1 electron ≈ 0,00055 amu.</li>
+</ul>
+
+<p>
+Khối lượng electron rất nhỏ nên có thể coi khối lượng nguyên tử gần bằng khối lượng hạt nhân.
+</p>
+
+<p>
+<b>Ví dụ:</b> Nguyên tử nhôm có 13 proton và 14 neutron.
+</p>
+
+<p>
+Khối lượng nguyên tử nhôm ≈ 13 + 14 = <b>27 amu</b>.
+</p>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display = "flex";
+    document.getElementById("bigImg").src = img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display = "none";
+}
+</script>
+
+</body>
+</html>

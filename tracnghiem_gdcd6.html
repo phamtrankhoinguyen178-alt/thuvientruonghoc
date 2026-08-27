@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm GDCD 6 - Tàu Không Gian</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,#26356f 0%,transparent 25%),
+radial-gradient(circle at 80% 70%,#391b68 0%,transparent 30%),
+linear-gradient(135deg,#050816,#111b42,#240b3b);
+color:white;
+}
+
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1){top:8%;left:5%}
+.star:nth-child(2){top:20%;left:18%}
+.star:nth-child(3){top:12%;left:35%}
+.star:nth-child(4){top:30%;left:55%}
+.star:nth-child(5){top:10%;left:80%}
+.star:nth-child(6){top:45%;left:8%}
+.star:nth-child(7){top:65%;left:25%}
+.star:nth-child(8){top:75%;left:70%}
+.star:nth-child(9){top:55%;left:90%}
+.star:nth-child(10){top:85%;left:45%}
+.star:nth-child(11){top:35%;left:75%}
+.star:nth-child(12){top:90%;left:10%}
+
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.5)}
+to{opacity:1;transform:scale(1.5)}
+}
+
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.back:hover{
+background:#7c3aed;
+transform:translateY(-3px);
+}
+
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:40px;
+color:#fff;
+text-shadow:
+0 0 10px #38bdf8,
+0 0 25px #6366f1,
+0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#c4b5fd;
+}
+
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.space{
+position:relative;
+height:360px;
+overflow:hidden;
+border-radius:22px;
+background:
+radial-gradient(circle at 20% 30%,#ffffff 0 1px,transparent 2px),
+radial-gradient(circle at 70% 20%,#ffffff 0 1px,transparent 2px),
+radial-gradient(circle at 85% 70%,#ffffff 0 1px,transparent 2px),
+linear-gradient(135deg,#030712,#0f172a,#1e1b4b);
+background-size:auto,auto,auto,cover;
+border:4px solid #6366f1;
+box-shadow:
+inset 0 0 60px rgba(99,102,241,.35),
+0 10px 35px rgba(0,0,0,.5);
+}
+
+.planet{
+position:absolute;
+width:115px;
+height:115px;
+right:55px;
+bottom:30px;
+border-radius:50%;
+background:
+radial-gradient(circle at 30% 30%,#93c5fd,#2563eb 45%,#172554 80%);
+box-shadow:
+0 0 20px #60a5fa,
+0 0 50px rgba(37,99,235,.7);
+}
+
+.planet-ring{
+position:absolute;
+width:180px;
+height:45px;
+right:22px;
+bottom:65px;
+border:5px solid rgba(196,181,253,.7);
+border-radius:50%;
+transform:rotate(-15deg);
+}
+
+.spaceship{
+position:absolute;
+left:55px;
+top:125px;
+width:180px;
+height:110px;
+z-index:20;
+transition:left .15s linear;
+animation:shipFloat 1.2s infinite alternate;
+filter:drop-shadow(0 0 12px #38bdf8);
+}
+
+@keyframes shipFloat{
+from{transform:translateY(-4px) rotate(-1deg)}
+to{transform:translateY(5px) rotate(1deg)}
+}
+
+.ship-body{
+position:absolute;
+left:30px;
+top:30px;
+width:115px;
+height:48px;
+background:linear-gradient(180deg,#f8fafc,#94a3b8);
+border:3px solid #64748b;
+border-radius:50% 55% 45% 50%;
+}
+
+.ship-nose{
+position:absolute;
+left:135px;
+top:34px;
+width:35px;
+height:40px;
+background:#e2e8f0;
+border-radius:0 50% 50% 0;
+}
+
+.ship-wing1{
+position:absolute;
+left:55px;
+top:62px;
+width:70px;
+height:35px;
+background:#475569;
+clip-path:polygon(0 0,100% 100%,25% 75%);
+}
+
+.ship-wing2{
+position:absolute;
+left:55px;
+top:12px;
+width:70px;
+height:35px;
+background:#475569;
+clip-path:polygon(0 100%,100% 0,25% 25%);
+}
+
+.ship-window{
+position:absolute;
+left:75px;
+top:38px;
+width:22px;
+height:22px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#e0f2fe,#0ea5e9);
+border:3px solid #334155;
+z-index:3;
+box-shadow:0 0 12px #38bdf8;
+}
+
+.ship-window2{
+position:absolute;
+left:105px;
+top:38px;
+width:22px;
+height:22px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#e0f2fe,#0ea5e9);
+border:3px solid #334155;
+z-index:3;
+box-shadow:0 0 12px #38bdf8;
+}
+
+.fire{
+position:absolute;
+left:0;
+top:42px;
+width:40px;
+height:22px;
+background:linear-gradient(90deg,#f97316,#facc15,transparent);
+clip-path:polygon(100% 0,0 50%,100% 100%);
+animation:fire .2s infinite alternate;
+}
+
+@keyframes fire{
+from{transform:scaleX(.8)}
+to{transform:scaleX(1.2)}
+}
+
+.asteroid{
+display:none;
+position:absolute;
+right:80px;
+top:125px;
+width:130px;
+height:130px;
+z-index:15;
+animation:asteroidMove .7s infinite alternate;
+}
+
+.asteroid.show{
+display:block;
+}
+
+@keyframes asteroidMove{
+from{transform:rotate(0deg) translateY(-5px)}
+to{transform:rotate(8deg) translateY(5px)}
+}
+
+.rock{
+position:absolute;
+width:100px;
+height:100px;
+background:
+radial-gradient(circle at 30% 25%,#94a3b8,#475569 35%,#1e293b 80%);
+border:5px solid #0f172a;
+clip-path:polygon(
+30% 0,
+70% 8%,
+100% 35%,
+85% 75%,
+60% 100%,
+20% 90%,
+0 55%,
+8% 20%
+);
+box-shadow:
+0 0 20px rgba(148,163,184,.4),
+inset 10px 10px 20px rgba(255,255,255,.1);
+}
+
+.crater{
+position:absolute;
+border-radius:50%;
+background:#1e293b;
+box-shadow:inset 3px 3px 6px rgba(0,0,0,.6);
+}
+
+.crater1{
+width:25px;
+height:18px;
+left:25px;
+top:30px;
+}
+
+.crater2{
+width:18px;
+height:14px;
+left:60px;
+top:55px;
+}
+
+.crater3{
+width:20px;
+height:15px;
+left:40px;
+top:75px;
+}
+
+.start-area{
+text-align:center;
+margin:25px 0;
+}
+
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+box-shadow:
+0 8px 0 #312e81,
+0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+
+.start:hover{
+transform:translateY(-3px);
+box-shadow:
+0 11px 0 #312e81,
+0 18px 35px rgba(0,0,0,.5);
+}
+
+.start:active{
+transform:translateY(5px);
+box-shadow:0 3px 0 #312e81;
+}
+
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#e0e7ff;
+}
+
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);
+box-shadow:0 0 15px #818cf8;
+transition:.5s;
+}
+
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#c4b5fd;
+}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+
+.overlay.show{
+display:block;
+}
+
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#ffffff,#eef2ff);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#0f172a;
+}
+
+.question-box.show{
+display:block;
+animation:popup .3s forwards;
+}
+
+@keyframes popup{
+to{
+transform:translate(-50%,-50%) scale(1);
+}
+}
+
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#4f46e5;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #e2e8f0;
+border-radius:14px;
+background:#f8fafc;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#1e293b;
+}
+
+.answer:hover{
+transform:translateX(5px);
+border-color:#6366f1;
+background:#eef2ff;
+}
+
+.answer.selected{
+background:#dbeafe;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(79,70,229,.35);
+}
+
+.check:hover{
+transform:translateY(-2px);
+}
+
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+from{
+transform:translate(-50%,-50%) scale(.5);
+opacity:0;
+}
+to{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+.result h2{
+font-size:38px;
+color:#4f46e5;
+margin:0 0 20px;
+}
+
+.result.lose h2{
+color:#ef4444;
+}
+
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#334155;
+}
+
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#f97316,#ef4444);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#38bdf8;
+text-shadow:0 0 20px #818cf8;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+
+@keyframes correctEffect{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:0;
+}
+40%{
+transform:translate(-50%,-50%) scale(1.3);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-100%) scale(1);
+opacity:0;
+}
+}
+
+@media(max-width:700px){
+
+h1{
+font-size:28px;
+margin-top:75px;
+}
+
+.info{
+font-size:16px;
+}
+
+.game{
+width:96%;
+padding:12px;
+}
+
+.space{
+height:260px;
+}
+
+.spaceship{
+top:90px;
+transform:scale(.75);
+transform-origin:left center;
+}
+
+.asteroid{
+right:10px;
+top:80px;
+transform:scale(.7);
+}
+
+.planet{
+width:75px;
+height:75px;
+right:20px;
+bottom:15px;
+}
+
+.planet-ring{
+width:115px;
+height:30px;
+right:0;
+bottom:35px;
+}
+
+.question-box{
+padding:20px;
+}
+
+.question-box h2{
+font-size:21px;
+}
+
+.question{
+font-size:18px;
+}
+
+.answer{
+font-size:16px;
+padding:12px;
+}
+
+.result h2{
+font-size:30px;
+}
+
+.result p{
+font-size:18px;
+}
+
+.back{
+padding:9px 14px;
+font-size:14px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi6tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🚀 TRẮC NGHIỆM GDCD 6</h1>
+
+<div class="info">
+🌌 TRÒ CHƠI TÀU KHÔNG GIAN - CHINH PHỤC KIẾN THỨC GDCD
+</div>
+
+<div class="game">
+
+<div class="space">
+
+<div class="planet"></div>
+<div class="planet-ring"></div>
+
+<div class="spaceship" id="spaceship">
+
+<div class="fire"></div>
+<div class="ship-wing1"></div>
+<div class="ship-wing2"></div>
+<div class="ship-body"></div>
+<div class="ship-nose"></div>
+<div class="ship-window"></div>
+<div class="ship-window2"></div>
+
+</div>
+
+<div class="asteroid" id="asteroid">
+
+<div class="rock">
+
+<div class="crater crater1"></div>
+<div class="crater crater2"></div>
+<div class="crater crater3"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="start-area">
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()"
+>
+🚀 BẮT ĐẦU PHI HÀNH
+</button>
+
+</div>
+
+<div class="progress-text" id="progressText">
+🌌 Chưa bắt đầu
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để khám phá vũ trụ GDCD!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+
+<h2>☄️ THIÊN THẠCH CẢN ĐƯỜNG!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+🚀 TRẢ LỜI
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 PHI HÀNH LẠI
+</button>
+
+</div>
+
+<script>
+
+const questionBank=[
+
+["Công dân là người dân của một nước, có các quyền và nghĩa vụ theo quy định của:",["Gia đình","Pháp luật","Nhà trường","Bạn bè"],1],
+
+["Một trong những quyền cơ bản của công dân là quyền:",["Được học tập","Được nói dối","Được vi phạm pháp luật","Được gây mất trật tự"],0],
+
+["Trẻ em có quyền được:",["Học tập","Bỏ học","Đánh nhau","Phá hoại tài sản"],0],
+
+["Quyền được học tập có nghĩa là mọi công dân đều có quyền:",["Học tập suốt đời","Bỏ học tùy ý","Không cần đến trường","Chỉ học khi thích"],0],
+
+["Tự lập là:",["Tự làm lấy công việc của mình","Phụ thuộc hoàn toàn vào người khác","Luôn nhờ người khác làm hộ","Không làm bất cứ việc gì"],0],
+
+["Người có tính tự lập thường:",["Chủ động trong công việc","Luôn chờ người khác giúp","Ngại suy nghĩ","Không chịu trách nhiệm"],0],
+
+["Tự lập giúp con người:",["Trưởng thành và có trách nhiệm hơn","Lười biếng hơn","Phụ thuộc hơn","Không cần học tập"],0],
+
+["Biểu hiện của người tự lập là:",["Tự chuẩn bị bài trước khi đến lớp","Luôn chờ bạn làm bài","Nhờ bố mẹ làm bài tập","Không làm việc nhà"],0],
+
+["Tự nhận thức bản thân là:",["Hiểu rõ điểm mạnh và điểm yếu của mình","Chỉ quan tâm đến người khác","Không biết mình là ai","Luôn cho mình đúng"],0],
+
+["Tự nhận thức đúng về bản thân giúp chúng ta:",["Phát huy điểm mạnh và khắc phục điểm yếu","Trở nên tự ti","Không cần cố gắng","Tránh mọi hoạt động"],0],
+
+["Biểu hiện của tự nhận thức đúng là:",["Biết mình còn hạn chế và cố gắng sửa chữa","Luôn cho rằng mình hoàn hảo","Không nghe góp ý","Đổ lỗi cho người khác"],0],
+
+["Người biết yêu thương con người thường:",["Quan tâm và giúp đỡ người khác","Thờ ơ trước khó khăn","Chỉ quan tâm đến bản thân","Chê bai người khác"],0],
+
+["Yêu thương con người là:",["Quan tâm, chia sẻ và giúp đỡ người khác","Lợi dụng người khác","Chỉ giúp người giàu","Chỉ quan tâm đến bạn thân"],0],
+
+["Hành động nào thể hiện lòng yêu thương con người?",["Giúp đỡ bạn khi gặp khó khăn","Chê bai bạn","Đánh bạn","Bỏ mặc người gặp nạn"],0],
+
+["Siêng năng là:",["Làm việc thường xuyên, đều đặn","Lười biếng","Chỉ làm việc khi bị ép","Không chịu học tập"],0],
+
+["Kiên trì là:",["Cố gắng đến cùng dù gặp khó khăn","Bỏ cuộc ngay khi thất bại","Không làm việc","Trốn tránh nhiệm vụ"],0],
+
+["Siêng năng, kiên trì giúp con người:",["Đạt được mục tiêu","Dễ bỏ cuộc","Trở nên lười biếng","Không cần cố gắng"],0],
+
+["Biểu hiện của siêng năng là:",["Chăm chỉ học bài hằng ngày","Chỉ học trước khi kiểm tra","Không làm bài tập","Thường xuyên nghỉ học"],0],
+
+["Tôn trọng sự thật là:",["Công nhận và bảo vệ sự thật","Che giấu mọi sự thật","Nói sai sự thật","Đổ lỗi cho người khác"],0],
+
+["Người tôn trọng sự thật sẽ:",["Nói đúng sự thật","Luôn nói dối","Che giấu khuyết điểm của mình","Bịa chuyện"],0],
+
+["Hành động nào thể hiện tôn trọng sự thật?",["Nhận lỗi khi mình làm sai","Đổ lỗi cho bạn","Nói dối giáo viên","Che giấu sự việc"],0],
+
+["Tôn trọng sự thật giúp con người:",["Được mọi người tin tưởng","Mất niềm tin","Trở nên gian dối","Không có bạn bè"],0],
+
+["Giữ gìn truyền thống gia đình là:",["Trân trọng và phát huy những giá trị tốt đẹp của gia đình","Từ bỏ mọi truyền thống","Chê bai truyền thống","Không quan tâm đến gia đình"],0],
+
+["Truyền thống gia đình có thể là:",["Hiếu học","Lười biếng","Gây gổ","Không tôn trọng người khác"],0],
+
+["Một biểu hiện giữ gìn truyền thống gia đình là:",["Kính trọng ông bà, cha mẹ","Không nghe lời cha mẹ","Chê bai nghề truyền thống","Không quan tâm người thân"],0],
+
+["Tình yêu thương con người được thể hiện qua:",["Sự quan tâm và chia sẻ","Sự ích kỉ","Sự thờ ơ","Sự ganh ghét"],0],
+
+["Quyền và nghĩa vụ của công dân được quy định trong:",["Pháp luật","Truyện cổ tích","Nội quy gia đình בלבד","Sở thích cá nhân"],0],
+
+["Hành vi nào là sống có trách nhiệm?",["Hoàn thành nhiệm vụ được giao","Trốn tránh nhiệm vụ","Đổ lỗi cho người khác","Không giữ lời hứa"],0],
+
+["Khi mắc lỗi, chúng ta nên:",["Nhận lỗi và sửa chữa","Đổ lỗi cho người khác","Che giấu lỗi","Bỏ đi"],0],
+
+["Khi bạn gặp khó khăn trong học tập, em nên:",["Giúp đỡ và động viên bạn","Chê bai bạn","Bỏ mặc bạn","Làm bạn buồn"],0]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let shipPosition=55;
+let shipTimer=null;
+let asteroidTimer=null;
+
+function startGame(){
+
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+shipPosition=55;
+
+document.getElementById("spaceship").style.left=shipPosition+"px";
+document.getElementById("asteroid").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+
+document.getElementById("startButton").innerHTML="🔄 PHI HÀNH LẠI";
+
+document.getElementById("status").innerHTML=
+"🚀 Tàu không gian đang bay qua vũ trụ GDCD...";
+
+let shuffled=[...questionBank];
+
+shuffled.sort(()=>Math.random()-.5);
+
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+clearInterval(shipTimer);
+clearTimeout(asteroidTimer);
+
+shipTimer=setInterval(moveShip,100);
+asteroidTimer=setTimeout(showAsteroid,5000);
+
+}
+
+function moveShip(){
+
+if(!gameRunning||waiting)return;
+
+shipPosition+=2;
+
+let width=document.querySelector(".space").clientWidth;
+
+if(shipPosition>width-220){
+shipPosition=55;
+}
+
+document.getElementById("spaceship").style.left=
+shipPosition+"px";
+
+}
+
+function showAsteroid(){
+
+if(!gameRunning)return;
+
+waiting=true;
+
+document.getElementById("asteroid").classList.add("show");
+
+document.getElementById("status").innerHTML=
+"☄️ THIÊN THẠCH PHÍA TRƯỚC! Hãy trả lời câu hỏi GDCD!";
+
+clearInterval(shipTimer);
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=gameQuestions[currentQuestion];
+
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML=
+"Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+
+});
+
+document.getElementById("answers").innerHTML=html;
+
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function correctEffect(){
+
+const effect=document.createElement("div");
+
+effect.className="correct-effect";
+effect.innerHTML="🚀 CHÍNH XÁC!";
+
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},800);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+
+alert("⚠️ Hãy chọn một đáp án!");
+
+return;
+
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+
+loseGame();
+
+return;
+
+}
+
+correctEffect();
+
+currentQuestion++;
+
+document.getElementById("asteroid").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+updateProgress();
+
+if(currentQuestion>=10){
+
+winGame();
+
+return;
+
+}
+
+waiting=false;
+
+document.getElementById("status").innerHTML=
+"✅ Chính xác! Tàu tiếp tục xuyên qua vũ trụ GDCD...";
+
+shipTimer=setInterval(moveShip,100);
+
+asteroidTimer=setTimeout(showAsteroid,5000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML=
+"🌌 Đã vượt qua "+currentQuestion+"/10 thiên thạch";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(shipTimer);
+clearTimeout(asteroidTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("asteroid").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML=
+"💥 TÀU VŨ TRỤ GẶP NẠN!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Bạn đã trả lời sai!<br><br>"+
+"☄️ Bạn đã vượt qua "+currentQuestion+
+"/10 thiên thạch.<br><br>"+
+"📚 Hãy ôn lại kiến thức GDCD và thử lại lần nữa!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(shipTimer);
+clearTimeout(asteroidTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("asteroid").classList.remove("show");
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("progressText").innerHTML=
+"🏆 HOÀN THÀNH 10/10!";
+
+document.getElementById("status").innerHTML=
+"🌌 Bạn đã chinh phục thành công vũ trụ GDCD 6!";
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("resultTitle").innerHTML=
+"🏆 CHINH PHỤC KIẾN THỨC!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"🚀 Bạn đã vượt qua cả 10 thiên thạch!<br><br>"+
+"📚 Bạn đã hoàn thành màn chơi Trắc nghiệm GDCD 6!";
+
+}
+
+</script>
+
+</body>
+</html>

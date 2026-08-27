@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Công nghệ 6 - Sửa Xe</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 15% 20%,#164e63 0%,transparent 25%),
+radial-gradient(circle at 85% 70%,#713f12 0%,transparent 30%),
+linear-gradient(135deg,#06141b,#12343b,#30200b);
+color:white;
+}
+
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.back:hover{
+background:#f59e0b;
+transform:translateY(-3px);
+}
+
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:40px;
+text-shadow:
+0 0 10px #facc15,
+0 0 25px #f97316,
+0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#fde68a;
+}
+
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.workshop{
+position:relative;
+height:380px;
+overflow:hidden;
+border-radius:22px;
+border:4px solid #f59e0b;
+background:
+linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),
+linear-gradient(135deg,#17202a,#263238,#3b2f1f);
+background-size:35px 35px,35px 35px,cover;
+box-shadow:
+inset 0 0 60px rgba(245,158,11,.18),
+0 10px 35px rgba(0,0,0,.5);
+}
+
+/* BÀN SỬA XE */
+
+.workbench{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+height:75px;
+background:
+linear-gradient(180deg,#92400e,#451a03);
+border-top:8px solid #f59e0b;
+}
+
+/* XE */
+
+.bike{
+position:absolute;
+left:50%;
+top:90px;
+width:440px;
+height:220px;
+transform:translateX(-50%);
+}
+
+/* bánh xe */
+
+.wheel{
+position:absolute;
+width:120px;
+height:120px;
+border:12px solid #111827;
+border-radius:50%;
+background:#374151;
+box-shadow:
+inset 0 0 0 7px #6b7280,
+0 8px 15px rgba(0,0,0,.5);
+}
+
+.wheel1{
+left:20px;
+top:85px;
+}
+
+.wheel2{
+right:20px;
+top:85px;
+}
+
+/* vành bánh */
+
+.wheel:after{
+content:"";
+position:absolute;
+left:50%;
+top:50%;
+width:30px;
+height:30px;
+transform:translate(-50%,-50%);
+border-radius:50%;
+background:#d1d5db;
+border:6px solid #4b5563;
+}
+
+/* khung xe */
+
+.frame1{
+position:absolute;
+left:115px;
+top:100px;
+width:150px;
+height:12px;
+background:#ef4444;
+transform:rotate(-20deg);
+border-radius:10px;
+}
+
+.frame2{
+position:absolute;
+left:190px;
+top:70px;
+width:12px;
+height:120px;
+background:#dc2626;
+transform:rotate(25deg);
+border-radius:10px;
+}
+
+.frame3{
+position:absolute;
+left:110px;
+top:105px;
+width:110px;
+height:12px;
+background:#f97316;
+transform:rotate(35deg);
+border-radius:10px;
+}
+
+.frame4{
+position:absolute;
+left:205px;
+top:100px;
+width:120px;
+height:12px;
+background:#f97316;
+transform:rotate(-35deg);
+border-radius:10px;
+}
+
+/* tay lái */
+
+.handle{
+position:absolute;
+right:65px;
+top:45px;
+width:60px;
+height:12px;
+background:#111827;
+transform:rotate(-15deg);
+border-radius:10px;
+}
+
+.handle2{
+position:absolute;
+right:105px;
+top:25px;
+width:12px;
+height:55px;
+background:#111827;
+transform:rotate(10deg);
+border-radius:10px;
+}
+
+/* yên xe */
+
+.seat{
+position:absolute;
+left:125px;
+top:45px;
+width:70px;
+height:20px;
+background:#111827;
+border-radius:50%;
+}
+
+/* động cơ */
+
+.engine{
+position:absolute;
+left:165px;
+top:125px;
+width:80px;
+height:60px;
+background:linear-gradient(135deg,#6b7280,#111827);
+border:5px solid #9ca3af;
+border-radius:12px;
+box-shadow:0 5px 12px rgba(0,0,0,.5);
+}
+
+/* ỐC VÍT */
+
+.screw{
+position:absolute;
+width:35px;
+height:35px;
+border-radius:50%;
+background:
+radial-gradient(circle,#fef3c7 0 15%,#9ca3af 16% 45%,#374151 46% 100%);
+border:3px solid #d1d5db;
+box-shadow:
+0 0 15px #facc15,
+0 4px 8px rgba(0,0,0,.5);
+display:none;
+animation:screwFloat .8s infinite alternate;
+}
+
+.screw.show{
+display:block;
+}
+
+.screw1{
+left:225px;
+top:110px;
+}
+
+.screw2{
+left:250px;
+top:150px;
+}
+
+@keyframes screwFloat{
+from{
+transform:translateY(-3px) rotate(0deg);
+}
+to{
+transform:translateY(5px) rotate(15deg);
+}
+}
+
+/* THỢ */
+
+.mechanic{
+position:absolute;
+left:70px;
+bottom:55px;
+width:130px;
+height:210px;
+}
+
+/* đầu */
+
+.head{
+position:absolute;
+left:35px;
+top:0;
+width:65px;
+height:65px;
+background:#f3c49b;
+border-radius:50%;
+border:4px solid #78350f;
+}
+
+.hair{
+position:absolute;
+left:30px;
+top:-4px;
+width:75px;
+height:35px;
+background:#292524;
+border-radius:50% 50% 20% 20%;
+}
+
+/* mắt */
+
+.eye1,.eye2{
+position:absolute;
+top:28px;
+width:7px;
+height:7px;
+background:#111827;
+border-radius:50%;
+}
+
+.eye1{
+left:47px;
+}
+
+.eye2{
+left:75px;
+}
+
+/* áo */
+
+.body{
+position:absolute;
+left:20px;
+top:65px;
+width:95px;
+height:115px;
+background:#1f2937;
+border:5px solid #111827;
+border-radius:20px 20px 8px 8px;
+}
+
+.shirt{
+position:absolute;
+left:48px;
+top:75px;
+width:40px;
+height:80px;
+background:#f59e0b;
+border-radius:8px;
+}
+
+/* tay */
+
+.arm{
+position:absolute;
+width:25px;
+height:95px;
+background:#f3c49b;
+border-radius:20px;
+}
+
+.arm1{
+left:5px;
+top:75px;
+transform:rotate(35deg);
+}
+
+.arm2{
+right:0;
+top:75px;
+transform:rotate(-55deg);
+}
+
+/* mũ */
+
+.cap{
+position:absolute;
+left:20px;
+top:-15px;
+width:90px;
+height:30px;
+background:#f59e0b;
+border-radius:50%;
+border:4px solid #92400e;
+z-index:5;
+}
+
+/* cờ lê */
+
+.wrench{
+position:absolute;
+right:105px;
+top:170px;
+font-size:65px;
+transform:rotate(-25deg);
+filter:drop-shadow(0 5px 4px rgba(0,0,0,.6));
+}
+
+/* nút bắt đầu */
+
+.start-area{
+text-align:center;
+margin:25px 0;
+}
+
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#f59e0b,#ef4444);
+box-shadow:
+0 8px 0 #92400e,
+0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+
+.start:hover{
+transform:translateY(-3px);
+}
+
+.start:active{
+transform:translateY(5px);
+box-shadow:0 3px 0 #92400e;
+}
+
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#fef3c7;
+}
+
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#facc15,#f97316,#ef4444);
+box-shadow:0 0 15px #f59e0b;
+transition:.5s;
+}
+
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#fde68a;
+}
+
+/* CÂU HỎI */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+
+.overlay.show{
+display:block;
+}
+
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#ffffff,#fff7ed);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#0f172a;
+}
+
+.question-box.show{
+display:block;
+animation:popup .3s forwards;
+}
+
+@keyframes popup{
+to{
+transform:translate(-50%,-50%) scale(1);
+}
+}
+
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#ea580c;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #e2e8f0;
+border-radius:14px;
+background:#f8fafc;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#1e293b;
+}
+
+.answer:hover{
+transform:translateX(5px);
+border-color:#f59e0b;
+background:#fff7ed;
+}
+
+.answer.selected{
+background:#fef3c7;
+border-color:#f59e0b;
+box-shadow:0 0 0 3px rgba(245,158,11,.15);
+}
+
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#f59e0b,#ef4444);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(234,88,12,.35);
+}
+
+.check:hover{
+transform:translateY(-2px);
+}
+
+/* KẾT QUẢ */
+
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+from{
+transform:translate(-50%,-50%) scale(.5);
+opacity:0;
+}
+to{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+.result h2{
+font-size:38px;
+color:#ea580c;
+margin:0 0 20px;
+}
+
+.result.lose h2{
+color:#ef4444;
+}
+
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#334155;
+}
+
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#f59e0b,#ef4444);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* HIỆU ỨNG ỐC VÍT */
+
+.screw-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#facc15;
+text-shadow:0 0 20px #f97316;
+pointer-events:none;
+animation:screwEffect .9s forwards;
+}
+
+@keyframes screwEffect{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:0;
+}
+40%{
+transform:translate(-50%,-50%) scale(1.3);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-100%) scale(1);
+opacity:0;
+}
+}
+
+@media(max-width:700px){
+
+h1{
+font-size:28px;
+margin-top:75px;
+}
+
+.info{
+font-size:16px;
+}
+
+.game{
+width:96%;
+padding:12px;
+}
+
+.workshop{
+height:300px;
+}
+
+.bike{
+transform:translateX(-50%) scale(.65);
+transform-origin:top center;
+top:35px;
+}
+
+.mechanic{
+transform:scale(.7);
+transform-origin:bottom left;
+left:15px;
+}
+
+.wrench{
+right:30px;
+top:120px;
+font-size:45px;
+}
+
+.question-box{
+padding:20px;
+}
+
+.question-box h2{
+font-size:21px;
+}
+
+.question{
+font-size:18px;
+}
+
+.answer{
+font-size:16px;
+padding:12px;
+}
+
+.result h2{
+font-size:30px;
+}
+
+.result p{
+font-size:18px;
+}
+
+.back{
+padding:9px 14px;
+font-size:14px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<a href="khoi6tracnghiem.html" class="back">
+⬅ Quay lại
+</a>
+
+<h1>🔧 TRẮC NGHIỆM CÔNG NGHỆ 6</h1>
+
+<div class="info">
+🛵 TRÒ CHƠI SỬA XE - TÌM ỐC VÍT
+</div>
+
+<div class="game">
+
+<div class="workshop">
+
+<div class="bike">
+
+<div class="wheel wheel1"></div>
+<div class="wheel wheel2"></div>
+
+<div class="frame1"></div>
+<div class="frame2"></div>
+<div class="frame3"></div>
+<div class="frame4"></div>
+
+<div class="handle"></div>
+<div class="handle2"></div>
+
+<div class="seat"></div>
+
+<div class="engine"></div>
+
+</div>
+
+<div class="mechanic">
+
+<div class="cap"></div>
+<div class="hair"></div>
+<div class="head">
+
+<div class="eye1"></div>
+<div class="eye2"></div>
+
+</div>
+
+<div class="body"></div>
+<div class="shirt"></div>
+
+<div class="arm arm1"></div>
+<div class="arm arm2"></div>
+
+</div>
+
+<div class="wrench">
+🔧
+</div>
+
+<div class="screw screw1" id="screw1"></div>
+<div class="screw screw2" id="screw2"></div>
+
+<div class="workbench"></div>
+
+</div>
+
+<div class="start-area">
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()"
+>
+🔧 BẮT ĐẦU SỬA XE
+</button>
+
+</div>
+
+<div class="progress-text" id="progressText">
+🔩 Chưa bắt đầu
+</div>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+id="progressBar">
+</div>
+
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để giúp người thợ sửa xe!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+
+<h2>🔩 ỐC VÍT BỊ MẤT!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+🔧 TRẢ LỜI & TÌM ỐC VÍT
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 SỬA XE LẠI
+</button>
+
+</div>
+
+<script>
+
+const questionBank=[
+
+[
+"Công nghệ là gì?",
+["Là quá trình tạo ra sản phẩm phục vụ đời sống",
+"Là một môn thể thao",
+"Là một trò chơi",
+"Là một loại thức ăn"],
+0
+],
+
+[
+"Một trong những vai trò của công nghệ là:",
+["Giúp nâng cao chất lượng cuộc sống",
+"Làm con người lười học",
+"Làm ô nhiễm môi trường trong mọi trường hợp",
+"Làm giảm năng suất lao động"],
+0
+],
+
+[
+"Công nghệ giúp con người:",
+["Tạo ra sản phẩm và giải quyết các vấn đề trong cuộc sống",
+"Không cần lao động",
+"Không cần học tập",
+"Không cần sử dụng máy móc"],
+0
+],
+
+[
+"Nhà ở có vai trò quan trọng nhất là:",
+["Nơi cư trú và bảo vệ con người",
+"Nơi chỉ để vui chơi",
+"Nơi chỉ để học tập",
+"Nơi chỉ để sản xuất"],
+0
+],
+
+[
+"Nhà ở giúp con người:",
+["Bảo vệ khỏi các tác động của môi trường",
+"Không cần ăn uống",
+"Không cần nghỉ ngơi",
+"Không cần làm việc"],
+0
+],
+
+[
+"Nhà ở thường gồm các khu vực:",
+["Phòng khách, phòng ngủ, bếp, nhà vệ sinh",
+"Chỉ có phòng khách",
+"Chỉ có phòng ngủ",
+"Chỉ có nhà bếp"],
+0
+],
+
+[
+"Phòng khách thường được sử dụng để:",
+["Tiếp khách và sinh hoạt chung",
+"Nấu ăn",
+"Tắm rửa",
+"Giặt quần áo"],
+0
+],
+
+[
+"Phòng ngủ có chức năng chính là:",
+["Nghỉ ngơi",
+"Nấu ăn",
+"Tiếp khách",
+"Để xe"],
+0
+],
+
+[
+"Nhà bếp thường dùng để:",
+["Nấu ăn và chuẩn bị thức ăn",
+"Ngủ",
+"Học bài",
+"Tiếp khách"],
+0
+],
+
+[
+"Để sử dụng năng lượng tiết kiệm, chúng ta nên:",
+["Tắt thiết bị điện khi không sử dụng",
+"Bật tất cả thiết bị",
+"Mở đèn cả ngày",
+"Để điều hòa hoạt động liên tục"],
+0
+],
+
+[
+"Biện pháp tiết kiệm điện là:",
+["Tận dụng ánh sáng tự nhiên",
+"Bật đèn khi trời sáng",
+"Mở tivi khi không xem",
+"Để quạt chạy khi ra khỏi phòng"],
+0
+],
+
+[
+"Thực phẩm là:",
+["Sản phẩm con người sử dụng để ăn uống",
+"Thiết bị điện",
+"Đồ dùng học tập",
+"Vật liệu xây dựng"],
+0
+],
+
+[
+"Chất dinh dưỡng giúp cơ thể:",
+["Sinh trưởng và phát triển",
+"Không cần vận động",
+"Không cần ngủ",
+"Không cần uống nước"],
+0
+],
+
+[
+"Nhóm chất cung cấp năng lượng chủ yếu cho cơ thể là:",
+["Chất bột đường",
+"Vitamin",
+"Khoáng chất",
+"Nước"],
+0
+],
+
+[
+"Thực phẩm giàu protein còn gọi là:",
+["Chất đạm",
+"Chất xơ",
+"Vitamin",
+"Nước"],
+0
+],
+
+[
+"Để bảo quản thực phẩm, có thể sử dụng phương pháp:",
+["Làm lạnh",
+"Để ngoài trời nắng",
+"Để nơi ẩm ướt",
+"Không che đậy"],
+0
+],
+
+[
+"Phương pháp làm lạnh giúp:",
+["Làm chậm quá trình hư hỏng của thực phẩm",
+"Làm thực phẩm nóng lên",
+"Làm thực phẩm cháy",
+"Làm thực phẩm mất hoàn toàn chất dinh dưỡng"],
+0
+],
+
+[
+"An toàn thực phẩm là:",
+["Đảm bảo thực phẩm không gây hại cho sức khỏe",
+"Ăn bất cứ thực phẩm nào",
+"Chỉ ăn đồ ngọt",
+"Không cần kiểm tra thực phẩm"],
+0
+],
+
+[
+"Trang phục có chức năng:",
+["Bảo vệ cơ thể và làm đẹp",
+"Chỉ để trang trí nhà",
+"Chỉ để chơi thể thao",
+"Chỉ để ngủ"],
+0
+],
+
+[
+"Khi lựa chọn trang phục cần chú ý:",
+["Phù hợp với lứa tuổi, hoàn cảnh và thời tiết",
+"Chỉ cần màu sắc",
+"Chỉ cần giá tiền",
+"Chỉ cần thương hiệu"],
+0
+],
+
+[
+"Vải cotton thường có ưu điểm:",
+["Thoáng mát, thấm hút mồ hôi tốt",
+"Không thấm nước",
+"Luôn rất cứng",
+"Không thể giặt"],
+0
+],
+
+[
+"Trang phục đi học nên:",
+["Gọn gàng, lịch sự, phù hợp với môi trường học tập",
+"Quá cầu kỳ",
+"Không cần sạch sẽ",
+"Mặc tùy ý"],
+0
+],
+
+[
+"Đồ dùng điện trong gia đình cần được:",
+["Sử dụng đúng hướng dẫn và đảm bảo an toàn",
+"Sử dụng tùy ý",
+"Chạm tay ướt vào",
+"Để gần nước"],
+0
+],
+
+[
+"Khi phát hiện dây điện bị hở, em nên:",
+["Báo người lớn và không chạm vào",
+"Chạm trực tiếp vào dây",
+"Dùng tay kéo dây",
+"Đổ nước vào dây"],
+0
+],
+
+[
+"Để tránh tai nạn điện, không nên:",
+["Chạm vào thiết bị điện khi tay ướt",
+"Tắt điện khi không sử dụng",
+"Kiểm tra dây điện",
+"Sử dụng thiết bị đúng hướng dẫn"],
+0
+],
+
+[
+"Thiết bị nào giúp chiếu sáng?",
+["Đèn điện",
+"Tủ lạnh",
+"Quạt điện",
+"Máy giặt"],
+0
+],
+
+[
+"Thiết bị nào dùng để bảo quản thực phẩm?",
+["Tủ lạnh",
+"Quạt",
+"Đèn",
+"Bàn là"],
+0
+],
+
+[
+"Thiết bị nào dùng để làm mát không khí?",
+["Quạt điện",
+"Tủ lạnh",
+"Bếp điện",
+"Nồi cơm điện"],
+0
+],
+
+[
+"Nồi cơm điện được sử dụng để:",
+["Nấu cơm",
+"Giặt quần áo",
+"Làm mát",
+"Chiếu sáng"],
+0
+],
+
+[
+"Khi sử dụng thiết bị điện, chúng ta cần:",
+["Đọc và thực hiện đúng hướng dẫn sử dụng",
+"Tự ý tháo thiết bị",
+"Dùng khi tay ướt",
+"Để thiết bị gần nước"],
+0
+]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+
+function startGame(){
+
+gameRunning=true;
+currentQuestion=0;
+selectedAnswer=null;
+
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+
+document.getElementById("startButton").innerHTML=
+"🔄 SỬA XE LẠI";
+
+document.getElementById("status").innerHTML=
+"🔧 Người thợ đang kiểm tra chiếc xe...";
+
+document.getElementById("screw1").classList.remove("show");
+document.getElementById("screw2").classList.remove("show");
+
+let shuffled=[...questionBank];
+
+shuffled.sort(()=>Math.random()-.5);
+
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+setTimeout(showQuestion,1500);
+
+}
+
+function showQuestion(){
+
+if(!gameRunning)return;
+
+let q=gameQuestions[currentQuestion];
+
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML=
+"Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+
+});
+
+document.getElementById("answers").innerHTML=html;
+
+document.getElementById("overlay").classList.add("show");
+
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function screwEffect(){
+
+const effect=document.createElement("div");
+
+effect.className="screw-effect";
+
+effect.innerHTML="🔩 TÌM ĐƯỢC ỐC VÍT!";
+
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},900);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+
+alert("⚠️ Hãy chọn một đáp án!");
+
+return;
+
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+
+loseGame();
+
+return;
+
+}
+
+screwEffect();
+
+currentQuestion++;
+
+document.getElementById("questionBox").classList.remove("show");
+
+document.getElementById("overlay").classList.remove("show");
+
+if(currentQuestion===5){
+
+document.getElementById("screw1").classList.add("show");
+
+}
+
+if(currentQuestion===10){
+
+document.getElementById("screw2").classList.add("show");
+
+}
+
+updateProgress();
+
+if(currentQuestion>=10){
+
+winGame();
+
+return;
+
+}
+
+document.getElementById("status").innerHTML=
+"🔩 Chính xác! Bạn đã tìm được một chiếc ốc vít!";
+
+setTimeout(showQuestion,1000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML=
+"🔩 Đã tìm được "+currentQuestion+"/10 ốc vít";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+
+document.getElementById("questionBox").classList.remove("show");
+
+document.getElementById("overlay").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML=
+"🔧 SỬA XE THẤT BẠI!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Bạn đã trả lời sai câu hỏi!<br><br>"+
+"🔩 Bạn mới tìm được "+
+currentQuestion+
+"/10 ốc vít.<br><br>"+
+"📚 Hãy ôn lại kiến thức Công nghệ 6 và thử lại!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+
+document.getElementById("questionBox").classList.remove("show");
+
+document.getElementById("overlay").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("resultTitle").innerHTML=
+"🏆 SỬA XE THÀNH CÔNG!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"🔩 Bạn đã tìm đủ 10/10 ốc vít!<br><br>"+
+"🛵 Chiếc xe đã được sửa hoàn chỉnh!<br><br>"+
+"📚 Bạn đã chinh phục Trắc nghiệm Công nghệ 6!";
+
+document.getElementById("status").innerHTML=
+"🏆 Chiếc xe đã được sửa xong!";
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("progressText").innerHTML=
+"🏆 HOÀN THÀNH 10/10 ỐC VÍT!";
+
+}
+
+</script>
+
+</body>
+</html>

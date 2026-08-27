@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+<title>AI Học Tập</title>
+
+
+<style>
+
+body{
+
+font-family:Arial;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+height:100vh;
+
+}
+
+
+/* nút mở AI */
+
+.ai-button{
+
+position:fixed;
+right:30px;
+bottom:30px;
+
+background:#10a37f;
+color:white;
+
+padding:15px 25px;
+border-radius:30px;
+
+cursor:pointer;
+font-size:18px;
+
+}
+
+
+/* cửa sổ AI */
+
+.ai-box{
+
+display:none;
+
+position:fixed;
+
+right:30px;
+bottom:90px;
+
+width:350px;
+
+background:white;
+
+border-radius:20px;
+
+box-shadow:0 0 20px #555;
+
+overflow:hidden;
+
+}
+
+
+/* đầu AI */
+
+.header{
+
+background:#202123;
+color:white;
+
+padding:15px;
+
+display:flex;
+
+justify-content:space-between;
+
+}
+
+
+.close{
+
+cursor:pointer;
+color:red;
+
+}
+
+
+/* nội dung chat */
+
+.chat{
+
+height:300px;
+
+padding:15px;
+
+overflow:auto;
+
+}
+
+
+
+.input{
+
+display:flex;
+
+padding:10px;
+
+}
+
+
+input{
+
+flex:1;
+
+padding:10px;
+
+}
+
+
+button{
+
+background:#10a37f;
+
+color:white;
+
+border:0;
+
+padding:10px;
+
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<h1>
+Trang web lớp 6A
+</h1>
+
+
+
+<!-- nút mở AI -->
+
+<div class="ai-button" onclick="openAI()">
+
+🤖 AI Học Tập
+
+</div>
+
+
+
+
+
+<!-- cửa sổ AI -->
+
+
+<div class="ai-box" id="ai">
+
+
+<div class="header">
+
+<span>
+🤖 AI Học Tập
+</span>
+
+
+<span class="close" onclick="closeAI()">
+❌
+</span>
+
+
+</div>
+
+
+
+
+<div class="chat" id="chat">
+
+
+<p>
+AI: Xin chào! Bạn cần hỏi gì?
+</p>
+
+
+</div>
+
+
+
+
+<div class="input">
+
+
+<input id="question"
+placeholder="Nhập câu hỏi">
+
+
+<button onclick="send()">
+Gửi
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function openAI(){
+
+document.getElementById("ai").style.display="block";
+
+}
+
+
+
+function closeAI(){
+
+document.getElementById("ai").style.display="none";
+
+}
+
+
+
+
+function send(){
+
+
+let q=document.getElementById("question").value;
+
+
+let answer="";
+
+
+q=q.toLowerCase();
+
+
+
+if(q.includes("toán")){
+
+answer="Bạn hãy gửi bài toán cụ thể, mình sẽ giúp giải.";
+
+}
+
+else if(q.includes("thủ đô")){
+
+answer="Thủ đô Việt Nam là Hà Nội.";
+
+}
+
+else if(q.includes("nguyễn du")){
+
+answer="Nguyễn Du là tác giả Truyện Kiều.";
+
+}
+
+else if(q.includes("xin chào")){
+
+answer="Xin chào! Chúc bạn học tốt.";
+
+}
+
+else{
+
+answer="Mình chưa biết câu này.";
+
+}
+
+
+
+document.getElementById("chat").innerHTML +=
+
+`
+
+<p>
+👤 Bạn: ${q}
+</p>
+
+<p>
+🤖 AI: ${answer}
+</p>
+
+`;
+
+
+
+document.getElementById("question").value="";
+
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

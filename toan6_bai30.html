@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 30: Làm tròn và ước lượng</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan6.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 30: Làm tròn và ước lượng</h2>
+
+<h3>📖 1. Làm tròn số</h3>
+
+<p>
+Để làm tròn một số thập phân dương đến một hàng nào đó, ta thực hiện:
+</p>
+
+<ul>
+
+<li>
+Giữ nguyên chữ số ở hàng làm tròn nếu chữ số bên phải nhỏ hơn 5.
+</li>
+
+<li>
+Tăng thêm 1 đơn vị ở hàng làm tròn nếu chữ số bên phải lớn hơn hoặc bằng 5.
+</li>
+
+<li>
+Các chữ số phía sau hàng làm tròn bị bỏ đi nếu thuộc phần thập phân.
+</li>
+
+<li>
+Nếu thuộc phần số nguyên thì thay bằng các chữ số 0.
+</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+a) Làm tròn số 4,12356 đến hàng phần trăm.
+</p>
+
+<p>
+Chữ số hàng phần trăm là 2.
+</p>
+
+<p>
+Chữ số bên phải là 3.
+</p>
+
+<p>
+Vì 3 &lt; 5 nên giữ nguyên chữ số 2.
+</p>
+
+<p>
+Kết quả:
+</p>
+
+<p>
+4,12356 ≈ 4,12
+</p>
+
+<p>
+b) Làm tròn số 3124,13 đến hàng trăm.
+</p>
+
+<p>
+Chữ số hàng trăm là 1.
+</p>
+
+<p>
+Chữ số bên phải là 2.
+</p>
+
+<p>
+Vì 2 &lt; 5 nên giữ nguyên chữ số 1.
+</p>
+
+<p>
+Thay các chữ số phía sau bằng 0.
+</p>
+
+<p>
+Kết quả:
+</p>
+
+<p>
+3124,13 ≈ 3100
+</p>
+
+<h3>📖 2. Ước lượng</h3>
+
+<p>
+Trong thực tế, ta thường chỉ cần một kết quả gần đúng.
+</p>
+
+<p>
+Đó gọi là ước lượng.
+</p>
+
+<p>
+Một số cách ước lượng:
+</p>
+
+<ul>
+
+<li>
+Bỏ bớt các chữ số ở phần thập phân.
+</li>
+
+<li>
+Làm tròn kết quả đến một hàng thích hợp.
+</li>
+
+<li>
+Làm tròn các số trong phép tính rồi mới tính.
+</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+Trong các số sau, số nào là kết quả của phép tính:
+</p>
+
+<p>
+256,3 + 892,37 + 45
+</p>
+
+<p>
+A. 1190,65
+</p>
+
+<p>
+B. 2356,67
+</p>
+
+<p>
+C. 1193,67
+</p>
+
+<p>
+D. 128,67
+</p>
+
+<p>
+Làm tròn:
+</p>
+
+<p>
+256,3 ≈ 256
+</p>
+
+<p>
+892,37 ≈ 892
+</p>
+
+<p>
+45 ≈ 45
+</p>
+
+<p>
+Tổng xấp xỉ:
+</p>
+
+<p>
+256 + 892 + 45
+</p>
+
+<p>
+= 1193
+</p>
+
+<p>
+Trong các đáp án, số gần nhất với 1193 là:
+</p>
+
+<p>
+1193,67
+</p>
+
+<p>
+Đáp án: C
+</p>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Nếu chữ số bên phải nhỏ hơn 5 thì giữ nguyên chữ số làm tròn.
+</li>
+
+<li>
+Nếu chữ số bên phải lớn hơn hoặc bằng 5 thì tăng thêm 1 đơn vị.
+</li>
+
+<li>
+Ước lượng giúp tính toán nhanh và kiểm tra kết quả.
+</li>
+
+<li>
+Có thể ước lượng bằng cách làm tròn số hoặc làm tròn các số trong phép tính.
+</li>
+
+<li>
+Kết quả ước lượng là kết quả gần đúng với giá trị thực.
+</li>
+
+</ul>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

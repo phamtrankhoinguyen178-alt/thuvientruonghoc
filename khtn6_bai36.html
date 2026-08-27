@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm KHTN 6 - Bài 36: Động vật</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f9;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+color:#2c3e50;
+}
+
+.question{
+margin-bottom:20px;
+padding:15px;
+background:#eef7ff;
+border-radius:8px;
+}
+
+button{
+padding:12px 25px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#218838;
+}
+
+#result{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+text-align:center;
+color:#d35400;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Trắc nghiệm KHTN 6 - Bài 36: Động vật</h1>
+
+<form id="quiz">
+
+<div class="question">
+<p><b>Câu 1:</b> Động vật thuộc nhóm sinh vật nào?</p>
+<label><input type="radio" name="q1" value="A"> Đơn bào</label><br>
+<label><input type="radio" name="q1" value="B"> Đa bào nhân thực</label><br>
+<label><input type="radio" name="q1" value="C"> Không có tế bào</label><br>
+<label><input type="radio" name="q1" value="D"> Tự dưỡng</label>
+</div>
+
+<div class="question">
+<p><b>Câu 2:</b> Động vật nào thuộc ngành Ruột khoang?</p>
+<label><input type="radio" name="q2" value="A"> Giun đất</label><br>
+<label><input type="radio" name="q2" value="B"> Sứa</label><br>
+<label><input type="radio" name="q2" value="C"> Mực</label><br>
+<label><input type="radio" name="q2" value="D"> Tôm</label>
+</div>
+
+<div class="question">
+<p><b>Câu 3:</b> Giun đất thuộc nhóm nào?</p>
+<label><input type="radio" name="q3" value="A"> Giun đốt</label><br>
+<label><input type="radio" name="q3" value="B"> Giun tròn</label><br>
+<label><input type="radio" name="q3" value="C"> Thân mềm</label><br>
+<label><input type="radio" name="q3" value="D"> Chân khớp</label>
+</div>
+
+<div class="question">
+<p><b>Câu 4:</b> Đặc điểm nổi bật của động vật chân khớp là gì?</p>
+<label><input type="radio" name="q4" value="A"> Có mai đá vôi</label><br>
+<label><input type="radio" name="q4" value="B"> Có chân phân đốt khớp động</label><br>
+<label><input type="radio" name="q4" value="C"> Có vỏ mềm</label><br>
+<label><input type="radio" name="q4" value="D"> Có xương sống</label>
+</div>
+
+<div class="question">
+<p><b>Câu 5:</b> Cá hô hấp bằng gì?</p>
+<label><input type="radio" name="q5" value="A"> Da</label><br>
+<label><input type="radio" name="q5" value="B"> Phổi</label><br>
+<label><input type="radio" name="q5" value="C"> Mang</label><br>
+<label><input type="radio" name="q5" value="D"> Túi khí</label>
+</div>
+
+<div class="question">
+<p><b>Câu 6:</b> Con vật nào thuộc lớp lưỡng cư?</p>
+<label><input type="radio" name="q6" value="A"> Cá chép</label><br>
+<label><input type="radio" name="q6" value="B"> Rùa</label><br>
+<label><input type="radio" name="q6" value="C"> Ếch</label><br>
+<label><input type="radio" name="q6" value="D"> Chim sẻ</label>
+</div>
+
+<div class="question">
+<p><b>Câu 7:</b> Đặc điểm của lớp chim là?</p>
+<label><input type="radio" name="q7" value="A"> Có lông mao</label><br>
+<label><input type="radio" name="q7" value="B"> Có vảy sừng</label><br>
+<label><input type="radio" name="q7" value="C"> Có lông vũ và cánh</label><br>
+<label><input type="radio" name="q7" value="D"> Có mang</label>
+</div>
+
+<div class="question">
+<p><b>Câu 8:</b> Động vật có vú có đặc điểm nào?</p>
+<label><input type="radio" name="q8" value="A"> Đẻ trứng</label><br>
+<label><input type="radio" name="q8" value="B"> Nuôi con bằng sữa</label><br>
+<label><input type="radio" name="q8" value="C"> Hô hấp bằng mang</label><br>
+<label><input type="radio" name="q8" value="D"> Có vỏ cứng</label>
+</div>
+
+<div class="question">
+<p><b>Câu 9:</b> Vai trò của động vật đối với tự nhiên là?</p>
+<label><input type="radio" name="q9" value="A"> Chỉ gây hại</label><br>
+<label><input type="radio" name="q9" value="B"> Là mắt xích trong chuỗi thức ăn</label><br>
+<label><input type="radio" name="q9" value="C"> Không có vai trò</label><br>
+<label><input type="radio" name="q9" value="D"> Chỉ cung cấp thức ăn</label>
+</div>
+
+<div class="question">
+<p><b>Câu 10:</b> Động vật nào có thể gây hại cho con người?</p>
+<label><input type="radio" name="q10" value="A"> Giun sán kí sinh</label><br>
+<label><input type="radio" name="q10" value="B"> Ong thụ phấn</label><br>
+<label><input type="radio" name="q10" value="C"> Chim ăn sâu</label><br>
+<label><input type="radio" name="q10" value="D"> Cá heo</label>
+</div>
+
+<button type="button" onclick="checkQuiz()">Nộp bài</button>
+
+</form>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function checkQuiz(){
+
+const answers={
+q1:"B",
+q2:"B",
+q3:"A",
+q4:"B",
+q5:"C",
+q6:"C",
+q7:"C",
+q8:"B",
+q9:"B",
+q10:"A"
+};
+
+let score=0;
+
+for(let q in answers){
+let selected=document.querySelector(`input[name="${q}"]:checked`);
+if(selected && selected.value===answers[q]){
+score++;
+}
+}
+
+document.getElementById("result").innerHTML=
+"Bạn đạt " + score + "/10 điểm";
+}
+</script>
+
+</body>
+</html>

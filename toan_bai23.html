@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 23: Đại lượng tỉ lệ nghịch</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+.img{
+display:block;
+max-width:500px;
+width:100%;
+margin:25px auto;
+border-radius:12px;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+#imgBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+#imgBox span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p{
+font-size:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 23: Đại lượng tỉ lệ nghịch</h2>
+
+<h3>📖 1. Đại lượng tỉ lệ nghịch</h3>
+
+<p>• Nếu đại lượng y liên hệ với đại lượng x theo công thức:</p>
+
+<p><b>y = a/x</b> (a là một hằng số khác 0)</p>
+
+<p>thì ta nói y tỉ lệ nghịch với x theo hệ số tỉ lệ a.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Nếu y tỉ lệ nghịch với x theo hệ số tỉ lệ a thì x cũng tỉ lệ nghịch với y theo hệ số tỉ lệ a.</p>
+
+<p>• Khi đó ta nói hai đại lượng x và y tỉ lệ nghịch với nhau.</p>
+
+<h3>📊 Nhận xét</h3>
+
+<p>• Nếu hai đại lượng y và x tỉ lệ nghịch với nhau thì:</p>
+
+<p>+ Tích hai giá trị tương ứng của chúng luôn không đổi (và bằng hệ số tỉ lệ).</p>
+
+<img src="hinhanh20.jpg" class="img" onclick="openImg(this)">
+
+<p>+ Tỉ số hai giá trị bất kì của đại lượng này bằng nghịch đảo của tỉ số hai giá trị tương ứng của đại lượng kia.</p>
+
+<img src="hinhanh121.jpg" class="img" onclick="openImg(this)">
+
+<h3>📖 2. Một số bài toán về đại lượng tỉ lệ nghịch</h3>
+
+<p>• Để giải toán về đại lượng tỉ lệ nghịch, ta cần nhận biết được hai đại lượng tỉ lệ nghịch trong bài toán.</p>
+
+<p>• Từ đó ta có thể lập các tỉ số bằng nhau và dựa vào tính chất của dãy tỉ số bằng nhau để tìm các yếu tố chưa biết.</p>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+document.getElementById("imgBox").style.display="flex";
+document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

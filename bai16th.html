@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 16 - Thuật toán sắp xếp</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#2c3e50;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul{
+    padding-left:25px;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<a href="tinhoc7.html" class="back">⬅ Quay lại</a>
+
+
+<div class="header">
+<h1>💻 Bài 16</h1>
+<h2>Thuật toán sắp xếp</h2>
+</div>
+
+
+
+<div class="content">
+
+
+
+<h2>I. Thuật toán sắp xếp nổi bọt</h2>
+
+
+<p>
+Thuật toán sắp xếp nổi bọt là thuật toán sắp xếp bằng cách thực hiện nhiều lần việc hoán đổi các phần tử liền kề nếu chúng chưa đúng thứ tự.
+</p>
+
+
+<p>
+Sau mỗi lần thực hiện một lượt so sánh, phần tử nhỏ nhất sẽ được đưa dần về đầu dãy giống như hiện tượng "nổi bọt".
+</p>
+
+
+
+
+<h3>Mô tả thuật toán sắp xếp nổi bọt bằng ngôn ngữ tự nhiên</h3>
+
+
+
+<p>
+<b>Bước 1:</b>
+Với phần tử đầu tiên, thực hiện một vòng lặp:
+</p>
+
+
+<ul>
+
+<li>
+So sánh hai phần tử đứng cạnh nhau theo thứ tự từ cuối dãy lên đến phần tử đầu tiên.
+</li>
+
+<li>
+Nếu phần tử đứng sau nhỏ hơn phần tử đứng trước thì đổi chỗ hai phần tử đó.
+</li>
+
+<li>
+Kết thúc vòng lặp sẽ nhận được dãy số với phần tử nhỏ nhất ở vị trí đầu tiên.
+</li>
+
+</ul>
+
+
+
+
+<p>
+<b>Bước 2:</b>
+Với phần tử thứ hai, thực hiện một vòng lặp tương tự.
+</p>
+
+
+<ul>
+
+<li>
+So sánh các phần tử đứng cạnh nhau từ cuối dãy ngược lên vị trí thứ hai.
+</li>
+
+<li>
+Nếu phần tử đứng sau nhỏ hơn phần tử đứng trước thì đổi chỗ chúng.
+</li>
+
+<li>
+Kết thúc vòng lặp nhận được phần tử nhỏ thứ hai ở vị trí thứ hai.
+</li>
+
+</ul>
+
+
+
+<p>
+<b>Bước 3:</b>
+Tiếp tục thực hiện tương tự với các phần tử thứ ba, thứ tư,... cho đến phần tử cuối cùng.
+</p>
+
+
+<p>
+<b>Bước 4:</b>
+Kết thúc thuật toán, ta nhận được dãy số được sắp xếp theo thứ tự từ nhỏ đến lớn.
+</p>
+
+
+
+
+
+<h2>II. Thuật toán sắp xếp chọn</h2>
+
+
+<p>
+Thuật toán sắp xếp chọn xét từng vị trí từ đầu đến cuối dãy.
+</p>
+
+
+<p>
+Tại mỗi vị trí, thuật toán so sánh phần tử đang xét với các phần tử phía sau và hoán đổi nếu chưa đúng thứ tự.
+</p>
+
+
+
+<h3>Mô tả thuật toán sắp xếp chọn bằng ngôn ngữ tự nhiên</h3>
+
+
+<p>
+Sắp xếp dãy số theo thứ tự từ nhỏ đến lớn bằng thuật toán sắp xếp chọn.
+</p>
+
+
+
+<p>
+<b>Bước 1:</b>
+Với phần tử đầu tiên, thực hiện một vòng lặp:
+</p>
+
+
+<ul>
+
+<li>
+So sánh phần tử đầu tiên với các phần tử từ vị trí thứ hai đến cuối dãy.
+</li>
+
+<li>
+Nếu phần tử được xét nhỏ hơn phần tử đầu tiên thì đổi chỗ hai phần tử.
+</li>
+
+<li>
+Kết thúc vòng lặp nhận được phần tử nhỏ nhất ở vị trí đầu tiên.
+</li>
+
+</ul>
+
+
+
+
+<p>
+<b>Bước 2:</b>
+Với phần tử thứ hai, thực hiện vòng lặp tương tự.
+</p>
+
+
+<ul>
+
+<li>
+So sánh phần tử thứ hai với các phần tử từ vị trí thứ ba đến cuối dãy.
+</li>
+
+<li>
+Nếu phần tử được xét nhỏ hơn phần tử thứ hai thì đổi chỗ.
+</li>
+
+<li>
+Kết thúc vòng lặp nhận được phần tử nhỏ thứ hai ở vị trí thứ hai.
+</li>
+
+</ul>
+
+
+
+
+<p>
+<b>Bước 3:</b>
+Tiếp tục thực hiện tương tự với các phần tử thứ ba, thứ tư,... đến phần tử trước phần tử cuối cùng.
+</p>
+
+
+<p>
+<b>Bước 4:</b>
+Kết thúc thuật toán, nhận được dãy số đã được sắp xếp theo thứ tự từ nhỏ đến lớn.
+</p>
+
+
+
+
+
+<h2>III. So sánh các thuật toán sắp xếp</h2>
+
+
+<ul>
+
+<li>
+<b>Sắp xếp nổi bọt:</b>
+Dựa vào việc so sánh và đổi chỗ các phần tử liền kề.
+</li>
+
+
+<li>
+<b>Sắp xếp chọn:</b>
+Dựa vào việc chọn phần tử nhỏ nhất trong phần còn lại của dãy rồi đưa về đúng vị trí.
+</li>
+
+
+<li>
+Cả hai thuật toán đều giúp sắp xếp dữ liệu theo một thứ tự nhất định.
+</li>
+
+</ul>
+
+
+
+
+
+<h2>IV. Chia bài toán thành những bài toán nhỏ hơn</h2>
+
+
+<p>
+Chia một bài toán lớn thành các bài toán nhỏ hơn giúp cho việc xây dựng thuật toán trở nên dễ hiểu và dễ thực hiện hơn.
+</p>
+
+
+<ul>
+
+<li>
+Giúp giảm độ phức tạp của bài toán.
+</li>
+
+<li>
+Dễ kiểm tra từng phần của thuật toán.
+</li>
+
+<li>
+Có thể giải quyết từng phần nhỏ trước khi ghép thành bài toán hoàn chỉnh.
+</li>
+
+</ul>
+
+
+
+
+
+<h2>V. Ví dụ minh họa</h2>
+
+
+<p>
+Cho dãy số:
+</p>
+
+
+<p>
+<b>7, 3, 9, 2, 5</b>
+</p>
+
+
+<p>
+Sắp xếp theo thứ tự từ nhỏ đến lớn:
+</p>
+
+
+<ul>
+
+<li>
+So sánh và đổi chỗ các phần tử chưa đúng vị trí.
+</li>
+
+<li>
+Sau các lần thực hiện, dãy số trở thành:
+</li>
+
+</ul>
+
+
+<p>
+<b>2, 3, 5, 7, 9</b>
+</p>
+
+
+
+
+
+<h2>📌 Ghi nhớ</h2>
+
+
+<ul>
+
+<li>
+Thuật toán sắp xếp giúp đưa dữ liệu về một thứ tự xác định.
+</li>
+
+<li>
+Sắp xếp nổi bọt sử dụng cách đổi chỗ các phần tử liền kề.
+</li>
+
+<li>
+Sắp xếp chọn tìm phần tử nhỏ nhất và đưa về đúng vị trí.
+</li>
+
+<li>
+Chia bài toán thành các bài toán nhỏ giúp xây dựng thuật toán dễ dàng hơn.
+</li>
+
+</ul>
+
+
+</div>
+
+
+</body>
+</html>

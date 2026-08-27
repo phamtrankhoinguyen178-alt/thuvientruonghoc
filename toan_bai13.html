@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 13: Hai tam giác bằng nhau. Trường hợp bằng nhau thứ nhất của tam giác</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+.img{
+display:block;
+max-width:500px;
+width:100%;
+margin:25px auto;
+border-radius:12px;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+#imgBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+#imgBox span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p{
+font-size:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 13: Hai tam giác bằng nhau. Trường hợp bằng nhau thứ nhất của tam giác</h2>
+
+<h3>📖 1. Hai tam giác bằng nhau</h3>
+
+<p>• Hai tam giác ABC và A'B'C' bằng nhau nếu chúng có các cạnh tương ứng bằng nhau và các góc tương ứng bằng nhau, nghĩa là:</p>
+
+<p>AB = A'B'; AC = A'C'; BC = B'C' và góc A = góc A'; góc B = góc B'; góc C = góc C'.</p>
+
+<p>• Khi kí hiệu hai tam giác bằng nhau thì thứ tự các đỉnh tương ứng phải được viết theo cùng một thứ tự.</p>
+
+<p>Ở đây hai đỉnh A và A' (B và B', C và C') là hai đỉnh tương ứng.</p>
+
+<p>Hai góc A và A' (B và B', C và C') là hai góc tương ứng.</p>
+
+<p>Hai cạnh AB và A'B' (AC và A'C', BC và B'C') là hai cạnh tương ứng.</p>
+
+<p>Khi đó ta kí hiệu:</p>
+
+<p>ΔABC = ΔA'B'C'</p>
+
+<h3>🧠 2. Trường hợp bằng nhau thứ nhất của tam giác: Cạnh - Cạnh - Cạnh (c.c.c)</h3>
+
+<p>• Cách vẽ tam giác khi biết số đo ba cạnh.</p>
+
+<p>Ví dụ: Vẽ tam giác ABC biết AB = 2 cm; AC = 3 cm; BC = 4 cm.</p>
+
+<p>+ Dùng thước kẻ có vạch chia vẽ đoạn BC = 4 cm.</p>
+
+<p>+ Dùng compa mở khẩu độ 2 cm, tâm tại điểm B, vẽ một cung tròn.</p>
+
+<p>+ Mở compa khẩu độ 3 cm, tâm tại điểm C, vẽ một cung tròn.</p>
+
+<p>+ Giao điểm của hai cung tròn là điểm A.</p>
+
+<p>+ Vẽ các đoạn thẳng AB và AC ta được tam giác ABC.</p>
+
+<img src="anhvehinh2.jpg" class="img" onclick="openImg(this)">
+
+<p>• Trường hợp bằng nhau cạnh - cạnh - cạnh (c.c.c).</p>
+
+<p>Nếu ba cạnh của tam giác này bằng ba cạnh của tam giác kia thì hai tam giác đó bằng nhau.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Cách vẽ tia phân giác của một góc bằng thước kẻ và compa.</p>
+
+<p>Vẽ tia phân giác của góc xOy ta làm như sau:</p>
+
+<img src="anhvehinh3.jpg" class="img" onclick="openImg(this)">
+
+<p>1) Vẽ đường tròn tâm O cắt Ox, Oy lần lượt tại A và B.</p>
+
+<p>2) Vẽ đường tròn tâm A bán kính AO và đường tròn tâm B bán kính BO. Hai đường tròn này cắt nhau tại điểm M khác điểm O.</p>
+
+<p>3) Vẽ tia Oz đi qua M. Tia Oz là tia phân giác của góc xOy.</p>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+document.getElementById("imgBox").style.display="flex";
+document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

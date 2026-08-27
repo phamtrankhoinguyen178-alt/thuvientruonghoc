@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 39 - Tái bản DNA và phiên mã tạo RNA</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:#222;
+    line-height:1.7;
+    padding-bottom:40px;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:80px auto 30px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#fff;
+    color:#185a9d;
+    padding:10px 18px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    z-index:10;
+}
+
+.back:hover{
+    background:#185a9d;
+    color:white;
+}
+
+h1{
+    text-align:center;
+    color:#185a9d;
+    margin-bottom:25px;
+    font-size:30px;
+}
+
+h2{
+    color:#e65100;
+    margin-top:30px;
+    margin-bottom:15px;
+    padding:10px 15px;
+    background:#fff3e0;
+    border-left:6px solid #e65100;
+    border-radius:8px;
+}
+
+h3{
+    color:#1565c0;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+p{
+    margin:8px 0;
+}
+
+ul{
+    margin:8px 0 8px 25px;
+}
+
+li{
+    margin:6px 0;
+}
+
+.box{
+    background:#f5faff;
+    border-left:5px solid #2196f3;
+    padding:15px 20px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.note{
+    background:#fff8e1;
+    border-left:5px solid #ffb300;
+    padding:15px 20px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.formula{
+    background:#eef7ff;
+    text-align:center;
+    padding:18px;
+    margin:15px 0;
+    border-radius:10px;
+    font-size:20px;
+    font-weight:bold;
+    color:#1565c0;
+}
+
+.step{
+    background:#f8f9fa;
+    border:1px solid #ddd;
+    padding:18px;
+    margin:15px 0;
+    border-radius:12px;
+}
+
+.step-title{
+    color:#00897b;
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.keyword{
+    color:#d84315;
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+th,td{
+    border:1px solid #bbb;
+    padding:12px;
+    vertical-align:top;
+}
+
+th{
+    background:#1976d2;
+    color:white;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f5f5f5;
+}
+
+.footer{
+    text-align:center;
+    color:white;
+    margin-top:20px;
+    font-size:15px;
+}
+
+@media(max-width:700px){
+    .container{
+        width:95%;
+        padding:18px;
+        margin-top:70px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    table{
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<a href="monhoc.html" class="back">← Quay lại</a>
+
+<div class="container">
+
+<h1>🧬 BÀI 39: TÁI BẢN DNA VÀ PHIÊN MÃ TẠO RNA</h1>
+
+<div class="box">
+    <b>📚 KHTN 9 - Kết nối tri thức</b><br>
+    Bài học tìm hiểu hai quá trình quan trọng của vật chất di truyền:
+    <b>tái bản DNA</b> và <b>phiên mã tạo RNA</b>.
+</div>
+
+<h2>I. QUÁ TRÌNH TÁI BẢN DNA</h2>
+
+<h3>1. Vị trí và thời điểm</h3>
+
+<ul>
+    <li>Ở sinh vật nhân thực: diễn ra trong <b>nhân tế bào</b>.</li>
+    <li>Ở sinh vật nhân sơ: diễn ra ở <b>vùng nhân</b>.</li>
+    <li>Diễn ra <b>trước khi tế bào bước vào giai đoạn phân chia</b>.</li>
+</ul>
+
+<h3>2. Các giai đoạn tái bản DNA</h3>
+
+<div class="step">
+
+<div class="step-title">🔹 Giai đoạn 1: DNA tháo xoắn</div>
+
+<p>
+Phân tử DNA ban đầu tháo xoắn và tách thành <b>hai mạch đơn</b>.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-title">🔹 Giai đoạn 2: Tổng hợp mạch mới</div>
+
+<p>
+Các nucleotide tự do trong môi trường tế bào liên kết với nucleotide
+trên mỗi mạch khuôn theo <b>nguyên tắc bổ sung</b>.
+</p>
+
+<div class="formula">
+A ↔ T &nbsp;&nbsp;&nbsp;&nbsp; G ↔ C
+</div>
+
+<p>
+A liên kết với T bằng <b>2 liên kết hydrogen</b>.
+</p>
+
+<p>
+G liên kết với C bằng <b>3 liên kết hydrogen</b>.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-title">🔹 Giai đoạn 3: Hình thành DNA mới</div>
+
+<p>
+Hai mạch đơn gồm một mạch cũ và một mạch mới tổng hợp
+xoắn trở lại với nhau tạo thành DNA mới.
+</p>
+
+</div>
+
+<h3>3. Kết quả</h3>
+
+<div class="box">
+
+<p>
+Từ <b>1 phân tử DNA ban đầu</b> tạo ra <b>2 phân tử DNA mới</b>.
+</p>
+
+<p>
+Hai phân tử DNA mới có trình tự nucleotide giống nhau
+và giống DNA ban đầu.
+</p>
+
+<p>
+Trong mỗi DNA mới có:
+</p>
+
+<ul>
+    <li>1 mạch DNA ban đầu.</li>
+    <li>1 mạch mới được tổng hợp.</li>
+</ul>
+
+</div>
+
+<h3>4. Ý nghĩa</h3>
+
+<p>
+Quá trình tái bản DNA tạo ra hai bản sao giống DNA ban đầu,
+giúp <span class="keyword">truyền đạt thông tin di truyền</span>
+qua các thế hệ tế bào và cơ thể một cách ổn định.
+</p>
+
+<div class="formula">
+1 DNA ban đầu → 2 DNA mới
+<br><br>
+Mỗi DNA mới = 1 mạch cũ + 1 mạch mới
+</div>
+
+<h2>II. QUÁ TRÌNH PHIÊN MÃ</h2>
+
+<h3>1. Khái niệm</h3>
+
+<p>
+<span class="keyword">Phiên mã</span> là quá trình tổng hợp phân tử RNA
+dựa trên trình tự nucleotide của gene (DNA).
+</p>
+
+<h3>2. Vị trí và thời điểm</h3>
+
+<ul>
+    <li>Ở sinh vật nhân thực: diễn ra trong <b>nhân tế bào</b>.</li>
+    <li>Ở sinh vật nhân sơ: diễn ra ở <b>vùng nhân</b>.</li>
+    <li>Quá trình diễn ra trước khi tế bào bước vào giai đoạn phân chia.</li>
+</ul>
+
+<h3>3. Các giai đoạn phiên mã</h3>
+
+<div class="step">
+
+<div class="step-title">🔹 Giai đoạn 1: Khởi đầu</div>
+
+<p>
+Enzyme <b>RNA polymerase</b> bám vào vùng điều hòa,
+làm gene tháo xoắn để lộ ra mạch gốc có chiều
+<b>3' → 5'</b>.
+</p>
+
+<p>
+RNA polymerase bắt đầu tổng hợp mRNA tại vị trí đặc hiệu.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-title">🔹 Giai đoạn 2: Kéo dài</div>
+
+<p>
+RNA polymerase trượt dọc theo mạch gốc của gene theo chiều
+<b>3' → 5'</b>.
+</p>
+
+<p>
+Các nucleotide tự do liên kết với nucleotide trên mạch khuôn
+theo nguyên tắc bổ sung.
+</p>
+
+<div class="formula">
+A → U
+<br>
+T → A
+<br>
+G → C
+<br>
+C → G
+</div>
+
+<p>
+Phân tử mRNA được tổng hợp theo chiều <b>5' → 3'</b>.
+</p>
+
+<p>
+Vùng gene vừa phiên mã xong sẽ đóng xoắn trở lại.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-title">🔹 Giai đoạn 3: Kết thúc</div>
+
+<p>
+Khi RNA polymerase di chuyển đến cuối gene và gặp
+tín hiệu kết thúc, quá trình phiên mã dừng lại.
+</p>
+
+<p>
+Phân tử RNA được giải phóng và có cấu trúc một mạch,
+chiều <b>5' → 3'</b>.
+</p>
+
+</div>
+
+<h3>4. Kết quả của phiên mã</h3>
+
+<div class="box">
+
+<p>
+Quá trình phiên mã tạo ra các phân tử <b>RNA</b>.
+</p>
+
+<p>
+Sau khi được tạo thành, RNA có thể rời nhân ra tế bào chất
+để thực hiện các chức năng của mình.
+</p>
+
+</div>
+
+<h2>III. NGUYÊN TẮC BỔ SUNG TRONG PHIÊN MÃ</h2>
+
+<table>
+
+<tr>
+    <th>Nucleotide trên DNA</th>
+    <th>Nucleotide trên RNA</th>
+</tr>
+
+<tr>
+    <td>A</td>
+    <td>U</td>
+</tr>
+
+<tr>
+    <td>T</td>
+    <td>A</td>
+</tr>
+
+<tr>
+    <td>G</td>
+    <td>C</td>
+</tr>
+
+<tr>
+    <td>C</td>
+    <td>G</td>
+</tr>
+
+</table>
+
+<div class="note">
+
+<b>⭐ Ghi nhớ:</b>
+
+<div class="formula">
+A - U &nbsp;&nbsp;&nbsp; T - A &nbsp;&nbsp;&nbsp;
+G - C &nbsp;&nbsp;&nbsp; C - G
+</div>
+
+</div>
+
+<h2>IV. MỐI QUAN HỆ GIỮA GENE VÀ RNA</h2>
+
+<p>
+Thông tin di truyền trên trình tự nucleotide của gene được sử dụng
+làm khuôn để tổng hợp RNA theo <b>nguyên tắc bổ sung</b>.
+</p>
+
+<div class="formula">
+GENE (DNA)
+<br>
+↓
+<br>
+PHIÊN MÃ
+<br>
+↓
+<br>
+RNA
+</div>
+
+<p>
+Do đó, trình tự nucleotide trên mạch khuôn của gene
+quy định trình tự nucleotide trên phân tử RNA.
+</p>
+
+<h2>V. SO SÁNH TÁI BẢN DNA VÀ PHIÊN MÃ</h2>
+
+<table>
+
+<tr>
+    <th>Đặc điểm</th>
+    <th>Tái bản DNA</th>
+    <th>Phiên mã</th>
+</tr>
+
+<tr>
+    <td><b>Nguyên liệu</b></td>
+    <td>Nucleotide của DNA</td>
+    <td>Nucleotide của RNA</td>
+</tr>
+
+<tr>
+    <td><b>Khuôn</b></td>
+    <td>Cả hai mạch DNA</td>
+    <td>Một mạch của gene</td>
+</tr>
+
+<tr>
+    <td><b>Sản phẩm</b></td>
+    <td>2 phân tử DNA</td>
+    <td>Phân tử RNA</td>
+</tr>
+
+<tr>
+    <td><b>Nguyên tắc bổ sung</b></td>
+    <td>A - T; G - C</td>
+    <td>A - U; T - A; G - C; C - G</td>
+</tr>
+
+<tr>
+    <td><b>Ý nghĩa</b></td>
+    <td>
+        Đảm bảo truyền đạt thông tin di truyền qua các thế hệ.
+    </td>
+    <td>
+        Tạo RNA để truyền đạt và thực hiện thông tin di truyền.
+    </td>
+</tr>
+
+</table>
+
+<h2>VI. KIẾN THỨC CẦN NHỚ ⭐</h2>
+
+<div class="box">
+
+<p>
+<b>1.</b> Tái bản DNA diễn ra trước khi tế bào phân chia.
+</p>
+
+<p>
+<b>2.</b> Từ 1 DNA tạo ra <b>2 DNA mới</b>.
+</p>
+
+<p>
+<b>3.</b> Mỗi DNA mới gồm <b>1 mạch cũ + 1 mạch mới</b>.
+</p>
+
+<p>
+<b>4.</b> Trong tái bản DNA:
+<b>A liên kết T, G liên kết C.</b>
+</p>
+
+<p>
+<b>5.</b> Phiên mã là quá trình tổng hợp RNA dựa trên DNA.
+</p>
+
+<p>
+<b>6.</b> Trong phiên mã:
+<b>A - U, T - A, G - C, C - G.</b>
+</p>
+
+<p>
+<b>7.</b> RNA được tổng hợp theo chiều <b>5' → 3'</b>.
+</p>
+
+<p>
+<b>8.</b> RNA polymerase là enzyme tham gia tổng hợp RNA.
+</p>
+
+</div>
+
+<h2>📝 SƠ ĐỒ GHI NHỚ</h2>
+
+<div class="formula">
+
+<b>TÁI BẢN DNA</b>
+<br><br>
+DNA
+<br>
+↓
+<br>
+Tháo xoắn
+<br>
+↓
+<br>
+Tách 2 mạch
+<br>
+↓
+<br>
+Nucleotide liên kết bổ sung
+<br>
+↓
+<br>
+<b>2 DNA mới</b>
+
+<br><br><br>
+
+<b>PHIÊN MÃ</b>
+<br><br>
+DNA (gene)
+<br>
+↓
+<br>
+RNA polymerase
+<br>
+↓
+<br>
+Nucleotide liên kết bổ sung
+<br>
+↓
+<br>
+<b>RNA</b>
+
+</div>
+
+</div>
+
+<div class="footer">
+    🧬 KHTN 9 - Bài 39: Tái bản DNA và phiên mã tạo RNA
+</div>
+
+</body>
+</html>

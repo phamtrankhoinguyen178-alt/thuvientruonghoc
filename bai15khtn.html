@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 15 - Sự phản xạ ánh sáng</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🔦 Bài 15</h1>
+    <h2>Sự phản xạ ánh sáng</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Hiện tượng phản xạ ánh sáng</h2>
+
+<p>
+Khi chiếu một chùm sáng vào gương, chùm sáng bị hắt trở lại theo hướng khác. Hiện tượng đó gọi là phản xạ ánh sáng.
+</p>
+
+<p>
+Hiện tượng phản xạ ánh sáng cũng xảy ra trên các bề mặt nhẵn bóng khác.
+</p>
+
+<p><b>Ví dụ:</b> Phản xạ ánh sáng trên mặt nước phẳng lặng.</p>
+
+<img src="anhkhtn44.png" class="img" onclick="openImg(this)">
+
+<h3>Các thành phần trong hiện tượng phản xạ ánh sáng</h3>
+
+<ul>
+<li>G: Gương phẳng (mặt phản xạ).</li>
+<li>SI: Tia tới.</li>
+<li>IR: Tia phản xạ.</li>
+<li>I: Điểm tới.</li>
+<li>IN: Pháp tuyến tại điểm tới.</li>
+<li>Mặt phẳng tới: Mặt phẳng chứa tia tới và pháp tuyến.</li>
+<li>Góc tới: Góc tạo bởi tia tới và pháp tuyến.</li>
+<li>Góc phản xạ: Góc tạo bởi tia phản xạ và pháp tuyến.</li>
+</ul>
+
+<img src="anhkhtn45.png" class="img" onclick="openImg(this)">
+
+<h2>II. Định luật phản xạ ánh sáng</h2>
+
+<ul>
+<li>Tia phản xạ nằm trong mặt phẳng tới.</li>
+<li>Góc phản xạ bằng góc tới.</li>
+</ul>
+
+<img src="anhkhtn46.png" class="img" onclick="openImg(this)">
+
+<h2>III. Phản xạ và phản xạ khuếch tán</h2>
+
+<h3>1. Phản xạ</h3>
+
+<p>
+Khi mặt phản xạ nhẵn, các tia sáng tới song song sẽ phản xạ theo cùng một hướng. Hiện tượng này gọi là phản xạ gương.
+</p>
+
+<p>
+Khi xảy ra phản xạ gương, ta có thể nhìn thấy ảnh của vật.
+</p>
+
+<p><b>Ví dụ:</b> Phản xạ trên mặt nước phẳng lặng hoặc gương soi.</p>
+
+<img src="anhkhtn47.png" class="img" onclick="openImg(this)">
+
+<h3>2. Phản xạ khuếch tán</h3>
+
+<p>
+Khi mặt phản xạ không nhẵn, các tia sáng tới song song sẽ phản xạ theo nhiều hướng khác nhau. Hiện tượng này gọi là phản xạ khuếch tán.
+</p>
+
+<p>
+Khi xảy ra phản xạ khuếch tán, ta không nhìn thấy ảnh của vật.
+</p>
+
+<p><b>Ví dụ:</b> Phản xạ trên mặt nước gợn sóng hoặc tường nhám.</p>
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Ánh sáng gặp gương hoặc bề mặt nhẵn sẽ xảy ra hiện tượng phản xạ.</li>
+<li>Tia phản xạ nằm trong mặt phẳng tới.</li>
+<li>Góc phản xạ luôn bằng góc tới.</li>
+<li>Mặt nhẵn tạo phản xạ gương.</li>
+<li>Mặt gồ ghề tạo phản xạ khuếch tán.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

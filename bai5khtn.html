@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 5 - Đơn chất, hợp chất và phân tử</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:250px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="hoahoc.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🧫 Bài 5</h1>
+    <h2>Đơn chất, hợp chất và phân tử</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Đơn chất và hợp chất</h2>
+
+<h3>1. Đơn chất</h3>
+
+<p>
+Đơn chất là những chất được tạo nên từ một nguyên tố hóa học.
+</p>
+
+<p><b>Ví dụ:</b></p>
+<ul>
+<li>Đồng (Cu) được tạo từ nguyên tố đồng.</li>
+<li>Khí hydrogen được tạo từ nguyên tố hydrogen.</li>
+</ul>
+
+<p>
+Một số nguyên tố có thể tạo nhiều dạng đơn chất khác nhau.
+</p>
+
+<p><b>Ví dụ:</b></p>
+<ul>
+<li>Carbon: than chì, kim cương, than gỗ.</li>
+<li>Phosphorus: phosphorus đỏ, phosphorus trắng.</li>
+</ul>
+
+<p>
+Đơn chất được chia thành: kim loại, phi kim và khí hiếm.
+</p>
+
+<p>
+Ở điều kiện thường:
+</p>
+
+<ul>
+<li>Kim loại: rắn (trừ Hg là lỏng).</li>
+<li>Phi kim: rắn, lỏng hoặc khí.</li>
+<li>Khí hiếm: tồn tại ở dạng khí.</li>
+</ul>
+
+<img src="anhkhtn11.jpg" class="img" onclick="openImg(this)">
+
+<h3>2. Hợp chất</h3>
+
+<p>
+Hợp chất là chất được tạo nên từ hai hay nhiều nguyên tố hóa học.
+</p>
+
+<p><b>Ví dụ:</b></p>
+<ul>
+<li>Nước (H₂O): gồm H và O.</li>
+<li>Calcium carbonate (CaCO₃): gồm Ca, C, O.</li>
+</ul>
+
+<p>
+Hợp chất gồm:
+</p>
+
+<ul>
+<li>Hợp chất vô cơ: nước, muối ăn, CO₂…</li>
+<li>Hợp chất hữu cơ: glucose, protein, saccharose…</li>
+</ul>
+
+<h2>II. Phân tử</h2>
+
+<h3>1. Khái niệm</h3>
+
+<p>
+Phân tử là hạt đại diện cho chất, gồm một hoặc nhiều nguyên tử liên kết với nhau.
+</p>
+
+<p>
+Phân tử đơn chất được tạo từ cùng một nguyên tố.
+</p>
+
+<p><b>Ví dụ:</b></p>
+<ul>
+<li>N₂: 2 nguyên tử nitrogen.</li>
+<li>O₂: 2 nguyên tử oxygen.</li>
+</ul>
+
+<p>
+Phân tử hợp chất được tạo từ nhiều nguyên tố khác nhau.
+</p>
+
+<p><b>Ví dụ:</b></p>
+<ul>
+<li>CH₄: 1 C và 4 H.</li>
+<li>H₂O: 2 H và 1 O.</li>
+</ul>
+
+<img src="anhkhtn12.jpg" class="img" onclick="openImg(this)">
+
+<h3>2. Khối lượng phân tử</h3>
+
+<p>
+Khối lượng phân tử bằng tổng khối lượng các nguyên tử trong phân tử.
+</p>
+
+<p>
+Đơn vị: amu.
+</p>
+
+<p><b>Ví dụ:</b> H₂O = 2×1 + 16 = 18 amu.</p>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display = "flex";
+    document.getElementById("bigImg").src = img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display = "none";
+}
+</script>
+
+</body>
+</html>

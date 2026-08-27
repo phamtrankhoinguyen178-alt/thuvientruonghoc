@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 12: Bội chung - Bội chung nhỏ nhất</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table,th,td{
+border:1px solid #999;
+}
+
+th,td{
+padding:12px;
+text-align:center;
+font-size:22px;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li,
+th,
+td{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan6.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 12: Bội chung - Bội chung nhỏ nhất</h2>
+
+<h3>📖 1. Bội chung và bội chung nhỏ nhất</h3>
+
+<p>
+Bội chung của hai hay nhiều số là bội của tất cả các số đã cho.
+</p>
+
+<p>
+Bội chung nhỏ nhất của hai hay nhiều số là số nhỏ nhất khác 0 trong tập hợp các bội chung của các số đó.
+</p>
+
+<p>
+Kí hiệu:
+</p>
+
+<ul>
+<li>BC(a, b): Tập hợp các bội chung của a và b.</li>
+<li>BCNN(a, b): Bội chung nhỏ nhất của a và b.</li>
+</ul>
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Tìm BC và BCNN của 30 và 45.
+</p>
+
+<p>
+B(30) = {0; 30; 60; 90; 120; 150; 180; 210; 240; 270; ...}
+</p>
+
+<p>
+B(45) = {0; 45; 90; 135; 180; 225; 270; ...}
+</p>
+
+<p>
+BC(30;45) = {0; 90; 180; 270; ...}
+</p>
+
+<p>
+BCNN(30;45) = 90
+</p>
+
+<h3>📌 Nhận xét</h3>
+
+<ul>
+
+<li>
+Nếu số lớn nhất là bội của các số còn lại thì BCNN chính là số lớn nhất đó.
+</li>
+
+<li>
+Nếu a là bội của b thì:
+</li>
+
+</ul>
+
+<p>
+BCNN(a,b) = a
+</p>
+
+<ul>
+
+<li>
+Mọi số tự nhiên đều là bội của 1.
+</li>
+
+</ul>
+
+<p>
+BCNN(a,1) = a
+</p>
+
+<p>
+BCNN(a,b,1) = BCNN(a,b)
+</p>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+a) Tìm BCNN(12;36)
+</p>
+
+<p>
+Vì 36 là bội của 12 nên:
+</p>
+
+<p>
+BCNN(12;36) = 36
+</p>
+
+<p>
+b) Tìm BCNN(124;1)
+</p>
+
+<p>
+BCNN(124;1) = 124
+</p>
+
+<h3>📖 2. Cách tìm BCNN</h3>
+
+<p>
+Để tìm BCNN của hai hay nhiều số lớn hơn 1 ta thực hiện:
+</p>
+
+<ul>
+
+<li>
+Bước 1: Phân tích các số ra thừa số nguyên tố.
+</li>
+
+<li>
+Bước 2: Chọn các thừa số nguyên tố chung và riêng.
+</li>
+
+<li>
+Bước 3: Lập tích các thừa số đã chọn với số mũ lớn nhất.
+</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 3</h3>
+
+<p>
+Tìm BCNN(21;14)
+</p>
+
+<p>
+21 = 3 × 7
+</p>
+
+<p>
+14 = 2 × 7
+</p>
+
+<p>
+Chọn các thừa số nguyên tố:
+</p>
+
+<p>
+2; 3; 7
+</p>
+
+<p>
+Vậy:
+</p>
+
+<p>
+BCNN(21;14) = 2 × 3 × 7 = 42
+</p>
+
+<h3>📖 3. Tìm bội chung từ BCNN</h3>
+
+<p>
+Muốn tìm bội chung của các số đã cho:
+</p>
+
+<ul>
+
+<li>
+Bước 1: Tìm BCNN của các số đó.
+</li>
+
+<li>
+Bước 2: Tìm các bội của BCNN.
+</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 4</h3>
+
+<p>
+Tìm BC(12;24;30)
+</p>
+
+<p>
+12 = 2² × 3
+</p>
+
+<p>
+24 = 2³ × 3
+</p>
+
+<p>
+30 = 2 × 3 × 5
+</p>
+
+<p>
+BCNN(12;24;30)
+</p>
+
+<p>
+= 2³ × 3 × 5
+</p>
+
+<p>
+= 120
+</p>
+
+<p>
+Vậy:
+</p>
+
+<p>
+BC(12;24;30)
+</p>
+
+<p>
+= B(120)
+</p>
+
+<p>
+= {0; 120; 240; 360; 480; ...}
+</p>
+
+<h3>📊 Bảng tóm tắt cách tìm BCNN</h3>
+
+<table>
+
+<tr>
+<th>Bước</th>
+<th>Thực hiện</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Phân tích các số ra thừa số nguyên tố</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Chọn các thừa số nguyên tố chung và riêng</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Lấy số mũ lớn nhất của mỗi thừa số</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Nhân các thừa số đã chọn để được BCNN</td>
+</tr>
+
+</table>
+
+<h3>📖 4. Quy đồng mẫu số các phân số</h3>
+
+<p>
+Để quy đồng mẫu số hai phân số, ta cần tìm mẫu số chung.
+</p>
+
+<p>
+Thông thường ta chọn:
+</p>
+
+<p>
+Mẫu số chung = BCNN của hai mẫu số.
+</p>
+
+<h3>🔍 Ví dụ 5</h3>
+
+<p>
+Quy đồng hai phân số:
+</p>
+
+<p>
+1/6 và 5/8
+</p>
+
+<p>
+BCNN(6;8) = 24
+</p>
+
+<p>
+Ta có:
+</p>
+
+<p>
+1/6 = 4/24
+</p>
+
+<p>
+5/8 = 15/24
+</p>
+
+<p>
+Vậy hai phân số sau khi quy đồng là:
+</p>
+
+<p>
+4/24 và 15/24
+</p>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Bội chung là bội của tất cả các số đã cho.
+</li>
+
+<li>
+BCNN là số nhỏ nhất khác 0 trong tập hợp các bội chung.
+</li>
+
+<li>
+Muốn tìm BCNN, phân tích các số ra thừa số nguyên tố rồi lấy các thừa số chung và riêng với số mũ lớn nhất.
+</li>
+
+<li>
+Các bội của BCNN chính là các bội chung của các số đã cho.
+</li>
+
+<li>
+Khi quy đồng mẫu số các phân số, thường chọn mẫu chung là BCNN của các mẫu số.
+</li>
+
+</ul>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

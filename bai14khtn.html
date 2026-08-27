@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 14 - Năng lượng ánh sáng. Tia sáng, vùng tối</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>💡 Bài 14</h1>
+    <h2>Năng lượng ánh sáng. Tia sáng, vùng tối</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Ánh sáng là một dạng của năng lượng</h2>
+
+<p>
+Ánh sáng không thể thiếu trong cuộc sống của con người và các sinh vật trên Trái Đất.
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<ul>
+<li>Ánh sáng giúp con người nhìn thấy môi trường xung quanh.</li>
+<li>Cây cối cần ánh sáng để quang hợp.</li>
+</ul>
+
+<p>
+Ánh sáng là một dạng năng lượng và có thể chuyển hóa thành các dạng năng lượng khác như nhiệt năng, điện năng,...
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<li>Bếp năng lượng Mặt Trời.</li>
+<li>Pin năng lượng Mặt Trời.</li>
+<li>Bình nước nóng năng lượng Mặt Trời.</li>
+
+<h2>II. Chùm sáng và tia sáng</h2>
+
+<h3>1. Chùm sáng</h3>
+
+<p>
+Ánh sáng phát ra từ nguồn sáng và truyền trong không gian thành các chùm sáng.
+</p>
+
+<p>
+Có ba loại chùm sáng thường gặp:
+</p>
+
+<ul>
+<li>Chùm sáng song song.</li>
+
+<img src="anhkhtn39.png" class="img" onclick="openImg(this)">
+
+<li>Chùm sáng hội tụ.</li>
+
+<img src="anhkhtn40.png" class="img" onclick="openImg(this)">
+
+<li>Chùm sáng phân kì.</li>
+
+<img src="anhkhtn41.png" class="img" onclick="openImg(this)">
+
+</ul>
+
+<h3>2. Tia sáng</h3>
+
+<p>
+Tia sáng là đường biểu diễn đường truyền của ánh sáng bằng một đoạn thẳng có mũi tên chỉ hướng truyền.
+</p>
+
+<p><b>Ví dụ:</b> Đoạn thẳng SM có mũi tên biểu diễn một tia sáng.</p>
+
+<img src="anhkhtn42.png" class="img" onclick="openImg(this)">
+
+<h3>3. Chùm sáng hẹp song song</h3>
+
+<p>
+Trong thực tế, một chùm sáng song song rất hẹp được coi là mô hình của một tia sáng.
+</p>
+
+<h2>III. Vùng tối</h2>
+
+<h3>1. Vùng tối do nguồn sáng hẹp</h3>
+
+<p>
+Phía sau vật cản sẽ có vùng hoàn toàn không nhận được ánh sáng từ nguồn sáng truyền tới, gọi là vùng tối.
+</p>
+
+<p>
+Vùng tối do nguồn sáng hẹp có ranh giới rõ ràng với vùng sáng.
+</p>
+
+<img src="anhkhtn43.png" class="img" onclick="openImg(this)">
+
+<h3>2. Vùng tối do nguồn sáng rộng</h3>
+
+<p>
+Phía sau vật cản có:
+</p>
+
+<ul>
+<li>Vùng tối hoàn toàn.</li>
+<li>Vùng nửa tối (vùng tối không hoàn toàn), chỉ nhận được một phần ánh sáng.</li>
+</ul>
+
+<p>
+Ranh giới giữa vùng sáng và vùng tối không rõ rệt.
+</p>
+
+<img src="anhkhtn38.png" class="img" onclick="openImg(this)">
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Ánh sáng là một dạng năng lượng.</li>
+<li>Có ba loại chùm sáng: song song, hội tụ và phân kì.</li>
+<li>Tia sáng biểu diễn đường truyền của ánh sáng.</li>
+<li>Nguồn sáng hẹp tạo vùng tối rõ ràng.</li>
+<li>Nguồn sáng rộng tạo vùng tối và vùng nửa tối.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

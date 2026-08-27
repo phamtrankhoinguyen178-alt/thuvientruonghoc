@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 19: Biểu đồ đoạn thẳng</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+.img{
+display:block;
+max-width:500px;
+width:100%;
+margin:25px auto;
+border-radius:12px;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+#imgBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+#imgBox span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p{
+font-size:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 19: Biểu đồ đoạn thẳng</h2>
+
+<h3>📖 1. Giới thiệu biểu đồ đoạn thẳng</h3>
+
+<p>• Biểu đồ đoạn thẳng thường được dùng để biểu diễn sự thay đổi của một đại lượng theo thời gian.</p>
+
+<p>• Các thành phần của biểu đồ đoạn thẳng bao gồm:</p>
+
+<p>+ Tiêu đề của biểu đồ thường ở dòng trên cùng.</p>
+
+<p>+ Trục ngang biểu diễn thời gian.</p>
+
+<p>+ Trục đứng biểu diễn đại lượng ta đang quan tâm.</p>
+
+<p>+ Mỗi điểm biểu diễn giá trị của đại lượng tại một thời điểm. Hai điểm liên tiếp được nối với nhau bằng một đoạn thẳng.</p>
+
+<img src="hinhanh11.jpg" class="img" onclick="openImg(this)">
+
+<h3>🧠 Chú ý</h3>
+
+<p>+ Có thể dùng biểu tượng khác như dấu chấm tròn, dấu nhân,... để biểu diễn các điểm.</p>
+
+<img src="hinhanh13.jpg" class="img" onclick="openImg(this)">
+
+<h3>📊 2. Đọc và phân tích dữ liệu trong biểu đồ đoạn thẳng</h3>
+
+<p>• Biểu đồ đoạn thẳng giúp ta dễ dàng nhận ra xu thế của đại lượng ta đang quan tâm theo thời gian.</p>
+
+<p>• Độ dốc của biểu đồ đoạn thẳng cho biết tốc độ tăng của đại lượng được biểu diễn trong biểu đồ.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Đôi khi người ta biểu diễn nhiều bộ số liệu trên cùng một biểu đồ để so sánh (mỗi đường có chú giải ứng với một bộ số liệu).</p>
+
+<img src="hinhanh13.jpg" class="img" onclick="openImg(this)">
+
+<h3>✏️ 3. Vẽ biểu đồ đoạn thẳng</h3>
+
+<p>• Chẳng hạn, vẽ biểu đồ biểu diễn chiều cao của cây đậu theo bảng thống kê dưới đây, ta làm như sau:</p>
+
+<img src="hinhanh12.jpg" class="img" onclick="openImg(this)">
+
+<p>+ Bước 1: Vẽ trục ngang biểu diễn ngày, trục đứng biểu diễn chiều cao cây đậu. Do chiều cao lớn nhất là 2,5 cm và thấp nhất là 0,5 cm nên ở trục đứng ta chọn đơn vị là 0,5 và giá trị lớn nhất là 3.</p>
+
+<img src="hinhanh14.jpg" class="img" onclick="openImg(this)">
+
+<p>+ Bước 2: Với mỗi ngày trên trục ngang, chiều cao của cây đậu tại ngày đó được biểu diễn bởi một điểm.</p>
+
+<img src="hinhanh15.jpg" class="img" onclick="openImg(this)">
+
+<p>+ Bước 3: Nối các điểm liên tiếp với nhau bằng các đoạn thẳng.</p>
+
+<img src="hinhanh16.jpg" class="img" onclick="openImg(this)">
+
+<p>+ Bước 4: Ghi chú thích cho các trục, điền giá trị tại các điểm (nếu cần) và đặt tên cho biểu đồ để hoàn thiện biểu đồ.</p>
+
+<img src="hinhanh17.jpg" class="img" onclick="openImg(this)">
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Độ dốc của biểu đồ phụ thuộc vào việc chọn đơn vị của trục đứng. Khi số liệu lớn trong khi đơn vị độ dài của trục đứng nhỏ thì ta không nên vẽ trục đứng bắt đầu từ 0.</p>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+document.getElementById("imgBox").style.display="flex";
+document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

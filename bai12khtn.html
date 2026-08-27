@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 12 - Độ to và độ cao của âm</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🎵 Bài 12</h1>
+    <h2>Độ to và độ cao của âm</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Độ to và biên độ của sóng âm</h2>
+
+<h3>1. Biên độ dao động của nguồn âm, sóng âm</h3>
+
+<p>
+Biên độ dao động là khoảng cách từ vị trí cân bằng đến vị trí xa nhất của dao động.
+</p>
+
+<img src="anhkhtn28.jpg" class="img" onclick="openImg(this)">
+
+<h3>2. Độ to của âm</h3>
+
+<p>
+Độ to của âm phụ thuộc vào biên độ dao động.
+</p>
+
+<ul>
+<li>Sóng âm có biên độ dao động càng lớn thì âm nghe càng to.</li>
+<li>Sóng âm có biên độ dao động càng nhỏ thì âm nghe càng nhỏ.</li>
+</ul>
+
+<h2>II. Độ cao và tần số của sóng âm</h2>
+
+<h3>1. Tần số</h3>
+
+<p>
+Tần số là số dao động mà vật thực hiện trong một giây.
+</p>
+
+<p>
+Đơn vị của tần số là héc (Hz).
+</p>
+
+<p>
+Ví dụ: Trong 1 giây, vật thực hiện được 20 dao động thì tần số là 20 Hz.
+</p>
+
+<p>
+Tai người nghe được âm có tần số từ <b>20 Hz đến 20 000 Hz</b>.
+</p>
+
+<h3>2. Độ cao của âm</h3>
+
+<p>
+Độ cao của âm phụ thuộc vào tần số.
+</p>
+
+<ul>
+<li>Tần số càng lớn thì âm càng cao (âm bổng).</li>
+<li>Tần số càng nhỏ thì âm càng thấp (âm trầm).</li>
+</ul>
+
+<img src="anhkhtn29.jpg" class="img" onclick="openImg(this)">
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Biên độ dao động quyết định độ to của âm.</li>
+<li>Biên độ càng lớn thì âm càng to.</li>
+<li>Tần số là số dao động trong một giây.</li>
+<li>Đơn vị của tần số là Hz.</li>
+<li>Tần số càng lớn thì âm càng cao, tần số càng nhỏ thì âm càng thấp.</li>
+<li>Tai người nghe được âm có tần số từ 20 Hz đến 20 000 Hz.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

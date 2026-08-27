@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 10: Tứ giác</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan8.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 10: Tứ giác</h2>
+
+<h3>📖 1. Tứ giác lồi</h3>
+
+<p>
+Tứ giác ABCD là hình gồm bốn đoạn thẳng AB, BC, CD, DA trong đó không có hai đoạn thẳng nào nằm trên cùng một đường thẳng.
+</p>
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Các hình có bốn cạnh ghép kín tạo thành một hình được gọi là tứ giác.
+</p>
+
+<p>
+Các điểm A, B, C, D được gọi là các đỉnh của tứ giác.
+</p>
+
+<p>
+Các đoạn thẳng AB, BC, CD, DA được gọi là các cạnh của tứ giác.
+</p>
+
+<h3>📌 Tứ giác lồi</h3>
+
+<p>
+Tứ giác lồi là tứ giác mà hai đỉnh thuộc một cạnh bất kì luôn nằm cùng một phía đối với đường thẳng chứa hai đỉnh còn lại.
+</p>
+
+<p>
+Trong chương trình Toán 8, khi nói đến tứ giác thì ta hiểu đó là tứ giác lồi.
+</p>
+
+<h3>📌 Các yếu tố của tứ giác</h3>
+
+<p>
+Trong tứ giác MNPQ:
+</p>
+
+<ul>
+
+<li>
+M, N, P, Q là các đỉnh.
+</li>
+
+<li>
+MN, NP, PQ, QM là các cạnh.
+</li>
+
+<li>
+MP và NQ là hai đường chéo.
+</li>
+
+<li>
+MN và PQ là một cặp cạnh đối.
+</li>
+
+<li>
+MQ và NP là một cặp cạnh đối.
+</li>
+
+<li>
+Góc M và góc P là hai góc đối.
+</li>
+
+<li>
+Góc N và góc Q là hai góc đối.
+</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+Cho bốn điểm M, N, P, Q.
+</p>
+
+<p>
+Một tứ giác có thể được gọi là:
+</p>
+
+<p>
+MNPQ, NPQM, PQMN, QMNP,...
+</p>
+
+<p>
+Miễn là các đỉnh được gọi theo thứ tự liên tiếp quanh tứ giác.
+</p>
+
+<h3>📖 2. Tổng các góc của một tứ giác</h3>
+
+<h3>📌 Định lí</h3>
+
+<p>
+Tổng số đo các góc trong một tứ giác bằng 360°.
+</p>
+
+<p>
+∠A + ∠B + ∠C + ∠D = 360°
+</p>
+
+<h3>🔍 Ví dụ 3</h3>
+
+<p>
+Cho tứ giác MNPQ có:
+</p>
+
+<p>
+∠N = 90°
+</p>
+
+<p>
+∠P = 60°
+</p>
+
+<p>
+∠Q = 120°
+</p>
+
+<p>
+Tính ∠M.
+</p>
+
+<p>
+Ta có:
+</p>
+
+<p>
+∠M + ∠N + ∠P + ∠Q = 360°
+</p>
+
+<p>
+∠M + 90° + 60° + 120° = 360°
+</p>
+
+<p>
+∠M + 270° = 360°
+</p>
+
+<p>
+∠M = 90°
+</p>
+
+<h3>📌 Nhận xét</h3>
+
+<ul>
+
+<li>
+Mọi tứ giác đều có hai đường chéo.
+</li>
+
+<li>
+Tổng bốn góc trong luôn bằng 360°.
+</li>
+
+<li>
+Đường chéo chia tứ giác thành hai tam giác.
+</li>
+
+<li>
+Định lí tổng các góc thường được dùng để tính góc còn thiếu của tứ giác.
+</li>
+
+</ul>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Tứ giác là hình có bốn cạnh và bốn đỉnh.
+</li>
+
+<li>
+Tứ giác lồi là tứ giác có các đỉnh nằm cùng phía đối với cạnh đối diện.
+</li>
+
+<li>
+Tứ giác có hai đường chéo nối các đỉnh đối nhau.
+</li>
+
+<li>
+Tổng số đo các góc trong một tứ giác bằng 360°.
+</li>
+
+<li>
+Khi giải toán về tứ giác cần nhớ công thức:
+A + B + C + D = 360°.
+</li>
+
+</ul>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

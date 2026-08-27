@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 17 - Nam châm</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🧲 Bài 17</h1>
+    <h2>Nam châm</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Nam châm là gì?</h2>
+
+<p>
+Nam châm là vật có khả năng hút các vật bằng sắt và một số vật khác. Khi được đặt tự do, nam châm luôn định hướng theo hướng Bắc – Nam.
+</p>
+
+<p>
+Nam châm có hai cực:
+</p>
+
+<ul>
+<li>Cực Bắc (N - North).</li>
+<li>Cực Nam (S - South).</li>
+</ul>
+
+<p>
+Để phân biệt hai cực, người ta thường sơn cực Bắc màu đỏ và cực Nam màu xanh.
+</p>
+
+<p><b>Một số loại nam châm:</b></p>
+
+<ul>
+<li>Nam châm thẳng.</li>
+<li>Nam châm chữ U (móng ngựa).</li>
+<li>Nam châm viên.</li>
+</ul>
+
+<h2>II. Tính chất từ của nam châm</h2>
+
+<p>
+Nam châm có từ tính, có khả năng hút các vật bằng sắt và một số hợp kim của sắt.
+</p>
+
+<p><b>Một số vật liệu có từ tính:</b></p>
+
+<ul>
+<li>Sắt.</li>
+<li>Thép.</li>
+<li>Niken.</li>
+<li>Coban.</li>
+</ul>
+
+<p><b>Một số vật liệu không có từ tính:</b></p>
+
+<ul>
+<li>Nhôm.</li>
+<li>Đồng.</li>
+<li>Gỗ.</li>
+<li>Nhựa.</li>
+</ul>
+
+<p>
+Nam châm hút mạnh nhất ở hai đầu cực.
+</p>
+
+<p>
+Kim nam châm đặt cân bằng trên mũi nhọn luôn chỉ theo hướng Bắc – Nam.
+</p>
+
+<h2>III. Tương tác giữa hai nam châm</h2>
+
+<p>
+Khi đưa hai thanh nam châm lại gần nhau:
+</p>
+
+<ul>
+<li>Hai cực khác tên hút nhau.</li>
+
+<img src="anhkhtn52.png" class="img" onclick="openImg(this)">
+
+<li>Hai cực cùng tên đẩy nhau.</li>
+
+<img src="anhkhtn53.png" class="img" onclick="openImg(this)">
+
+</ul>
+
+<h2>IV. Định hướng của kim nam châm tự do</h2>
+
+<p>
+Kim nam châm (nam châm thử) đặt gần nam châm sẽ chịu tác dụng của từ trường và quay theo một hướng xác định.
+</p>
+
+<p>
+Nếu để tự do, kim nam châm luôn định hướng theo hướng Bắc – Nam.
+</p>
+
+<img src="anhkhtn51.png" class="img" onclick="openImg(this)">
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Nam châm có hai cực: Bắc (N) và Nam (S).</li>
+<li>Nam châm hút mạnh nhất ở hai đầu cực.</li>
+<li>Hai cực cùng tên đẩy nhau, hai cực khác tên hút nhau.</li>
+<li>Kim nam châm tự do luôn chỉ theo hướng Bắc – Nam.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

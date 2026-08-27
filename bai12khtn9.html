@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 12 - Đoạn mạch nối tiếp, song song</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.formula{
+    background:#e3f2fd;
+    border-left:5px solid #2196f3;
+    padding:15px;
+    border-radius:8px;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+.note{
+    background:#fff3cd;
+    border-left:5px solid #ffc107;
+    padding:15px;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="khtn9.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>📖 Bài 12</h1>
+    <h2>Đoạn mạch nối tiếp, song song</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Đoạn mạch nối tiếp</h2>
+
+<p>
+Đoạn mạch nối tiếp là đoạn mạch trong đó các điện trở được mắc liên tiếp nhau.
+</p>
+
+<h3>1. Điện trở tương đương</h3>
+
+<p>
+Điện trở tương đương là điện trở có thể thay thế các điện trở trong mạch mà vẫn giữ nguyên cường độ dòng điện khi đặt cùng hiệu điện thế.
+</p>
+
+<div class="formula">
+Rtđ = R1 + R2
+</div>
+
+<p>Đối với n điện trở mắc nối tiếp:</p>
+
+<div class="formula">
+Rtđ = R1 + R2 + ... + Rn
+</div>
+
+<h3>2. Cường độ dòng điện</h3>
+
+<div class="formula">
+I = I1 = I2
+</div>
+
+<p>Đối với n điện trở:</p>
+
+<div class="formula">
+I = I1 = I2 = ... = In
+</div>
+
+<p>
+Cường độ dòng điện tại mọi vị trí trong mạch nối tiếp là như nhau.
+</p>
+
+<h3>3. Hiệu điện thế</h3>
+
+<div class="formula">
+U = U1 + U2
+</div>
+
+<p>Đối với n điện trở:</p>
+
+<div class="formula">
+U = U1 + U2 + ... + Un
+</div>
+
+<p>
+Hiệu điện thế của toàn mạch bằng tổng hiệu điện thế trên các điện trở.
+</p>
+
+<h2>II. Đoạn mạch song song</h2>
+
+<p>
+Đoạn mạch song song là đoạn mạch trong đó các điện trở được mắc vào cùng hai điểm của mạch điện.
+</p>
+
+<h3>1. Điện trở tương đương</h3>
+
+<p>Đối với hai điện trở mắc song song:</p>
+
+<div class="formula">
+1/Rtđ = 1/R1 + 1/R2
+</div>
+
+<p>Đối với n điện trở mắc song song:</p>
+
+<div class="formula">
+1/Rtđ = 1/R1 + 1/R2 + ... + 1/Rn
+</div>
+
+<h3>2. Cường độ dòng điện</h3>
+
+<div class="formula">
+I = I1 + I2
+</div>
+
+<p>Đối với n nhánh:</p>
+
+<div class="formula">
+I = I1 + I2 + ... + In
+</div>
+
+<p>
+Cường độ dòng điện của mạch chính bằng tổng cường độ dòng điện qua các nhánh.
+</p>
+
+<h3>3. Hiệu điện thế</h3>
+
+<div class="formula">
+U = U1 = U2
+</div>
+
+<p>Đối với n nhánh:</p>
+
+<div class="formula">
+U = U1 = U2 = ... = Un
+</div>
+
+<p>
+Hiệu điện thế giữa hai đầu các nhánh song song luôn bằng nhau.
+</p>
+
+<h2>III. So sánh mạch nối tiếp và mạch song song</h2>
+
+<table border="1" cellpadding="10" cellspacing="0" width="100%">
+<tr>
+<th>Đặc điểm</th>
+<th>Mạch nối tiếp</th>
+<th>Mạch song song</th>
+</tr>
+
+<tr>
+<td>Cường độ dòng điện</td>
+<td>I = I1 = I2</td>
+<td>I = I1 + I2</td>
+</tr>
+
+<tr>
+<td>Hiệu điện thế</td>
+<td>U = U1 + U2</td>
+<td>U = U1 = U2</td>
+</tr>
+
+<tr>
+<td>Điện trở tương đương</td>
+<td>Rtđ = R1 + R2</td>
+<td>1/Rtđ = 1/R1 + 1/R2</td>
+</tr>
+</table>
+
+<div class="note">
+Mạch nối tiếp có điện trở tương đương lớn hơn từng điện trở thành phần, còn mạch song song có điện trở tương đương nhỏ hơn điện trở nhỏ nhất trong mạch.
+</div>
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+    <li>Mạch nối tiếp: dòng điện như nhau, hiệu điện thế cộng lại.</li>
+    <li>Mạch song song: hiệu điện thế bằng nhau, dòng điện cộng lại.</li>
+    <li>Rtđ = R1 + R2 + ... + Rn đối với mạch nối tiếp.</li>
+    <li>1/Rtđ = 1/R1 + 1/R2 + ... + 1/Rn đối với mạch song song.</li>
+</ul>
+
+</div>
+
+</body>
+</html>

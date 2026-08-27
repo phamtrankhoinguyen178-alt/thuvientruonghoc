@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 14 - Thuật toán tìm kiếm tuần tự</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#2c3e50;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul{
+    padding-left:25px;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<a href="tinhoc7.html" class="back">⬅ Quay lại</a>
+
+
+<div class="header">
+<h1>💻 Bài 14</h1>
+<h2>Thuật toán tìm kiếm tuần tự</h2>
+</div>
+
+
+<div class="content">
+
+
+<h2>I. Thuật toán tìm kiếm tuần tự</h2>
+
+
+<p>
+Thuật toán tìm kiếm tuần tự là thuật toán tìm kiếm bằng cách kiểm tra lần lượt từng phần tử trong danh sách từ đầu đến cuối.
+</p>
+
+<p>
+Quá trình tìm kiếm được thực hiện cho đến khi:
+</p>
+
+
+<ul>
+<li>
+Tìm thấy phần tử cần tìm.
+</li>
+
+<li>
+Hoặc đã kiểm tra hết danh sách mà chưa tìm thấy.
+</li>
+</ul>
+
+
+
+<p>
+Cách tìm kiếm này được gọi là <b>tìm kiếm tuần tự</b>.
+</p>
+
+
+
+
+<h2>II. Ví dụ về tìm kiếm tuần tự</h2>
+
+
+<p>
+Giả sử cần tìm thông tin của một khách hàng trong danh sách khách hàng.
+</p>
+
+
+<h3>Công việc cần làm được mô tả như sau:</h3>
+
+
+<ul>
+
+<li>
+<b>Đầu vào:</b>
+Danh sách khách hàng và họ tên khách hàng cần tìm.
+</li>
+
+
+<li>
+<b>Đầu ra:</b>
+Địa chỉ của khách hàng cần tìm.
+</li>
+
+</ul>
+
+
+
+<p>
+Thuật toán thực hiện tìm kiếm lần lượt từ đầu đến cuối danh sách khách hàng.
+</p>
+
+
+
+<h2>III. Điều kiện dừng vòng lặp</h2>
+
+
+<p>
+Trong quá trình tìm kiếm tuần tự cần kiểm tra hai điều kiện để dừng vòng lặp:
+</p>
+
+
+<ul>
+
+<li>
+<b>Điều kiện thứ nhất:</b>
+Kiểm tra họ và tên khách hàng đang xét có đúng với họ tên khách hàng cần tìm hay không.
+</li>
+
+
+<li>
+<b>Điều kiện thứ hai:</b>
+Kiểm tra đã hết danh sách khách hàng hay chưa.
+</li>
+
+</ul>
+
+
+
+
+
+<h2>IV. Mô tả thuật toán tìm kiếm tuần tự bằng ngôn ngữ tự nhiên</h2>
+
+
+<h3>Các bước thực hiện:</h3>
+
+
+<p>
+<b>Bước 1:</b>
+Xét phần tử đầu tiên của danh sách.
+</p>
+
+
+
+<p>
+<b>Bước 2:</b>
+Nếu giá trị của phần tử đang xét bằng giá trị cần tìm thì chuyển sang Bước 4.
+</p>
+
+<p>
+Nếu không đúng thì thực hiện Bước 3.
+</p>
+
+
+
+
+<p>
+<b>Bước 3:</b>
+Kiểm tra đã hết danh sách chưa.
+</p>
+
+<ul>
+
+<li>
+Nếu đã hết danh sách thì chuyển sang Bước 5.
+</li>
+
+<li>
+Nếu chưa hết danh sách thì quay lại thực hiện từ Bước 2.
+</li>
+
+</ul>
+
+
+
+
+
+<p>
+<b>Bước 4:</b>
+Trả lời <b>"Tìm thấy"</b> và chỉ ra vị trí của phần tử tìm được, sau đó kết thúc thuật toán.
+</p>
+
+
+
+
+<p>
+<b>Bước 5:</b>
+Trả lời <b>"Không tìm thấy"</b> và kết thúc thuật toán.
+</p>
+
+
+
+
+
+<h2>V. Ví dụ minh họa</h2>
+
+
+<p>
+Cho danh sách số:
+</p>
+
+
+<p>
+<b>5, 8, 12, 20, 25</b>
+</p>
+
+
+<p>
+Cần tìm số <b>12</b>.
+</p>
+
+
+<ul>
+
+<li>
+Kiểm tra số 5 → chưa tìm thấy.
+</li>
+
+<li>
+Kiểm tra số 8 → chưa tìm thấy.
+</li>
+
+<li>
+Kiểm tra số 12 → tìm thấy.
+</li>
+
+<li>
+Kết thúc thuật toán.
+</li>
+
+</ul>
+
+
+
+
+<h2>📌 Ghi nhớ</h2>
+
+
+<ul>
+
+<li>
+Thuật toán tìm kiếm tuần tự tìm lần lượt các phần tử trong danh sách từ đầu đến cuối.
+</li>
+
+<li>
+Quá trình tìm kiếm dừng khi tìm thấy phần tử cần tìm hoặc đã kiểm tra hết danh sách.
+</li>
+
+<li>
+Thuật toán tìm kiếm tuần tự đơn giản, dễ hiểu và có thể áp dụng cho nhiều loại dữ liệu.
+</li>
+
+<li>
+Cần xác định rõ dữ liệu đầu vào và kết quả đầu ra của thuật toán.
+</li>
+
+</ul>
+
+
+</div>
+
+
+</body>
+</html>

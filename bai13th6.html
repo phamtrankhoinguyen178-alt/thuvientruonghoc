@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 13 - Thực hành tìm kiếm và thay thế</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#1565c0;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul,ol{
+    padding-left:25px;
+}
+
+.note{
+    background:#e3f2fd;
+    padding:15px;
+    border-left:5px solid #2196f3;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+.example{
+    background:#f3e5f5;
+    padding:15px;
+    border-left:5px solid #9c27b0;
+    border-radius:8px;
+    margin:15px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="tinhoc6.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+<h1>💻 Bài 13</h1>
+<h2>Thực hành tìm kiếm và thay thế</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Tại sao phải tìm kiếm và thay thế văn bản?</h2>
+
+<p>
+Trong các văn bản dài, việc tìm kiếm hoặc sửa từng từ bằng cách đọc thủ công sẽ mất nhiều thời gian.
+</p>
+
+<p>
+Công cụ <b>Tìm kiếm (Find)</b> và <b>Thay thế (Replace)</b> giúp tìm nhanh một từ hoặc cụm từ và thay thế chúng một cách chính xác.
+</p>
+
+<div class="note">
+<b>Ghi nhớ:</b> Công cụ Find và Replace giúp chỉnh sửa văn bản nhanh chóng, tiết kiệm thời gian và hạn chế sai sót.
+</div>
+
+<h3>Ví dụ</h3>
+
+<p>
+Trong một bài văn có nhiều lần xuất hiện từ <b>"Tin học"</b>, em muốn đổi thành <b>"Môn Tin học"</b>. Thay vì sửa từng chỗ, em có thể dùng lệnh Replace để thay thế toàn bộ.
+</p>
+
+<h2>II. Sử dụng công cụ tìm kiếm (Find)</h2>
+
+<p>
+Lệnh Find giúp tìm vị trí xuất hiện của từ hoặc cụm từ trong văn bản.
+</p>
+
+<h3>Các bước thực hiện</h3>
+
+<ol>
+<li>Mở thẻ <b>Home</b>.</li>
+
+<li>Trong nhóm lệnh <b>Editing</b>, chọn <b>Find</b>.</li>
+
+<li>Nhập từ hoặc cụm từ cần tìm.</li>
+
+<li>Nhấn <b>Enter</b>.</li>
+</ol>
+
+<p>
+Phần mềm sẽ đánh dấu những vị trí chứa từ hoặc cụm từ cần tìm trong văn bản.
+</p>
+
+<h2>III. Sử dụng công cụ thay thế (Replace)</h2>
+
+<p>
+Lệnh Replace giúp thay thế một từ hoặc cụm từ bằng nội dung khác.
+</p>
+
+<h3>Các bước thực hiện</h3>
+
+<ol>
+<li>Mở thẻ <b>Home</b>.</li>
+
+<li>Trong nhóm lệnh <b>Editing</b>, chọn <b>Replace</b>.</li>
+
+<li>Nhập từ hoặc cụm từ cần tìm vào ô <b>Find What</b>.</li>
+
+<li>Nhập từ hoặc cụm từ thay thế vào ô <b>Replace With</b>.</li>
+
+<li>Chọn một trong các nút lệnh phù hợp.</li>
+</ol>
+
+<h3>Các nút lệnh thường dùng</h3>
+
+<ul>
+<li><b>Find Next:</b> Tìm vị trí tiếp theo.</li>
+
+<li><b>Replace:</b> Thay thế vị trí đang được chọn.</li>
+
+<li><b>Replace All:</b> Thay thế tất cả các vị trí trong văn bản.</li>
+
+<li><b>Cancel:</b> Đóng hộp thoại và kết thúc.</li>
+</ul>
+
+<div class="example">
+<b>Ví dụ:</b><br>
+Find What: học sinh<br>
+Replace With: bạn học sinh<br>
+Chọn Replace All để thay thế toàn bộ trong văn bản.
+</div>
+
+<h2>IV. Lợi ích của công cụ tìm kiếm và thay thế</h2>
+
+<ul>
+<li>Tìm kiếm nhanh nội dung cần thiết.</li>
+
+<li>Chỉnh sửa văn bản dễ dàng.</li>
+
+<li>Tiết kiệm thời gian khi làm việc với văn bản dài.</li>
+
+<li>Giảm sai sót khi sửa nhiều lần.</li>
+
+<li>Tăng hiệu quả làm việc.</li>
+</ul>
+
+<h2>V. Thực hành</h2>
+
+<p>
+Thực hiện các yêu cầu sau:
+</p>
+
+<ol>
+<li>Mở một văn bản đã soạn.</li>
+
+<li>Sử dụng lệnh Find để tìm một từ khóa.</li>
+
+<li>Sử dụng lệnh Replace để thay thế từ khóa đó bằng từ mới.</li>
+
+<li>Kiểm tra lại kết quả sau khi thay thế.</li>
+
+<li>Lưu văn bản sau khi chỉnh sửa.</li>
+</ol>
+
+<h2>📌 Ghi nhớ</h2>
+
+<ul>
+<li>Find dùng để tìm kiếm từ hoặc cụm từ trong văn bản.</li>
+
+<li>Replace dùng để thay thế từ hoặc cụm từ bằng nội dung khác.</li>
+
+<li>Lệnh Find và Replace nằm trong nhóm Editing của thẻ Home.</li>
+
+<li>Replace All giúp thay thế toàn bộ các kết quả tìm thấy.</li>
+
+<li>Công cụ tìm kiếm và thay thế giúp chỉnh sửa văn bản nhanh chóng và chính xác.</li>
+</ul>
+
+</div>
+
+</body>
+</html>

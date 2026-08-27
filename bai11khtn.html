@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 11 - Sóng âm</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🔊 Bài 11</h1>
+    <h2>Sóng âm</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Dao động và sóng</h2>
+
+<h3>1. Dao động</h3>
+
+<p>
+Các chuyển động qua lại quanh một vị trí cân bằng được gọi là dao động.
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<ul>
+<li>Dao động của quả lắc.</li>
+<img src="anhkhtn20.jpg" class="img" onclick="openImg(this)">
+<li>Dao động của chiếc võng.</li>
+<img src="anhkhtn21.jpg" class="img" onclick="openImg(this)">
+<li>Dao động của chiếc xích đu.</li>
+<img src="anhkhtn22.jpg" class="img" onclick="openImg(this)">
+</ul>
+
+<h3>2. Sóng</h3>
+
+<p>
+Sóng là sự lan truyền dao động trong môi trường.
+</p>
+
+<p><b>Ví dụ:</b> Sóng nước.</p>
+
+<img src="anhkhtn23.jpg" class="img" onclick="openImg(this)">
+
+<h2>II. Nguồn âm</h2>
+
+<p>
+Nguồn âm là nguồn phát ra âm. Mọi nguồn âm đều dao động.
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<ul>
+<li>Mặt trống.</li>
+<img src="anhkhtn24.jpg" class="img" onclick="openImg(this)">
+<li>Dây đàn.</li>
+<img src="anhkhtn25.jpg" class="img" onclick="openImg(this)">
+<li>Âm thoa.</li>
+<img src="anhkhtn26.jpg" class="img" onclick="openImg(this)">
+</ul>
+
+<h2>III. Sóng âm</h2>
+
+<p>
+Sóng âm là sự lan truyền dao động của nguồn âm trong môi trường.
+</p>
+
+<p>
+Sóng âm truyền từ nguồn âm theo mọi phương ra môi trường xung quanh.
+</p>
+
+<p><b>Ví dụ:</b> Âm thanh do loa phát ra truyền theo mọi hướng.</p>
+
+<img src="anhkhtn27.jpg" class="img" onclick="openImg(this)">
+
+<h2>IV. Các môi trường truyền âm</h2>
+
+<p>
+Môi trường truyền được sóng âm gọi là môi trường truyền âm.
+</p>
+
+<ul>
+<li>Sóng âm truyền được trong chất rắn.</li>
+<li>Sóng âm truyền được trong chất lỏng.</li>
+<li>Sóng âm truyền được trong chất khí.</li>
+<li>Sóng âm không truyền được trong chân không.</li>
+</ul>
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Dao động là chuyển động qua lại quanh vị trí cân bằng.</li>
+<li>Sóng là sự lan truyền dao động trong môi trường.</li>
+<li>Nguồn âm đều dao động.</li>
+<li>Sóng âm truyền được trong chất rắn, chất lỏng và chất khí.</li>
+<li>Sóng âm không truyền được trong chân không.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

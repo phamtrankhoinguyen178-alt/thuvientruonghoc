@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 16: Tam giác cân. Đường trung trực của đoạn thẳng</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.img{
+display:block;
+max-width:500px;
+width:100%;
+margin:25px auto;
+border-radius:12px;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+#imgBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+#imgBox span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p{
+font-size:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 16: Tam giác cân. Đường trung trực của đoạn thẳng</h2>
+
+<h3>📖 1. Tam giác cân và tính chất</h3>
+
+<p>• Định nghĩa: Tam giác cân là tam giác có hai cạnh bằng nhau.</p>
+
+<p>• Tính chất:</p>
+
+<p>+ Trong tam giác cân, hai góc ở đáy bằng nhau.</p>
+
+<p>+ Tam giác có hai góc ở đáy bằng nhau thì tam giác đó là tam giác cân.</p>
+
+<img src="hinhanh3.jpg" class="img" onclick="openImg(this)">
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Tam giác đều là tam giác có ba cạnh bằng nhau. Khi đó ba góc cũng bằng nhau và bằng 60°.</p>
+
+<p>• Một tam giác có ba cạnh hoặc ba góc bằng nhau thì tam giác ấy là tam giác đều.</p>
+
+<p>• Tam giác cân có một góc bằng 60° thì tam giác ấy là tam giác đều.</p>
+
+<h3>📐 2. Đường trung trực của một đoạn thẳng</h3>
+
+<p>• Định nghĩa: Đường thẳng vuông góc với đoạn thẳng tại trung điểm của nó được gọi là đường trung trực của đoạn thẳng đó.</p>
+
+<p>• Đường trung trực của đoạn thẳng cũng là trục đối xứng của đoạn thẳng đó.</p>
+
+<p>• Tính chất: Điểm nằm trên đường trung trực của một đoạn thẳng thì cách đều hai mút của đoạn thẳng đó.</p>
+
+<p>• Đường trung trực của đoạn thẳng là tập hợp tất cả các điểm cách đều hai mút của đoạn thẳng đó.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Cách vẽ đường trung trực của đoạn thẳng bằng compa và thước thẳng.</p>
+
+<p>Chẳng hạn: Vẽ đường thẳng d là đường trung trực của đoạn thẳng AB như sau:</p>
+
+<p>+ Vẽ đoạn thẳng AB.</p>
+
+<p>+ Lấy A làm tâm, vẽ cung tròn có bán kính lớn hơn AB/2. Sau đó lấy B làm tâm, vẽ cung tròn cùng bán kính sao cho hai cung này cắt nhau tại hai điểm M và N.</p>
+
+<p>+ Dùng thước thẳng vẽ đường thẳng đi qua M và N. Đường thẳng đó là đường trung trực của đoạn thẳng AB.</p>
+
+<img src="hinhanh4.jpg" class="img" onclick="openImg(this)">
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+document.getElementById("imgBox").style.display="flex";
+document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

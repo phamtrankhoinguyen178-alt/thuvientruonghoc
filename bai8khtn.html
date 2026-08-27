@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 8 - Tốc độ của chuyển động</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🚗 Bài 8</h1>
+    <h2>Tốc độ của chuyển động</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Khái niệm tốc độ</h2>
+
+<p>
+Nếu quãng đường đi được là <b>s</b>, thời gian đi là <b>t</b> thì tốc độ được tính theo công thức:
+</p>
+
+<p style="text-align:center;">
+<b>v = s / t</b>
+</p>
+
+<p>
+Trong đó:
+</p>
+
+<ul>
+<li><b>v</b>: tốc độ.</li>
+<li><b>s</b>: quãng đường đi được.</li>
+<li><b>t</b>: thời gian chuyển động.</li>
+</ul>
+
+<p>
+Mối quan hệ giữa ba đại lượng <b>v, s, t</b> được biểu diễn bằng sơ đồ:
+</p>
+
+<img src="anhkhtn16.jpg" class="img" onclick="openImg(this)">
+
+<p>
+Thương số <b>s/t</b> đặc trưng cho sự nhanh hay chậm của chuyển động và được gọi là <b>tốc độ</b>.
+</p>
+
+<h2>II. Đơn vị đo tốc độ</h2>
+
+<p>
+Trong hệ đo lường chính thức của nước ta, đơn vị đo tốc độ là:
+</p>
+
+<ul>
+<li>m/s (mét trên giây).</li>
+<li>km/h (kilômét trên giờ).</li>
+</ul>
+
+<h3>Cách đổi đơn vị</h3>
+
+<ul>
+<li>1 m/s = 3,6 km/h.</li>
+<li>1 km/h ≈ 0,278 m/s.</li>
+</ul>
+
+<h2>III. Ghi nhớ</h2>
+
+<ul>
+<li>Tốc độ cho biết mức độ nhanh hay chậm của chuyển động.</li>
+<li>Công thức tính tốc độ: <b>v = s/t</b>.</li>
+<li>Đơn vị thường dùng là <b>m/s</b> và <b>km/h</b>.</li>
+<li>Cần đổi đơn vị phù hợp trước khi tính toán.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

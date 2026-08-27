@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 9 - Trình bày bảng tính</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#1565c0;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul{
+    padding-left:25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="tinhoc7.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+<h1>📊 Bài 9</h1>
+<h2>Trình bày bảng tính</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Định dạng dữ liệu số</h2>
+
+<p>
+Có thể định dạng dữ liệu số theo nhiều kiểu khác nhau như số thập phân, phần trăm, ngày tháng hoặc phân tách hàng nghìn.
+</p>
+
+<h3>1. Định dạng dữ liệu số</h3>
+
+<ul>
+<li>Chọn ô hoặc vùng dữ liệu cần định dạng.</li>
+<li>Chọn Home.</li>
+<li>Nháy vào nhóm Number.</li>
+<li>Mở hộp thoại Format Cells.</li>
+<li>Chọn kiểu định dạng phù hợp.</li>
+</ul>
+
+<p>
+<b>Ví dụ:</b><br>
+1234567 → 1,234,567<br>
+12.5 → 12.50
+</p>
+
+<h3>2. Định dạng kiểu phần trăm</h3>
+
+<ul>
+<li>Chọn vùng dữ liệu.</li>
+<li>Mở Format Cells.</li>
+<li>Chọn Percentage.</li>
+<li>Nhấn OK.</li>
+</ul>
+
+<p>
+<b>Ví dụ:</b> 0.75 → 75%
+</p>
+
+<h3>3. Định dạng ngày tháng</h3>
+
+<ul>
+<li>Chọn vùng dữ liệu.</li>
+<li>Mở Format Cells.</li>
+<li>Chọn Date.</li>
+<li>Nhấn OK.</li>
+</ul>
+
+<p>
+<b>Ví dụ:</b><br>
+20/08/2026 (dd/mm/yyyy)
+</p>
+
+<h2>II. Trình bày bảng tính</h2>
+
+<h3>1. Chèn, xóa, ẩn và hiện hàng cột</h3>
+
+<p><b>Xóa hàng hoặc cột</b></p>
+
+<ul>
+<li>Chọn hàng hoặc cột cần xóa.</li>
+<li>Nháy chuột phải.</li>
+<li>Chọn Delete.</li>
+</ul>
+
+<p><b>Chèn hàng hoặc cột</b></p>
+
+<ul>
+<li>Chọn hàng hoặc cột cần chèn.</li>
+<li>Nháy chuột phải.</li>
+<li>Chọn Insert.</li>
+</ul>
+
+<p><b>Ẩn hàng hoặc cột</b></p>
+
+<ul>
+<li>Chọn hàng hoặc cột cần ẩn.</li>
+<li>Nháy chuột phải.</li>
+<li>Chọn Hide.</li>
+</ul>
+
+<p><b>Hiện lại hàng hoặc cột</b></p>
+
+<ul>
+<li>Chọn hai hàng hoặc cột bên cạnh vùng bị ẩn.</li>
+<li>Nháy chuột phải.</li>
+<li>Chọn Unhide.</li>
+</ul>
+
+<h3>2. Gộp các ô dữ liệu</h3>
+
+<p>
+Để gộp nhiều ô thành một ô:
+</p>
+
+<ul>
+<li>Chọn vùng dữ liệu cần gộp.</li>
+<li>Chọn Home.</li>
+<li>Chọn Merge & Center.</li>
+</ul>
+
+<p>
+Merge & Center giúp gộp ô và căn giữa nội dung.
+</p>
+
+<h2>III. Tính chất của các hàm</h2>
+
+<p>
+Các hàm SUM, AVERAGE, COUNT, MIN và MAX chỉ thực hiện tính toán trên dữ liệu số.
+</p>
+
+<p>
+Các ô chứa văn bản hoặc ô trống sẽ không được tính.
+</p>
+
+<p>
+<b>Ví dụ:</b><br>
+=SUM(A1:A5)
+</p>
+
+<p>
+Nếu A3 chứa chữ "Tin học" thì hàm SUM sẽ bỏ qua ô A3.
+</p>
+
+<h2>IV. Thực hành: Hoàn thành dữ liệu dự án Trường học xanh</h2>
+
+<h3>1. Tạo trang tính mới</h3>
+
+<p>
+Mở tệp THXanh.xlsx.
+</p>
+
+<p>
+<b>Tên trang tính mới:</b><br>
+5. Tổng kết
+</p>
+
+<h3>2. Sao chép dữ liệu</h3>
+
+<ul>
+<li>Sao chép dữ liệu từ trang tính 4. Dự kiến kết quả.</li>
+<li>Dán sang trang tính 5. Tổng kết.</li>
+<li>Sửa ô A2 thành:</li>
+</ul>
+
+<p>
+Bảng 5. Dự kiến phân bổ cây dự án Trường học xanh
+</p>
+
+<h3>3. Tính chi phí</h3>
+
+<ul>
+<li>Chèn cột Đơn giá.</li>
+<li>Thêm cột Chi phí.</li>
+<li>Nhập công thức tính chi phí.</li>
+</ul>
+
+<p>
+Chi phí = Đơn giá × Tổng số cây
+</p>
+
+<p>
+=N4*K4
+</p>
+
+<p>
+Tính tổng chi phí tại các ô:
+</p>
+
+<ul>
+<li>N9</li>
+<li>N17</li>
+<li>N24</li>
+<li>N25</li>
+</ul>
+
+<h3>4. Định dạng dữ liệu</h3>
+
+<ul>
+<li>In đậm tiêu đề.</li>
+<li>Tô màu hàng tiêu đề.</li>
+<li>In đậm các kết quả tổng hợp.</li>
+<li>Điều chỉnh độ rộng cột.</li>
+<li>Căn giữa dữ liệu cần thiết.</li>
+</ul>
+
+<h2>📌 Ghi nhớ</h2>
+
+<ul>
+<li>Có thể định dạng dữ liệu số, phần trăm và ngày tháng.</li>
+<li>Có thể chèn, xóa, ẩn và hiện hàng cột.</li>
+<li>Merge & Center dùng để gộp ô và căn giữa nội dung.</li>
+<li>Các hàm SUM, AVERAGE, COUNT, MIN, MAX chỉ tính trên dữ liệu số.</li>
+</ul>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 13 - Phản xạ âm và chống ô nhiễm tiếng ồn</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🔉 Bài 13</h1>
+    <h2>Phản xạ âm và chống ô nhiễm tiếng ồn</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Phản xạ âm</h2>
+
+<p>
+Âm được dội lại khi gặp một mặt chắn gọi là <b>âm phản xạ</b>.
+</p>
+
+<img src="anhkhtn30.png" class="img" onclick="openImg(this)">
+
+<h2>II. Vật phản xạ âm tốt, vật phản xạ âm kém</h2>
+
+<h3>1. Vật phản xạ âm tốt</h3>
+
+<p>
+Các vật liệu cứng và có bề mặt nhẵn phản xạ âm tốt.
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<ul>
+<li>Tường nhà, gạch đá hoa.</li>
+
+<img src="anhkhtn31.png" class="img" onclick="openImg(this)">
+
+<li>Cửa kính.</li>
+</ul>
+
+<img src="anhkhtn32.png" class="img" onclick="openImg(this)">
+
+<h3>2. Vật phản xạ âm kém</h3>
+
+<p>
+Các vật liệu mềm, xốp hoặc có bề mặt sần sùi phản xạ âm kém.
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<ul>
+<li>Xốp.</li>
+
+<img src="anhkhtn33.png" class="img" onclick="openImg(this)">
+
+<li>Cao su xốp.</li>
+
+<img src="anhkhtn34.png" class="img" onclick="openImg(this)">
+
+<li>Rèm nhung.</li>
+
+<img src="anhkhtn35.png" class="img" onclick="openImg(this)">
+</ul>
+
+<h2>III. Chống ô nhiễm tiếng ồn</h2>
+
+<h3>1. Tiếng ồn</h3>
+
+<p>
+Những âm thanh to, kéo dài có thể gây hại đến sức khỏe và hoạt động bình thường của con người được gọi là tiếng ồn.
+</p>
+
+<p>
+Những nơi thường xuyên có tiếng ồn được xem là bị ô nhiễm tiếng ồn.
+</p>
+
+<p><b>Ví dụ:</b></p>
+
+<ul>
+<li>Tiếng ồn ở chợ.</li>
+
+<img src="anhkhtn36.png" class="img" onclick="openImg(this)">
+
+<li>Tiếng còi xe vào giờ cao điểm.</li>
+
+<img src="anhkhtn37.png" class="img" onclick="openImg(this)">
+
+</ul>
+
+<h3>2. Các biện pháp giảm tiếng ồn</h3>
+
+<ul>
+<li>Hạn chế nguồn gây ra tiếng ồn.</li>
+<li>Phân tán tiếng ồn trên đường truyền.</li>
+<li>Ngăn cản sự lan truyền của tiếng ồn đến tai.</li>
+</ul>
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Âm dội lại khi gặp vật cản gọi là âm phản xạ.</li>
+<li>Vật cứng, nhẵn phản xạ âm tốt.</li>
+<li>Vật mềm, xốp hoặc sần sùi phản xạ âm kém.</li>
+<li>Tiếng ồn ảnh hưởng xấu đến sức khỏe.</li>
+<li>Cần áp dụng các biện pháp để giảm ô nhiễm tiếng ồn.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

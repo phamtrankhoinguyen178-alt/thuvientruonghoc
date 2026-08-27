@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 9: Phân tích đa thức thành nhân tử</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan8.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 9: Phân tích đa thức thành nhân tử</h2>
+
+<h3>📖 1. Phân tích đa thức thành nhân tử bằng cách đặt nhân tử chung</h3>
+
+<p>
+Phân tích đa thức thành nhân tử (hay thừa số) là biến đổi đa thức đó thành một tích của những đa thức.
+</p>
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+x² + x
+</p>
+
+<p>
+= x.x + x.1
+</p>
+
+<p>
+= x(x + 1)
+</p>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+2x³ + 4x
+</p>
+
+<p>
+= 2x.x² + 2x.2
+</p>
+
+<p>
+= 2x(x² + 2)
+</p>
+
+<h3>🔍 Ví dụ 3</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+3(x + 1) − 4x(x + 1)
+</p>
+
+<p>
+= (x + 1)(3 − 4x)
+</p>
+
+<h3>📌 Phương pháp</h3>
+
+<ul>
+
+<li>
+Tìm nhân tử chung của tất cả các hạng tử.
+</li>
+
+<li>
+Đặt nhân tử chung ra ngoài dấu ngoặc.
+</li>
+
+<li>
+Các biểu thức còn lại được viết trong dấu ngoặc.
+</li>
+
+<li>
+Đôi khi cần đổi dấu để xuất hiện nhân tử chung.
+</li>
+
+</ul>
+
+<h3>📖 2. Phân tích đa thức thành nhân tử bằng hằng đẳng thức</h3>
+
+<p>
+Sử dụng các hằng đẳng thức đáng nhớ để đưa đa thức về dạng tích.
+</p>
+
+<h3>🔍 Ví dụ 4</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+x² + 4x + 4
+</p>
+
+<p>
+= x² + 2.x.2 + 2²
+</p>
+
+<p>
+= (x + 2)²
+</p>
+
+<h3>🔍 Ví dụ 5</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+x² − 9
+</p>
+
+<p>
+= x² − 3²
+</p>
+
+<p>
+= (x + 3)(x − 3)
+</p>
+
+<h3>🔍 Ví dụ 6</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+27x³ + 1
+</p>
+
+<p>
+= (3x)³ + 1³
+</p>
+
+<p>
+= (3x + 1)(9x² − 3x + 1)
+</p>
+
+<h3>📌 Chú ý</h3>
+
+<ul>
+
+<li>
+Nhận dạng đúng hằng đẳng thức trước khi áp dụng.
+</li>
+
+<li>
+Có thể kết hợp nhiều hằng đẳng thức trong cùng một bài toán.
+</li>
+
+</ul>
+
+<h3>📖 3. Phân tích đa thức thành nhân tử bằng cách nhóm hạng tử</h3>
+
+<p>
+Nhóm các hạng tử thích hợp để xuất hiện nhân tử chung.
+</p>
+
+<h3>🔍 Ví dụ 7</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+x² − 2xy + 3x − 6y
+</p>
+
+<p>
+= (x² − 2xy) + (3x − 6y)
+</p>
+
+<p>
+= x(x − 2y) + 3(x − 2y)
+</p>
+
+<p>
+= (x − 2y)(x + 3)
+</p>
+
+<h3>🔍 Ví dụ 8</h3>
+
+<p>
+Phân tích:
+</p>
+
+<p>
+2xyz + xy + 2x²z + x²
+</p>
+
+<p>
+= (2xyz + 2x²z) + (xy + x²)
+</p>
+
+<p>
+= 2xz(y + x) + x(y + x)
+</p>
+
+<p>
+= (y + x)(2xz + x)
+</p>
+
+<p>
+= x(y + x)(2z + 1)
+</p>
+
+<h3>📌 Phương pháp nhóm hạng tử</h3>
+
+<ul>
+
+<li>
+Nhóm các hạng tử để tạo nhân tử chung.
+</li>
+
+<li>
+Có thể đổi vị trí các hạng tử trước khi nhóm.
+</li>
+
+<li>
+Sau khi nhóm, áp dụng đặt nhân tử chung hoặc hằng đẳng thức.
+</li>
+
+<li>
+Tiếp tục phân tích cho đến khi không thể phân tích thêm.
+</li>
+
+</ul>
+
+<h3>⚠ Chú ý</h3>
+
+<ul>
+
+<li>
+Một đa thức có thể có nhiều cách nhóm khác nhau.
+</li>
+
+<li>
+Khi nhóm phải chú ý dấu của các hạng tử.
+</li>
+
+<li>
+Kết quả cuối cùng luôn giống nhau dù cách làm khác nhau.
+</li>
+
+<li>
+Cần phân tích đến dạng đơn giản nhất.
+</li>
+
+</ul>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Có ba phương pháp cơ bản để phân tích đa thức thành nhân tử:
+đặt nhân tử chung, dùng hằng đẳng thức và nhóm hạng tử.
+</li>
+
+<li>
+Luôn ưu tiên tìm nhân tử chung trước.
+</li>
+
+<li>
+Khi không đặt được nhân tử chung, hãy xét các hằng đẳng thức đáng nhớ.
+</li>
+
+<li>
+Nếu vẫn chưa thực hiện được, hãy thử nhóm các hạng tử.
+</li>
+
+<li>
+Có thể kết hợp nhiều phương pháp trong cùng một bài toán.
+</li>
+
+</ul>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

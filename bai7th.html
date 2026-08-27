@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 7 - Tính toán tự động trên bảng tính</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#1565c0;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul{
+    padding-left:25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="tinhoc7.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+<h1>📊 Bài 7</h1>
+<h2>Tính toán tự động trên bảng tính</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Kiểu dữ liệu trên bảng tính</h2>
+
+<p>
+Dữ liệu trong ô tính có thể thuộc nhiều kiểu khác nhau như văn bản, số, ngày tháng và công thức.
+</p>
+
+<p>
+Công thức luôn bắt đầu bằng dấu "=" và theo sau là biểu thức toán học.
+</p>
+
+<h3>Một số phép toán thường dùng</h3>
+
+<ul>
+<li>Phép cộng (+)</li>
+<li>Phép trừ (-)</li>
+<li>Phép nhân (*)</li>
+<li>Phép chia (/)</li>
+<li>Phép lũy thừa (^)</li>
+</ul>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+=20+7
+<br><br>
+=42-35
+<br><br>
+=7*9
+<br><br>
+=35/7
+<br><br>
+=5^3
+</p>
+
+<h2>II. Công thức trong bảng tính</h2>
+
+<p>
+Khi nhập công thức vào ô tính, nếu tính toán với dữ liệu ở các ô khác thì cần sử dụng địa chỉ của các ô đó trong công thức.
+</p>
+
+<p>
+Phần mềm bảng tính sẽ tự động tính toán và cập nhật kết quả nếu dữ liệu thay đổi.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+Ô A1 = 10
+<br>
+Ô B1 = 5
+<br><br>
+Công thức:
+<br>
+=A1+B1
+<br><br>
+Kết quả: 15
+</p>
+
+<h2>III. Sao chép ô tính chứa công thức</h2>
+
+<p>
+Các bước sao chép ô tính chứa công thức:
+</p>
+
+<ul>
+<li>Bước 1: Chọn ô chứa công thức.</li>
+<li>Bước 2: Nhấn Ctrl + C.</li>
+<li>Bước 3: Chọn vị trí cần dán.</li>
+<li>Bước 4: Nhấn Ctrl + V.</li>
+</ul>
+
+<p>
+Khi sao chép công thức, các địa chỉ ô sẽ tự động thay đổi để phù hợp với vị trí mới.
+</p>
+
+<p>
+Chức năng tính toán tự động của phần mềm bảng tính còn được thể hiện khi sao chép công thức.
+</p>
+
+<h2>IV. Thực hành: Nhập thông tin dự kiến số lượng cây cần trồng</h2>
+
+<h3>Nhiệm vụ</h3>
+
+<ul>
+<li>Tạo trang tính mới.</li>
+<li>Nhập dữ liệu số lượng cây cần trồng.</li>
+<li>Tính tổng số cây từng loại.</li>
+<li>Tính tổng số cây toàn dự án.</li>
+<li>Định dạng dữ liệu.</li>
+</ul>
+
+<h3>Hướng dẫn</h3>
+
+<p>
+Bước 1: Mở tệp THXanh.xlsx.
+</p>
+
+<p>
+Bước 2: Tạo trang tính mới và đặt tên:
+</p>
+
+<p>
+2. Dự kiến số lượng cây
+</p>
+
+<p>
+Bước 3: Nhập công thức vào ô E4:
+</p>
+
+<p>
+=C4*D4
+</p>
+
+<p>
+Sau đó sao chép công thức xuống các ô E5 và E6.
+</p>
+
+<p>
+Bước 4: Tại ô E7 nhập:
+</p>
+
+<p>
+=E4+E5+E6
+</p>
+
+<p>
+để tính tổng số cây của ba loại cây trồng.
+</p>
+
+<p>
+Bước 5: Định dạng dữ liệu:
+</p>
+
+<ul>
+<li>In đậm tiêu đề.</li>
+<li>Đổi màu nền.</li>
+<li>Căn giữa dữ liệu.</li>
+<li>Điều chỉnh độ rộng cột.</li>
+</ul>
+
+<p>
+Bước 6: Lưu kết quả.
+</p>
+
+<h2>📌 Ghi nhớ</h2>
+
+<ul>
+<li>Dữ liệu trong bảng tính có thể là văn bản, số, ngày tháng hoặc công thức.</li>
+<li>Công thức luôn bắt đầu bằng dấu "=".</li>
+<li>Có thể sử dụng địa chỉ ô trong công thức.</li>
+<li>Khi sao chép công thức, địa chỉ ô sẽ tự động điều chỉnh.</li>
+<li>Phần mềm bảng tính giúp tính toán nhanh và chính xác.</li>
+</ul>
+
+</div>
+
+</body>
+</html>

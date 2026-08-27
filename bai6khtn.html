@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 6 - Liên kết hóa học</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:250px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="hoahoc.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🧪 Bài 6</h1>
+    <h2>Liên kết ion và liên kết cộng hóa trị</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Cấu trúc electron bền vững của khí hiếm</h2>
+
+<p>
+Ở điều kiện thường, khí hiếm tồn tại dưới dạng đơn nguyên tử bền vững, rất khó tham gia phản ứng hóa học.
+</p>
+
+<p>
+Nguyên tử khí hiếm có lớp electron ngoài cùng bền vững: 8 electron (trừ He có 2 electron).
+</p>
+
+<p>
+Các nguyên tử khác có xu hướng đạt cấu hình giống khí hiếm bằng cách nhường, nhận hoặc dùng chung electron.
+</p>
+
+<img src="anhkhtn13.jpg" class="img" onclick="openImg(this)">
+
+<h2>II. Liên kết ion</h2>
+
+<p>
+Ion là hạt mang điện được tạo thành khi nguyên tử nhường hoặc nhận electron.
+</p>
+
+<p>
+Liên kết ion là lực hút tĩnh điện giữa các ion mang điện trái dấu.
+</p>
+
+<h3>Ví dụ: NaCl</h3>
+
+<ul>
+<li>Na nhường 1 electron → Na⁺ (giống Ne).</li>
+<li>Cl nhận 1 electron → Cl⁻ (giống Ar).</li>
+<li>Na⁺ và Cl⁻ hút nhau tạo thành liên kết ion.</li>
+</ul>
+
+<img src="anhkhtn14.jpg" class="img" onclick="openImg(this)">
+
+<p><b>Chú ý:</b></p>
+
+<ul>
+<li>Kim loại → nhường electron → ion dương.</li>
+<li>Phi kim → nhận electron → ion âm.</li>
+<li>Hợp chất ion: rắn, khó nóng chảy, tan trong nước dẫn điện.</li>
+</ul>
+
+<h2>III. Liên kết cộng hóa trị</h2>
+
+<p>
+Liên kết cộng hóa trị được hình thành do sự dùng chung electron.
+</p>
+
+<h3>1. Liên kết trong phân tử đơn chất</h3>
+
+<h4>Hydrogen (H₂)</h4>
+<ul>
+<li>Mỗi H có 1 electron.</li>
+<li>Hai H dùng chung 1 cặp electron.</li>
+</ul>
+
+<h4>Oxygen (O₂)</h4>
+<ul>
+<li>Mỗi O có 6 electron lớp ngoài cùng.</li>
+<li>Hai O dùng chung 2 cặp electron.</li>
+</ul>
+
+<p><b>Chú ý:</b> Liên kết cộng hóa trị thường gặp trong phân tử phi kim.</p>
+
+<h3>2. Liên kết trong phân tử hợp chất</h3>
+
+<h4>Phân tử nước (H₂O)</h4>
+<ul>
+<li>O dùng chung electron với 2 H.</li>
+<li>Tạo 2 cặp electron dùng chung.</li>
+</ul>
+
+<p><b>Chú ý:</b></p>
+
+<ul>
+<li>Các chất như NH₃, CO₂, đường… đều có liên kết cộng hóa trị.</li>
+<li>Chất cộng hóa trị có thể là rắn, lỏng hoặc khí.</li>
+<li>Nhiệt độ nóng chảy và sôi thường thấp.</li>
+</ul>
+
+<img src="anhkhtn15.jpg" class="img" onclick="openImg(this)">
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+    <span>✖</span>
+    <img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display = "flex";
+    document.getElementById("bigImg").src = img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display = "none";
+}
+</script>
+
+</body>
+</html>

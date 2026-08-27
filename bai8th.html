@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 8 - Công cụ hỗ trợ tính toán</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#1565c0;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul{
+    padding-left:25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="tinhoc7.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+<h1>🧮 Bài 8</h1>
+<h2>Công cụ hỗ trợ tính toán</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Hàm trong bảng tính</h2>
+
+<p>
+Hàm là công cụ giúp thực hiện các phép tính tự động trong bảng tính.
+</p>
+
+<p>
+Cách nhập hàm tương tự như cách nhập công thức.
+</p>
+
+<p>
+Cú pháp:
+</p>
+
+<p>
+= Tên_hàm(Các_tham_số)
+</p>
+
+<ul>
+<li>Phải nhập đúng tên hàm.</li>
+<li>Phải nhập đúng các tham số.</li>
+<li>Có thể dùng chuột để chọn vùng dữ liệu.</li>
+<li>Tên hàm có thể viết chữ hoa hoặc chữ thường.</li>
+</ul>
+
+<h2>II. Một số hàm tính toán đơn giản</h2>
+
+<h3>1. Hàm SUM</h3>
+
+<p>
+Dùng để tính tổng các giá trị.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+SUM(C3:E5)
+</p>
+
+<h3>2. Hàm AVERAGE</h3>
+
+<p>
+Dùng để tính giá trị trung bình.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+AVERAGE(B2:E6)
+</p>
+
+<h3>3. Hàm MIN</h3>
+
+<p>
+Dùng để tìm giá trị nhỏ nhất.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+MIN(A1:B10)
+</p>
+
+<h3>4. Hàm MAX</h3>
+
+<p>
+Dùng để tìm giá trị lớn nhất.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+MAX(B1:E1)
+</p>
+
+<h3>5. Hàm COUNT</h3>
+
+<p>
+Dùng để đếm số lượng giá trị số.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<p>
+COUNT(B3:E10)
+</p>
+
+<h2>III. Lưu ý khi sử dụng hàm</h2>
+
+<ul>
+<li>Các hàm chỉ xử lí dữ liệu số.</li>
+<li>Ô chứa văn bản sẽ bị bỏ qua.</li>
+<li>Ô trống sẽ không được tính.</li>
+<li>Dấu "." dùng để ngăn cách phần nguyên và phần thập phân.</li>
+<li>Dấu "," dùng để ngăn cách hàng nghìn, hàng triệu.</li>
+</ul>
+
+<h2>IV. Thực hành: Tính toán trên dữ liệu trồng cây thực tế</h2>
+
+<h3>Nhiệm vụ</h3>
+
+<ul>
+<li>Tạo trang tính mới trong dự án.</li>
+<li>Nhập và sao chép dữ liệu.</li>
+<li>Tính tổng số cây.</li>
+<li>Định dạng dữ liệu cho trang tính.</li>
+</ul>
+
+<h3>1. Tạo trang tính mới</h3>
+
+<ul>
+<li>Mở tệp THXanh.xlsx.</li>
+<li>Tạo trang tính mới.</li>
+<li>Đặt tên trang tính là 4. Dự kiến kết quả.</li>
+</ul>
+
+<h3>2. Nhập và sao chép dữ liệu</h3>
+
+<ul>
+<li>Nhập tại ô A2: Bảng 4. Dự kiến phân bổ cây cho các lớp.</li>
+<li>Mở trang tính 3. Tìm hiểu giống cây.</li>
+<li>Sao chép vùng dữ liệu A3:C19.</li>
+<li>Dán vào trang tính 4. Dự kiến kết quả tại ô A3.</li>
+<li>Nhập dữ liệu dự kiến theo yêu cầu.</li>
+</ul>
+
+<h3>3. Tính tổng số cây mỗi loại mà mỗi lớp trồng được</h3>
+
+<ul>
+<li>Chèn thêm hai hàng trống phía trên hàng 9.</li>
+<li>Chèn thêm hai hàng trống phía trên hàng 12.</li>
+<li>Tại ô D9 nhập công thức:</li>
+</ul>
+
+<p>
+=SUM(D4:D8)
+</p>
+
+<ul>
+<li>Sao chép công thức sang các lớp còn lại.</li>
+<li>Tính tổng số cây hoa, cây ăn quả và cây bóng mát.</li>
+</ul>
+
+<h3>4. Tính tổng số cây các loại mà mỗi lớp trồng được</h3>
+
+<p>
+Tại ô D25 nhập:
+</p>
+
+<p>
+=D9+D17+D24
+</p>
+
+<ul>
+<li>Sao chép công thức sang các ô còn lại.</li>
+<li>Tạo thêm cột Tổng số cây.</li>
+<li>Tạo thêm cột Trung bình.</li>
+</ul>
+
+<p>
+Tại ô K4 nhập:
+</p>
+
+<p>
+=SUM(D4:J4)
+</p>
+
+<p>
+Tại ô L4 nhập:
+</p>
+
+<p>
+=AVERAGE(D4:J4)
+</p>
+
+<ul>
+<li>Sao chép công thức xuống các hàng phía dưới.</li>
+<li>Xóa dữ liệu tại các hàng trống.</li>
+</ul>
+
+<h3>5. Định dạng dữ liệu cho trang tính</h3>
+
+<ul>
+<li>In đậm tiêu đề bảng.</li>
+<li>Tô màu vàng cho hàng tiêu đề.</li>
+<li>In đậm các ô chứa dữ liệu tổng hợp.</li>
+<li>Điều chỉnh độ rộng cột.</li>
+<li>Lưu kết quả.</li>
+</ul>
+
+<h2>📌 Ghi nhớ</h2>
+
+<ul>
+<li>Hàm giúp thực hiện tính toán tự động trong bảng tính.</li>
+<li>Cú pháp chung: =Tên_hàm(Tham_số).</li>
+<li>Các hàm thông dụng gồm SUM, AVERAGE, MIN, MAX và COUNT.</li>
+<li>Các hàm chỉ tính trên dữ liệu số.</li>
+<li>Có thể sao chép công thức để tính toán nhanh cho nhiều ô.</li>
+</ul>
+
+</div>
+
+</body>
+</html>

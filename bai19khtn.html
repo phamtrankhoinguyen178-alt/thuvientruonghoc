@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 19 - Chế tạo nam châm điện đơn giản</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:280px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🧲 Bài 19</h1>
+    <h2>Chế tạo nam châm điện đơn giản</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Nam châm điện</h2>
+
+<p>
+Nam châm điện là nam châm được tạo ra khi có dòng điện chạy qua cuộn dây dẫn.
+</p>
+
+<p>
+<b>Cấu tạo của nam châm điện gồm:</b>
+</p>
+
+<ul>
+<li>Ống dây dẫn.</li>
+<li>Lõi sắt non đặt bên trong ống dây.</li>
+<li>Nguồn điện.</li>
+<li>Công tắc.</li>
+</ul>
+
+<img src="anhkhtn60.png" class="img" onclick="openImg(this)">
+
+<p>
+Lõi sắt non có tác dụng làm tăng từ trường của nam châm điện.
+</p>
+
+<p>
+Khi đóng công tắc để dòng điện chạy qua cuộn dây thì cuộn dây trở thành nam châm điện.
+</p>
+
+<p>
+Khi ngắt dòng điện thì từ trường biến mất.
+</p>
+
+<h2>II. Chế tạo nam châm điện đơn giản</h2>
+
+<h3>1. Dụng cụ</h3>
+
+<ul>
+<li>Dây đồng có lớp sơn cách điện.</li>
+<li>Một chiếc đinh sắt.</li>
+<li>Dây nối.</li>
+<li>Nguồn điện (5 – 6 pin).</li>
+<li>Công tắc.</li>
+</ul>
+
+<h3>2. Các bước tiến hành</h3>
+
+<img src="anhkhtn61.png" class="img" onclick="openImg(this)">
+
+<p><b>Bước 1:</b> Quấn dây đồng quanh đinh sắt rồi nối với nguồn điện qua công tắc.</p>
+
+<p><b>Bước 2:</b> Đóng công tắc để dòng điện chạy qua cuộn dây.</p>
+
+<p><b>Bước 3:</b> Đưa các vật bằng sắt lại gần để kiểm tra khả năng hút.</p>
+
+<p><b>Bước 4:</b> Tăng số pin để quan sát lực hút của nam châm điện.</p>
+
+<p><b>Bước 5:</b> Đổi chiều nguồn điện và dùng kim nam châm kiểm tra chiều từ trường.</p>
+
+<h2>III. Ứng dụng của nam châm điện</h2>
+
+<p>
+Nam châm điện có ưu điểm là có thể bật, tắt và thay đổi độ mạnh của từ trường rất nhanh nên được sử dụng rộng rãi.
+</p>
+
+<p><b>Một số ứng dụng:</b></p>
+
+<ul>
+<li>Xe cẩu điện dùng để nâng sắt thép.</li>
+<li>Chuông điện.</li>
+<li>Máy phát điện.</li>
+<li>Động cơ điện.</li>
+<li>Rơ-le điện.</li>
+</ul>
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Nam châm điện chỉ có từ trường khi có dòng điện chạy qua.</li>
+<li>Lõi sắt non giúp tăng từ trường của nam châm điện.</li>
+<li>Có thể thay đổi lực từ bằng cách thay đổi cường độ dòng điện.</li>
+<li>Nam châm điện được ứng dụng rộng rãi trong đời sống và sản xuất.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

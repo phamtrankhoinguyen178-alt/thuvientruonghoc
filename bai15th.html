@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 15 - Thuật toán tìm kiếm nhị phân</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#2c3e50;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul{
+    padding-left:25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="tinhoc7.html" class="back">⬅ Quay lại</a>
+
+
+<div class="header">
+<h1>💻 Bài 15</h1>
+<h2>Thuật toán tìm kiếm nhị phân</h2>
+</div>
+
+
+
+<div class="content">
+
+
+<h2>I. Thuật toán tìm kiếm nhị phân</h2>
+
+
+<p>
+Thuật toán tìm kiếm nhị phân được thực hiện trên danh sách đã được sắp xếp.
+Thuật toán bắt đầu tìm kiếm từ vị trí giữa của danh sách.
+</p>
+
+
+<ul>
+
+<li>
+So sánh giá trị cần tìm với giá trị tại vị trí giữa danh sách.
+</li>
+
+<li>
+Nếu giá trị cần tìm lớn hơn giá trị giữa thì tiếp tục tìm ở nửa sau của danh sách.
+</li>
+
+<li>
+Nếu giá trị cần tìm nhỏ hơn giá trị giữa thì tiếp tục tìm ở nửa trước của danh sách.
+</li>
+
+<li>
+Nếu giá trị cần tìm bằng giá trị giữa thì kết thúc quá trình tìm kiếm.
+</li>
+
+</ul>
+
+
+<p>
+Quá trình tìm kiếm được lặp lại cho đến khi tìm thấy giá trị cần tìm hoặc vùng tìm kiếm không còn phần tử nào.
+</p>
+
+
+
+
+
+<h2>II. Mô tả thuật toán tìm kiếm nhị phân bằng ngôn ngữ tự nhiên</h2>
+
+
+<h3>Các bước thực hiện:</h3>
+
+
+<p>
+<b>Bước 1:</b>
+Nếu vùng tìm kiếm không có phần tử nào thì kết luận không tìm thấy và thuật toán kết thúc.
+</p>
+
+
+<p>
+<b>Bước 2:</b>
+Xác định vị trí giữa của vùng tìm kiếm.
+</p>
+
+
+<p>
+Vị trí giữa chia vùng tìm kiếm thành hai phần:
+</p>
+
+<ul>
+
+<li>
+Nửa trước của vùng tìm kiếm.
+</li>
+
+<li>
+Nửa sau của vùng tìm kiếm.
+</li>
+
+</ul>
+
+
+
+<p>
+<b>Bước 3:</b>
+Nếu giá trị cần tìm bằng giá trị tại vị trí giữa thì kết luận:
+<b>"Giá trị cần tìm xuất hiện tại vị trí giữa"</b> và kết thúc thuật toán.
+</p>
+
+
+
+
+<p>
+<b>Bước 4:</b>
+Nếu giá trị cần tìm nhỏ hơn giá trị tại vị trí giữa thì thu hẹp vùng tìm kiếm còn nửa trước của dãy.
+</p>
+
+<p>
+Ngược lại, nếu giá trị cần tìm lớn hơn giá trị tại vị trí giữa thì thu hẹp vùng tìm kiếm còn nửa sau của dãy.
+</p>
+
+
+
+
+<p>
+<b>Bước 5:</b>
+Lặp lại từ Bước 1 đến Bước 4 cho đến khi:
+</p>
+
+<ul>
+
+<li>
+Tìm thấy giá trị cần tìm.
+</li>
+
+<li>
+Hoặc vùng tìm kiếm không còn phần tử nào.
+</li>
+
+</ul>
+
+
+
+<p>
+<b>Lưu ý:</b>
+Nửa trước và nửa sau không bao gồm phần tử ở vị trí giữa.
+</p>
+
+
+
+
+
+<h2>III. Sắp xếp và tìm kiếm</h2>
+
+
+<p>
+Việc sắp xếp dữ liệu trước khi tìm kiếm giúp quá trình tìm kiếm được thực hiện nhanh hơn.
+</p>
+
+
+<p>
+Ví dụ:
+</p>
+
+
+<p>
+Cho 10 số trên các tấm thẻ:
+</p>
+
+
+<p>
+<b>
+2, 3, 5, 6, 8, 9, 11, 15, 16, 18
+</b>
+</p>
+
+
+<p>
+Giả sử A giữ 10 tấm thẻ và B là người tìm kiếm.
+B sử dụng thuật toán tìm kiếm nhị phân để tìm một số nhỏ hơn 20 trong các tấm thẻ của A.
+</p>
+
+
+
+
+
+<h2>IV. Cách chơi tìm kiếm nhị phân bằng thẻ số</h2>
+
+
+<h3>Các bước thực hiện:</h3>
+
+
+<p>
+<b>Bước 1:</b>
+A úp lần lượt 10 chiếc thẻ lên bàn theo thứ tự các số từ bé đến lớn.
+</p>
+
+
+<p>
+<b>Bước 2:</b>
+B cho A biết con số cần tìm.
+</p>
+
+
+<p>
+<b>Bước 3:</b>
+B chọn tấm thẻ ở vị trí giữa.
+</p>
+
+
+<p>
+<b>Bước 4:</b>
+A mở tấm thẻ và trả lời bằng một trong ba câu:
+</p>
+
+
+<ul>
+
+<li>
+<b>"Bằng nhau"</b> nếu số trên thẻ đúng bằng số cần tìm.
+</li>
+
+<li>
+<b>"Lớn hơn"</b> nếu số trên thẻ lớn hơn số cần tìm.
+</li>
+
+<li>
+<b>"Bé hơn"</b> nếu số trên thẻ nhỏ hơn số cần tìm.
+</li>
+
+</ul>
+
+
+
+<p>
+<b>Bước 5:</b>
+Dựa vào câu trả lời của A, B chọn nửa dãy số tiếp theo để tìm kiếm.
+</p>
+
+
+<p>
+<b>Bước 6:</b>
+Lặp lại các bước 3, 4, 5 cho đến khi:
+</p>
+
+<ul>
+
+<li>
+Tìm thấy số cần tìm.
+</li>
+
+<li>
+Hoặc đã tìm hết dãy số.
+</li>
+
+</ul>
+
+
+<p>
+<b>Bước 7:</b>
+Hoán đổi vị trí A và B trong lượt chơi tiếp theo.
+</p>
+
+
+
+
+
+<h2>V. Ví dụ minh họa</h2>
+
+
+<p>
+Tìm số <b>15</b> trong dãy:
+</p>
+
+
+<p>
+<b>2, 3, 5, 6, 8, 9, 11, 15, 16, 18</b>
+</p>
+
+
+<ul>
+
+<li>
+Chọn vị trí giữa là số 8.
+</li>
+
+<li>
+15 lớn hơn 8 nên tìm ở nửa sau.
+</li>
+
+<li>
+Chọn tiếp vị trí giữa của phần còn lại là 15.
+</li>
+
+<li>
+Tìm thấy số 15 và kết thúc.
+</li>
+
+</ul>
+
+
+
+
+
+<h2>📌 Ghi nhớ</h2>
+
+
+<ul>
+
+<li>
+Thuật toán tìm kiếm nhị phân chỉ áp dụng cho danh sách đã được sắp xếp.
+</li>
+
+<li>
+Mỗi lần tìm kiếm, thuật toán loại bỏ một nửa số phần tử không cần thiết.
+</li>
+
+<li>
+Tìm kiếm nhị phân nhanh hơn tìm kiếm tuần tự với danh sách lớn.
+</li>
+
+<li>
+Cần xác định vị trí giữa và so sánh để thu hẹp vùng tìm kiếm.
+</li>
+
+</ul>
+
+
+</div>
+
+
+</body>
+</html>

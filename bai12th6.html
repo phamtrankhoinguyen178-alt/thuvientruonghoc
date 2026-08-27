@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 12 - Trình bày thông tin ở dạng bảng</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#9b59b6,#3498db);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#1565c0;
+}
+
+h3{
+    color:#8e44ad;
+}
+
+p,li{
+    line-height:1.8;
+    font-size:17px;
+}
+
+ul,ol{
+    padding-left:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#3498db;
+    color:white;
+}
+
+.note{
+    background:#e3f2fd;
+    padding:15px;
+    border-left:5px solid #2196f3;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+.example{
+    background:#f3e5f5;
+    padding:15px;
+    border-left:5px solid #9c27b0;
+    border-radius:8px;
+    margin:15px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="tinhoc6.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+<h1>💻 Bài 12</h1>
+<h2>Trình bày thông tin ở dạng bảng</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Trình bày thông tin ở dạng bảng</h2>
+
+<p>
+Bảng là công cụ giúp trình bày thông tin một cách ngắn gọn, rõ ràng và dễ quan sát.
+</p>
+
+<p>
+Bảng thường được sử dụng để ghi lại dữ liệu trong các công việc thống kê, điều tra, khảo sát hoặc tổng hợp thông tin.
+</p>
+
+<div class="note">
+<b>Ghi nhớ:</b> Bảng giúp tìm kiếm, so sánh và tổng hợp thông tin dễ dàng hơn.
+</div>
+
+<h3>Ví dụ bảng thông tin</h3>
+
+<table>
+<tr>
+<th>Họ và tên</th>
+<th>Lớp</th>
+<th>Điểm Tin học</th>
+</tr>
+
+<tr>
+<td>Nguyễn Văn An</td>
+<td>6A</td>
+<td>9</td>
+</tr>
+
+<tr>
+<td>Trần Thị Bình</td>
+<td>6A</td>
+<td>10</td>
+</tr>
+</table>
+
+<h2>II. Tạo bảng</h2>
+
+<p>
+Để tạo bảng trong phần mềm soạn thảo văn bản, thực hiện các bước sau:
+</p>
+
+<ol>
+<li>Chọn thẻ <b>Insert</b>.</li>
+
+<li>Chọn nút <b>Table</b>.</li>
+
+<li>Di chuyển chuột để chọn số hàng và số cột cần tạo.</li>
+
+<li>Hoặc chọn <b>Insert Table</b> rồi nhập số hàng và số cột.</li>
+</ol>
+
+<h3>Nhập dữ liệu vào bảng</h3>
+
+<ul>
+<li>Đưa con trỏ vào ô cần nhập.</li>
+
+<li>Gõ nội dung cần nhập.</li>
+
+<li>Dùng chuột hoặc các phím mũi tên để di chuyển giữa các ô.</li>
+</ul>
+
+<p>
+Việc căn lề trong ô thực hiện tương tự như căn lề văn bản thông thường.
+</p>
+
+<h2>III. Định dạng bảng</h2>
+
+<p>
+Khi đặt con trỏ trong bảng, nhóm thẻ <b>Table Tools</b> sẽ xuất hiện để hỗ trợ chỉnh sửa bảng.
+</p>
+
+<h3>1. Chèn hoặc xóa hàng, cột</h3>
+
+<p>
+Các bước thực hiện:
+</p>
+
+<ol>
+<li>Đặt con trỏ vào một ô trong bảng.</li>
+
+<li>Chọn <b>Table Tools → Layout</b>.</li>
+
+<li>Chọn lệnh phù hợp.</li>
+</ol>
+
+<table>
+<tr>
+<th>Lệnh</th>
+<th>Chức năng</th>
+</tr>
+
+<tr>
+<td>Insert Above</td>
+<td>Thêm hàng phía trên</td>
+</tr>
+
+<tr>
+<td>Insert Below</td>
+<td>Thêm hàng phía dưới</td>
+</tr>
+
+<tr>
+<td>Insert Left</td>
+<td>Thêm cột bên trái</td>
+</tr>
+
+<tr>
+<td>Insert Right</td>
+<td>Thêm cột bên phải</td>
+</tr>
+
+<tr>
+<td>Delete</td>
+<td>Xóa hàng hoặc cột</td>
+</tr>
+</table>
+
+<h3>2. Gộp ô và tách ô</h3>
+
+<p>
+Các bước thực hiện:
+</p>
+
+<ol>
+<li>Đặt con trỏ trong ô cần chỉnh sửa.</li>
+
+<li>Chọn <b>Table Tools → Layout</b>.</li>
+
+<li>Chọn lệnh trong nhóm <b>Merge</b>.</li>
+</ol>
+
+<ul>
+<li>Merge Cells: Gộp các ô.</li>
+
+<li>Split Cells: Tách ô.</li>
+</ul>
+
+<h3>3. Điều chỉnh kích thước ô</h3>
+
+<p>
+Để thay đổi kích thước hàng hoặc cột:
+</p>
+
+<ol>
+<li>Chọn ô cần chỉnh sửa.</li>
+
+<li>Vào <b>Table Tools → Layout</b>.</li>
+
+<li>Nhập giá trị vào ô <b>Height</b> hoặc <b>Width</b>.</li>
+</ol>
+
+<p>
+Hoặc kéo đường biên của hàng và cột bằng chuột để thay đổi kích thước.
+</p>
+
+<div class="example">
+<b>Mẹo:</b> Điều chỉnh kích thước cột phù hợp giúp bảng đẹp và dễ đọc hơn.
+</div>
+
+<h2>IV. Thực hành</h2>
+
+<p>
+Hoàn thành các yêu cầu thực hành trong SGK:
+</p>
+
+<ol>
+<li>Tạo bảng theo mẫu.</li>
+
+<li>Nhập dữ liệu vào bảng.</li>
+
+<li>Chèn thêm hàng hoặc cột khi cần.</li>
+
+<li>Gộp ô và tách ô.</li>
+
+<li>Điều chỉnh kích thước hàng, cột.</li>
+
+<li>Lưu tệp văn bản vào thư mục quy định.</li>
+</ol>
+
+<h2>📌 Ghi nhớ</h2>
+
+<ul>
+<li>Bảng giúp trình bày thông tin rõ ràng và khoa học.</li>
+
+<li>Có thể tạo bảng bằng lệnh Insert → Table.</li>
+
+<li>Dữ liệu được nhập trực tiếp vào các ô của bảng.</li>
+
+<li>Có thể thêm hoặc xóa hàng, cột trong bảng.</li>
+
+<li>Có thể gộp ô, tách ô và thay đổi kích thước ô.</li>
+
+<li>Bảng giúp việc thống kê và so sánh dữ liệu thuận tiện hơn.</li>
+</ul>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 18: Thu thập và phân loại dữ liệu</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+.formula{
+background:#f5f7ff;
+border-left:6px solid #0b2a88;
+padding:15px 25px;
+margin:20px 0;
+font-size:26px;
+font-weight:bold;
+color:#0b2a88;
+border-radius:8px;
+}
+
+.example{
+background:#fff8ef;
+border-left:6px solid #ff6a00;
+padding:15px 25px;
+margin:20px 0;
+border-radius:8px;
+}
+
+.note{
+background:#eef9f0;
+border-left:6px solid #28a745;
+padding:15px 25px;
+margin:20px 0;
+border-radius:8px;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+.formula{
+font-size:22px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan8.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 18: Thu thập và phân loại dữ liệu</h2>
+
+<h3>📖 1. Thu thập dữ liệu</h3>
+
+<p>
+Thu thập dữ liệu là quá trình tìm kiếm, ghi nhận và tập hợp các thông tin cần thiết để phục vụ cho việc nghiên cứu hoặc giải quyết một vấn đề.
+</p>
+
+<p>
+Thu thập dữ liệu có thể được thực hiện theo hai cách:
+</p>
+
+<ul>
+
+<li>
+<strong>Thu thập dữ liệu trực tiếp:</strong> là việc thu thập dữ liệu thông qua quan sát, làm thí nghiệm, lập bảng hỏi, phỏng vấn, đo đạc,...
+</li>
+
+<li>
+<strong>Thu thập dữ liệu gián tiếp:</strong> là việc thu thập dữ liệu từ những nguồn có sẵn như sách, báo, mạng Internet,...
+</li>
+
+</ul>
+
+<h3>📌 2. Thu thập dữ liệu trực tiếp</h3>
+
+<p>
+Thu thập dữ liệu trực tiếp là việc người thu thập tự mình quan sát, đo đạc, thực hiện thí nghiệm, hỏi hoặc phỏng vấn để có được dữ liệu.
+</p>
+
+<div class="example">
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Thầy giáo Giáo dục thể chất muốn biết thời gian chạy cự li 100 mét của các học sinh khối 8.
+</p>
+
+<p>
+Thầy giáo cho học sinh chạy 100 mét, dùng đồng hồ bấm giờ để đo thời gian chạy và ghi lại kết quả.
+</p>
+
+<p>
+Đây là phương pháp:
+</p>
+
+<div class="formula">
+Thu thập dữ liệu trực tiếp
+</div>
+
+</div>
+
+<h3>📌 3. Thu thập dữ liệu gián tiếp</h3>
+
+<p>
+Thu thập dữ liệu gián tiếp là việc sử dụng những dữ liệu đã có sẵn từ các nguồn khác.
+</p>
+
+<p>
+Một số nguồn dữ liệu có sẵn thường gặp:
+</p>
+
+<ul>
+
+<li>Sách giáo khoa, sách tham khảo.</li>
+
+<li>Báo, tạp chí.</li>
+
+<li>Các trang web đáng tin cậy.</li>
+
+<li>Các báo cáo, thống kê.</li>
+
+<li>Các tài liệu đã được công bố.</li>
+
+</ul>
+
+<div class="example">
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+Muốn biết thứ hạng của Việt Nam tại một kì SEA Games, ta có thể tìm thông tin trên các trang web chính thống hoặc các bài báo.
+</p>
+
+<p>
+Đây là phương pháp:
+</p>
+
+<div class="formula">
+Thu thập dữ liệu gián tiếp
+</div>
+
+</div>
+
+<h3>📌 4. Yêu cầu đối với dữ liệu thu thập được</h3>
+
+<p>
+Để có thể đưa ra các kết luận hợp lí, dữ liệu thu thập được cần đảm bảo tính đại diện cho toàn bộ đối tượng đang được quan tâm.
+</p>
+
+<div class="note">
+
+<p>
+⭐ <strong>Ghi nhớ:</strong> Khi thu thập dữ liệu, cần lựa chọn phương pháp phù hợp và nguồn dữ liệu đáng tin cậy.
+</p>
+
+</div>
+
+<h3>🔍 Ví dụ 3</h3>
+
+<div class="example">
+
+<p>
+Để tìm hiểu chiều cao của học sinh lớp 8A, giáo viên đo chiều cao của từng học sinh trong lớp và ghi lại kết quả.
+</p>
+
+<p>
+Đây là:
+</p>
+
+<div class="formula">
+Thu thập dữ liệu trực tiếp
+</div>
+
+<p>
+Vì dữ liệu được thu thập thông qua việc đo trực tiếp chiều cao của học sinh.
+</p>
+
+</div>
+
+<h3>📖 5. Phân loại dữ liệu</h3>
+
+<p>
+Dữ liệu có thể được phân loại thành nhiều dạng khác nhau. Trong bài học này, ta đặc biệt quan tâm đến số liệu liên tục và số liệu rời rạc.
+</p>
+
+<h3>📌 6. Số liệu liên tục</h3>
+
+<p>
+Số liệu có thể nhận giá trị tùy ý trong một khoảng nào đó được gọi là <strong>số liệu liên tục</strong>.
+</p>
+
+<p>
+Số liệu liên tục thường thu được từ các phép đo.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<ul>
+
+<li>Chiều cao của học sinh.</li>
+
+<li>Cân nặng của học sinh.</li>
+
+<li>Nhiệt độ.</li>
+
+<li>Thời gian.</li>
+
+<li>Độ dài của một vật.</li>
+
+</ul>
+
+<div class="formula">
+Số liệu liên tục → thường thu được từ phép đo
+</div>
+
+<h3>🔍 Ví dụ 4</h3>
+
+<div class="example">
+
+<p>
+Thời gian một bạn học sinh đi từ nhà đến trường lần lượt là:
+</p>
+
+<div class="formula">
+0,5 giờ ; 1 giờ ; 1,1 giờ
+</div>
+
+<p>
+Thời gian có thể nhận nhiều giá trị khác nhau trong một khoảng.
+</p>
+
+<p>
+Do đó đây là:
+</p>
+
+<div class="formula">
+Số liệu liên tục
+</div>
+
+</div>
+
+<h3>📌 7. Số liệu rời rạc</h3>
+
+<p>
+Số liệu không phải là số liệu liên tục được gọi là <strong>số liệu rời rạc</strong>.
+</p>
+
+<p>
+Số liệu rời rạc thường là số liệu đếm số phần tử của một tập hợp.
+</p>
+
+<p>
+Ví dụ:
+</p>
+
+<ul>
+
+<li>Số học sinh trong một lớp.</li>
+
+<li>Số bàn học trong một phòng học.</li>
+
+<li>Số sản phẩm một công nhân làm được trong ngày.</li>
+
+<li>Số quyển sách trong thư viện.</li>
+
+<li>Số máy tính trong phòng tin học.</li>
+
+</ul>
+
+<div class="formula">
+Số liệu rời rạc → thường là số liệu đếm
+</div>
+
+<h3>🔍 Ví dụ 5</h3>
+
+<div class="example">
+
+<p>
+Số học sinh của ba lớp lần lượt là:
+</p>
+
+<div class="formula">
+30 ; 35 ; 42
+</div>
+
+<p>
+Số học sinh là số được đếm nên đây là:
+</p>
+
+<div class="formula">
+Số liệu rời rạc
+</div>
+
+</div>
+
+<h3>📖 8. So sánh số liệu liên tục và số liệu rời rạc</h3>
+
+<div class="example">
+
+<p>
+<strong>🔵 Số liệu liên tục:</strong>
+</p>
+
+<ul>
+
+<li>Thường thu được từ phép đo.</li>
+
+<li>Có thể nhận nhiều giá trị trong một khoảng.</li>
+
+<li>Ví dụ: chiều cao, cân nặng, nhiệt độ, thời gian.</li>
+
+</ul>
+
+<p>
+<strong>🟠 Số liệu rời rạc:</strong>
+</p>
+
+<ul>
+
+<li>Thường thu được từ việc đếm.</li>
+
+<li>Không nhận mọi giá trị trong một khoảng.</li>
+
+<li>Ví dụ: số học sinh, số bàn, số sản phẩm.</li>
+
+</ul>
+
+</div>
+
+<h3>📖 9. Sơ đồ phân loại dữ liệu</h3>
+
+<div class="formula">
+
+DỮ LIỆU
+<br>
+↓
+<br>
+SỐ LIỆU
+<br>
+↙　　　　　↘
+<br>
+LIÊN TỤC　　 RỜI RẠC
+<br>
+↓　　　　　　↓
+<br>
+Đo lường　　 Đếm số lượng
+
+</div>
+
+<h3>🔍 Ví dụ 6: Xác định loại dữ liệu</h3>
+
+<div class="example">
+
+<p>
+Cho các dữ liệu sau:
+</p>
+
+<p>
+<strong>a)</strong> Thời gian một bạn đi từ nhà đến trường là:
+</p>
+
+<div class="formula">
+0,5 ; 1 ; 1,1 giờ
+</div>
+
+<p>
+Thời gian là đại lượng có thể nhận nhiều giá trị trong một khoảng.
+</p>
+
+<p>
+Vì vậy:
+</p>
+
+<div class="formula">
+→ Số liệu liên tục
+</div>
+
+<p>
+<strong>b)</strong> Số lượng bàn học trong ba lớp lần lượt là:
+</p>
+
+<div class="formula">
+30 ; 1900 ; 41
+</div>
+
+<p>
+Số lượng bàn học là số liệu đếm nên:
+</p>
+
+<div class="formula">
+→ Số liệu rời rạc
+</div>
+
+<p>
+Tuy nhiên, giá trị 1900 là không hợp lí vì số bàn học của một lớp không thể lớn đến như vậy.
+</p>
+
+<div class="formula">
+Giá trị không hợp lí: 1900
+</div>
+
+</div>
+
+<h3>📖 10. Phát hiện dữ liệu không hợp lí</h3>
+
+<p>
+Khi thu thập dữ liệu, cần kiểm tra các giá trị để phát hiện những dữ liệu không hợp lí.
+</p>
+
+<p>
+Một dữ liệu có thể không hợp lí nếu nó quá lớn, quá nhỏ hoặc không phù hợp với đối tượng đang xét.
+</p>
+
+<h3>🔍 Ví dụ 7</h3>
+
+<div class="example">
+
+<p>
+Số học sinh của ba lớp lần lượt là:
+</p>
+
+<div class="formula">
+35 ; 42 ; 1500
+</div>
+
+<p>
+Số học sinh của một lớp thường chỉ có vài chục học sinh.
+</p>
+
+<p>
+Do đó:
+</p>
+
+<div class="formula">
+1500 là giá trị không hợp lí.
+</div>
+
+</div>
+
+<h3>📌 11. Cách làm bài thu thập và phân loại dữ liệu</h3>
+
+<ul>
+
+<li>
+Bước 1: Xác định dữ liệu cần thu thập.
+</li>
+
+<li>
+Bước 2: Xác định cách thu thập dữ liệu là trực tiếp hay gián tiếp.
+</li>
+
+<li>
+Bước 3: Phân loại dữ liệu.
+</li>
+
+<li>
+Bước 4: Kiểm tra các giá trị có hợp lí hay không.
+</li>
+
+</ul>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Có hai cách thu thập dữ liệu: trực tiếp và gián tiếp.
+</li>
+
+<li>
+Thu thập trực tiếp được thực hiện thông qua quan sát, đo đạc, thí nghiệm, bảng hỏi, phỏng vấn,...
+</li>
+
+<li>
+Thu thập gián tiếp sử dụng các nguồn dữ liệu có sẵn như sách, báo, Internet,...
+</li>
+
+<li>
+Số liệu liên tục thường thu được từ phép đo.
+</li>
+
+<li>
+Số liệu rời rạc thường thu được từ việc đếm.
+</li>
+
+<li>
+Cần kiểm tra dữ liệu để phát hiện các giá trị không hợp lí.
+</li>
+
+<li>
+Dữ liệu thu thập được cần có tính đại diện để đưa ra kết luận hợp lí.
+</li>
+
+</ul>
+
+<h3>⭐ Kết luận</h3>
+
+<p>
+Thu thập và phân loại dữ liệu là bước quan trọng trong việc xử lí thông tin và giải quyết các vấn đề thực tế.
+</p>
+
+<p>
+Khi làm bài, cần nhớ hai nội dung chính:
+</p>
+
+<div class="formula">
+Thu thập dữ liệu → Trực tiếp hoặc gián tiếp
+</div>
+
+<div class="formula">
+Phân loại số liệu → Liên tục hoặc rời rạc
+</div>
+
+<p>
+Ngoài ra, cần luôn kiểm tra dữ liệu để phát hiện những giá trị không hợp lí trước khi sử dụng chúng để đưa ra kết luận.
+</p>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

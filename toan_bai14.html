@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 14: Trường hợp bằng nhau thứ hai và thứ ba của tam giác</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+.img{
+display:block;
+max-width:500px;
+width:100%;
+margin:25px auto;
+border-radius:12px;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+#imgBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+#imgBox span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p{
+font-size:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 14: Trường hợp bằng nhau thứ hai và thứ ba của tam giác</h2>
+
+<h3>📖 1. Trường hợp bằng nhau thứ hai của tam giác: Cạnh - Góc - Cạnh (c.g.c)</h3>
+
+<img src="anhhinh1.jpg" class="img" onclick="openImg(this)">
+
+<p>• Trong tam giác ABC, góc BAC (hay góc A) được gọi là góc xen giữa của hai cạnh AB và AC.</p>
+
+<p>• Nếu hai cạnh và góc xen giữa của tam giác này bằng hai cạnh và góc xen giữa của tam giác kia thì hai tam giác đó bằng nhau.</p>
+
+<h3>🧠 2. Trường hợp bằng nhau thứ ba của tam giác: Góc - Cạnh - Góc (g.c.g)</h3>
+
+<img src="hinhanh2.jpg" class="img" onclick="openImg(this)">
+
+<p>• Trong tam giác ABC, hai góc ABC và ACB (hay góc B và góc C) được gọi là hai góc kề cạnh BC của tam giác ABC.</p>
+
+<p>• Nếu một cạnh và hai góc kề của tam giác này bằng một cạnh và hai góc kề của tam giác kia thì hai tam giác đó bằng nhau.</p>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+document.getElementById("imgBox").style.display="flex";
+document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

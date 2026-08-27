@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 19: Biểu diễn dữ liệu bằng bảng, biểu đồ</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+.formula{
+background:#f5f7ff;
+border-left:6px solid #0b2a88;
+padding:15px 25px;
+margin:20px 0;
+font-size:26px;
+font-weight:bold;
+color:#0b2a88;
+border-radius:8px;
+}
+
+.example{
+background:#fff8ef;
+border-left:6px solid #ff6a00;
+padding:15px 25px;
+margin:20px 0;
+border-radius:8px;
+}
+
+.note{
+background:#eef9f0;
+border-left:6px solid #28a745;
+padding:15px 25px;
+margin:20px 0;
+border-radius:8px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:25px 0;
+background:white;
+}
+
+th,td{
+border:2px solid #0b2a88;
+padding:12px;
+text-align:center;
+font-size:22px;
+}
+
+th{
+background:#0b2a88;
+color:white;
+}
+
+tr:nth-child(even){
+background:#f5f7ff;
+}
+
+.chart{
+margin:25px 0;
+padding:25px;
+background:#fafafa;
+border:2px solid #ddd;
+border-radius:10px;
+}
+
+.bar-box{
+display:flex;
+align-items:flex-end;
+justify-content:space-around;
+height:300px;
+border-left:3px solid #333;
+border-bottom:3px solid #333;
+margin:30px 20px;
+padding:0 20px;
+}
+
+.bar{
+width:70px;
+background:#ff6a00;
+color:white;
+text-align:center;
+font-weight:bold;
+border-radius:6px 6px 0 0;
+padding-top:8px;
+}
+
+.bar span{
+display:block;
+margin-top:-35px;
+color:#333;
+font-size:18px;
+}
+
+.label{
+text-align:center;
+font-weight:bold;
+font-size:18px;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+.formula{
+font-size:22px;
+}
+
+th,td{
+font-size:18px;
+padding:8px;
+}
+
+.bar{
+width:45px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan8.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 19: Biểu diễn dữ liệu bằng bảng, biểu đồ</h2>
+
+<h3>📖 1. Biểu diễn dữ liệu bằng bảng</h3>
+
+<p>
+Bảng thống kê là một cách trình bày dữ liệu giúp chúng ta dễ dàng quan sát, so sánh và phân tích các thông tin.
+</p>
+
+<p>
+Một bảng thống kê thường gồm các hàng và các cột. Các cột có thể biểu diễn tên đối tượng, thời gian hoặc số liệu tương ứng.
+</p>
+
+<div class="example">
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Số học sinh lớp 7C đạt điểm tốt môn Toán trong 4 tháng được cho như sau:
+</p>
+
+<table>
+
+<tr>
+<th>Tháng</th>
+<th>Số học sinh</th>
+</tr>
+
+<tr>
+<td>9</td>
+<td>8</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>5</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>9</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>12</td>
+</tr>
+
+</table>
+
+<p>
+Từ bảng trên, ta có thể dễ dàng biết được số học sinh đạt điểm tốt trong từng tháng.
+</p>
+
+</div>
+
+<h3>📖 2. Lựa chọn biểu đồ tranh hay biểu đồ cột</h3>
+
+<p>
+Có thể dùng <strong>biểu đồ tranh</strong> hoặc <strong>biểu đồ cột</strong> để biểu diễn số lượng các loại đối tượng khác nhau.
+</p>
+
+<p>
+Tuy nhiên, khi dùng biểu đồ tranh mà phải vẽ quá nhiều biểu tượng thì nên sử dụng biểu đồ cột.
+</p>
+
+<div class="note">
+
+<p>
+⭐ <strong>Ghi nhớ:</strong>
+</p>
+
+<p>
+Khi số lượng đối tượng không quá lớn, biểu đồ tranh có thể giúp dữ liệu trực quan và dễ hiểu.
+</p>
+
+<p>
+Khi số lượng cần biểu diễn lớn hoặc có nhiều giá trị khác nhau, biểu đồ cột thường thuận tiện hơn.
+</p>
+
+</div>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<div class="example">
+
+<p>
+Một buổi biểu diễn âm nhạc bán được số vé như sau:
+</p>
+
+<table>
+
+<tr>
+<th>Giá vé</th>
+<th>Số vé bán được</th>
+</tr>
+
+<tr>
+<td>200 nghìn đồng</td>
+<td>700</td>
+</tr>
+
+<tr>
+<td>250 nghìn đồng</td>
+<td>500</td>
+</tr>
+
+<tr>
+<td>300 nghìn đồng</td>
+<td>400</td>
+</tr>
+
+<tr>
+<td>500 nghìn đồng</td>
+<td>100</td>
+</tr>
+
+<tr>
+<td>1 triệu đồng</td>
+<td>150</td>
+</tr>
+
+</table>
+
+<p>
+Vì số lượng vé khá lớn nên nếu dùng biểu đồ tranh sẽ phải sử dụng rất nhiều biểu tượng.
+</p>
+
+<p>
+Do đó, ta nên sử dụng:
+</p>
+
+<div class="formula">
+→ Biểu đồ cột
+</div>
+
+<p>
+Từ bảng dữ liệu, ta biết:
+</p>
+
+<ul>
+
+<li>700 vé loại 200 nghìn đồng.</li>
+
+<li>500 vé loại 250 nghìn đồng.</li>
+
+<li>400 vé loại 300 nghìn đồng.</li>
+
+<li>100 vé loại 500 nghìn đồng.</li>
+
+<li>150 vé loại 1 triệu đồng.</li>
+
+</ul>
+
+</div>
+
+<h3>📊 Minh họa biểu đồ cột</h3>
+
+<div class="chart">
+
+<div class="bar-box">
+
+<div>
+<div class="bar" style="height:210px;">
+<span>700</span>
+</div>
+<div class="label">200k</div>
+</div>
+
+<div>
+<div class="bar" style="height:150px;">
+<span>500</span>
+</div>
+<div class="label">250k</div>
+</div>
+
+<div>
+<div class="bar" style="height:120px;">
+<span>400</span>
+</div>
+<div class="label">300k</div>
+</div>
+
+<div>
+<div class="bar" style="height:30px;">
+<span>100</span>
+</div>
+<div class="label">500k</div>
+</div>
+
+<div>
+<div class="bar" style="height:45px;">
+<span>150</span>
+</div>
+<div class="label">1 triệu</div>
+</div>
+
+</div>
+
+<p style="text-align:center;">
+Biểu đồ cột số vé bán được theo từng loại giá
+</p>
+
+</div>
+
+<h3>📖 3. Lựa chọn biểu đồ cột hay biểu đồ đoạn thẳng</h3>
+
+<p>
+Nếu muốn biểu diễn sự thay đổi của một đại lượng theo thời gian thì ta dùng <strong>biểu đồ đoạn thẳng</strong>.
+</p>
+
+<p>
+Khi số lượng thời điểm quan sát ít, ta cũng có thể biểu diễn bằng biểu đồ cột.
+</p>
+
+<div class="formula">
+Thay đổi theo thời gian → Biểu đồ đoạn thẳng
+</div>
+
+<div class="example">
+
+<h3>🔍 Ví dụ 3</h3>
+
+<p>
+Cho bảng dữ liệu về số học sinh lớp 7C đạt điểm tốt môn Toán trong 4 tháng:
+</p>
+
+<table>
+
+<tr>
+<th>Tháng</th>
+<th>Số học sinh</th>
+</tr>
+
+<tr>
+<td>9</td>
+<td>8</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>5</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>9</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>12</td>
+</tr>
+
+</table>
+
+<p>
+Dữ liệu thay đổi theo các tháng.
+</p>
+
+<p>
+Vì vậy, ta nên sử dụng:
+</p>
+
+<div class="formula">
+→ Biểu đồ đoạn thẳng
+</div>
+
+<p>
+Biểu đồ đoạn thẳng giúp ta quan sát được sự tăng giảm của số học sinh đạt điểm tốt qua từng tháng.
+</p>
+
+</div>
+
+<h3>📖 4. Lựa chọn biểu đồ cột kép hay biểu đồ hình quạt tròn</h3>
+
+<p>
+Tùy vào mục đích biểu diễn dữ liệu mà ta lựa chọn biểu đồ phù hợp.
+</p>
+
+<p>
+<strong>Biểu đồ cột kép</strong> được sử dụng khi muốn so sánh hai tập dữ liệu với nhau.
+</p>
+
+<div class="formula">
+So sánh hai tập dữ liệu → Biểu đồ cột kép
+</div>
+
+<p>
+<strong>Biểu đồ hình quạt tròn</strong> được sử dụng khi muốn biểu diễn tỉ lệ các phần trong một tổng thể.
+</p>
+
+<div class="formula">
+Biểu diễn tỉ lệ trong tổng thể → Biểu đồ hình quạt tròn
+</div>
+
+<h3>🔍 Ví dụ 4</h3>
+
+<div class="example">
+
+<p>
+Xét các trường hợp sau:
+</p>
+
+<p>
+<strong>a)</strong> Tỉ lệ các loại con vật nuôi tại một nông trường.
+</p>
+
+<p>
+Đây là dữ liệu về tỉ lệ các phần trong tổng thể.
+</p>
+
+<div class="formula">
+→ Biểu đồ hình quạt tròn
+</div>
+
+<p>
+<strong>b)</strong> Tỉ lệ xếp loại hạnh kiểm của học sinh.
+</p>
+
+<p>
+Đây cũng là dữ liệu về tỉ lệ các phần trong tổng thể.
+</p>
+
+<div class="formula">
+→ Biểu đồ hình quạt tròn
+</div>
+
+<p>
+<strong>c)</strong> Số lượng huy chương của đoàn thể thao Mỹ và Nhật Bản tại Olympic Tokyo 2020.
+</p>
+
+<p>
+Ta cần so sánh hai tập dữ liệu.
+</p>
+
+<div class="formula">
+→ Biểu đồ cột kép
+</div>
+
+</div>
+
+<h3>📖 5. Các loại biểu đồ thường gặp</h3>
+
+<table>
+
+<tr>
+<th>Loại biểu đồ</th>
+<th>Mục đích sử dụng</th>
+</tr>
+
+<tr>
+<td>📊 Biểu đồ cột</td>
+<td>Biểu diễn và so sánh số lượng các đối tượng</td>
+</tr>
+
+<tr>
+<td>📈 Biểu đồ đoạn thẳng</td>
+<td>Biểu diễn sự thay đổi của một đại lượng theo thời gian</td>
+</tr>
+
+<tr>
+<td>📊 Biểu đồ cột kép</td>
+<td>So sánh hai tập dữ liệu</td>
+</tr>
+
+<tr>
+<td>🥧 Biểu đồ hình quạt tròn</td>
+<td>Biểu diễn tỉ lệ các phần trong tổng thể</td>
+</tr>
+
+<tr>
+<td>🖼️ Biểu đồ tranh</td>
+<td>Biểu diễn số lượng bằng hình ảnh hoặc biểu tượng</td>
+</tr>
+
+</table>
+
+<h3>📌 6. Cách lựa chọn biểu đồ</h3>
+
+<ul>
+
+<li>
+Nếu muốn biểu diễn số lượng các loại đối tượng khác nhau → chọn biểu đồ cột hoặc biểu đồ tranh.
+</li>
+
+<li>
+Nếu phải sử dụng quá nhiều biểu tượng trong biểu đồ tranh → nên chọn biểu đồ cột.
+</li>
+
+<li>
+Nếu muốn biểu diễn sự thay đổi của đại lượng theo thời gian → chọn biểu đồ đoạn thẳng.
+</li>
+
+<li>
+Nếu muốn so sánh hai tập dữ liệu → chọn biểu đồ cột kép.
+</li>
+
+<li>
+Nếu muốn biểu diễn tỉ lệ các phần trong tổng thể → chọn biểu đồ hình quạt tròn.
+</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 5: Lựa chọn biểu đồ phù hợp</h3>
+
+<div class="example">
+
+<p>
+Cho các tình huống sau:
+</p>
+
+<p>
+<strong>1.</strong> Số học sinh của các lớp 8A, 8B, 8C.
+</p>
+
+<div class="formula">
+→ Biểu đồ cột
+</div>
+
+<p>
+<strong>2.</strong> Nhiệt độ trung bình trong 7 ngày liên tiếp.
+</p>
+
+<div class="formula">
+→ Biểu đồ đoạn thẳng
+</div>
+
+<p>
+<strong>3.</strong> So sánh số học sinh nam và nữ của các lớp.
+</p>
+
+<div class="formula">
+→ Biểu đồ cột kép
+</div>
+
+<p>
+<strong>4.</strong> Tỉ lệ học sinh đạt các mức xếp loại khác nhau.
+</p>
+
+<div class="formula">
+→ Biểu đồ hình quạt tròn
+</div>
+
+</div>
+
+<h3>📖 7. Đọc và nhận xét biểu đồ</h3>
+
+<p>
+Khi đọc một biểu đồ, cần chú ý:
+</p>
+
+<ul>
+
+<li>Tên biểu đồ.</li>
+
+<li>Các đối tượng được biểu diễn.</li>
+
+<li>Đơn vị của dữ liệu.</li>
+
+<li>Giá trị tương ứng với từng đối tượng.</li>
+
+<li>Đối tượng có giá trị lớn nhất.</li>
+
+<li>Đối tượng có giá trị nhỏ nhất.</li>
+
+<li>Sự tăng giảm hoặc sự khác nhau giữa các đối tượng.</li>
+
+</ul>
+
+<h3>🔍 Ví dụ 6</h3>
+
+<div class="example">
+
+<p>
+Từ biểu đồ số vé bán được ở ví dụ trên:
+</p>
+
+<ul>
+
+<li>Số vé bán được nhiều nhất là vé 200 nghìn đồng.</li>
+
+<li>Số vé bán được ít nhất là vé 500 nghìn đồng.</li>
+
+<li>Vé 200 nghìn đồng bán được 700 vé.</li>
+
+<li>Vé 250 nghìn đồng bán được 500 vé.</li>
+
+<li>Vé 300 nghìn đồng bán được 400 vé.</li>
+
+</ul>
+
+</div>
+
+<h3>📌 8. Lưu ý khi biểu diễn dữ liệu</h3>
+
+<div class="note">
+
+<ul>
+
+<li>
+Chọn đúng loại biểu đồ phù hợp với mục đích.
+</li>
+
+<li>
+Ghi rõ tên biểu đồ.
+</li>
+
+<li>
+Ghi rõ đơn vị đo.
+</li>
+
+<li>
+Các trục của biểu đồ cần có tên hoặc chú thích phù hợp.
+</li>
+
+<li>
+Không làm sai lệch dữ liệu khi vẽ biểu đồ.
+</li>
+
+<li>
+Cần đọc đúng số liệu trước khi đưa ra nhận xét.
+</li>
+
+</ul>
+
+</div>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Biểu đồ tranh và biểu đồ cột có thể dùng để biểu diễn số lượng các loại đối tượng.
+</li>
+
+<li>
+Nếu phải vẽ quá nhiều biểu tượng thì nên dùng biểu đồ cột.
+</li>
+
+<li>
+Biểu đồ đoạn thẳng thường dùng để biểu diễn sự thay đổi của một đại lượng theo thời gian.
+</li>
+
+<li>
+Biểu đồ cột kép dùng để so sánh hai tập dữ liệu.
+</li>
+
+<li>
+Biểu đồ hình quạt tròn dùng để biểu diễn tỉ lệ các phần trong tổng thể.
+</li>
+
+<li>
+Khi đọc biểu đồ cần chú ý tên biểu đồ, đơn vị, số liệu và các đặc điểm nổi bật.
+</li>
+
+</ul>
+
+<h3>⭐ Kết luận</h3>
+
+<p>
+Việc lựa chọn đúng loại biểu đồ giúp dữ liệu được trình bày một cách trực quan, rõ ràng và dễ phân tích.
+</p>
+
+<div class="formula">
+Số lượng đối tượng → Biểu đồ cột / Biểu đồ tranh
+</div>
+
+<div class="formula">
+Thay đổi theo thời gian → Biểu đồ đoạn thẳng
+</div>
+
+<div class="formula">
+So sánh hai tập dữ liệu → Biểu đồ cột kép
+</div>
+
+<div class="formula">
+Tỉ lệ các phần trong tổng thể → Biểu đồ hình quạt tròn
+</div>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

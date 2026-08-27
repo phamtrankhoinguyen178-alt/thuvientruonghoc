@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 38 - Nucleic acid và gene</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:#222;
+    line-height:1.7;
+    padding-bottom:40px;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:80px auto 30px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#fff;
+    color:#185a9d;
+    padding:10px 18px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    z-index:10;
+}
+
+.back:hover{
+    background:#185a9d;
+    color:white;
+}
+
+h1{
+    text-align:center;
+    color:#185a9d;
+    margin-bottom:25px;
+    font-size:30px;
+}
+
+h2{
+    color:#e65100;
+    margin-top:30px;
+    margin-bottom:15px;
+    padding:10px 15px;
+    background:#fff3e0;
+    border-left:6px solid #e65100;
+    border-radius:8px;
+}
+
+h3{
+    color:#1565c0;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+h4{
+    color:#00897b;
+    margin-top:15px;
+}
+
+p{
+    margin:8px 0;
+}
+
+ul{
+    margin:8px 0 8px 25px;
+}
+
+li{
+    margin:6px 0;
+}
+
+.box{
+    background:#f5faff;
+    border-left:5px solid #2196f3;
+    padding:15px 20px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.note{
+    background:#fff8e1;
+    border-left:5px solid #ffb300;
+    padding:15px 20px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.formula{
+    background:#eef7ff;
+    text-align:center;
+    padding:15px;
+    margin:15px 0;
+    border-radius:10px;
+    font-size:20px;
+    font-weight:bold;
+    color:#1565c0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+th,td{
+    border:1px solid #bbb;
+    padding:12px;
+    vertical-align:top;
+}
+
+th{
+    background:#1976d2;
+    color:white;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f5f5f5;
+}
+
+.keyword{
+    color:#d84315;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    color:white;
+    margin-top:20px;
+    font-size:15px;
+}
+
+@media(max-width:700px){
+    .container{
+        width:95%;
+        padding:18px;
+        margin-top:70px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    table{
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<a href="monhoc.html" class="back">← Quay lại</a>
+
+<div class="container">
+
+<h1>🧬 BÀI 38: NUCLEIC ACID VÀ GENE</h1>
+
+<div class="box">
+    <b>📚 KHTN 9 - Kết nối tri thức</b><br>
+    Nội dung trọng tâm giúp học sinh nắm được khái niệm nucleic acid, cấu tạo và chức năng của DNA, RNA và gene.
+</div>
+
+<h2>I. KHÁI NIỆM NUCLEIC ACID</h2>
+
+<p>
+<span class="keyword">Nucleic acid</span> là những đại phân tử sinh học được tìm thấy trong tế bào của cơ thể sinh vật và trong virus.
+</p>
+
+<h3>1. Cấu tạo</h3>
+
+<ul>
+    <li>Được cấu tạo từ các nguyên tố: <b>C, H, O, N, P</b>.</li>
+    <li>Được cấu tạo theo nguyên tắc đa phân.</li>
+    <li>Đơn phân của nucleic acid là <b>nucleotide</b>.</li>
+</ul>
+
+<div class="box">
+    <b>Nucleotide gồm 3 thành phần:</b>
+    <ul>
+        <li>Đường pentose.</li>
+        <li>Nhóm phosphate.</li>
+        <li>Base nitrogen.</li>
+    </ul>
+</div>
+
+<h3>2. Phân loại</h3>
+
+<p>Nucleic acid gồm hai loại chính:</p>
+
+<ul>
+    <li><b>DNA</b> - Deoxyribonucleic acid.</li>
+    <li><b>RNA</b> - Ribonucleic acid.</li>
+</ul>
+
+<h2>II. DEOXYRIBONUCLEIC ACID - DNA</h2>
+
+<h3>1. Cấu trúc của DNA</h3>
+
+<h4>a. Kích thước và cấu tạo hóa học</h4>
+
+<ul>
+    <li>DNA là đại phân tử sinh học có kích thước và khối lượng rất lớn.</li>
+    <li>DNA được cấu tạo từ các nguyên tố <b>C, H, O, N, P</b>.</li>
+    <li>Đơn phân của DNA là nucleotide.</li>
+    <li>DNA có 4 loại nucleotide: <b>A, T, G, C</b>.</li>
+</ul>
+
+<div class="formula">
+A = Adenine &nbsp;&nbsp; T = Thymine &nbsp;&nbsp;
+G = Guanine &nbsp;&nbsp; C = Cytosine
+</div>
+
+<h4>b. Cấu trúc không gian</h4>
+
+<ul>
+    <li>DNA có cấu trúc <b>xoắn kép</b>.</li>
+    <li>Gồm hai mạch polynucleotide song song, ngược chiều.</li>
+    <li>Các nucleotide trên cùng một mạch liên kết với nhau bằng liên kết cộng hóa trị.</li>
+    <li>Các nucleotide giữa hai mạch liên kết với nhau bằng liên kết hydrogen.</li>
+</ul>
+
+<div class="note">
+    <b>🔑 Nguyên tắc bổ sung:</b><br>
+    A liên kết với T<br>
+    G liên kết với C
+</div>
+
+<div class="formula">
+A ↔ T &nbsp;&nbsp;&nbsp;&nbsp; G ↔ C
+</div>
+
+<p>
+Theo mô hình Watson và Crick năm 1953, DNA có cấu trúc xoắn kép, xoắn quanh một trục tưởng tượng.
+</p>
+
+<h3>2. Chức năng của DNA</h3>
+
+<ul>
+    <li><b>Lưu giữ</b> thông tin di truyền.</li>
+    <li><b>Bảo quản</b> thông tin di truyền.</li>
+    <li><b>Truyền đạt</b> thông tin di truyền qua các thế hệ tế bào và cơ thể.</li>
+</ul>
+
+<div class="box">
+    <b>💡 Vì sao DNA có thể lưu giữ thông tin di truyền?</b>
+    <p>
+        Vì trình tự sắp xếp các nucleotide trên DNA chứa thông tin di truyền
+        chỉ dẫn cho tế bào tổng hợp protein.
+    </p>
+</div>
+
+<h3>3. Khái niệm gene</h3>
+
+<p>
+<span class="keyword">Gene</span> là một đoạn của phân tử DNA có chức năng di truyền xác định.
+</p>
+
+<ul>
+    <li>Mỗi tế bào của mỗi loài chứa nhiều gene.</li>
+    <li>Mỗi phân tử DNA có thể chứa từ vài trăm đến hàng nghìn gene.</li>
+    <li>Mỗi gene có trình tự nucleotide xác định.</li>
+    <li>Mỗi gene quy định một sản phẩm xác định là RNA hoặc chuỗi polypeptide.</li>
+</ul>
+
+<div class="note">
+    <b>⭐ Ghi nhớ:</b> Gene là đơn vị cơ bản của di truyền, nằm trên DNA và mang thông tin di truyền.
+</div>
+
+<h3>4. Tính đa dạng và đặc trưng của DNA</h3>
+
+<p>DNA rất đa dạng và đặc trưng do:</p>
+
+<ul>
+    <li>Số lượng nucleotide khác nhau.</li>
+    <li>Thành phần nucleotide khác nhau.</li>
+    <li>Trình tự sắp xếp nucleotide khác nhau.</li>
+</ul>
+
+<p>
+Trình tự nucleotide trong DNA đặc trưng cho từng loài, thậm chí từng cá thể.
+</p>
+
+<h3>5. Phân tích DNA</h3>
+
+<p>
+Cơ sở của phương pháp phân tích DNA là tính đặc trưng của DNA.
+</p>
+
+<table>
+<tr>
+    <th>Lĩnh vực</th>
+    <th>Ứng dụng</th>
+</tr>
+
+<tr>
+    <td>⚖️ Pháp y</td>
+    <td>
+        So sánh mẫu DNA để xác định quan hệ huyết thống,
+        xác định danh tính và hỗ trợ điều tra.
+    </td>
+</tr>
+
+<tr>
+    <td>🏥 Y học</td>
+    <td>
+        Phân tích DNA để dự đoán nguy cơ mắc một số bệnh di truyền
+        và hỗ trợ điều trị.
+    </td>
+</tr>
+
+<tr>
+    <td>🧬 Nghiên cứu tiến hóa</td>
+    <td>
+        So sánh DNA của các sinh vật để nghiên cứu quan hệ họ hàng
+        và quá trình tiến hóa.
+    </td>
+</tr>
+</table>
+
+<h2>III. RIBONUCLEIC ACID - RNA</h2>
+
+<h3>1. Cấu trúc của RNA</h3>
+
+<ul>
+    <li>RNA là một đại phân tử sinh học.</li>
+    <li>Kích thước và khối lượng thường nhỏ hơn DNA.</li>
+    <li>Được cấu tạo từ các nguyên tố <b>C, H, O, N, P</b>.</li>
+    <li>Đơn phân là nucleotide.</li>
+    <li>RNA có 4 loại nucleotide: <b>A, U, G, C</b>.</li>
+</ul>
+
+<div class="formula">
+A = Adenine &nbsp;&nbsp; U = Uracil &nbsp;&nbsp;
+G = Guanine &nbsp;&nbsp; C = Cytosine
+</div>
+
+<p>
+RNA thường có cấu trúc <b>một mạch</b>.
+</p>
+
+<h3>2. Các loại RNA</h3>
+
+<table>
+<tr>
+    <th>Loại RNA</th>
+    <th>Cấu trúc</th>
+    <th>Chức năng</th>
+</tr>
+
+<tr>
+    <td><b>mRNA</b></td>
+    <td>
+        Thường là mạch thẳng, không có vùng tự bắt cặp.
+    </td>
+    <td>
+        Làm khuôn cho quá trình tổng hợp chuỗi polypeptide.
+    </td>
+</tr>
+
+<tr>
+    <td><b>tRNA</b></td>
+    <td>
+        Có các vùng tự bắt cặp tạo cấu trúc đặc trưng.
+    </td>
+    <td>
+        Vận chuyển amino acid đến ribosome để tổng hợp chuỗi polypeptide.
+    </td>
+</tr>
+
+<tr>
+    <td><b>rRNA</b></td>
+    <td>
+        Có nhiều vùng tự bắt cặp tạo cấu trúc đặc trưng.
+    </td>
+    <td>
+        Kết hợp với protein tạo thành ribosome - nơi tổng hợp chuỗi polypeptide.
+    </td>
+</tr>
+</table>
+
+<h2>IV. PHÂN BIỆT DNA VÀ RNA</h2>
+
+<table>
+<tr>
+    <th>Đặc điểm</th>
+    <th>DNA</th>
+    <th>RNA</th>
+</tr>
+
+<tr>
+    <td><b>Số mạch</b></td>
+    <td>Thường có 2 mạch.</td>
+    <td>Thường có 1 mạch.</td>
+</tr>
+
+<tr>
+    <td><b>Đường</b></td>
+    <td>Deoxyribose C₅H₁₀O₄.</td>
+    <td>Ribose C₅H₁₀O₅.</td>
+</tr>
+
+<tr>
+    <td><b>Base nitrogen</b></td>
+    <td>A, T, G, C.</td>
+    <td>A, U, G, C.</td>
+</tr>
+
+<tr>
+    <td><b>Chức năng</b></td>
+    <td>
+        Lưu giữ, bảo quản và truyền đạt thông tin di truyền.
+    </td>
+    <td>
+        Tham gia vào quá trình tổng hợp protein.
+    </td>
+</tr>
+</table>
+
+<h2>V. KIẾN THỨC CẦN NHỚ ⭐</h2>
+
+<div class="box">
+
+<p><b>1.</b> Nucleic acid gồm <b>DNA và RNA</b>.</p>
+
+<p><b>2.</b> DNA được cấu tạo từ 4 loại nucleotide:
+<b>A, T, G, C</b>.</p>
+
+<p><b>3.</b> RNA được cấu tạo từ 4 loại nucleotide:
+<b>A, U, G, C</b>.</p>
+
+<p><b>4.</b> DNA có cấu trúc xoắn kép, RNA thường có cấu trúc một mạch.</p>
+
+<p><b>5.</b> Trong DNA:
+<b>A liên kết T, G liên kết C</b>.</p>
+
+<p><b>6.</b> Gene là một đoạn DNA có chức năng di truyền xác định.</p>
+
+<p><b>7.</b> DNA có chức năng chủ yếu là lưu giữ, bảo quản và truyền đạt thông tin di truyền.</p>
+
+<p><b>8.</b> mRNA làm khuôn, tRNA vận chuyển amino acid, rRNA cấu tạo nên ribosome.</p>
+
+</div>
+
+<h2>📝 SƠ ĐỒ GHI NHỚ</h2>
+
+<div class="formula">
+Nucleic acid
+<br>
+↓
+<br>
+DNA + RNA
+<br><br>
+DNA → A, T, G, C → Lưu giữ thông tin di truyền
+<br>
+RNA → A, U, G, C → Tham gia tổng hợp protein
+<br><br>
+Gene = Một đoạn DNA có chức năng di truyền xác định
+</div>
+
+</div>
+
+<div class="footer">
+    🧬 KHTN 9 - Bài 38: Nucleic acid và gene
+</div>
+
+</body>
+</html>

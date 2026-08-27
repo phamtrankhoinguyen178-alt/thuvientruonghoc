@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Tin học 6 - Robot Máy Tính</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,#164e63 0%,transparent 25%),
+radial-gradient(circle at 80% 70%,#312e81 0%,transparent 30%),
+linear-gradient(135deg,#020617,#0f172a,#172554);
+color:white;
+}
+
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1){top:8%;left:5%}
+.star:nth-child(2){top:20%;left:18%}
+.star:nth-child(3){top:12%;left:35%}
+.star:nth-child(4){top:30%;left:55%}
+.star:nth-child(5){top:10%;left:80%}
+.star:nth-child(6){top:45%;left:8%}
+.star:nth-child(7){top:65%;left:25%}
+.star:nth-child(8){top:75%;left:70%}
+.star:nth-child(9){top:55%;left:90%}
+.star:nth-child(10){top:85%;left:45%}
+.star:nth-child(11){top:35%;left:75%}
+.star:nth-child(12){top:90%;left:10%}
+
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.5)}
+to{opacity:1;transform:scale(1.5)}
+}
+
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.back:hover{
+background:#0891b2;
+transform:translateY(-3px);
+}
+
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:40px;
+text-shadow:
+0 0 10px #22d3ee,
+0 0 25px #06b6d4,
+0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#a5f3fc;
+}
+
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.computer{
+position:relative;
+height:360px;
+overflow:hidden;
+border-radius:22px;
+background:
+radial-gradient(circle at 20% 30%,#67e8f9 0 1px,transparent 2px),
+radial-gradient(circle at 70% 20%,#ffffff 0 1px,transparent 2px),
+radial-gradient(circle at 85% 70%,#22d3ee 0 1px,transparent 2px),
+linear-gradient(135deg,#020617,#164e63,#172554);
+border:4px solid #06b6d4;
+box-shadow:
+inset 0 0 60px rgba(6,182,212,.35),
+0 10px 35px rgba(0,0,0,.5);
+}
+
+.planet{
+position:absolute;
+width:120px;
+height:120px;
+right:60px;
+bottom:30px;
+border-radius:50%;
+background:
+radial-gradient(circle at 30% 30%,#67e8f9,#0891b2 45%,#164e63 80%);
+box-shadow:
+0 0 20px #22d3ee,
+0 0 50px rgba(6,182,212,.7);
+}
+
+.robot{
+position:absolute;
+left:55px;
+top:100px;
+width:150px;
+height:170px;
+z-index:20;
+transition:left .15s linear;
+animation:robotFloat 1.2s infinite alternate;
+filter:drop-shadow(0 0 12px #22d3ee);
+}
+
+@keyframes robotFloat{
+from{transform:translateY(-4px)}
+to{transform:translateY(5px)}
+}
+
+.robot-head{
+position:absolute;
+left:25px;
+top:0;
+width:100px;
+height:70px;
+border-radius:18px;
+background:linear-gradient(180deg,#f8fafc,#94a3b8);
+border:4px solid #475569;
+}
+
+.robot-eye1,
+.robot-eye2{
+position:absolute;
+top:20px;
+width:18px;
+height:18px;
+border-radius:50%;
+background:#22d3ee;
+border:3px solid #0f172a;
+box-shadow:0 0 15px #22d3ee;
+}
+
+.robot-eye1{left:20px}
+.robot-eye2{left:58px}
+
+.robot-body{
+position:absolute;
+left:20px;
+top:75px;
+width:110px;
+height:75px;
+border-radius:18px;
+background:linear-gradient(180deg,#e2e8f0,#64748b);
+border:4px solid #475569;
+}
+
+.robot-screen{
+position:absolute;
+left:43px;
+top:92px;
+width:65px;
+height:38px;
+border-radius:8px;
+background:#083344;
+border:3px solid #22d3ee;
+box-shadow:0 0 15px #22d3ee;
+}
+
+.robot-leg1,
+.robot-leg2{
+position:absolute;
+top:145px;
+width:25px;
+height:30px;
+background:#475569;
+border-radius:8px;
+}
+
+.robot-leg1{left:38px}
+.robot-leg2{left:87px}
+
+.robot-arm1,
+.robot-arm2{
+position:absolute;
+top:80px;
+width:25px;
+height:60px;
+background:#64748b;
+border-radius:15px;
+}
+
+.robot-arm1{left:0}
+.robot-arm2{left:125px}
+
+.data{
+position:absolute;
+right:180px;
+top:80px;
+font-size:55px;
+animation:dataMove 1.5s infinite alternate;
+}
+
+@keyframes dataMove{
+from{transform:translateY(0);opacity:.5}
+to{transform:translateY(-20px);opacity:1}
+}
+
+.start-area{
+text-align:center;
+margin:25px 0;
+}
+
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#0891b2,#4f46e5);
+box-shadow:
+0 8px 0 #312e81,
+0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+
+.start:hover{
+transform:translateY(-3px);
+}
+
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#cffafe;
+}
+
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#22d3ee,#818cf8,#c084fc);
+box-shadow:0 0 15px #22d3ee;
+transition:.5s;
+}
+
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#a5f3fc;
+}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+
+.overlay.show{
+display:block;
+}
+
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#ffffff,#ecfeff);
+color:#0f172a;
+}
+
+.question-box.show{
+display:block;
+animation:popup .3s forwards;
+}
+
+@keyframes popup{
+to{
+transform:translate(-50%,-50%) scale(1);
+}
+}
+
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#0891b2;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #e2e8f0;
+border-radius:14px;
+background:#f8fafc;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#1e293b;
+}
+
+.answer:hover{
+transform:translateX(5px);
+border-color:#0891b2;
+background:#ecfeff;
+}
+
+.answer.selected{
+background:#cffafe;
+border-color:#0891b2;
+box-shadow:0 0 0 3px rgba(8,145,178,.12);
+}
+
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#0891b2,#4f46e5);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+from{
+transform:translate(-50%,-50%) scale(.5);
+opacity:0;
+}
+to{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+.result h2{
+font-size:38px;
+color:#0891b2;
+margin:0 0 20px;
+}
+
+.result.lose h2{
+color:#ef4444;
+}
+
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#334155;
+}
+
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#0891b2,#4f46e5);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#22d3ee;
+text-shadow:0 0 20px #818cf8;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+
+@keyframes correctEffect{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:0;
+}
+40%{
+transform:translate(-50%,-50%) scale(1.3);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-100%) scale(1);
+opacity:0;
+}
+}
+
+@media(max-width:700px){
+
+h1{
+font-size:28px;
+margin-top:75px;
+}
+
+.info{
+font-size:16px;
+}
+
+.game{
+width:96%;
+padding:12px;
+}
+
+.computer{
+height:260px;
+}
+
+.robot{
+top:70px;
+transform:scale(.75);
+transform-origin:left center;
+}
+
+.planet{
+width:75px;
+height:75px;
+right:20px;
+bottom:15px;
+}
+
+.question-box{
+padding:20px;
+}
+
+.question-box h2{
+font-size:21px;
+}
+
+.question{
+font-size:18px;
+}
+
+.answer{
+font-size:16px;
+padding:12px;
+}
+
+.result h2{
+font-size:30px;
+}
+
+.result p{
+font-size:18px;
+}
+
+.back{
+padding:9px 14px;
+font-size:14px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi6tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🤖 TRẮC NGHIỆM TIN HỌC 6</h1>
+
+<div class="info">
+💻 TRÒ CHƠI ROBOT - KHÁM PHÁ THẾ GIỚI MÁY TÍNH
+</div>
+
+<div class="game">
+
+<div class="computer">
+
+<div class="planet"></div>
+
+<div class="data">💾</div>
+
+<div class="robot" id="robot">
+
+<div class="robot-head">
+<div class="robot-eye1"></div>
+<div class="robot-eye2"></div>
+</div>
+
+<div class="robot-body"></div>
+<div class="robot-screen"></div>
+
+<div class="robot-arm1"></div>
+<div class="robot-arm2"></div>
+
+<div class="robot-leg1"></div>
+<div class="robot-leg2"></div>
+
+</div>
+
+</div>
+
+<div class="start-area">
+
+<button class="start" id="startButton" onclick="startGame()">
+🤖 BẮT ĐẦU KHÁM PHÁ
+</button>
+
+</div>
+
+<div class="progress-text" id="progressText">
+💻 Chưa bắt đầu
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để khám phá thế giới Tin học!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+
+<h2>💻 THỬ THÁCH TIN HỌC!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+🤖 TRẢ LỜI
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 CHƠI LẠI
+</button>
+
+</div>
+
+<script>
+
+const questionBank=[
+
+["Máy tính điện tử đầu tiên có tên là gì?",["ENIAC","Internet","Windows","Google"],0],
+
+["CPU là bộ phận nào của máy tính?",["Bộ nhớ","Bộ xử lí trung tâm","Màn hình","Bàn phím"],1],
+
+["Thiết bị nào dùng để nhập dữ liệu vào máy tính?",["Màn hình","Loa","Bàn phím","Máy in"],2],
+
+["Thiết bị nào dùng để hiển thị thông tin?",["Bàn phím","Chuột","Màn hình","Micro"],2],
+
+["Chuột máy tính thuộc nhóm thiết bị nào?",["Thiết bị vào","Thiết bị ra","Thiết bị lưu trữ","Phần mềm"],0],
+
+["Bàn phím dùng để làm gì?",["In tài liệu","Nhập dữ liệu","Phát âm thanh","Hiển thị hình ảnh"],1],
+
+["Phần mềm là gì?",["Các chương trình chạy trên máy tính","Màn hình máy tính","Bàn phím","Dây điện"],0],
+
+["Hệ điều hành là gì?",["Một trò chơi","Phần mềm quản lí và điều khiển máy tính","Một thiết bị","Một loại virus"],1],
+
+["Windows là gì?",["Một hệ điều hành","Một bàn phím","Một trình duyệt","Một con chuột"],0],
+
+["Internet là gì?",["Mạng máy tính toàn cầu","Một trò chơi","Một phần mềm vẽ","Một thiết bị"],0],
+
+["Google Chrome là gì?",["Trình duyệt web","Hệ điều hành","CPU","Bàn phím"],0],
+
+["Thông tin có thể được biểu diễn dưới dạng nào?",["Văn bản","Hình ảnh","Âm thanh","Cả ba đáp án trên"],3],
+
+["Thiết bị nào dùng để in tài liệu?",["Máy in","Chuột","CPU","Màn hình"],0],
+
+["Thiết bị nào dùng để nghe âm thanh?",["Loa","Bàn phím","Máy in","Chuột"],0],
+
+["USB thường dùng để làm gì?",["Lưu trữ và truyền dữ liệu","Hiển thị hình ảnh","Gõ văn bản","Phát âm thanh"],0],
+
+["Tệp tin là gì?",["Đơn vị lưu trữ thông tin","Một thiết bị","Một loại máy tính","Một hệ điều hành"],0],
+
+["Thư mục dùng để làm gì?",["Chứa và sắp xếp các tệp","Phát nhạc","In tài liệu","Kết nối Internet"],0],
+
+["Virus máy tính có thể làm gì?",["Gây hại cho dữ liệu và máy tính","Tăng tốc máy tính","Làm màn hình đẹp hơn","Tạo điện"],0],
+
+["Mật khẩu dùng để làm gì?",["Bảo vệ tài khoản và dữ liệu","Tăng âm lượng","Tắt màn hình","In tài liệu"],0],
+
+["Mật khẩu nào an toàn hơn?",["123456","password","Nguyen@2026#A7","111111"],2],
+
+["Khi sử dụng Internet, chúng ta nên làm gì?",["Bảo vệ thông tin cá nhân","Chia sẻ mật khẩu","Tin mọi thông tin","Mở mọi liên kết"],0],
+
+["Dữ liệu cá nhân gồm thông tin nào?",["Họ tên","Địa chỉ","Số điện thoại","Tất cả các đáp án trên"],3],
+
+["Scratch là phần mềm dùng để làm gì?",["Lập trình trực quan","Soạn văn bản","Nghe nhạc","Chỉnh sửa ảnh"],0],
+
+["Thuật toán là gì?",["Các bước giải quyết một vấn đề","Một thiết bị","Một trò chơi","Một loại máy tính"],0],
+
+["Lập trình là gì?",["Viết chương trình để máy tính thực hiện nhiệm vụ","Gõ văn bản","Xem phim","Nghe nhạc"],0],
+
+["Biểu tượng nào thường dùng để lưu tệp?",["💾","🔊","🖨️","🔍"],0],
+
+["Phím Enter thường dùng để làm gì?",["Xác nhận hoặc xuống dòng","Xóa dữ liệu","Tắt máy","Sao chép"],0],
+
+["Phím Space dùng để làm gì?",["Tạo khoảng trắng","Xóa chữ","In văn bản","Lưu tệp"],0],
+
+["Ctrl + C thường dùng để làm gì?",["Sao chép","Dán","Cắt","Lưu"],0],
+
+["Ctrl + V thường dùng để làm gì?",["Sao chép","Dán","Cắt","Xóa"],1]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let robotPosition=55;
+let robotTimer=null;
+let challengeTimer=null;
+
+function startGame(){
+
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+robotPosition=55;
+
+document.getElementById("robot").style.left=robotPosition+"px";
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+
+document.getElementById("startButton").innerHTML="🔄 KHÁM PHÁ LẠI";
+
+document.getElementById("status").innerHTML=
+"🤖 Robot đang khám phá thế giới máy tính...";
+
+let shuffled=[...questionBank];
+
+shuffled.sort(()=>Math.random()-.5);
+
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+clearInterval(robotTimer);
+clearTimeout(challengeTimer);
+
+robotTimer=setInterval(moveRobot,100);
+challengeTimer=setTimeout(showChallenge,3000);
+
+}
+
+function moveRobot(){
+
+if(!gameRunning||waiting)return;
+
+robotPosition+=2;
+
+let width=document.querySelector(".computer").clientWidth;
+
+if(robotPosition>width-210){
+robotPosition=55;
+}
+
+document.getElementById("robot").style.left=
+robotPosition+"px";
+
+}
+
+function showChallenge(){
+
+if(!gameRunning)return;
+
+waiting=true;
+
+document.getElementById("status").innerHTML=
+"💻 THỬ THÁCH XUẤT HIỆN! Hãy trả lời câu hỏi!";
+
+clearInterval(robotTimer);
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=gameQuestions[currentQuestion];
+
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML=
+"Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+
+});
+
+document.getElementById("answers").innerHTML=html;
+
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function correctEffect(){
+
+const effect=document.createElement("div");
+
+effect.className="correct-effect";
+effect.innerHTML="🤖 CHÍNH XÁC!";
+
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},800);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+
+alert("⚠️ Hãy chọn một đáp án!");
+
+return;
+
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+
+loseGame();
+
+return;
+
+}
+
+correctEffect();
+
+currentQuestion++;
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+updateProgress();
+
+if(currentQuestion>=10){
+
+winGame();
+
+return;
+
+}
+
+waiting=false;
+
+document.getElementById("status").innerHTML=
+"✅ Chính xác! Robot tiếp tục khám phá...";
+
+robotTimer=setInterval(moveRobot,100);
+
+challengeTimer=setTimeout(showChallenge,3000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML=
+"💻 Đã vượt qua "+currentQuestion+"/10 thử thách";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(robotTimer);
+clearTimeout(challengeTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML=
+"💥 ROBOT GẶP SỰ CỐ!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Bạn đã trả lời sai!<br><br>"+
+"💻 Bạn đã vượt qua "+currentQuestion+
+"/10 thử thách.<br><br>"+
+"🤖 Hãy ôn lại kiến thức và thử lại!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(robotTimer);
+clearTimeout(challengeTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("progressText").innerHTML=
+"🏆 HOÀN THÀNH 10/10!";
+
+document.getElementById("status").innerHTML=
+"💻 Bạn đã chinh phục thành công Tin học 6!";
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("resultTitle").innerHTML=
+"🏆 CHINH PHỤC TIN HỌC!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"🤖 Bạn đã vượt qua cả 10 thử thách!<br><br>"+
+"💻 Bạn đã hoàn thành màn chơi Trắc nghiệm Tin học 6!";
+
+}
+
+</script>
+
+</body>
+</html>

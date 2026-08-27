@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 1: Tập hợp</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan6.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 1: Tập hợp</h2>
+
+<h3>📖 1. Tập hợp và phần tử của tập hợp</h3>
+
+<p>
+• Tập hợp là một khái niệm cơ bản của Toán học (không định nghĩa).
+</p>
+
+<p>
+• Tập hợp được kí hiệu bằng các chữ cái in hoa: A, B, C, D,...
+</p>
+
+<p>
+<b>Ví dụ 1:</b>
+</p>
+
+<p>
+a) Tập hợp các học sinh trong tổ 4 lớp 6A gồm: Thắm, Trọng, Xuân, Cương, Bảo, Dũng, Khôi, Huế, Linh.
+</p>
+
+<p>
+b) Tập hợp các loại bút trong túi bút của bạn Ngọc gồm: Bút bi, bút chì, bút đánh dấu, bút xóa, bút màu.
+</p>
+
+<p>
+• Một tập hợp bao gồm những đối tượng xác định. Các đối tượng đó được gọi là phần tử của tập hợp.
+</p>
+
+<ul>
+<li>x là phần tử của tập hợp A, kí hiệu: x ∈ A.</li>
+<li>y không là phần tử của tập hợp A, kí hiệu: y ∉ A.</li>
+</ul>
+
+<p>
+<b>Chú ý:</b> Khi x ∈ A ta còn nói:
+</p>
+
+<ul>
+<li>x thuộc A.</li>
+<li>x nằm trong A.</li>
+<li>A chứa x.</li>
+</ul>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+Cho tập hợp M gồm các phần tử: 1; 4; 8; 9.
+</p>
+
+<ul>
+<li>1 ∈ M</li>
+<li>4 ∈ M</li>
+<li>8 ∈ M</li>
+<li>9 ∈ M</li>
+<li>7 ∉ M</li>
+</ul>
+
+<h3>📚 2. Mô tả một tập hợp</h3>
+
+<h3>✏️ 2.1. Liệt kê các phần tử của tập hợp</h3>
+
+<p>
+Viết tất cả các phần tử của tập hợp trong dấu ngoặc nhọn { } theo thứ tự tùy ý nhưng mỗi phần tử chỉ được viết một lần.
+</p>
+
+<p>
+<b>Ví dụ 3:</b>
+</p>
+
+<p>
+Tập hợp P gồm các số: 1; 3; 5; 7; 9; 11.
+</p>
+
+<p>
+Ta viết:
+</p>
+
+<p>
+P = {1; 3; 5; 7; 9; 11}
+</p>
+
+<h3>✏️ 2.2. Nêu dấu hiệu đặc trưng cho các phần tử của tập hợp</h3>
+
+<p>
+Gọi x là phần tử của tập hợp, chỉ ra tính chất đặc trưng của phần tử rồi viết tập hợp bằng lời mô tả.
+</p>
+
+<p>
+<b>Ví dụ 4:</b>
+</p>
+
+<p>
+P = {1; 3; 5; 7; 9; 11}
+</p>
+
+<p>
+Các phần tử của tập hợp P đều là các số tự nhiên lẻ nhỏ hơn 12.
+</p>
+
+<p>
+Do đó:
+</p>
+
+<p>
+P = {x | x là số tự nhiên lẻ và nhỏ hơn 12}
+</p>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Tập hợp là một khái niệm cơ bản của Toán học.
+</li>
+
+<li>
+Các đối tượng trong tập hợp được gọi là phần tử của tập hợp.
+</li>
+
+<li>
+Kí hiệu x ∈ A nghĩa là x thuộc tập hợp A.
+</li>
+
+<li>
+Kí hiệu x ∉ A nghĩa là x không thuộc tập hợp A.
+</li>
+
+<li>
+Có hai cách mô tả tập hợp:
+</li>
+
+<li>
+Liệt kê các phần tử của tập hợp.
+</li>
+
+<li>
+Nêu dấu hiệu đặc trưng của các phần tử.
+</li>
+
+</ul>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

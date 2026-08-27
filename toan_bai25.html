@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 25: Đa thức một biến</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p{
+font-size:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 25: Đa thức một biến</h2>
+
+<h3>📖 1. Đơn thức một biến</h3>
+
+<p>• Đơn thức một biến (gọi tắt là đơn thức) là biểu thức đại số có dạng tích của một số thực với một lũy thừa của biến. Trong đó số thực gọi là hệ số, số mũ của biến gọi là bậc của đơn thức.</p>
+
+<p>• Cộng (hoặc trừ) hai đơn thức cùng bậc bằng cách cộng (hoặc trừ) các hệ số với nhau và giữ nguyên lũy thừa của biến.</p>
+
+<p>• Nhân hai đơn thức bằng cách nhân các hệ số với nhau và nhân các lũy thừa của biến với nhau.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Một số khác 0 được gọi là đơn thức bậc 0.</p>
+
+<p>• Số 0 cũng được coi là một đơn thức nhưng không có bậc.</p>
+
+<h3>📖 2. Khái niệm đa thức một biến</h3>
+
+<p>• Đa thức một biến (gọi tắt là đa thức) là tổng của các đơn thức cùng một biến.</p>
+
+<p>• Mỗi đơn thức trong đa thức được gọi là một hạng tử.</p>
+
+<p>• Một đơn thức cũng là một đa thức.</p>
+
+<p>• Số 0 cũng được coi là một đa thức, gọi là đa thức không.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Ta thường kí hiệu đa thức bằng một chữ cái in hoa như P(x), Q(x), F(x)...</p>
+
+<h3>📖 3. Đa thức một biến thu gọn</h3>
+
+<p>• Đa thức thu gọn là đa thức không chứa hai đơn thức nào cùng bậc.</p>
+
+<p>• Nếu đa thức có các hạng tử cùng bậc thì ta cộng hoặc trừ các hạng tử đó để đưa về dạng thu gọn.</p>
+
+<h3>📖 4. Sắp xếp đa thức một biến</h3>
+
+<p>• Để thuận tiện cho việc tính toán, người ta thường viết đa thức dưới dạng thu gọn và sắp xếp các hạng tử theo lũy thừa giảm dần của biến.</p>
+
+<h3>📖 5. Bậc và các hệ số của đa thức</h3>
+
+<p>Trong một đa thức thu gọn và khác đa thức 0:</p>
+
+<p>• Bậc của hạng tử có bậc cao nhất được gọi là bậc của đa thức.</p>
+
+<p>• Hệ số của hạng tử có bậc cao nhất gọi là hệ số cao nhất.</p>
+
+<p>• Hệ số của hạng tử bậc 0 gọi là hệ số tự do.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>• Đa thức không là đa thức không có bậc.</p>
+
+<p>• Trong một đa thức thu gọn, hệ số cao nhất luôn khác 0.</p>
+
+<p>• Muốn tìm bậc của một đa thức chưa thu gọn, cần thu gọn đa thức trước.</p>
+
+<h3>📖 6. Nghiệm của đa thức một biến</h3>
+
+<p>• Nếu tại x = a, đa thức F(x) có giá trị bằng 0, tức là F(a) = 0 thì a được gọi là một nghiệm của đa thức F(x).</p>
+
+<p>• Một đa thức có thể có nhiều nghiệm hoặc không có nghiệm.</p>
+
+<p>• Nếu hệ số tự do của đa thức bằng 0 thì x = 0 là một nghiệm của đa thức đó.</p>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

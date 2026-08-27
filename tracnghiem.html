@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc Nghiệm - THCS Quảng Phương</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+}
+
+header{
+background:linear-gradient(135deg,#ff6a00,#ff9500);
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+header h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+header p{
+font-size:16px;
+opacity:.95;
+}
+
+.home-btn{
+display:inline-block;
+margin-top:20px;
+background:#0b2a88;
+color:white;
+text-decoration:none;
+padding:12px 25px;
+border-radius:8px;
+font-weight:bold;
+transition:.3s;
+}
+
+.home-btn:hover{
+background:#081f66;
+}
+
+.container{
+width:1200px;
+max-width:95%;
+margin:40px auto;
+}
+
+.title{
+text-align:center;
+font-size:34px;
+font-weight:bold;
+color:#ff6a00;
+margin-bottom:35px;
+}
+
+.khoi{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+}
+
+.card{
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 20px rgba(0,0,0,.12);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.card-content{
+padding:20px;
+text-align:center;
+}
+
+.card-content h2{
+color:#ff6a00;
+margin-bottom:10px;
+}
+
+.card-content p{
+color:#666;
+margin-bottom:18px;
+line-height:1.5;
+}
+
+.btn{
+display:inline-block;
+text-decoration:none;
+background:#ff6a00;
+color:white;
+padding:12px 24px;
+border-radius:8px;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+background:#e55d00;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:25px;
+margin-top:50px;
+}
+
+footer p{
+margin:6px 0;
+}
+
+@media(max-width:1000px){
+
+.khoi{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.khoi{
+grid-template-columns:1fr;
+}
+
+header h1{
+font-size:30px;
+}
+
+.title{
+font-size:28px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>📝 TRẮC NGHIỆM</h1>
+
+<p>
+Hệ thống trắc nghiệm trực tuyến THCS Quảng Phương
+</p>
+
+<a href="index.html" class="home-btn">
+🏠 Trang Chủ
+</a>
+
+</header>
+
+<div class="container">
+
+<div class="title">
+🎯 Chọn Khối Trắc Nghiệm
+</div>
+
+<div class="khoi">
+
+<div class="card">
+
+<img src="k6tn.jpg">
+
+<div class="card-content">
+
+<h2>KHỐI 6</h2>
+
+<p>
+Bộ câu hỏi trắc nghiệm các môn học lớp 6.
+</p>
+
+<a href="khoi6tracnghiem.html" class="btn">
+Làm bài
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="k7tn.png">
+
+<div class="card-content">
+
+<h2>KHỐI 7</h2>
+
+<p>
+Bộ câu hỏi trắc nghiệm các môn học lớp 7.
+</p>
+
+<a href="khoi7tracnghiem.html" class="btn">
+Làm bài
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="k8tn.jpg">
+
+<div class="card-content">
+
+<h2>KHỐI 8</h2>
+
+<p>
+Bộ câu hỏi trắc nghiệm các môn học lớp 8.
+</p>
+
+<a href="khoi8tracnghiem.html" class="btn">
+Làm bài
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="k9tn.jpg">
+
+<div class="card-content">
+
+<h2>KHỐI 9</h2>
+
+<p>
+Bộ câu hỏi trắc nghiệm các môn học lớp 9.
+</p>
+
+<a href="khoi9tracnghiem.html" class="btn">
+Làm bài
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<h2>THƯ VIỆN THCS QUẢNG PHƯƠNG</h2>
+
+<p>
+Học tập • Tài liệu • Trắc nghiệm • Sách • Dạng bài
+</p>
+
+<p>
+© 2026 THCS Quảng Phương
+</p>
+
+</footer>
+
+</body>
+</html>

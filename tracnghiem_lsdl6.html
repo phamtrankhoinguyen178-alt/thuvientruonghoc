@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Lịch sử và Địa lí 6 - Hành Trình Sa Mạc</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,#92400e 0%,transparent 25%),
+radial-gradient(circle at 80% 70%,#713f12 0%,transparent 30%),
+linear-gradient(135deg,#451a03,#78350f,#92400e);
+color:white;
+}
+
+.sun{
+position:fixed;
+width:110px;
+height:110px;
+right:70px;
+top:50px;
+border-radius:50%;
+background:#fde047;
+box-shadow:
+0 0 30px #facc15,
+0 0 80px rgba(250,204,21,.7);
+}
+
+.sand{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:180px;
+background:
+radial-gradient(ellipse at 20% 100%,#fbbf24 0 30%,transparent 31%),
+radial-gradient(ellipse at 70% 100%,#d97706 0 35%,transparent 36%),
+linear-gradient(180deg,#f59e0b,#92400e);
+opacity:.7;
+z-index:-1;
+}
+
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:#fff7ed;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1){top:10%;left:8%}
+.star:nth-child(2){top:20%;left:20%}
+.star:nth-child(3){top:15%;left:35%}
+.star:nth-child(4){top:30%;left:55%}
+.star:nth-child(5){top:18%;left:80%}
+.star:nth-child(6){top:45%;left:10%}
+.star:nth-child(7){top:60%;left:25%}
+.star:nth-child(8){top:70%;left:70%}
+.star:nth-child(9){top:50%;left:90%}
+.star:nth-child(10){top:85%;left:45%}
+
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.5)}
+to{opacity:1;transform:scale(1.5)}
+}
+
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.back:hover{
+background:#d97706;
+transform:translateY(-3px);
+}
+
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:38px;
+text-shadow:
+0 0 10px #fbbf24,
+0 0 25px #f97316,
+0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#fde68a;
+}
+
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.desert{
+position:relative;
+height:380px;
+overflow:hidden;
+border-radius:22px;
+background:
+radial-gradient(circle at 20% 30%,rgba(255,255,255,.8) 0 1px,transparent 2px),
+radial-gradient(circle at 70% 20%,rgba(255,255,255,.7) 0 1px,transparent 2px),
+linear-gradient(180deg,#38bdf8 0%,#fbbf24 48%,#d97706 49%,#92400e 100%);
+border:4px solid #f59e0b;
+box-shadow:
+inset 0 0 60px rgba(251,191,36,.35),
+0 10px 35px rgba(0,0,0,.5);
+}
+
+.dune1{
+position:absolute;
+left:-80px;
+bottom:20px;
+width:600px;
+height:170px;
+background:#f59e0b;
+border-radius:50% 50% 0 0;
+}
+
+.dune2{
+position:absolute;
+right:-120px;
+bottom:0;
+width:650px;
+height:200px;
+background:#b45309;
+border-radius:50% 50% 0 0;
+}
+
+.palm{
+position:absolute;
+right:100px;
+bottom:85px;
+width:20px;
+height:120px;
+background:#78350f;
+border-radius:20px;
+transform:rotate(5deg);
+}
+
+.palm:before{
+content:"";
+position:absolute;
+left:-55px;
+top:-30px;
+width:130px;
+height:80px;
+background:#15803d;
+clip-path:polygon(
+50% 50%,
+0 0,
+30% 35%,
+5% 30%,
+40% 55%,
+20% 90%,
+50% 60%,
+80% 90%,
+60% 55%,
+95% 30%,
+70% 35%
+);
+}
+
+.person{
+position:absolute;
+left:55px;
+top:135px;
+width:95px;
+height:170px;
+z-index:20;
+animation:walk 1s infinite alternate;
+filter:drop-shadow(0 5px 5px rgba(0,0,0,.3));
+}
+
+@keyframes walk{
+from{transform:translateY(-3px)}
+to{transform:translateY(5px)}
+}
+
+.head{
+position:absolute;
+left:32px;
+top:0;
+width:45px;
+height:45px;
+background:#d97706;
+border-radius:50%;
+border:3px solid #78350f;
+}
+
+.hair{
+position:absolute;
+left:28px;
+top:-5px;
+width:52px;
+height:25px;
+background:#451a03;
+border-radius:50% 50% 20% 20%;
+}
+
+.body{
+position:absolute;
+left:25px;
+top:43px;
+width:60px;
+height:75px;
+background:#92400e;
+border:3px solid #451a03;
+border-radius:20px 20px 10px 10px;
+}
+
+.arm1{
+position:absolute;
+left:13px;
+top:50px;
+width:18px;
+height:70px;
+background:#d97706;
+border-radius:15px;
+transform:rotate(15deg);
+}
+
+.arm2{
+position:absolute;
+left:75px;
+top:50px;
+width:18px;
+height:70px;
+background:#d97706;
+border-radius:15px;
+transform:rotate(-15deg);
+}
+
+.leg1{
+position:absolute;
+left:30px;
+top:112px;
+width:20px;
+height:58px;
+background:#451a03;
+border-radius:15px;
+transform:rotate(8deg);
+}
+
+.leg2{
+position:absolute;
+left:62px;
+top:112px;
+width:20px;
+height:58px;
+background:#451a03;
+border-radius:15px;
+transform:rotate(-8deg);
+}
+
+.eye{
+position:absolute;
+width:6px;
+height:6px;
+background:#111827;
+border-radius:50%;
+top:18px;
+left:28px;
+}
+
+.dinosaur{
+position:absolute;
+left:210px;
+top:170px;
+width:190px;
+height:140px;
+z-index:19;
+animation:dinoWalk 1.4s infinite alternate;
+filter:drop-shadow(0 8px 5px rgba(0,0,0,.4));
+}
+
+@keyframes dinoWalk{
+from{transform:translateY(-4px)}
+to{transform:translateY(4px)}
+}
+
+.dino-body{
+position:absolute;
+left:45px;
+top:45px;
+width:100px;
+height:65px;
+background:#16a34a;
+border:4px solid #14532d;
+border-radius:55% 45% 45% 50%;
+}
+
+.dino-head{
+position:absolute;
+left:125px;
+top:15px;
+width:65px;
+height:60px;
+background:#22c55e;
+border:4px solid #14532d;
+border-radius:50% 60% 45% 50%;
+}
+
+.dino-eye{
+position:absolute;
+left:163px;
+top:28px;
+width:9px;
+height:9px;
+background:#111827;
+border-radius:50%;
+}
+
+.dino-mouth{
+position:absolute;
+left:155px;
+top:54px;
+width:35px;
+height:4px;
+background:#14532d;
+border-radius:10px;
+}
+
+.dino-tail{
+position:absolute;
+left:0;
+top:55px;
+width:70px;
+height:35px;
+background:#15803d;
+clip-path:polygon(100% 0,0 50%,100% 100%);
+}
+
+.dino-leg1{
+position:absolute;
+left:65px;
+top:95px;
+width:25px;
+height:55px;
+background:#15803d;
+border-radius:15px;
+}
+
+.dino-leg2{
+position:absolute;
+left:115px;
+top:95px;
+width:25px;
+height:55px;
+background:#15803d;
+border-radius:15px;
+}
+
+.dino-arm{
+position:absolute;
+left:125px;
+top:68px;
+width:18px;
+height:45px;
+background:#15803d;
+border-radius:15px;
+transform:rotate(-20deg);
+}
+
+.water{
+display:none;
+position:absolute;
+right:100px;
+bottom:55px;
+width:100px;
+height:60px;
+background:#38bdf8;
+border:5px solid #075985;
+border-radius:50%;
+box-shadow:
+0 0 20px #38bdf8,
+0 0 40px rgba(56,189,248,.7);
+z-index:10;
+}
+
+.water.show{
+display:block;
+animation:waterShow .6s infinite alternate;
+}
+
+@keyframes waterShow{
+from{transform:scale(.95)}
+to{transform:scale(1.05)}
+}
+
+.obstacle{
+display:none;
+position:absolute;
+right:300px;
+bottom:80px;
+width:130px;
+height:110px;
+z-index:25;
+}
+
+.obstacle.show{
+display:block;
+}
+
+.rock{
+position:absolute;
+bottom:0;
+width:120px;
+height:90px;
+background:
+radial-gradient(circle at 30% 20%,#a8a29e,#57534e 50%,#292524 90%);
+clip-path:polygon(
+20% 100%,
+10% 50%,
+30% 15%,
+60% 0,
+90% 30%,
+100% 75%,
+80% 100%
+);
+border:5px solid #292524;
+}
+
+.start-area{
+text-align:center;
+margin:25px 0;
+}
+
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#d97706,#92400e);
+box-shadow:
+0 8px 0 #451a03,
+0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+
+.start:hover{
+transform:translateY(-3px);
+}
+
+.start:active{
+transform:translateY(5px);
+box-shadow:0 3px 0 #451a03;
+}
+
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#fef3c7;
+}
+
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#facc15,#f97316,#dc2626);
+box-shadow:0 0 15px #f97316;
+transition:.5s;
+}
+
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#fde68a;
+}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(28,25,23,.8);
+backdrop-filter:blur(6px);
+}
+
+.overlay.show{
+display:block;
+}
+
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#fff7ed,#fef3c7);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#451a03;
+}
+
+.question-box.show{
+display:block;
+animation:popup .3s forwards;
+}
+
+@keyframes popup{
+to{
+transform:translate(-50%,-50%) scale(1);
+}
+}
+
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#92400e;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #fed7aa;
+border-radius:14px;
+background:#fff;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#451a03;
+}
+
+.answer:hover{
+transform:translateX(5px);
+border-color:#f97316;
+background:#ffedd5;
+}
+
+.answer.selected{
+background:#fed7aa;
+border-color:#ea580c;
+box-shadow:0 0 0 3px rgba(234,88,12,.12);
+}
+
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#d97706,#92400e);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(146,64,14,.35);
+}
+
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+from{
+transform:translate(-50%,-50%) scale(.5);
+opacity:0;
+}
+to{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+.result h2{
+font-size:38px;
+color:#92400e;
+margin:0 0 20px;
+}
+
+.result.lose h2{
+color:#dc2626;
+}
+
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#451a03;
+}
+
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#d97706,#92400e);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#facc15;
+text-shadow:0 0 20px #f97316;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+
+@keyframes correctEffect{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:0;
+}
+40%{
+transform:translate(-50%,-50%) scale(1.3);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-100%) scale(1);
+opacity:0;
+}
+}
+
+@media(max-width:700px){
+
+h1{
+font-size:27px;
+margin-top:75px;
+}
+
+.info{
+font-size:16px;
+}
+
+.game{
+width:96%;
+padding:12px;
+}
+
+.desert{
+height:280px;
+}
+
+.person{
+transform:scale(.75);
+transform-origin:left top;
+top:110px;
+}
+
+.dinosaur{
+transform:scale(.7);
+transform-origin:left top;
+left:145px;
+top:125px;
+}
+
+.palm{
+right:35px;
+bottom:60px;
+transform:scale(.7);
+}
+
+.obstacle{
+right:90px;
+bottom:65px;
+transform:scale(.7);
+}
+
+.question-box{
+padding:20px;
+}
+
+.question-box h2{
+font-size:21px;
+}
+
+.question{
+font-size:18px;
+}
+
+.answer{
+font-size:16px;
+padding:12px;
+}
+
+.result h2{
+font-size:30px;
+}
+
+.result p{
+font-size:18px;
+}
+
+.back{
+padding:9px 14px;
+font-size:14px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="sun"></div>
+<div class="sand"></div>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi6tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🏜️ TRẮC NGHIỆM LỊCH SỬ VÀ ĐỊA LÍ 6</h1>
+
+<div class="info">
+🦖 CON NGƯỜI VÀ KHỦNG LONG - HÀNH TRÌNH TÌM NƯỚC TRÊN SA MẠC
+</div>
+
+<div class="game">
+
+<div class="desert">
+
+<div class="dune1"></div>
+<div class="dune2"></div>
+<div class="palm"></div>
+
+<div class="person">
+
+<div class="hair"></div>
+<div class="head">
+<div class="eye"></div>
+</div>
+<div class="body"></div>
+<div class="arm1"></div>
+<div class="arm2"></div>
+<div class="leg1"></div>
+<div class="leg2"></div>
+
+</div>
+
+<div class="dinosaur">
+
+<div class="dino-tail"></div>
+<div class="dino-body"></div>
+<div class="dino-head"></div>
+<div class="dino-eye"></div>
+<div class="dino-mouth"></div>
+<div class="dino-leg1"></div>
+<div class="dino-leg2"></div>
+<div class="dino-arm"></div>
+
+</div>
+
+<div class="water" id="water"></div>
+
+<div class="obstacle" id="obstacle">
+<div class="rock"></div>
+</div>
+
+</div>
+
+<div class="start-area">
+
+<button class="start" id="startButton" onclick="startGame()">
+🏜️ BẮT ĐẦU HÀNH TRÌNH
+</button>
+
+</div>
+
+<div class="progress-text" id="progressText">
+🌵 Chưa bắt đầu
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="status" id="status">
+Hãy bắt đầu hành trình tìm nguồn nước!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+
+<h2>🪨 CHƯỚNG NGẠI VẬT TRÊN SA MẠC!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+🏜️ TRẢ LỜI
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 HÀNH TRÌNH LẠI
+</button>
+
+</div>
+
+<script>
+
+const questionBank=[
+
+["Lịch sử là gì?",["Những gì đã diễn ra trong quá khứ","Những gì sẽ xảy ra","Những điều tưởng tượng","Những việc đang diễn ra"],0],
+
+["Nguồn sử liệu nào là những di tích, đồ vật còn được lưu lại?",["Sử liệu hiện vật","Sử liệu truyền miệng","Sử liệu chữ viết","Sử liệu điện tử"],0],
+
+["Người tối cổ xuất hiện cách ngày nay khoảng bao lâu?",["4 triệu năm","4 nghìn năm","400 năm","40 triệu năm"],0],
+
+["Công cụ lao động chủ yếu của Người tối cổ được làm bằng gì?",["Đá","Sắt","Đồng","Nhựa"],0],
+
+["Người tinh khôn xuất hiện khoảng bao nhiêu năm trước?",["4 vạn năm","400 năm","4 nghìn năm","40 triệu năm"],0],
+
+["Xã hội nguyên thủy trải qua những giai đoạn chính nào?",["Bầy người nguyên thủy và công xã thị tộc","Phong kiến và tư bản","Nô lệ và phong kiến","Tư bản và xã hội chủ nghĩa"],0],
+
+["Ai Cập cổ đại hình thành bên lưu vực con sông nào?",["Sông Nile","Sông Hằng","Sông Hoàng Hà","Sông Amazon"],0],
+
+["Lưỡng Hà cổ đại nằm giữa hai con sông nào?",["Tigris và Euphrates","Nile và Hằng","Hoàng Hà và Trường Giang","Amazon và Nile"],0],
+
+["Kim tự tháp là công trình nổi tiếng của nền văn minh nào?",["Ai Cập","Hy Lạp","La Mã","Ấn Độ"],0],
+
+["Vạn Lý Trường Thành thuộc quốc gia nào?",["Trung Quốc","Ai Cập","Ấn Độ","Hy Lạp"],0],
+
+["Đấu trường Colosseum là công trình nổi tiếng của nền văn minh nào?",["La Mã","Ai Cập","Trung Quốc","Ấn Độ"],0],
+
+["Chữ viết của người Ai Cập cổ đại được gọi là gì?",["Chữ tượng hình","Chữ La-tinh","Chữ Hán","Chữ Phạn"],0],
+
+["Vị trí địa lí có ý nghĩa gì đối với một quốc gia?",["Ảnh hưởng đến điều kiện tự nhiên và phát triển kinh tế","Không có ý nghĩa","Chỉ ảnh hưởng đến dân số","Chỉ ảnh hưởng đến thời tiết"],0],
+
+["Trái Đất có dạng gần giống hình gì?",["Hình cầu","Hình vuông","Hình tam giác","Hình trụ"],0],
+
+["Trái Đất tự quay quanh trục theo hướng nào?",["Từ Tây sang Đông","Từ Đông sang Tây","Từ Bắc xuống Nam","Từ Nam lên Bắc"],0],
+
+["Trái Đất quay một vòng quanh Mặt Trời mất khoảng bao lâu?",["365 ngày 6 giờ","24 giờ","30 ngày","12 giờ"],0],
+
+["Kinh tuyến gốc có số độ là bao nhiêu?",["0°","90°","180°","360°"],0],
+
+["Xích đạo có số độ vĩ là bao nhiêu?",["0°","90°","180°","45°"],0],
+
+["Bản đồ là gì?",["Hình vẽ thu nhỏ một phần hoặc toàn bộ bề mặt Trái Đất","Một bức tranh","Một bảng số liệu","Một loại biểu đồ"],0],
+
+["Địa hình núi thường có đặc điểm gì?",["Độ cao lớn và địa hình dốc","Hoàn toàn bằng phẳng","Thấp hơn biển","Không có độ dốc"],0],
+
+["Đồng bằng thường có đặc điểm gì?",["Tương đối bằng phẳng và thấp","Rất cao và dốc","Luôn có tuyết","Luôn là sa mạc"],0],
+
+["Sa mạc là nơi có đặc điểm khí hậu như thế nào?",["Khô hạn, lượng mưa rất ít","Mưa nhiều quanh năm","Lạnh và ẩm quanh năm","Luôn có băng tuyết"],0],
+
+["Sông là gì?",["Dòng nước chảy thường xuyên trên bề mặt lục địa","Một vùng núi","Một vùng biển","Một loại đất"],0],
+
+["Hồ là gì?",["Khoảng nước đọng tương đối rộng trên đất liền","Dòng nước chảy ra biển","Một loại núi","Một loại khí"],0],
+
+["Khí hậu là gì?",["Sự lặp đi lặp lại của thời tiết trong thời gian dài","Thời tiết trong một giờ","Một trận mưa","Một cơn gió"],0],
+
+["Thời tiết là trạng thái của khí quyển tại đâu?",["Một địa phương trong một thời điểm hoặc khoảng thời gian ngắn","Toàn bộ Trái Đất trong hàng nghìn năm","Chỉ trên biển","Chỉ ở vùng núi"],0],
+
+["Khí hậu nhiệt đới thường có đặc điểm gì?",["Nhiệt độ cao","Luôn có băng tuyết","Nhiệt độ rất thấp","Không có mưa"],0],
+
+["Rừng nhiệt đới thường có đặc điểm gì?",["Nóng ẩm và sinh vật phong phú","Khô lạnh","Không có cây","Luôn có tuyết"],0],
+
+["Dân cư là gì?",["Tập hợp những người sinh sống trên một lãnh thổ","Các loài động vật","Các loại cây","Các dòng sông"],0],
+
+["Mật độ dân số được tính bằng gì?",["Số dân trên một đơn vị diện tích","Diện tích chia cho số núi","Số sông trên diện tích","Số cây trên diện tích"],0],
+
+["Châu lục nào có diện tích lớn nhất thế giới?",["Châu Á","Châu Âu","Châu Phi","Châu Đại Dương"],0],
+
+["Châu Phi nổi tiếng với kiểu môi trường nào?",["Hoang mạc và xa van","Băng tuyết quanh năm","Rừng lá kim בלבד","Đồng bằng băng"],0],
+
+["Đỉnh núi cao nhất thế giới là gì?",["Everest","Phú Sĩ","An-pơ","Phan-xi-păng"],0],
+
+["Sông dài nhất Việt Nam chảy hoàn toàn trong lãnh thổ Việt Nam là sông nào?",["Sông Đồng Nai","Sông Hồng","Sông Mã","Sông Cả"],0],
+
+["Biển Đông nằm ở phía nào của Việt Nam?",["Phía Đông","Phía Tây","Phía Bắc","Phía Nam"],0],
+
+["Việt Nam nằm ở khu vực nào của châu Á?",["Đông Nam Á","Đông Á","Nam Á","Tây Á"],0],
+
+["Hoàng Hà và Trường Giang là hai con sông lớn của quốc gia nào?",["Trung Quốc","Ấn Độ","Ai Cập","Hy Lạp"],0],
+
+["Ấn Độ cổ đại hình thành chủ yếu ở lưu vực sông nào?",["Sông Ấn và sông Hằng","Sông Nile","Sông Hồng","Sông Amazon"],0],
+
+["Hy Lạp cổ đại phát triển mạnh ở khu vực nào?",["Ven Địa Trung Hải","Bắc Âu","Nam Mỹ","Đông Á"],0],
+
+["Người Việt cổ đã sử dụng công cụ bằng kim loại nào?",["Đồng và sắt","Nhựa","Nhôm hiện đại","Thép không gỉ"],0],
+
+["Nhà nước đầu tiên trong lịch sử Việt Nam là gì?",["Văn Lang","Âu Lạc","Đại Việt","Đại Cồ Việt"],0],
+
+["Người đứng đầu nhà nước Văn Lang là ai?",["Các vua Hùng","An Dương Vương","Lý Công Uẩn","Trần Hưng Đạo"],0],
+
+["An Dương Vương lập nước nào?",["Âu Lạc","Văn Lang","Đại Việt","Chăm-pa"],0],
+
+["Công trình phòng thủ nổi tiếng của Âu Lạc là gì?",["Thành Cổ Loa","Vạn Lý Trường Thành","Kim tự tháp","Colosseum"],0],
+
+["Đồng bằng sông Hồng được bồi đắp chủ yếu bởi hệ thống sông nào?",["Sông Hồng và sông Thái Bình","Sông Nile","Sông Amazon","Sông Hằng"],0],
+
+["Tài nguyên thiên nhiên là gì?",["Những thành phần tự nhiên có ích cho con người","Chỉ các công trình xây dựng","Chỉ các thành phố","Các loại phương tiện giao thông"],0],
+
+["Khoáng sản là gì?",["Khoáng vật và đá có ích được con người khai thác","Động vật hoang dã","Cây trồng","Nước mưa"],0],
+
+["Dầu mỏ thuộc nhóm tài nguyên nào?",["Năng lượng","Đất","Sinh vật","Nước"],0],
+
+["Rừng có vai trò nào sau đây?",["Điều hòa khí hậu và bảo vệ đất","Làm tăng xói mòn","Làm mất đa dạng sinh học","Làm giảm oxygen"],0],
+
+["Con người cần làm gì để bảo vệ tài nguyên thiên nhiên?",["Khai thác hợp lí và tiết kiệm","Khai thác càng nhiều càng tốt","Phá rừng","Xả rác xuống sông"],0]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let personPosition=55;
+let personTimer=null;
+let obstacleTimer=null;
+
+function startGame(){
+
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+personPosition=55;
+
+document.querySelector(".person").style.left=personPosition+"px";
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("water").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+
+document.getElementById("startButton").innerHTML="🔄 HÀNH TRÌNH LẠI";
+
+document.getElementById("status").innerHTML=
+"🏜️ Con người và khủng long đang đi tìm nguồn nước...";
+
+let shuffled=[...questionBank];
+
+shuffled.sort(()=>Math.random()-.5);
+
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+clearInterval(personTimer);
+clearTimeout(obstacleTimer);
+
+personTimer=setInterval(movePerson,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+
+}
+
+function movePerson(){
+
+if(!gameRunning||waiting)return;
+
+personPosition+=2;
+
+let width=document.querySelector(".desert").clientWidth;
+
+if(personPosition>width-180){
+personPosition=55;
+}
+
+document.querySelector(".person").style.left=
+personPosition+"px";
+
+document.querySelector(".dinosaur").style.left=
+(personPosition+155)+"px";
+
+}
+
+function showObstacle(){
+
+if(!gameRunning)return;
+
+waiting=true;
+
+document.getElementById("obstacle").classList.add("show");
+
+document.getElementById("status").innerHTML=
+"🪨 Chướng ngại vật phía trước! Hãy trả lời câu hỏi!";
+
+clearInterval(personTimer);
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=gameQuestions[currentQuestion];
+
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML=
+"Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+
+});
+
+document.getElementById("answers").innerHTML=html;
+
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function correctEffect(){
+
+const effect=document.createElement("div");
+
+effect.className="correct-effect";
+effect.innerHTML="🏜️ CHÍNH XÁC!";
+
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},800);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+
+alert("⚠️ Hãy chọn một đáp án!");
+
+return;
+
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+
+loseGame();
+
+return;
+
+}
+
+correctEffect();
+
+currentQuestion++;
+
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+updateProgress();
+
+if(currentQuestion>=10){
+
+winGame();
+
+return;
+
+}
+
+waiting=false;
+
+document.getElementById("status").innerHTML=
+"✅ Chính xác! Hành trình tiếp tục tìm nước...";
+
+personTimer=setInterval(movePerson,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML=
+"🏜️ Đã vượt qua "+currentQuestion+"/10 chướng ngại vật";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(personTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML=
+"🌵 HÀNH TRÌNH THẤT BẠI!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Bạn đã trả lời sai!<br><br>"+
+"🏜️ Bạn đã vượt qua "+
+currentQuestion+
+"/10 chướng ngại vật.<br><br>"+
+"💧 Hãy ôn lại kiến thức Lịch sử và Địa lí 6 rồi thử lại!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(personTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+
+document.getElementById("water").classList.add("show");
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("progressText").innerHTML=
+"🏆 HOÀN THÀNH 10/10!";
+
+document.getElementById("status").innerHTML=
+"💧 Đã tìm thấy nguồn nước!";
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("resultTitle").innerHTML=
+"💧 TÌM THẤY NGUỒN NƯỚC!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"🦖 Con người và khủng long đã vượt qua cả 10 chướng ngại vật!<br><br>"+
+"📚 Bạn đã hoàn thành Trắc nghiệm Lịch sử và Địa lí 6!";
+
+}
+
+</script>
+
+</body>
+</html>

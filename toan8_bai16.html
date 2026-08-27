@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 16: Đường trung bình của tam giác</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan8.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 16: Đường trung bình của tam giác</h2>
+
+<h3>📖 1. Định nghĩa đường trung bình của tam giác</h3>
+
+<p>
+Đường trung bình của tam giác là đoạn thẳng nối trung điểm của hai cạnh trong tam giác.
+</p>
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Cho tam giác ABC.
+</p>
+
+<p>
+D, E, F lần lượt là trung điểm của BC, AC và AB.
+</p>
+
+<p>
+Khi đó:
+</p>
+
+<ul>
+
+<li>DE là đường trung bình của tam giác ABC.</li>
+
+<li>DF là đường trung bình của tam giác ABC.</li>
+
+<li>EF là đường trung bình của tam giác ABC.</li>
+
+</ul>
+
+<h3>📖 2. Tính chất đường trung bình của tam giác</h3>
+
+<h3>📌 Định lí</h3>
+
+<p>
+Đường trung bình của tam giác song song với cạnh thứ ba và bằng một nửa cạnh đó.
+</p>
+
+<p>
+Nếu D và E lần lượt là trung điểm của AB và AC thì:
+</p>
+
+<p>
+DE là đường trung bình của tam giác ABC.
+</p>
+
+<p>
+Khi đó:
+</p>
+
+<p>
+DE // BC
+</p>
+
+<p>
+và
+</p>
+
+<p>
+DE = 1/2 BC
+</p>
+
+<h3>📖 3. Chứng minh định lí</h3>
+
+<p>
+Vì D và E là trung điểm của AB và AC nên:
+</p>
+
+<p>
+AD / AB = AE / AC = 1/2
+</p>
+
+<p>
+Theo định lí Thalès đảo:
+</p>
+
+<p>
+DE // BC
+</p>
+
+<p>
+Từ đó suy ra:
+</p>
+
+<p>
+DE = 1/2 BC
+</p>
+
+<p>
+Vậy đường trung bình của tam giác song song với cạnh thứ ba và bằng một nửa cạnh đó.
+</p>
+
+<h3>📌 Chú ý</h3>
+
+<p>
+Trong một tam giác, nếu một đường thẳng đi qua trung điểm của một cạnh và song song với cạnh thứ hai thì nó đi qua trung điểm của cạnh thứ ba.
+</p>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+Cho tam giác ABC.
+</p>
+
+<p>
+D và E lần lượt là trung điểm của AB và AC.
+</p>
+
+<p>
+Biết BC = 8 cm.
+</p>
+
+<p>
+Tính DE.
+</p>
+
+<p>
+Vì D và E là trung điểm của AB và AC nên DE là đường trung bình của tam giác ABC.
+</p>
+
+<p>
+Theo tính chất đường trung bình:
+</p>
+
+<p>
+DE = 1/2 BC
+</p>
+
+<p>
+DE = 1/2 × 8
+</p>
+
+<p>
+DE = 4 cm
+</p>
+
+<p>
+Vậy DE = 4 cm.
+</p>
+
+<h3>🔍 Ví dụ 3</h3>
+
+<p>
+Cho tam giác MNP.
+</p>
+
+<p>
+A là trung điểm của MN.
+</p>
+
+<p>
+Qua A kẻ đường thẳng song song với NP cắt MP tại B.
+</p>
+
+<p>
+Chứng minh B là trung điểm của MP.
+</p>
+
+<p>
+Vì A là trung điểm của MN và AB // NP.
+</p>
+
+<p>
+Theo tính chất đường trung bình:
+</p>
+
+<p>
+B là trung điểm của MP.
+</p>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+Đường trung bình của tam giác là đoạn thẳng nối trung điểm của hai cạnh.
+</li>
+
+<li>
+Đường trung bình của tam giác song song với cạnh thứ ba.
+</li>
+
+<li>
+Đường trung bình bằng một nửa cạnh thứ ba.
+</li>
+
+<li>
+Nếu một đường thẳng đi qua trung điểm của một cạnh và song song với cạnh thứ hai thì nó đi qua trung điểm của cạnh còn lại.
+</li>
+
+<li>
+Công thức thường dùng:
+</li>
+
+</ul>
+
+<p>
+DE // BC
+</p>
+
+<p>
+DE = 1/2 BC
+</p>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

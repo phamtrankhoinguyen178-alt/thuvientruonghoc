@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tài Liệu - THCS Quảng Phương</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+}
+
+header{
+background:linear-gradient(135deg,#0b2a88,#1c52ff);
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+header h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+header p{
+font-size:16px;
+}
+
+.home-btn{
+display:inline-block;
+margin-top:20px;
+background:#ff6a00;
+color:white;
+text-decoration:none;
+padding:12px 25px;
+border-radius:8px;
+font-weight:bold;
+}
+
+.home-btn:hover{
+background:#e55d00;
+}
+
+.container{
+width:1200px;
+max-width:95%;
+margin:40px auto;
+}
+
+.search-box{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
+margin-bottom:30px;
+}
+
+.search-box h2{
+color:#0b2a88;
+margin-bottom:20px;
+}
+
+.search{
+display:flex;
+gap:10px;
+}
+
+.search input{
+flex:1;
+padding:14px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:16px;
+}
+
+.search button{
+background:#ff6a00;
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.search button:hover{
+background:#e55d00;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+color:#0b2a88;
+margin-bottom:20px;
+}
+
+.docs{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.doc{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+transition:.3s;
+}
+
+.doc:hover{
+transform:translateY(-5px);
+}
+
+.doc h3{
+color:#0b2a88;
+margin-bottom:10px;
+}
+
+.doc p{
+color:#666;
+margin-bottom:15px;
+}
+
+.doc a{
+display:inline-block;
+background:#ff6a00;
+color:white;
+text-decoration:none;
+padding:10px 18px;
+border-radius:6px;
+font-weight:bold;
+}
+
+.doc a:hover{
+background:#e55d00;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:25px;
+margin-top:50px;
+}
+
+@media(max-width:700px){
+
+.docs{
+grid-template-columns:1fr;
+}
+
+.search{
+flex-direction:column;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>📄 TÀI LIỆU</h1>
+
+<p>Kho tài liệu học tập THCS Quảng Phương</p>
+
+<a href="index.html" class="home-btn">
+🏠 Trang Chủ
+</a>
+
+</header>
+
+<div class="container">
+
+<div class="search-box">
+
+<h2>🔍 Tìm Kiếm Tài Liệu</h2>
+
+<div class="search">
+
+<input type="text" id="searchInput" placeholder="Nhập tên tài liệu...">
+
+<button onclick="searchDoc()">
+Tìm Kiếm
+</button>
+
+</div>
+
+</div>
+
+<div class="title">
+📚 Tài Liệu Nổi Bật
+</div>
+
+<div class="docs" id="docs">
+
+<div class="doc">
+<h3>Toán 6 - Tập hợp số tự nhiên</h3>
+<p>Tài liệu học tập môn Toán lớp 6.</p>
+<a href="#">Xem tài liệu</a>
+</div>
+
+<div class="doc">
+<h3>Ngữ Văn 7 - Bài 1</h3>
+<p>Tài liệu môn Ngữ Văn lớp 7.</p>
+<a href="#">Xem tài liệu</a>
+</div>
+
+<div class="doc">
+<h3>Tiếng Anh 7 Unit 1</h3>
+<p>Tài liệu Tiếng Anh lớp 7.</p>
+<a href="#">Xem tài liệu</a>
+</div>
+
+<div class="doc">
+<h3>KHTN 6 - Chất và sự biến đổi</h3>
+<p>Tài liệu Khoa học tự nhiên lớp 6.</p>
+<a href="#">Xem tài liệu</a>
+</div>
+
+<div class="doc">
+<h3>Lịch Sử 7 - Bài 1</h3>
+<p>Tài liệu Lịch Sử lớp 7.</p>
+<a href="#">Xem tài liệu</a>
+</div>
+
+<div class="doc">
+<h3>Địa Lí 7 - Châu Âu</h3>
+<p>Tài liệu Địa Lí lớp 7.</p>
+<a href="#">Xem tài liệu</a>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>© 2026 THƯ VIỆN THCS QUẢNG PHƯƠNG</p>
+
+</footer>
+
+<script>
+
+function searchDoc(){
+
+let input=document.getElementById("searchInput").value.toLowerCase();
+
+let docs=document.querySelectorAll(".doc");
+
+docs.forEach(doc=>{
+
+let text=doc.innerText.toLowerCase();
+
+if(text.includes(input)){
+doc.style.display="block";
+}else{
+doc.style.display="none";
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

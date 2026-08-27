@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 18 - Thực hành: Phân tích biểu đồ nhiệt độ, lượng mưa</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#2196f3,#0d47a1);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#3498db;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+h2{
+    color:#1565c0;
+}
+
+h3{
+    color:#1976d2;
+}
+
+p,li{
+    font-size:17px;
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid #ccc;
+}
+
+th{
+    background:#2196f3;
+    color:white;
+}
+
+th,td{
+    padding:10px;
+    text-align:center;
+}
+
+.note{
+    background:#fff8dc;
+    border-left:6px solid orange;
+    padding:15px;
+    border-radius:10px;
+    margin-top:30px;
+}
+
+.example{
+    background:#e8f5e9;
+    border-left:6px solid #4caf50;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="diali6.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+<h1>🌦️ Bài 18</h1>
+<h2>Thực hành: Phân tích biểu đồ nhiệt độ, lượng mưa</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Hướng dẫn đọc biểu đồ nhiệt độ, lượng mưa</h2>
+
+<p>
+Biểu đồ nhiệt độ, lượng mưa giúp chúng ta nhận biết đặc điểm khí hậu của một địa điểm thông qua nhiệt độ và lượng mưa trong năm.
+</p>
+
+<ul>
+<li>Trục bên trái biểu thị <b>nhiệt độ</b> (°C).</li>
+
+<li>Trục bên phải biểu thị <b>lượng mưa</b> (mm).</li>
+
+<li>Cột màu xanh thể hiện lượng mưa trung bình tháng.</li>
+
+<li>Đường màu đỏ thể hiện nhiệt độ trung bình tháng.</li>
+
+<li>Trục ngang thể hiện các tháng trong năm.</li>
+</ul>
+
+<div class="example">
+
+<h3>📖 Cách quan sát</h3>
+
+<ul>
+<li>Quan sát đường nhiệt độ để biết tháng nóng nhất, lạnh nhất.</li>
+
+<li>Quan sát cột mưa để biết tháng mưa nhiều nhất, ít nhất.</li>
+
+<li>Từ đó nhận xét đặc điểm khí hậu của địa điểm.</li>
+</ul>
+
+</div>
+
+<h2>II. Bảng số liệu nhiệt độ và lượng mưa</h2>
+
+<table>
+
+<tr>
+<th>Địa điểm</th>
+<th>Nhiệt độ cao nhất (°C)</th>
+<th>Nhiệt độ thấp nhất (°C)</th>
+<th>Biên độ nhiệt năm (°C)</th>
+<th>Nhiệt độ TB năm (°C)</th>
+</tr>
+
+<tr>
+<td>Tích-xi</td>
+<td>8</td>
+<td>-30</td>
+<td>38</td>
+<td>-12,8</td>
+</tr>
+
+<tr>
+<td>Xơ-un</td>
+<td>26</td>
+<td>-2</td>
+<td>28</td>
+<td>13,3</td>
+</tr>
+
+<tr>
+<td>Ma-ni-la</td>
+<td>28</td>
+<td>22</td>
+<td>6</td>
+<td>25,4</td>
+</tr>
+
+</table>
+
+<br>
+
+<table>
+
+<tr>
+<th>Địa điểm</th>
+<th>Lượng mưa cao nhất (mm)</th>
+<th>Lượng mưa thấp nhất (mm)</th>
+<th>Lượng mưa TB năm (mm)</th>
+</tr>
+
+<tr>
+<td>Tích-xi</td>
+<td>50</td>
+<td>10</td>
+<td>321</td>
+</tr>
+
+<tr>
+<td>Xơ-un</td>
+<td>390</td>
+<td>20</td>
+<td>1373</td>
+</tr>
+
+<tr>
+<td>Ma-ni-la</td>
+<td>440</td>
+<td>10</td>
+<td>2047</td>
+</tr>
+
+</table>
+
+<h2>III. Nhận xét đặc điểm khí hậu</h2>
+
+<h3>1. Ma-ni-la (Đới nóng - nhiệt đới)</h3>
+
+<ul>
+<li>Nhiệt độ cao quanh năm.</li>
+
+<li>Biên độ nhiệt năm nhỏ (6°C).</li>
+
+<li>Lượng mưa rất lớn (2047 mm/năm).</li>
+
+<li>Mưa tập trung chủ yếu vào mùa hạ.</li>
+</ul>
+
+<h3>2. Xơ-un (Đới ôn hòa)</h3>
+
+<ul>
+<li>Nhiệt độ trung bình năm tương đối thấp.</li>
+
+<li>Có tháng nhiệt độ xuống dưới 0°C.</li>
+
+<li>Biên độ nhiệt năm lớn (28°C).</li>
+
+<li>Lượng mưa khá cao nhưng phân bố không đều giữa các mùa.</li>
+</ul>
+
+<h3>3. Tích-xi (Đới lạnh)</h3>
+
+<ul>
+<li>Nhiệt độ rất thấp.</li>
+
+<li>Có tháng xuống tới -30°C.</li>
+
+<li>Biên độ nhiệt năm rất lớn (38°C).</li>
+
+<li>Lượng mưa thấp, khí hậu khô lạnh.</li>
+</ul>
+
+<div class="example">
+
+<h3>🌍 So sánh nhanh</h3>
+
+<ul>
+<li>Ma-ni-la: Nóng và mưa nhiều.</li>
+
+<li>Xơ-un: Ôn hòa, có mùa đông lạnh.</li>
+
+<li>Tích-xi: Rất lạnh, mưa ít.</li>
+</ul>
+
+</div>
+
+<h2>IV. Kĩ năng cần ghi nhớ</h2>
+
+<ul>
+<li>Xác định nhiệt độ cao nhất và thấp nhất.</li>
+
+<li>Tính biên độ nhiệt năm.</li>
+
+<li>Xác định lượng mưa cao nhất và thấp nhất.</li>
+
+<li>Nhận xét sự phân bố lượng mưa trong năm.</li>
+
+<li>So sánh đặc điểm khí hậu giữa các địa điểm.</li>
+</ul>
+
+<div class="note">
+
+<h2>📌 Ghi nhớ</h2>
+
+<ul>
+<li>Đường màu đỏ biểu diễn nhiệt độ trung bình tháng.</li>
+
+<li>Cột màu xanh biểu diễn lượng mưa trung bình tháng.</li>
+
+<li>Ma-ni-la thuộc đới nóng, nóng ẩm quanh năm.</li>
+
+<li>Xơ-un thuộc đới ôn hòa, có sự khác biệt rõ giữa các mùa.</li>
+
+<li>Tích-xi thuộc đới lạnh, nhiệt độ thấp và lượng mưa ít.</li>
+
+<li>Biểu đồ nhiệt độ, lượng mưa giúp nhận biết đặc điểm khí hậu của một địa điểm.</li>
+</ul>
+
+</div>
+
+</div>
+
+</body>
+</html>

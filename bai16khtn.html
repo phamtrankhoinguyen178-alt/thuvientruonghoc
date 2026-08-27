@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 16 - Ảnh của vật qua gương phẳng</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>🪞 Bài 16</h1>
+    <h2>Ảnh của vật qua gương phẳng</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Ảnh của vật qua gương phẳng</h2>
+
+<p>
+Hình của vật nhìn thấy trong gương phẳng được gọi là ảnh của vật qua gương phẳng.
+</p>
+
+<p><b>Ví dụ:</b> Ảnh của một em bé khi đứng trước gương.</p>
+
+<img src="anhkhtn48.png" class="img" onclick="openImg(this)">
+
+<h2>II. Tính chất ảnh của vật qua gương phẳng</h2>
+
+<ul>
+<li>Ảnh của vật qua gương phẳng là ảnh ảo, không hứng được trên màn chắn.</li>
+
+<li>Ảnh có kích thước bằng kích thước của vật.</li>
+
+<li>Khoảng cách từ vật đến gương bằng khoảng cách từ ảnh đến gương.</li>
+
+<li>Ảnh và vật đối xứng nhau qua mặt gương.</li>
+</ul>
+
+<h2>III. Dựng ảnh của vật qua gương phẳng</h2>
+
+<h3>1. Cách 1: Dựa vào định luật phản xạ ánh sáng</h3>
+
+<p><b>Ví dụ:</b> Dựng ảnh của điểm sáng S.</p>
+
+<ul>
+<li>Bước 1: Vẽ hai tia sáng SI₁ và SI₂ từ điểm S tới gương.</li>
+
+<li>Bước 2: Áp dụng định luật phản xạ để vẽ hai tia phản xạ I₁R₁ và I₂R₂.</li>
+
+<li>Bước 3: Kéo dài các tia phản xạ về phía sau gương, giao điểm của chúng là ảnh S'.</li>
+</ul>
+
+<img src="anhkhtn49.png" class="img" onclick="openImg(this)">
+
+<h3>2. Cách 2: Dựa vào tính chất ảnh</h3>
+
+<p><b>Ví dụ:</b> Dựng ảnh của đoạn thẳng AB.</p>
+
+<ul>
+<li>Bước 1: Kẻ AH và BK vuông góc với gương.</li>
+
+<li>Bước 2: Lấy A'H = AH và B'K = BK ở phía sau gương.</li>
+
+<li>Bước 3: Nối A' với B' để được ảnh A'B' của vật AB.</li>
+</ul>
+
+<img src="anhkhtn50.png" class="img" onclick="openImg(this)">
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Ảnh trong gương phẳng là ảnh ảo.</li>
+
+<li>Ảnh và vật có kích thước bằng nhau.</li>
+
+<li>Khoảng cách từ ảnh đến gương bằng khoảng cách từ vật đến gương.</li>
+
+<li>Có thể dựng ảnh bằng định luật phản xạ ánh sáng hoặc dựa vào tính chất đối xứng.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Môn học khối 7</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    text-align:center;
+    margin:0;
+}
+
+header{
+    background:linear-gradient(135deg,#0b2a88,#1c52ff);
+    color:white;
+    padding:30px;
+}
+
+h1{
+    margin:0;
+}
+
+.subject-list{
+    max-width:1200px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+    padding:0 20px;
+}
+
+.subject{
+    background:white;
+    border-radius:12px;
+    padding:30px 20px;
+    text-decoration:none;
+    color:#333;
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.subject:hover{
+    transform:translateY(-8px);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.subject h2{
+    color:#0b2a88;
+    font-size:22px;
+}
+
+.back-home{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#ff6a00;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.back-home:hover{
+    background:#e55d00;
+}
+
+@media(max-width:900px){
+
+.subject-list{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.subject-list{
+    grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="hoctap.html" class="back-home">⬅ Quay lại</a>
+
+<header>
+<h1>📚 CÁC MÔN HỌC KHỐI 7</h1>
+</header>
+
+<div class="subject-list">
+
+<a href="toan7.html" class="subject">
+<h2>📘 Toán 7</h2>
+</a>
+
+<a href="van7.html" class="subject">
+<h2>📖 Ngữ Văn 7</h2>
+</a>
+
+<a href="anh7.html" class="subject">
+<h2>🌍 Tiếng Anh 7</h2>
+</a>
+
+<a href="khtn7.html" class="subject">
+<h2>🔬 KHTN 7</h2>
+</a>
+
+<a href="ls7.html" class="subject">
+<h2>🏛️ Lịch Sử 7</h2>
+</a>
+
+<a href="dl7.html" class="subject">
+<h2>🌏 Địa Lí 7</h2>
+</a>
+
+<a href="tinhoc7.html" class="subject">
+<h2>💻 Tin Học 7</h2>
+</a>
+
+<a href="gdcd7.html" class="subject">
+<h2>⚖️ GDCD 7</h2>
+</a>
+
+</div>
+
+</body>
+</html>

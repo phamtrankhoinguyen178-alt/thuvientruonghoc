@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toán 7 - Giải cứu Trái Đất</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#030817;
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 10% 20%,white 1px,transparent 2px),
+radial-gradient(circle at 25% 70%,white 1px,transparent 2px),
+radial-gradient(circle at 45% 15%,white 1px,transparent 2px),
+radial-gradient(circle at 70% 65%,white 1px,transparent 2px),
+radial-gradient(circle at 90% 25%,white 1px,transparent 2px);
+background-size:180px 180px;
+opacity:.45;
+z-index:-1;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+padding:10px 18px;
+background:#ff6b00;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
+z-index:100;
+}
+
+.back:hover{
+background:#e65100;
+}
+
+header{
+margin-top:65px;
+text-align:center;
+padding:20px;
+background:#07133b;
+border-bottom:2px solid #3158ff;
+}
+
+header h1{
+margin:0;
+font-size:32px;
+color:#54dcff;
+}
+
+.game{
+max-width:1100px;
+margin:25px auto;
+padding:20px;
+}
+
+.start-screen,
+.end-screen{
+background:#0b1540;
+border:2px solid #3158ff;
+border-radius:22px;
+padding:45px 25px;
+text-align:center;
+box-shadow:0 0 35px rgba(40,80,255,.35);
+}
+
+.start-screen h2,
+.end-screen h2{
+font-size:34px;
+color:#53dcff;
+}
+
+.start-screen p,
+.end-screen p{
+font-size:19px;
+line-height:1.7;
+}
+
+.big-meteor{
+font-size:100px;
+}
+
+.start-btn,
+.restart-btn{
+border:0;
+background:#00a878;
+color:white;
+padding:16px 35px;
+font-size:20px;
+font-weight:bold;
+border-radius:12px;
+cursor:pointer;
+margin-top:15px;
+}
+
+.start-btn:hover,
+.restart-btn:hover{
+background:#00865f;
+transform:scale(1.04);
+}
+
+.story{
+background:#0b1540;
+border:2px solid #3158ff;
+border-radius:15px;
+padding:20px;
+font-size:18px;
+line-height:1.6;
+}
+
+.robot{
+color:#54dcff;
+font-weight:bold;
+}
+
+.status{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin:20px 0;
+}
+
+.status-box{
+background:#0b1540;
+border:1px solid #3158ff;
+border-radius:13px;
+padding:15px;
+text-align:center;
+}
+
+.status-box b{
+display:block;
+font-size:25px;
+margin-top:6px;
+color:#54dcff;
+}
+
+.energy{
+height:16px;
+margin-top:10px;
+border-radius:20px;
+background:#202947;
+overflow:hidden;
+}
+
+.energy-bar{
+height:100%;
+width:100%;
+background:#19d86b;
+transition:.5s;
+}
+
+.space{
+height:235px;
+background:
+radial-gradient(circle at 15% 20%,white 1px,transparent 2px),
+radial-gradient(circle at 50% 70%,white 1px,transparent 2px),
+radial-gradient(circle at 80% 30%,white 1px,transparent 2px),
+linear-gradient(#050c27,#020611);
+background-size:120px 120px,170px 170px,200px 200px,100% 100%;
+border:2px solid #3158ff;
+border-radius:18px;
+position:relative;
+overflow:hidden;
+margin:20px 0;
+}
+
+.meteor{
+position:absolute;
+left:4%;
+top:35px;
+font-size:65px;
+transform:rotate(-30deg);
+transition:left 1s ease;
+z-index:5;
+filter:drop-shadow(0 0 12px #ff6b00);
+}
+
+.earth{
+position:absolute;
+right:20px;
+bottom:-55px;
+width:180px;
+height:180px;
+border-radius:50%;
+background:
+radial-gradient(ellipse at 25% 30%,#35c95d 0%,#35c95d 9%,transparent 10%),
+radial-gradient(ellipse at 65% 25%,#39d66a 0%,#39d66a 12%,transparent 13%),
+radial-gradient(ellipse at 70% 65%,#31c65a 0%,#31c65a 15%,transparent 16%),
+radial-gradient(ellipse at 35% 72%,#2db94e 0%,#2db94e 10%,transparent 11%),
+linear-gradient(135deg,#168cff,#064da9);
+box-shadow:
+0 0 15px #168cff,
+0 0 35px rgba(22,140,255,.7),
+0 0 65px rgba(22,140,255,.3);
+z-index:3;
+}
+
+.earth:before{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+border-radius:50%;
+background:linear-gradient(
+90deg,
+transparent 0%,
+rgba(255,255,255,.15) 45%,
+transparent 60%
+);
+}
+
+.question{
+background:white;
+color:#222;
+border-radius:20px;
+padding:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.question h2{
+color:#132b91;
+margin-top:0;
+font-size:23px;
+}
+
+.answers{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.answer{
+padding:17px;
+border:2px solid #d7dced;
+border-radius:12px;
+background:#f6f7fb;
+font-size:18px;
+cursor:pointer;
+transition:.2s;
+}
+
+.answer:hover{
+background:#e9edff;
+border-color:#3158ff;
+transform:scale(1.02);
+}
+
+.answer.correct{
+background:#b9f7c5;
+border-color:#12a83c;
+}
+
+.answer.wrong{
+background:#ffc5c5;
+border-color:#e00000;
+}
+
+.message{
+text-align:center;
+font-size:19px;
+font-weight:bold;
+min-height:30px;
+margin:18px 0;
+}
+
+#nextBtn{
+display:block;
+margin:auto;
+padding:13px 25px;
+border:0;
+border-radius:10px;
+background:#ff7100;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+#nextBtn:hover{
+background:#df5900;
+}
+
+.hidden{
+display:none;
+}
+
+footer{
+text-align:center;
+padding:20px;
+margin-top:30px;
+background:#050b22;
+}
+
+@media(max-width:650px){
+
+.status{
+grid-template-columns:1fr;
+}
+
+.answers{
+grid-template-columns:1fr;
+}
+
+header h1{
+font-size:23px;
+}
+
+.start-screen h2,
+.end-screen h2{
+font-size:27px;
+}
+
+.earth{
+width:135px;
+height:135px;
+bottom:-35px;
+}
+
+.earth:before{
+width:135px;
+height:135px;
+}
+
+.meteor{
+font-size:50px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<a href="tracnghiem7.html" class="back">⬅ Quay lại</a>
+
+<header>
+<h1>☄️ TOÁN 7 - GIẢI CỨU TRÁI ĐẤT 🌍</h1>
+</header>
+
+<div class="game">
+
+<div id="startScreen" class="start-screen">
+
+<div class="big-meteor">☄️</div>
+
+<h2>🚨 NHIỆM VỤ KHẨN CẤP 🚨</h2>
+
+<p>
+Một thiên thạch khổng lồ đang lao thẳng về phía Trái Đất!
+</p>
+
+<p>
+Bạn là người điều khiển hệ thống phòng thủ cuối cùng.
+</p>
+
+<p>
+🤖 <span class="robot">ROBOT:</span>
+"Muốn phá hủy thiên thạch, bạn phải trả lời đúng 10 câu hỏi Toán 7!"
+</p>
+
+<p>
+🎯 100 câu hỏi được chọn ngẫu nhiên mỗi lần chơi.
+</p>
+
+<button class="start-btn" onclick="startGame()">
+🚀 BẮT ĐẦU GIẢI CỨU
+</button>
+
+</div>
+
+<div id="gameScreen" class="hidden">
+
+<div class="story">
+🤖 <span class="robot">ROBOT:</span>
+"Thiên thạch đang bay từ trái sang phải!
+Hãy trả lời thật nhanh. Mỗi câu trả lời đúng sẽ giúp hệ thống phòng thủ mạnh hơn!"
+</div>
+
+<div class="status">
+
+<div class="status-box">
+CÂU HỎI
+<b id="questionNumber">1/10</b>
+</div>
+
+<div class="status-box">
+NĂNG LƯỢNG
+<b id="energyText">100%</b>
+<div class="energy">
+<div id="energyBar" class="energy-bar"></div>
+</div>
+</div>
+
+<div class="status-box">
+ĐIỂM
+<b id="score">0</b>
+</div>
+
+</div>
+
+<div class="space">
+
+<div id="meteor" class="meteor">☄️</div>
+
+<div class="earth"></div>
+
+</div>
+
+<div class="question">
+
+<h2 id="questionText"></h2>
+
+<div id="answers" class="answers"></div>
+
+<div id="message" class="message"></div>
+
+<button id="nextBtn" class="hidden" onclick="nextQuestion()">
+➡️ Câu tiếp theo
+</button>
+
+</div>
+
+</div>
+
+<div id="endScreen" class="end-screen hidden">
+
+<div id="endMeteor" class="big-meteor">💥</div>
+
+<h2 id="endTitle"></h2>
+
+<p id="endText"></p>
+
+<p>
+🎯 Điểm của bạn:
+<strong id="finalScore"></strong>/10
+</p>
+
+<button class="restart-btn" onclick="restartGame()">
+🔄 CHƠI LẠI
+</button>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG | TOÁN 7
+</footer>
+
+<script>
+
+const questionBank=[
+
+{q:"Kết quả của 3 + 5 là:",a:["6","7","8","9"],c:2,l:1},
+{q:"Số đối của 7 là:",a:["-7","0","7","1"],c:0,l:1},
+{q:"Giá trị của 2³ là:",a:["6","8","9","12"],c:1,l:1},
+{q:"Phân số nào bằng 1/2?",a:["2/3","3/6","4/5","5/6"],c:1,l:1},
+{q:"Kết quả của 5² là:",a:["10","15","20","25"],c:3,l:1},
+{q:"Số đối của -4 là:",a:["-4","0","4","8"],c:2,l:1},
+{q:"Giá trị của |-8| là:",a:["-8","0","8","16"],c:2,l:1},
+{q:"Kết quả của 12 - 7 là:",a:["3","4","5","6"],c:2,l:1},
+{q:"Kết quả của 6 × 4 là:",a:["20","24","28","30"],c:1,l:1},
+{q:"Kết quả của 36 : 6 là:",a:["4","5","6","7"],c:2,l:1},
+{q:"Góc có số đo 90° là:",a:["Góc nhọn","Góc vuông","Góc tù","Góc bẹt"],c:1,l:1},
+{q:"Góc nhỏ hơn 90° là:",a:["Góc nhọn","Góc vuông","Góc tù","Góc bẹt"],c:0,l:1},
+{q:"Tam giác có ba cạnh bằng nhau gọi là:",a:["Tam giác cân","Tam giác đều","Tam giác vuông","Tam giác tù"],c:1,l:1},
+{q:"Nếu x = 3 thì 2x bằng:",a:["5","6","7","8"],c:1,l:1},
+{q:"Nếu x = 4 thì x + 7 bằng:",a:["9","10","11","12"],c:2,l:1},
+{q:"Số nào là số hữu tỉ?",a:["√2","π","3/5","√3"],c:2,l:1},
+{q:"0,5 viết dưới dạng phân số tối giản là:",a:["1/2","2/5","5/10","3/5"],c:0,l:1},
+{q:"1/3 + 1/3 bằng:",a:["1/3","2/3","3/3","1/2"],c:1,l:1},
+{q:"5/6 - 2/6 bằng:",a:["1/6","2/6","3/6","4/6"],c:2,l:1},
+{q:"Nếu 3x = 15 thì x bằng:",a:["3","4","5","6"],c:2,l:1},
+
+{q:"2/3 + 1/6 bằng:",a:["1/2","2/3","5/6","1"],c:2,l:2},
+{q:"5/6 - 1/3 bằng:",a:["1/6","1/2","2/3","5/3"],c:1,l:2},
+{q:"3/4 × 8/9 bằng:",a:["1/2","2/3","3/4","8/9"],c:1,l:2},
+{q:"5/6 : 10/9 bằng:",a:["3/4","2/3","5/9","4/5"],c:0,l:2},
+{q:"(-2)² bằng:",a:["-4","-2","2","4"],c:3,l:2},
+{q:"(-3)³ bằng:",a:["-27","-9","9","27"],c:0,l:2},
+{q:"x = -2 thì 3x + 5 bằng:",a:["-1","1","-11","11"],c:0,l:2},
+{q:"x = 4 thì 2x - 3 bằng:",a:["3","5","6","8"],c:1,l:2},
+{q:"4x + 3x bằng:",a:["7","7x","12x","x⁷"],c:1,l:2},
+{q:"8x - 3x bằng:",a:["5","5x","11x","24x"],c:1,l:2},
+{q:"2(x + 3) bằng:",a:["2x + 3","2x + 5","2x + 6","x + 6"],c:2,l:2},
+{q:"2x + 3 = 11 thì x bằng:",a:["3","4","5","7"],c:1,l:2},
+{q:"5x - 2 = 18 thì x bằng:",a:["3","4","5","6"],c:1,l:2},
+{q:"Hai góc đối đỉnh:",a:["Bằng nhau","Bù nhau","Phụ nhau","Khác nhau"],c:0,l:2},
+{q:"Hai góc kề bù có tổng:",a:["90°","120°","180°","360°"],c:2,l:2},
+{q:"Góc 65° kề bù với góc:",a:["25°","65°","115°","125°"],c:2,l:2},
+{q:"Tam giác có hai cạnh bằng nhau là:",a:["Tam giác đều","Tam giác cân","Tam giác vuông","Tam giác tù"],c:1,l:2},
+{q:"Tổng ba góc trong tam giác bằng:",a:["90°","180°","270°","360°"],c:1,l:2},
+{q:"Tam giác có hai góc 50° và 60°. Góc còn lại:",a:["60°","70°","80°","90°"],c:1,l:2},
+{q:"Tam giác vuông có góc nhọn 35°. Góc nhọn còn lại:",a:["45°","50°","55°","65°"],c:2,l:2},
+
+{q:"y = 3x, x = 5 thì y bằng:",a:["8","10","15","20"],c:2,l:3},
+{q:"y = 2x + 1, x = 4 thì y bằng:",a:["7","8","9","10"],c:2,l:3},
+{q:"Điểm A(2;3) có hoành độ:",a:["2","3","5","-2"],c:0,l:3},
+{q:"Điểm B(-4;5) có tung độ:",a:["-4","4","5","-5"],c:2,l:3},
+{q:"Điểm O(0;0) là:",a:["Gốc tọa độ","Trục hoành","Trục tung","Góc phần tư"],c:0,l:3},
+{q:"Điểm A(3;0) nằm trên:",a:["Trục tung","Trục hoành","Góc I","Góc II"],c:1,l:3},
+{q:"Điểm B(0;-5) nằm trên:",a:["Trục hoành","Trục tung","Góc III","Góc IV"],c:1,l:3},
+{q:"Đơn thức 3x² có bậc:",a:["1","2","3","5"],c:1,l:3},
+{q:"Đơn thức 5xy có bậc:",a:["1","2","3","5"],c:1,l:3},
+{q:"3x + 5x - 2x bằng:",a:["5x","6x","7x","10x"],c:1,l:3},
+{q:"7x² - 3x² + x² bằng:",a:["4x²","5x²","6x²","7x²"],c:1,l:3},
+{q:"(x + 2)² bằng:",a:["x²+2x+4","x²+4x+4","x²+4","x²+2x+2"],c:1,l:3},
+{q:"(x - 3)² bằng:",a:["x²-6x+9","x²-3x+9","x²+6x+9","x²-9"],c:0,l:3},
+{q:"(x + 2)(x - 2) bằng:",a:["x²+4","x²-4","x²-2x+4","x²+2x-4"],c:1,l:3},
+{q:"x² - 9 phân tích thành:",a:["(x-9)(x+1)","(x-3)(x+3)","(x-9)(x+9)","x(x-9)"],c:1,l:3},
+{q:"3x + 6 phân tích thành:",a:["3(x+2)","3(x+6)","x(3+6)","6(x+3)"],c:0,l:3},
+{q:"x² + 6x + 9 phân tích thành:",a:["(x+3)²","(x-3)²","x(x+9)","(x+9)²"],c:0,l:3},
+{q:"x² = 25 và x > 0 thì x:",a:["-5","0","5","25"],c:2,l:3},
+{q:"2⁴ × 2² bằng:",a:["2⁶","2⁸","4⁶","4⁸"],c:0,l:3},
+
+{q:"3⁵ : 3² bằng:",a:["3²","3³","3⁷","9³"],c:1,l:3},
+{q:"(2³)² bằng:",a:["2⁵","2⁶","2⁸","4⁶"],c:1,l:3},
+{q:"0,125 bằng phân số:",a:["1/4","1/5","1/8","1/10"],c:2,l:3},
+{q:"1/2 - 2/3 bằng:",a:["1/6","-1/6","1/3","-1/3"],c:1,l:3},
+{q:"(-2/3) × (9/4) bằng:",a:["-3/2","3/2","-2/3","2/3"],c:0,l:3},
+{q:"(-5/6) : (10/9) bằng:",a:["-3/4","3/4","-5/9","-4/3"],c:0,l:3},
+{q:"4x - 7 = 13 thì x:",a:["4","5","6","7"],c:1,l:3},
+{q:"3(x - 2) = 15 thì x:",a:["3","5","7","9"],c:2,l:3},
+{q:"2(x + 3) = 16 thì x:",a:["4","5","6","8"],c:2,l:3},
+{q:"Số 50 tăng 20% thành:",a:["55","60","65","70"],c:1,l:3},
+{q:"Số 100 giảm 20% còn:",a:["70","75","80","85"],c:2,l:3},
+{q:"3 quyển vở giá 24000 đồng. 5 quyển giá:",a:["30000","35000","40000","45000"],c:2,l:3},
+{q:"Tam giác có góc 45° và 75°. Góc thứ ba:",a:["50°","60°","70°","80°"],c:1,l:3},
+{q:"Tam giác cân có góc đỉnh 40°. Mỗi góc đáy:",a:["40°","50°","60°","70°"],c:3,l:3},
+{q:"Tam giác cân có góc đáy 65°. Góc đỉnh:",a:["40°","50°","60°","65°"],c:1,l:3},
+{q:"Hai góc đồng vị khi hai đường thẳng song song:",a:["Bằng nhau","Bù nhau","Phụ nhau","Khác nhau"],c:0,l:3},
+{q:"Hai góc so le trong của hai đường song song:",a:["Bằng nhau","Bù nhau","90°","Không liên quan"],c:0,l:3},
+{q:"A(-3;4) thuộc góc phần tư:",a:["I","II","III","IV"],c:1,l:3},
+{q:"B(2;-5) thuộc góc phần tư:",a:["I","II","III","IV"],c:3,l:3},
+
+{q:"x + y = 10 và x - y = 2. x bằng:",a:["4","5","6","8"],c:2,l:4},
+{q:"x + y = 10 và x - y = 2. y bằng:",a:["2","4","6","8"],c:1,l:4},
+{q:"2x + y = 7 và x = 2. y bằng:",a:["2","3","4","5"],c:1,l:4},
+{q:"x + 2y = 11 và y = 3. x bằng:",a:["3","4","5","6"],c:2,l:4},
+{q:"x² - 5x phân tích thành:",a:["x(x-5)","x(x+5)","(x-5)²","x²(1-5)"],c:0,l:4},
+{q:"4x² - 25 phân tích thành:",a:["(2x-5)(2x+5)","(4x-5)(x+5)","(2x-25)(2x+1)","(4x-25)(x+1)"],c:0,l:4},
+{q:"(2x + 3)² bằng:",a:["4x²+6x+9","4x²+12x+9","2x²+12x+9","4x²+9"],c:1,l:4},
+{q:"(3x - 2)² bằng:",a:["9x²-6x+4","9x²-12x+4","9x²+12x+4","3x²-12x+4"],c:1,l:4},
+{q:"(x + 1)² tại x = 4 bằng:",a:["16","20","25","36"],c:2,l:4},
+{q:"(2x - 1)² tại x = 3 bằng:",a:["15","20","25","30"],c:2,l:4},
+{q:"x/3 = 5 thì x:",a:["8","12","15","18"],c:2,l:4},
+{q:"(x - 2)/4 = 3 thì x:",a:["10","12","14","16"],c:2,l:4},
+{q:"40 học sinh, 60% là nữ. Số nữ:",a:["20","22","24","26"],c:2,l:4},
+{q:"200000 đồng giảm 15% còn:",a:["160000","170000","175000","185000"],c:1,l:4},
+{q:"Tăng 20% được 240000 đồng. Giá ban đầu:",a:["180000","200000","210000","220000"],c:1,l:4},
+{q:"x/6 = 4/3 thì x:",a:["6","8","10","12"],c:1,l:4},
+{q:"5/x = 10/14 thì x:",a:["5","6","7","8"],c:2,l:4},
+{q:"Ba góc tam giác tỉ lệ 2:3:4. Góc lớn nhất:",a:["60°","70°","80°","90°"],c:2,l:4},
+{q:"Ba góc tam giác tỉ lệ 2:3:4. Góc nhỏ nhất:",a:["30°","40°","50°","60°"],c:1,l:4},
+{q:"Hai góc trong cùng phía của hai đường song song có tổng:",a:["90°","120°","180°","360°"],c:2,l:4},
+
+{q:"Một góc bằng 70°. Góc đồng vị bằng:",a:["20°","70°","110°","180°"],c:1,l:4},
+{q:"Một góc bằng 120°. Góc kề bù:",a:["30°","60°","90°","120°"],c:1,l:4},
+{q:"Tam giác cân có góc đỉnh 80°. Mỗi góc đáy:",a:["40°","50°","60°","80°"],c:1,l:4},
+{q:"Tam giác cân có mỗi góc đáy 40°. Góc đỉnh:",a:["80°","90°","100°","120°"],c:2,l:4},
+{q:"x và y tỉ lệ thuận, x=4,y=12. x=7 thì y:",a:["18","20","21","24"],c:2,l:4},
+{q:"x và y tỉ lệ nghịch, x=4,y=12. x=6 thì y:",a:["6","8","10","12"],c:1,l:4},
+{q:"A(a;3) nằm trên trục tung. a:",a:["-3","0","3","1"],c:1,l:4},
+{q:"B(5;b) nằm trên trục hoành. b:",a:["-5","0","5","1"],c:1,l:4},
+{q:"y=-2x+5, x=3 thì y:",a:["-2","-1","1","2"],c:1,l:4},
+{q:"y=3x-7, x=4 thì y:",a:["3","4","5","6"],c:2,l:4},
+{q:"Ô tô đi 120 km trong 2 giờ. 5 giờ đi:",a:["240 km","300 km","360 km","400 km"],c:1,l:4},
+{q:"6 người làm 10 ngày. 12 người làm:",a:["3 ngày","5 ngày","6 ngày","8 ngày"],c:1,l:4},
+{q:"4 người làm 15 ngày. 5 người làm:",a:["10 ngày","12 ngày","15 ngày","20 ngày"],c:1,l:4},
+{q:"Hình hộp dài 5, rộng 3, cao 2. Thể tích:",a:["10 cm³","20 cm³","30 cm³","40 cm³"],c:2,l:4},
+{q:"Hình lập phương cạnh 4 cm có thể tích:",a:["16 cm³","32 cm³","48 cm³","64 cm³"],c:3,l:4},
+{q:"Hình lập phương cạnh 5 cm có diện tích toàn phần:",a:["25 cm²","100 cm²","125 cm²","150 cm²"],c:3,l:4},
+{q:"Tam giác đáy 12 cm, cao 5 cm. Diện tích:",a:["20 cm²","25 cm²","30 cm²","60 cm²"],c:2,l:4},
+{q:"Hình bình hành đáy 8 cm, cao 6 cm. Diện tích:",a:["14 cm²","24 cm²","48 cm²","56 cm²"],c:2,l:4},
+{q:"Hình chữ nhật diện tích 48 cm², dài 8 cm. Rộng:",a:["4 cm","5 cm","6 cm","8 cm"],c:2,l:4},
+{q:"Tam giác diện tích 36 cm², đáy 9 cm. Chiều cao:",a:["4 cm","6 cm","8 cm","9 cm"],c:2,l:4},
+{q:"x² - 16 = 0 và x > 0. x:",a:["-4","0","4","16"],c:2,l:4},
+{q:"(x-3)(x+3)=0. Nghiệm dương:",a:["-3","0","3","6"],c:2,l:4},
+{q:"x² - 7x = 0. Nghiệm dương khác 0:",a:["0","1","7","-7"],c:2,l:4}
+
+];
+
+let questions=[];
+let currentQuestion=0;
+let score=0;
+let energy=100;
+let answered=false;
+
+function shuffle(array){
+let arr=[...array];
+
+for(let i=arr.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1));
+[arr[i],arr[j]]=[arr[j],arr[i]];
+}
+
+return arr;
+}
+
+function createQuiz(){
+
+let easy=shuffle(questionBank.filter(q=>q.l===1)).slice(0,3);
+
+let medium=shuffle(questionBank.filter(q=>q.l===2)).slice(0,3);
+
+let hard=shuffle(questionBank.filter(q=>q.l===3)).slice(0,2);
+
+let veryHard=shuffle(questionBank.filter(q=>q.l===4)).slice(0,2);
+
+questions=[
+...easy,
+...medium,
+...hard,
+...veryHard
+];
+}
+
+function startGame(){
+
+document.getElementById("startScreen").classList.add("hidden");
+
+document.getElementById("gameScreen").classList.remove("hidden");
+
+currentQuestion=0;
+score=0;
+energy=100;
+
+createQuiz();
+
+updateEnergy();
+
+loadQuestion();
+}
+
+function loadQuestion(){
+
+answered=false;
+
+let q=questions[currentQuestion];
+
+document.getElementById("questionNumber").textContent=
+(currentQuestion+1)+"/10";
+
+document.getElementById("score").textContent=score;
+
+document.getElementById("questionText").textContent=
+"Câu "+(currentQuestion+1)+": "+q.q;
+
+document.getElementById("message").textContent="";
+
+document.getElementById("nextBtn").classList.add("hidden");
+
+let answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+q.a.forEach((answer,index)=>{
+
+let button=document.createElement("div");
+
+button.className="answer";
+
+button.textContent=
+String.fromCharCode(65+index)+". "+answer;
+
+button.onclick=function(){
+chooseAnswer(index,button);
+};
+
+answers.appendChild(button);
+
+});
+
+updateMeteor();
+}
+
+function chooseAnswer(index,button){
+
+if(answered)return;
+
+answered=true;
+
+let q=questions[currentQuestion];
+
+let all=document.querySelectorAll(".answer");
+
+if(index===q.c){
+
+score++;
+
+energy=Math.min(100,energy+10);
+
+button.classList.add("correct");
+
+document.getElementById("message").textContent=
+"✅ Chính xác! Hệ thống phòng thủ đã được nạp năng lượng!";
+
+}else{
+
+energy=Math.max(0,energy-10);
+
+button.classList.add("wrong");
+
+all[q.c].classList.add("correct");
+
+document.getElementById("message").textContent=
+"❌ Sai rồi! Đáp án đúng đã được đánh dấu.";
+
+}
+
+document.getElementById("score").textContent=score;
+
+updateEnergy();
+
+document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion>=10){
+
+endGame();
+
+}else{
+
+loadQuestion();
+
+}
+}
+
+function updateEnergy(){
+
+document.getElementById("energyText").textContent=
+energy+"%";
+
+document.getElementById("energyBar").style.width=
+energy+"%";
+}
+
+function updateMeteor(){
+
+let meteor=document.getElementById("meteor");
+
+let position=4+(currentQuestion*9);
+
+meteor.style.left=position+"%";
+}
+
+function endGame(){
+
+document.getElementById("gameScreen").classList.add("hidden");
+
+document.getElementById("endScreen").classList.remove("hidden");
+
+document.getElementById("finalScore").textContent=score;
+
+let title=document.getElementById("endTitle");
+
+let text=document.getElementById("endText");
+
+let meteor=document.getElementById("endMeteor");
+
+if(score===10){
+
+meteor.textContent="💥";
+
+title.textContent=
+"🌍 BẠN ĐÃ CỨU THẾ GIỚI!";
+
+text.textContent=
+"🎉 Tuyệt vời! Bạn đã trả lời đúng cả 10 câu và kích hoạt thành công hệ thống phá hủy thiên thạch!";
+
+}else if(score>=7){
+
+meteor.textContent="🌠";
+
+title.textContent=
+"🏆 NHIỆM VỤ THÀNH CÔNG!";
+
+text.textContent=
+"Bạn đã giúp hệ thống phòng thủ ngăn chặn thiên thạch và bảo vệ Trái Đất!";
+
+}else{
+
+meteor.textContent="☄️";
+
+title.textContent=
+"🚨 NHIỆM VỤ THẤT BẠI!";
+
+text.textContent=
+"Thiên thạch đã vượt qua hệ thống phòng thủ. Hãy luyện tập Toán 7 và thử lại!";
+
+}
+}
+
+function restartGame(){
+
+document.getElementById("endScreen").classList.add("hidden");
+
+document.getElementById("startScreen").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>

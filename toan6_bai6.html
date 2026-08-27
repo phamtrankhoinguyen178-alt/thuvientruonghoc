@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 6: Lũy thừa với số mũ tự nhiên</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+font-size:22px;
+}
+
+table,th,td{
+border:2px solid #999;
+}
+
+th{
+background:#0b2a88;
+color:white;
+padding:12px;
+}
+
+td{
+padding:12px;
+text-align:center;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li,
+table{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan6.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 6: Lũy thừa với số mũ tự nhiên</h2>
+
+<h3>📖 1. Khái niệm lũy thừa</h3>
+
+<p>
+Lũy thừa bậc n của số tự nhiên a là tích của n thừa số bằng nhau, mỗi thừa số bằng a.
+</p>
+
+<p>
+a<sup>n</sup> = a . a . a ... a (n thừa số)
+</p>
+
+<p>
+Trong đó:
+</p>
+
+<ul>
+<li>a là cơ số.</li>
+<li>n là số mũ.</li>
+<li>a<sup>n</sup> đọc là "a mũ n" hoặc "a lũy thừa n".</li>
+</ul>
+
+<h3>📌 Chú ý</h3>
+
+<ul>
+<li>a<sup>1</sup> = a.</li>
+<li>a<sup>2</sup> gọi là bình phương của a.</li>
+<li>a<sup>3</sup> gọi là lập phương của a.</li>
+</ul>
+
+<h3>🔍 Ví dụ 1</h3>
+
+<p>
+Viết các tích dưới dạng lũy thừa:
+</p>
+
+<p>
+a) 4 . 4 . 4 . 4 . 4 . 4 . 4
+</p>
+
+<p>
+= 4<sup>7</sup>
+</p>
+
+<p>
+b) 11 . 11 . 11
+</p>
+
+<p>
+= 11<sup>3</sup>
+</p>
+
+<p>
+c) 8 . 8 . 8 . 8 . 8
+</p>
+
+<p>
+= 8<sup>5</sup>
+</p>
+
+<h3>✖️ 2. Nhân hai lũy thừa cùng cơ số</h3>
+
+<p>
+Muốn nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ:
+</p>
+
+<p>
+a<sup>m</sup> . a<sup>n</sup> = a<sup>m+n</sup>
+</p>
+
+<h3>🔍 Ví dụ 2</h3>
+
+<p>
+a) a<sup>2</sup> . a<sup>3</sup> . a<sup>5</sup>
+</p>
+
+<p>
+= a<sup>2+3+5</sup>
+</p>
+
+<p>
+= a<sup>10</sup>
+</p>
+
+<p>
+b) 2<sup>3</sup> . 2<sup>8</sup> . 2<sup>7</sup>
+</p>
+
+<p>
+= 2<sup>3+8+7</sup>
+</p>
+
+<p>
+= 2<sup>18</sup>
+</p>
+
+<p>
+c) 7 . 7<sup>2</sup> . 7<sup>23</sup>
+</p>
+
+<p>
+= 7<sup>1+2+23</sup>
+</p>
+
+<p>
+= 7<sup>26</sup>
+</p>
+
+<h3>➗ 3. Chia hai lũy thừa cùng cơ số</h3>
+
+<p>
+Muốn chia hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và trừ các số mũ:
+</p>
+
+<p>
+a<sup>m</sup> : a<sup>n</sup> = a<sup>m-n</sup>
+</p>
+
+<p>
+(với a ≠ 0 và m ≥ n)
+</p>
+
+<h3>🔍 Ví dụ 3</h3>
+
+<p>
+a) 12<sup>12</sup> : 12
+</p>
+
+<p>
+= 12<sup>12</sup> : 12<sup>1</sup>
+</p>
+
+<p>
+= 12<sup>11</sup>
+</p>
+
+<p>
+b) 10<sup>8</sup> : 10<sup>5</sup> : 10<sup>3</sup>
+</p>
+
+<p>
+= 10<sup>8-5</sup> : 10<sup>3</sup>
+</p>
+
+<p>
+= 10<sup>3</sup> : 10<sup>3</sup>
+</p>
+
+<p>
+= 10<sup>0</sup>
+</p>
+
+<p>
+= 1
+</p>
+
+<h3>📝 Bài tập 1</h3>
+
+<p>
+Hoàn thành bảng sau:
+</p>
+
+<table>
+
+<tr>
+<th>Lũy thừa</th>
+<th>Cơ số</th>
+<th>Số mũ</th>
+<th>Giá trị</th>
+</tr>
+
+<tr>
+<td>5²</td>
+<td>5</td>
+<td>2</td>
+<td>25</td>
+</tr>
+
+<tr>
+<td>6³</td>
+<td>6</td>
+<td>3</td>
+<td>216</td>
+</tr>
+
+<tr>
+<td>2⁵</td>
+<td>2</td>
+<td>5</td>
+<td>32</td>
+</tr>
+
+<tr>
+<td>10³</td>
+<td>10</td>
+<td>3</td>
+<td>1000</td>
+</tr>
+
+</table>
+
+<h3>🌍 Bài tập 2</h3>
+
+<p>
+Khối lượng Trái Đất khoảng:
+</p>
+
+<p>
+6 × 10<sup>21</sup> tấn
+</p>
+
+<p>
+Khối lượng Mặt Trăng khoảng:
+</p>
+
+<p>
+7,4 × 10<sup>19</sup> tấn
+</p>
+
+<p>
+Hỏi khối lượng Trái Đất gấp bao nhiêu lần khối lượng Mặt Trăng?
+</p>
+
+<p>
+<b>Lời giải:</b>
+</p>
+
+<p>
+6 × 10<sup>21</sup> : (7,4 × 10<sup>19</sup>)
+</p>
+
+<p>
+= 600 × 10<sup>19</sup> : (7,4 × 10<sup>19</sup>)
+</p>
+
+<p>
+= 600 : 7,4
+</p>
+
+<p>
+≈ 81
+</p>
+
+<p>
+Vậy khối lượng Trái Đất gấp khoảng 81 lần khối lượng Mặt Trăng.
+</p>
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+
+<li>
+a<sup>n</sup> là tích của n thừa số bằng nhau, mỗi thừa số bằng a.
+</li>
+
+<li>
+a<sup>1</sup> = a.
+</li>
+
+<li>
+a<sup>2</sup> gọi là bình phương của a.
+</li>
+
+<li>
+a<sup>3</sup> gọi là lập phương của a.
+</li>
+
+<li>
+a<sup>m</sup> . a<sup>n</sup> = a<sup>m+n</sup>.
+</li>
+
+<li>
+a<sup>m</sup> : a<sup>n</sup> = a<sup>m-n</sup>.
+</li>
+
+<li>
+Khi nhân các lũy thừa cùng cơ số thì cộng số mũ.
+</li>
+
+<li>
+Khi chia các lũy thừa cùng cơ số thì trừ số mũ.
+</li>
+
+</ul>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 10 - Đồ thị quãng đường - thời gian</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fa;
+}
+
+.header{
+    background:linear-gradient(135deg,#43cea2,#185a9d);
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#00bcd4;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.content{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    color:#185a9d;
+}
+
+h3{
+    color:#009688;
+}
+
+p,li{
+    line-height:1.8;
+}
+
+ul{
+    padding-left:25px;
+}
+
+.img{
+    width:260px;
+    display:block;
+    margin:20px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.img:hover{
+    transform:scale(1.05);
+}
+
+#imgBox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#imgBox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+#imgBox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="vatly.html" class="back">⬅ Quay lại</a>
+
+<div class="header">
+    <h1>📈 Bài 10</h1>
+    <h2>Đồ thị quãng đường - thời gian</h2>
+</div>
+
+<div class="content">
+
+<h2>I. Vẽ đồ thị quãng đường - thời gian</h2>
+
+<p>
+Để vẽ đồ thị quãng đường - thời gian cho chuyển động thẳng, trước hết cần lập bảng ghi quãng đường đi được theo thời gian, sau đó vẽ đồ thị.
+</p>
+
+<h3>Các bước vẽ đồ thị</h3>
+
+<p><b>Bước 1.</b> Vẽ hai trục tọa độ vuông góc nhau.</p>
+
+<ul>
+<li>Trục <b>Os</b> (trục tung) biểu diễn quãng đường.</li>
+<li>Trục <b>Ot</b> (trục hoành) biểu diễn thời gian.</li>
+<li>Chọn tỉ lệ xích thích hợp cho mỗi trục.</li>
+</ul>
+
+<p><b>Bước 2.</b> Xác định các điểm biểu diễn quãng đường và thời gian tương ứng.</p>
+
+<p><b>Bước 3.</b> Nối các điểm đã xác định và nhận xét đường nối (thẳng hay cong, nghiêng hay song song với trục hoành).</p>
+
+<h2>II. Sử dụng đồ thị quãng đường - thời gian</h2>
+
+<p>
+Đồ thị quãng đường - thời gian giúp xác định:
+</p>
+
+<ul>
+<li>Tốc độ chuyển động của vật.</li>
+<li>Quãng đường vật đã đi được.</li>
+<li>Thời gian chuyển động.</li>
+</ul>
+
+<h2>Ghi nhớ</h2>
+
+<ul>
+<li>Muốn vẽ đồ thị cần lập bảng số liệu trước.</li>
+<li>Trục tung biểu diễn quãng đường, trục hoành biểu diễn thời gian.</li>
+<li>Đồ thị giúp mô tả chuyển động và xác định tốc độ, quãng đường, thời gian.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<script>
+function openImg(img){
+    document.getElementById("imgBox").style.display="flex";
+    document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+    document.getElementById("imgBox").style.display="none";
+}
+</script>
+
+</body>
+</html>

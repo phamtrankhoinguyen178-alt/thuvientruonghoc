@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 9: Hai đường thẳng song song và dấu hiệu nhận biết</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.box ul{
+padding-left:35px;
+}
+
+.box li{
+font-size:24px;
+margin:10px 0;
+}
+
+.img{
+width:350px;
+display:block;
+margin:25px auto;
+border-radius:10px;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+#imgBox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+#imgBox span{
+position:absolute;
+top:20px;
+right:30px;
+color:white;
+font-size:40px;
+cursor:pointer;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box p,
+.box li{
+font-size:20px;
+}
+
+.img{
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="toan7.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>📘 Bài 9: Hai đường thẳng song song và dấu hiệu nhận biết</h2>
+
+<h3>📖 1. Các góc tạo bởi một đường thẳng cắt hai đường thẳng</h3>
+
+<p>• Cho đường thẳng c cắt hai đường thẳng a và b lần lượt tại A và B.</p>
+
+<p>• Khi đó ta có:</p>
+
+<p>+ Các cặp góc so le trong là: A3 và B1; A4 và B2.</p>
+
+<p>+ Các cặp góc đồng vị là: A1 và B1; A2 và B2; A3 và B3; A4 và B4.</p>
+
+<p>+ Các cặp góc trong cùng phía là: A4 và B1; A3 và B2.</p>
+
+<p>• Nếu đường thẳng c cắt hai đường thẳng phân biệt a và b, đồng thời có một cặp góc so le trong bằng nhau thì:</p>
+
+<ul>
+<li>Hai góc so le trong còn lại bằng nhau.</li>
+
+<li>Các góc đồng vị bằng nhau.</li>
+</ul>
+
+<h3>📐 2. Dấu hiệu nhận biết hai đường thẳng song song</h3>
+
+<p>• Nếu đường thẳng c cắt hai đường thẳng phân biệt a và b và có:</p>
+
+<ul>
+<li>Một cặp góc so le trong bằng nhau.</li>
+
+<li>Hoặc một cặp góc đồng vị bằng nhau.</li>
+</ul>
+
+<p>Thì a song song với b.</p>
+
+<p>Kí hiệu:</p>
+
+<p>a // b</p>
+
+<p>• Hai đường thẳng phân biệt cùng vuông góc với một đường thẳng thứ ba thì chúng song song với nhau.</p>
+
+<h3>🧠 Chú ý</h3>
+
+<p>Muốn vẽ đường thẳng đi qua một điểm và song song với một đường thẳng cho trước bằng góc 60° của êke, ta thực hiện theo hướng dẫn trong hình sau:</p>
+
+<img src="anhvehinh.jpg" class="img" onclick="openImg(this)">
+
+<h3>📝 Ghi nhớ</h3>
+
+<ul>
+<li>Góc so le trong bằng nhau ⇒ Hai đường thẳng song song.</li>
+
+<li>Góc đồng vị bằng nhau ⇒ Hai đường thẳng song song.</li>
+
+<li>Hai đường thẳng cùng vuông góc với đường thẳng thứ ba thì song song với nhau.</li>
+
+<li>Kí hiệu hai đường thẳng song song là: a // b.</li>
+</ul>
+
+</div>
+
+<div id="imgBox" onclick="closeImg()">
+<span>✖</span>
+<img id="bigImg">
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+<script>
+
+function openImg(img){
+document.getElementById("imgBox").style.display="flex";
+document.getElementById("bigImg").src=img.src;
+}
+
+function closeImg(){
+document.getElementById("imgBox").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
