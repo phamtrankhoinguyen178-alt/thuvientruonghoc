@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Thư viện THCS Quảng Phương</title>
+<title>Thư viện THCS Quảng Trạch</title>
 
 <style>
 
@@ -25,25 +25,32 @@ box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
 .topbar{
-width:100%;
-padding:30px 0;
+max-width:1200px;
+margin:auto;
 display:flex;
-justify-content:center;
+justify-content:space-between;
 align-items:center;
+padding:15px 20px;
 }
 
 .logo{
-display:block;
-width:100%;
-text-align:center;
-font-size:75px;
-font-weight:900;
+font-size:36px;
+font-weight:bold;
 color:#0b2a88;
-font-family:Arial,sans-serif;
 }
 
 .logo span{
 color:#ff6a00;
+}
+
+.login-btn{
+background:#ff6a00;
+color:white;
+padding:10px 25px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
 }
 
 nav{
@@ -349,6 +356,38 @@ color:white;
 cursor:pointer;
 }
 
+
+.quote-run{
+    width:100%;
+    overflow:hidden;
+    margin-top:30px;
+    padding:15px 0;
+    background:white;
+}
+
+.quote-text{
+    display:flex;
+    width:max-content;
+    animation:quoteMove 30s linear infinite;
+}
+
+.quote-text span{
+    color:#0b2a88;
+    font-size:18px;
+    font-weight:bold;
+    white-space:nowrap;
+    margin-right:80px;
+}
+
+@keyframes quoteMove{
+    from{
+        transform:translateX(100%);
+    }
+    to{
+        transform:translateX(-100%);
+    }
+}
+
 </style>
 
 </head>
@@ -381,7 +420,7 @@ cursor:pointer;
 <div class="topbar">
 
 <div class="logo">
-<span>THƯ VIỆN SỐ</span> THCS QUẢNG PHƯƠNG
+<span>THƯ VIỆN SỐ</span> THCS QUẢNG TRẠCH
 </div>
 
 </div>
@@ -446,17 +485,8 @@ cursor:pointer;
 
 </li>
 
-<li class="dropdown">
-
-<a href="dangbai.html">DẠNG BÀI</a>
-
-<ul class="dropdown-menu">
-<li><a href="khoi6dangbai.html">Khối 6</a></li>
-<li><a href="khoi7dangbai.html">Khối 7</a></li>
-<li><a href="khoi8dangbai.html">Khối 8</a></li>
-<li><a href="khoi9dangbai.html">Khối 9</a></li>
-</ul>
-
+<li>
+<a href="music.html">NHẠC</a>
 </li>
 
 </ul>
@@ -472,51 +502,18 @@ cursor:pointer;
 </h1>
 
 <p>
-Gồm bài giảng, đề thi, tài liệu, trắc nghiệm,
-sách tham khảo và các dạng bài từ lớp 6 đến lớp 9.
+Gồm bài giảng, đề thi, tài liệu và bài trắc nghiệm từ lớp 6 đến lớp 9.
 </p>
 
-<div class="search-box">
-
-<select>
-
-<option>Tất cả</option>
-<option>Học tập</option>
-<option>Tài liệu</option>
-<option>Trắc nghiệm</option>
-<option>Sách</option>
-<option>Dạng bài</option>
-
-</select>
-
-<input
-type="text"
-placeholder="Bạn muốn tìm tài liệu gì ?">
-
-<button>
-Tìm kiếm
-</button>
-
-</div>
-
-<div class="tags">
-
-<span>Toán 6</span>
-
-<span>Ngữ Văn 7</span>
-
-<span>Tiếng Anh 8</span>
-
-<span>KHTN 6</span>
-
-<span>Lịch Sử 7</span>
-
-<span>Địa Lí 7</span>
-
-<span>Tin Học 6</span>
-
-<span>GDCD 7</span>
-
+<div class="quote-run">
+    <div class="quote-text">
+        <span>“Điều tuyệt vời nhất của việc học là không ai có thể lấy nó ra khỏi bạn.”</span>
+        <span>“Học, học nữa, học mãi.”</span>
+        <span>“Thất bại là mẹ thành công.”</span>
+        <span>“Kiến thức hôm nay là sức mạnh ngày mai.”</span>
+        <span>“Chăm chỉ là chìa khóa của thành công.”</span>
+        <span>“Mỗi ngày học một điều mới.”</span>
+    </div>
 </div>
 
 </section>
@@ -539,10 +536,6 @@ Tìm kiếm
 
 <li>
 <a href="tracnghiem.html">📝 Trắc nghiệm</a>
-</li>
-
-<li>
-<a href="sach.html">📖 Sách tham khảo</a>
 </li>
 
 <li>
@@ -613,7 +606,7 @@ TÀI LIỆU NỔI BẬT
 
 <footer>
 
-<h2>THƯ VIỆN THCS QUẢNG PHƯƠNG</h2>
+<h2>THƯ VIỆN THCS QUẢNG TRẠCH</h2>
 
 <p>
 Kho tài liệu học tập dành cho học sinh THCS từ khối 6 đến khối 9.
@@ -624,61 +617,81 @@ Học tập • Tài liệu • Trắc nghiệm • Sách • Dạng bài
 </p>
 
 <p>
-© 2026 THƯ VIỆN THCS QUẢNG PHƯƠNG
+© 2026 THƯ VIỆN THCS QUẢNG TRẠCH
 </p>
 
 </footer>
 
 <script>
+const aiBox = document.getElementById('aiBox');
+const chatArea = document.getElementById('chatArea');
+const questionInput = document.getElementById('question');
 
-function openAI(){
-document.getElementById("aiBox").style.display="block";
+const part1 = "AQ.Ab8RN6KCoMobR8Z9kQyrK5";
+const part2 = "H8_vQn_IBCzUrTMsuYQW9bREqwwQ";
+const GEMINI_API_KEY = part1 + part2;
+
+const API_URL = `https://googleapis.com{GEMINI_API_KEY}`;
+
+function openAI() {
+    aiBox.style.display = 'block';
 }
 
-function closeAI(){
-document.getElementById("aiBox").style.display="none";
+function closeAI() {
+    aiBox.style.display = 'none';
 }
 
-function sendAI(){
-
-let input=document.getElementById("question");
-let q=input.value.trim();
-
-if(q==="") return;
-
-let chat=document.getElementById("chatArea");
-
-chat.innerHTML+=`
-<p><b>Bạn:</b> ${q}</p>
-`;
-
-let answer="";
-
-if(q.toLowerCase().includes("toán")){
-answer="Bạn hãy gửi bài toán cụ thể nhé.";
-}
-else if(q.toLowerCase().includes("nguyễn du")){
-answer="Nguyễn Du là tác giả Truyện Kiều.";
-}
-else if(q.toLowerCase().includes("thủ đô")){
-answer="Thủ đô Việt Nam là Hà Nội.";
-}
-else if(q.toLowerCase().includes("xin chào")){
-answer="Xin chào! Chúc bạn học tốt.";
-}
-else{
-answer="Mình chưa có dữ liệu cho câu hỏi này.";
+function handleKeyPress(e) {
+    if (e.key === 'Enter') sendAI();
 }
 
-chat.innerHTML+=`
-<p><b>AI:</b> ${answer}</p>
-`;
+async function sendAI() {
+    const query = questionInput.value.trim();
+    if (!query) return;
 
-chat.scrollTop=chat.scrollHeight;
-input.value="";
+    const userP = document.createElement('p');
+    userP.innerHTML = `<b>Bạn:</b> ${query}`;
+    chatArea.appendChild(userP);
+    questionInput.value = '';
+    chatArea.scrollTop = chatArea.scrollHeight;
 
+    const aiP = document.createElement('p');
+    aiP.innerHTML = `<b>AI:</b> Đang suy nghĩ...`;
+    chatArea.appendChild(aiP);
+    chatArea.scrollTop = chatArea.scrollHeight;
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                contents: [{ 
+                    parts: [{ text: query }] 
+                }]
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+            const replyText = data.candidates[0].content.parts[0].text;
+            aiP.innerHTML = `<b>AI:</b> ${replyText.replace(/\n/g, '<br>')}`;
+        } else if (data.error) {
+            aiP.innerHTML = `<b>AI:</b> Lỗi từ Google: ${data.error.message}`;
+        } else {
+            aiP.innerHTML = `<b>AI:</b> Phản hồi trống hoặc sai cấu trúc dữ liệu gửi về.`;
+        }
+    } catch (error) {
+        console.error(error);
+        aiP.innerHTML = `<b>AI:</b> Không thể kết nối mạng hoặc lỗi cấu hình hệ thống.`;
+    }
+    chatArea.scrollTop = chatArea.scrollHeight;
 }
-
 </script>
+
+
+
 </body>
 </html>
