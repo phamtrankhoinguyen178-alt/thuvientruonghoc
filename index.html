@@ -623,75 +623,56 @@ Học tập • Tài liệu • Trắc nghiệm • Sách • Dạng bài
 </footer>
 
 <script>
-const aiBox = document.getElementById('aiBox');
-const chatArea = document.getElementById('chatArea');
-const questionInput = document.getElementById('question');
 
-const part1 = "AQ.Ab8RN6KCoMobR8Z9kQyrK5";
-const part2 = "H8_vQn_IBCzUrTMsuYQW9bREqwwQ";
-const GEMINI_API_KEY = part1 + part2;
-
-const API_URL = `https://googleapis.com{GEMINI_API_KEY}`;
-
-function openAI() {
-    aiBox.style.display = 'block';
+function openAI(){
+document.getElementById("aiBox").style.display="block";
 }
 
-function closeAI() {
-    aiBox.style.display = 'none';
+function closeAI(){
+document.getElementById("aiBox").style.display="none";
 }
 
-function handleKeyPress(e) {
-    if (e.key === 'Enter') sendAI();
+function sendAI(){
+
+let input=document.getElementById("question");
+let q=input.value.trim();
+
+if(q==="") return;
+
+let chat=document.getElementById("chatArea");
+
+chat.innerHTML+=`
+<p><b>Bạn:</b> ${q}</p>
+`;
+
+let answer="";
+
+if(q.toLowerCase().includes("toán")){
+answer="Bạn hãy gửi bài toán cụ thể nhé.";
+}
+else if(q.toLowerCase().includes("nguyễn du")){
+answer="Nguyễn Du là tác giả Truyện Kiều.";
+}
+else if(q.toLowerCase().includes("thủ đô")){
+answer="Thủ đô Việt Nam là Hà Nội.";
+}
+else if(q.toLowerCase().includes("xin chào")){
+answer="Xin chào! Chúc bạn học tốt.";
+}
+else{
+answer="Mình chưa có dữ liệu cho câu hỏi này.";
 }
 
-async function sendAI() {
-    const query = questionInput.value.trim();
-    if (!query) return;
+chat.innerHTML+=`
+<p><b>AI:</b> ${answer}</p>
+`;
 
-    const userP = document.createElement('p');
-    userP.innerHTML = `<b>Bạn:</b> ${query}`;
-    chatArea.appendChild(userP);
-    questionInput.value = '';
-    chatArea.scrollTop = chatArea.scrollHeight;
+chat.scrollTop=chat.scrollHeight;
+input.value="";
 
-    const aiP = document.createElement('p');
-    aiP.innerHTML = `<b>AI:</b> Đang suy nghĩ...`;
-    chatArea.appendChild(aiP);
-    chatArea.scrollTop = chatArea.scrollHeight;
-
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                contents: [{ 
-                    parts: [{ text: query }] 
-                }]
-            })
-        });
-
-        const data = await response.json();
-        
-        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-            const replyText = data.candidates[0].content.parts[0].text;
-            aiP.innerHTML = `<b>AI:</b> ${replyText.replace(/\n/g, '<br>')}`;
-        } else if (data.error) {
-            aiP.innerHTML = `<b>AI:</b> Lỗi từ Google: ${data.error.message}`;
-        } else {
-            aiP.innerHTML = `<b>AI:</b> Phản hồi trống hoặc sai cấu trúc dữ liệu gửi về.`;
-        }
-    } catch (error) {
-        console.error(error);
-        aiP.innerHTML = `<b>AI:</b> Không thể kết nối mạng hoặc lỗi cấu hình hệ thống.`;
-    }
-    chatArea.scrollTop = chatArea.scrollHeight;
 }
+
+
 </script>
-
-
-
 </body>
 </html>
