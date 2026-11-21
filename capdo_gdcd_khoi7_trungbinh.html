@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDCD 7 - Chế độ trung bình</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+    .top {
+        font-size: 16px;
+    }
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_gdcd_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚡ GDCD KHỐI 7 - CHẾ ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+
+{
+    q: "Vì sao cần phải giữ chữ tín trong cuộc sống?",
+    a: [
+        "Để mọi người luôn làm theo ý mình",
+        "Để tạo dựng niềm tin và sự tôn trọng",
+        "Để tránh phải làm việc",
+        "Để có thể nhận được nhiều quà"
+    ],
+    d: 1
+},
+
+{
+    q: "Một người bạn hứa trả sách đúng ngày nhưng lại quên. Bạn ấy nên làm gì?",
+    a: [
+        "Giả vờ không biết",
+        "Đổ lỗi cho người khác",
+        "Xin lỗi và nhanh chóng trả sách",
+        "Tiếp tục giữ sách"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi thấy bạn bị các bạn khác chế giễu vì hoàn cảnh khó khăn, em nên:",
+    a: [
+        "Cùng tham gia chế giễu",
+        "Im lặng và tránh xa",
+        "Bênh vực bạn, động viên và tìm sự hỗ trợ khi cần",
+        "Quay video đăng lên mạng"
+    ],
+    d: 2
+},
+
+{
+    q: "Học tập tự giác, tích cực giúp học sinh:",
+    a: [
+        "Phát triển năng lực và đạt kết quả học tập tốt",
+        "Không cần nghe thầy cô giảng",
+        "Không cần hợp tác với bạn",
+        "Có thể bỏ qua bài tập"
+    ],
+    d: 0
+},
+
+{
+    q: "Khi được giao nhiệm vụ chung nhưng một thành viên không hoàn thành, nhóm nên:",
+    a: [
+        "Loại bạn khỏi nhóm ngay lập tức",
+        "Tìm hiểu nguyên nhân và cùng hỗ trợ bạn hoàn thành",
+        "Làm ngơ",
+        "Đổ hết trách nhiệm cho bạn"
+    ],
+    d: 1
+},
+
+{
+    q: "Biểu hiện nào cho thấy một người biết cảm thông?",
+    a: [
+        "Chỉ trích người khác khi họ mắc lỗi",
+        "Hiểu và chia sẻ cảm xúc với người gặp khó khăn",
+        "Không quan tâm đến hoàn cảnh của người khác",
+        "Luôn cho mình đúng"
+    ],
+    d: 1
+},
+
+{
+    q: "Nếu bạn thân nhờ em nói dối thầy cô để che giấu lỗi của bạn, em nên:",
+    a: [
+        "Đồng ý vì là bạn thân",
+        "Nói dối để bảo vệ tình bạn",
+        "Khuyên bạn thành thật nhận lỗi",
+        "Đổ lỗi cho một bạn khác"
+    ],
+    d: 2
+},
+
+{
+    q: "Hành động nào thể hiện trách nhiệm trong học tập?",
+    a: [
+        "Tự hoàn thành nhiệm vụ được giao",
+        "Chép bài của bạn",
+        "Bỏ học không lý do",
+        "Không chuẩn bị bài"
+    ],
+    d: 0
+},
+
+{
+    q: "Khi có ý kiến khác với bạn trong hoạt động nhóm, em nên:",
+    a: [
+        "Tranh cãi và không nghe bạn",
+        "Tôn trọng, lắng nghe và cùng trao đổi",
+        "Bỏ khỏi nhóm",
+        "Ép mọi người đồng ý với mình"
+    ],
+    d: 1
+},
+
+{
+    q: "Một người thường xuyên thất hứa sẽ dễ:",
+    a: [
+        "Được mọi người tin tưởng hơn",
+        "Xây dựng nhiều mối quan hệ tốt",
+        "Làm mất lòng tin của người khác",
+        "Trở nên có trách nhiệm hơn"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi thấy người lớn tuổi cần giúp đỡ qua đường, em nên:",
+    a: [
+        "Chủ động hỏi và hỗ trợ khi an toàn",
+        "Chạy qua đường ngay lập tức",
+        "Mặc kệ",
+        "Cười đùa"
+    ],
+    d: 0
+},
+
+{
+    q: "Vì sao không nên bao che cho hành vi sai trái của bạn bè?",
+    a: [
+        "Vì có thể khiến hành vi sai tiếp tục",
+        "Vì không cần có bạn bè",
+        "Vì bạn bè không cần giúp đỡ",
+        "Vì phải luôn chỉ trích người khác"
+    ],
+    d: 0
+},
+
+{
+    q: "Khi nhận được thông tin chưa kiểm chứng về bạn học trên mạng, em nên:",
+    a: [
+        "Chia sẻ ngay cho mọi người",
+        "Bình luận xúc phạm bạn",
+        "Không phát tán và tìm hiểu thông tin chính xác",
+        "Tạo thêm tin đồn"
+    ],
+    d: 2
+},
+
+{
+    q: "Điều gì là biểu hiện của sự hợp tác trong học tập?",
+    a: [
+        "Giấu kiến thức để hơn bạn",
+        "Chia sẻ ý tưởng và cùng giải quyết nhiệm vụ",
+        "Không tham gia hoạt động",
+        "Chỉ làm việc cá nhân"
+    ],
+    d: 1
+},
+
+{
+    q: "Khi không hiểu bài, cách làm phù hợp nhất là:",
+    a: [
+        "Bỏ qua kiến thức đó",
+        "Chép đáp án mà không tìm hiểu",
+        "Chủ động hỏi thầy cô và bạn bè",
+        "Không học bài nữa"
+    ],
+    d: 2
+},
+
+{
+    q: "Bạn mắc lỗi và chủ động xin lỗi em. Em nên:",
+    a: [
+        "Không bao giờ tha thứ",
+        "Lắng nghe và xem xét tha thứ khi phù hợp",
+        "Trả đũa bạn",
+        "Kể lỗi của bạn cho tất cả mọi người"
+    ],
+    d: 1
+},
+
+{
+    q: "Một học sinh có kết quả học tập chưa tốt nhưng luôn cố gắng. Em nên:",
+    a: [
+        "Chê bai bạn",
+        "Không chơi với bạn",
+        "Động viên và hỗ trợ bạn học tập",
+        "So sánh bạn với người khác"
+    ],
+    d: 2
+},
+
+{
+    q: "Trong tình huống phải lựa chọn giữa lợi ích cá nhân và lời hứa đã đưa ra, em nên:",
+    a: [
+        "Tùy tiện phá bỏ lời hứa",
+        "Cố gắng thực hiện lời hứa và trao đổi trung thực nếu có trở ngại",
+        "Nói dối để có lợi cho mình",
+        "Trốn tránh trách nhiệm"
+    ],
+    d: 1
+},
+
+{
+    q: "Vì sao cần tôn trọng sự khác biệt giữa mọi người?",
+    a: [
+        "Để mọi người phải giống nhau",
+        "Để tránh giao tiếp",
+        "Để xây dựng mối quan hệ bình đẳng và hòa đồng",
+        "Để phân biệt đối xử"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi một bạn trong nhóm gặp khó khăn khiến tiến độ bị chậm, cách giải quyết tốt nhất là:",
+    a: [
+        "Phê bình bạn trước cả lớp",
+        "Bỏ mặc nhiệm vụ",
+        "Cùng trao đổi, phân chia lại công việc và hỗ trợ bạn",
+        "Đổ lỗi hoàn toàn cho bạn"
+    ],
+    d: 2
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    document.querySelectorAll(".answer").forEach(x => {
+        x.style.pointerEvents = "none";
+    });
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.7;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Xuất sắc! Bạn đã chiến thắng Bot!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot đã giành chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có kết quả ngang nhau!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 70% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+
+        <button onclick="location.href='capdo_gdcd_khoi7_trungbinh.html'">
+            Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_gdcd_khoi7.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

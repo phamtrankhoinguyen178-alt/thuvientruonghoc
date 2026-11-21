@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - CHẾ ĐỘ ĐỊA NGỤC
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+        q: "Điểm hạn chế lớn của các cuộc cải cách ở Việt Nam cuối thế kỉ XIX là gì?",
+        a: ["Không có nội dung đổi mới", "Không được đề xuất bởi bất cứ ai", "Triều đình không quyết tâm thực hiện đồng bộ và triệt để", "Được thực hiện quá thành công"],
+        d: 2
+    },
+
+    {
+        q: "Nếu rừng đầu nguồn bị chặt phá trên diện rộng, hậu quả nào dễ xảy ra?",
+        a: ["Giảm nguy cơ lũ lụt", "Tăng khả năng giữ nước", "Đất không bị xói mòn", "Tăng nguy cơ lũ quét, sạt lở và xói mòn đất"],
+        d: 3
+    },
+
+    {
+        q: "Vì sao cuộc khởi nghĩa Yên Thế có tính chất khác với phong trào Cần Vương?",
+        a: ["Yên Thế chủ yếu là phong trào đấu tranh tự vệ của nông dân để bảo vệ đất đai và cuộc sống", "Yên Thế không chống Pháp", "Yên Thế do vua Hàm Nghi lãnh đạo", "Yên Thế chỉ diễn ra trong một tháng"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao chế độ nước sông ngòi Việt Nam có sự phân mùa rõ rệt?",
+        a: ["Do không có mưa", "Do chế độ mưa theo mùa của khí hậu nhiệt đới gió mùa", "Do tất cả các sông đều bắt nguồn từ biển", "Do nhiệt độ không thay đổi"],
+        d: 1
+    },
+
+    {
+        q: "Tại sao Cách mạng công nghiệp làm thay đổi sâu sắc xã hội châu Âu?",
+        a: ["Làm biến mất mọi ngành nghề", "Làm nông nghiệp ngừng hoạt động", "Thúc đẩy đô thị hóa và hình thành hai giai cấp tư sản, vô sản", "Làm xã hội quay lại thời nguyên thủy"],
+        d: 2
+    },
+
+    {
+        q: "Biện pháp nào có ý nghĩa lâu dài trong việc thích ứng với biến đổi khí hậu ở đồng bằng sông Cửu Long?",
+        a: ["Tăng khai thác nước ngầm không kiểm soát", "Phá rừng ngập mặn", "Mở rộng sản xuất bất chấp hạn mặn", "Phát triển sản xuất thích ứng, bảo vệ rừng ngập mặn và sử dụng nước hợp lí"],
+        d: 3
+    },
+
+    {
+        q: "Nguyên nhân sâu xa khiến triều Nguyễn không thể bảo vệ độc lập dân tộc trước cuộc xâm lược của Pháp là gì?",
+        a: ["Đất nước khủng hoảng, chính sách bảo thủ và không có sự chuẩn bị phù hợp", "Việt Nam không có tài nguyên", "Nhân dân không yêu nước", "Pháp không có vũ khí"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao vùng ven biển miền Trung thường xảy ra hiện tượng cát bay, cát chảy?",
+        a: ["Do có nhiều sông lớn", "Do địa hình cồn cát, gió mạnh và thảm thực vật bị suy giảm", "Do có nhiều rừng rậm", "Do không có gió"],
+        d: 1
+    },
+
+    {
+        q: "Ý nghĩa lịch sử quan trọng của phong trào Tây Sơn là gì?",
+        a: ["Chỉ phát triển kinh tế nông nghiệp", "Chỉ xây dựng thành phố", "Lật đổ các tập đoàn phong kiến chia cắt đất nước và đánh bại ngoại xâm", "Mở đầu thời kì Bắc thuộc"],
+        d: 2
+    },
+
+    {
+        q: "Tại sao miền Trung thường có lũ lên nhanh và rút nhanh?",
+        a: ["Do sông rất dài", "Do không có núi", "Do mưa rất ít", "Do sông ngắn, dốc và mưa lớn tập trung"],
+        d: 3
+    },
+
+    {
+        q: "Điểm tiến bộ trong chính sách kinh tế thời Quang Trung là gì?",
+        a: ["Khuyến khích sản xuất, phục hồi nông nghiệp và phát triển buôn bán", "Cấm hoàn toàn hoạt động thương mại", "Bỏ toàn bộ ruộng đất", "Ngừng sản xuất thủ công nghiệp"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao cần bảo vệ đa dạng sinh học ở Việt Nam?",
+        a: ["Để khai thác động vật hoang dã nhiều hơn", "Để duy trì cân bằng sinh thái và nguồn gen quý", "Để giảm diện tích rừng", "Để tăng ô nhiễm môi trường"],
+        d: 1
+    },
+
+    {
+        q: "Tại sao phong trào yêu nước Việt Nam đầu thế kỉ XX xuất hiện nhiều khuynh hướng mới?",
+        a: ["Do đất nước không còn bị đô hộ", "Do không có ảnh hưởng từ thế giới", "Do ảnh hưởng của tư tưởng dân chủ tư sản và yêu cầu tìm đường cứu nước mới", "Do chế độ phong kiến phát triển mạnh"],
+        d: 2
+    },
+
+    {
+        q: "Nếu nhiệt độ tăng và lượng mưa thay đổi thất thường, hoạt động nào dễ bị ảnh hưởng?",
+        a: ["Chỉ hoạt động giao thông", "Chỉ hoạt động thương mại", "Không có hoạt động nào", "Nông nghiệp và nguồn nước"],
+        d: 3
+    },
+
+    {
+        q: "Nguyên nhân quan trọng khiến thực dân Pháp từng bước chiếm Việt Nam là gì?",
+        a: ["Sự suy yếu của triều Nguyễn và chính sách đối ngoại, đối nội hạn chế", "Việt Nam không có quân đội", "Nhân dân Việt Nam không chống đối", "Pháp không có mục tiêu xâm lược"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao cần xây dựng hệ thống đê điều ở đồng bằng sông Hồng?",
+        a: ["Để ngăn nước biển", "Để hạn chế lũ sông và bảo vệ khu dân cư, sản xuất", "Để làm tăng lượng mưa", "Để ngăn hoàn toàn mọi dòng sông"],
+        d: 1
+    },
+
+    {
+        q: "Điểm khác biệt cơ bản giữa Cách mạng tư sản Mỹ và Cách mạng tư sản Pháp là gì?",
+        a: ["Cả hai đều chống thực dân", "Cả hai đều không có chiến tranh", "Cách mạng Mỹ đấu tranh giành độc lập khỏi Anh, còn cách mạng Pháp lật đổ chế độ phong kiến chuyên chế", "Cách mạng Pháp diễn ra trước Cách mạng Mỹ"],
+        d: 2
+    },
+
+    {
+        q: "Vì sao cần phát triển năng lượng tái tạo ở Việt Nam?",
+        a: ["Để tăng sử dụng than đá", "Để làm tăng ô nhiễm", "Để khai thác hết tài nguyên không tái tạo", "Để giảm phụ thuộc vào nhiên liệu hóa thạch và hạn chế phát thải"],
+        d: 3
+    },
+
+    {
+        q: "Bài học quan trọng nhất từ phong trào đấu tranh chống Pháp cuối thế kỉ XIX là gì?",
+        a: ["Cần có đường lối lãnh đạo đúng đắn và tổ chức lực lượng thống nhất", "Chỉ cần dựa vào vũ khí", "Không cần sự tham gia của nhân dân", "Không cần chuẩn bị trước"],
+        d: 0
+    },
+
+    {
+        q: "Giải pháp nào góp phần bảo vệ tài nguyên nước ở Việt Nam?",
+        a: ["Xả nước thải chưa xử lí", "Sử dụng nước tiết kiệm, xử lí nước thải và bảo vệ lưu vực sông", "Khai thác nước ngầm không giới hạn", "Phá rừng đầu nguồn"],
+        d: 1
+    }
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 10;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.85;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 85% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi8_dianguc.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi8.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

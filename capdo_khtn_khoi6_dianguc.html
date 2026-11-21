@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHTN 6 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_khtn_khoi6.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 KHTN KHỐI 6 - CHẾ ĐỘ ĐỊA NGỤC
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+    {
+        q: "Một tế bào phân chia liên tiếp 5 lần tạo ra bao nhiêu tế bào con?",
+        a: ["16", "24", "32", "64"],
+        d: 2
+    },
+    {
+        q: "Một vật có khối lượng 540g và thể tích 200cm³. Khối lượng riêng của vật là bao nhiêu?",
+        a: ["1,7 g/cm³", "2,7 g/cm³", "3,7 g/cm³", "4,7 g/cm³"],
+        d: 1
+    },
+    {
+        q: "Trong quá trình quang hợp, năng lượng ánh sáng được chuyển hóa thành dạng năng lượng nào?",
+        a: ["Nhiệt năng", "Điện năng", "Hóa năng", "Cơ năng"],
+        d: 2
+    },
+    {
+        q: "Một hỗn hợp gồm cát, muối ăn và nước. Muốn thu được muối tinh khiết, phương pháp phù hợp là gì?",
+        a: ["Lọc rồi cô cạn", "Dùng nam châm", "Chiết trực tiếp", "Lắng rồi lọc một lần"],
+        d: 0
+    },
+    {
+        q: "Trong tế bào, quá trình nào giải phóng năng lượng từ chất hữu cơ?",
+        a: ["Quang hợp", "Hô hấp tế bào", "Phân chia tế bào", "Thoát hơi nước"],
+        d: 1
+    },
+    {
+        q: "Một vật chuyển động được 150m trong 30 giây. Tốc độ của vật là bao nhiêu?",
+        a: ["3 m/s", "4 m/s", "5 m/s", "6 m/s"],
+        d: 2
+    },
+    {
+        q: "Trong chuỗi thức ăn: Cỏ → Châu chấu → Ếch → Rắn. Sinh vật tiêu thụ bậc 2 là gì?",
+        a: ["Cỏ", "Châu chấu", "Ếch", "Rắn"],
+        d: 2
+    },
+    {
+        q: "Hiện tượng nào chứng tỏ không khí có thể bị nén?",
+        a: ["Bóng bay phồng lên", "Ép pittông ống tiêm khi đầu ống bị bịt kín", "Nước đóng băng", "Sắt bị gỉ"],
+        d: 1
+    },
+    {
+        q: "Vì sao khi đưa một thìa kim loại vào cốc nước nóng, cán thìa cũng nóng lên?",
+        a: ["Đối lưu", "Bức xạ", "Dẫn nhiệt", "Bay hơi"],
+        d: 2
+    },
+    {
+        q: "Nếu một quần thể sinh vật mất đi sinh vật sản xuất, điều gì có thể xảy ra?",
+        a: ["Chuỗi thức ăn vẫn luôn ổn định", "Nguồn năng lượng cho các bậc tiêu thụ bị suy giảm", "Sinh vật tiêu thụ tự tạo thức ăn", "Không ảnh hưởng đến hệ sinh thái"],
+        d: 1
+    },
+    {
+        q: "Một vật có khối lượng 2kg. Trọng lượng gần đúng của vật trên Trái Đất là bao nhiêu?",
+        a: ["2N", "10N", "20N", "200N"],
+        d: 2
+    },
+    {
+        q: "Trong các cấp tổ chức cơ thể đa bào, thứ tự đúng từ nhỏ đến lớn là gì?",
+        a: ["Cơ quan → Mô → Tế bào → Hệ cơ quan", "Tế bào → Mô → Cơ quan → Hệ cơ quan", "Mô → Tế bào → Hệ cơ quan → Cơ quan", "Tế bào → Cơ quan → Mô → Hệ cơ quan"],
+        d: 1
+    },
+    {
+        q: "Khi một chất chuyển trực tiếp từ thể rắn sang thể khí, hiện tượng đó gọi là gì?",
+        a: ["Ngưng tụ", "Đông đặc", "Thăng hoa", "Nóng chảy"],
+        d: 2
+    },
+    {
+        q: "Trong các sinh vật sau, sinh vật nào đóng vai trò phân giải?",
+        a: ["Cây xanh", "Nấm và nhiều vi khuẩn", "Thỏ", "Hổ"],
+        d: 1
+    },
+    {
+        q: "Tại sao lá cây thường có nhiều khí khổng?",
+        a: ["Để hấp thụ khoáng", "Để trao đổi khí và thoát hơi nước", "Để hút nước từ đất", "Để giữ cây đứng vững"],
+        d: 1
+    },
+    {
+        q: "Một vật có khối lượng riêng 800 kg/m³ và thể tích 0,02 m³. Khối lượng của vật là bao nhiêu?",
+        a: ["8kg", "12kg", "16kg", "20kg"],
+        d: 2
+    },
+    {
+        q: "Trong hệ Mặt Trời, hành tinh nào có thời gian tự quay quanh trục dài hơn thời gian quay quanh Mặt Trời?",
+        a: ["Sao Kim", "Sao Thủy", "Trái Đất", "Sao Hỏa"],
+        d: 0
+    },
+    {
+        q: "Đâu là đặc điểm cơ bản của tế bào nhân sơ?",
+        a: ["Có nhân hoàn chỉnh", "Không có vùng nhân", "Chưa có nhân hoàn chỉnh", "Có nhiều nhân"],
+        d: 2
+    },
+    {
+        q: "Trong một hệ sinh thái, năng lượng truyền qua các bậc dinh dưỡng chủ yếu theo chiều nào?",
+        a: ["Sinh vật tiêu thụ → Sinh vật sản xuất", "Sinh vật sản xuất → Sinh vật tiêu thụ", "Sinh vật phân giải → Mặt Trời", "Động vật → Ánh sáng"],
+        d: 1
+    },
+    {
+        q: "Một vật chịu tác dụng của hai lực cân bằng. Vật đang đứng yên sẽ như thế nào?",
+        a: ["Chuyển động nhanh dần", "Chuyển động chậm dần", "Tiếp tục đứng yên", "Quay tròn"],
+        d: 2
+    }
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 10;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.85;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 85% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_khtn_khoi6_dianguc.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_khtn_khoi6.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

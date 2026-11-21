@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - CHẾ ĐỘ KHÓ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #333;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - CHẾ ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+        q: "Ý nghĩa lớn nhất của Cách mạng tư sản Pháp năm 1789 là gì?",
+        a: ["Củng cố chế độ phong kiến", "Xóa bỏ chế độ phong kiến chuyên chế, mở đường cho chủ nghĩa tư bản phát triển", "Thành lập đế quốc La Mã", "Chấm dứt mọi cuộc chiến tranh"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao khí hậu nước ta có tính chất nhiệt đới ẩm gió mùa?",
+        a: ["Do nằm trong vùng nội chí tuyến và chịu ảnh hưởng của gió mùa", "Do nằm gần Bắc Cực", "Do không có biển", "Do nằm hoàn toàn trong vùng ôn đới"],
+        d: 0
+    },
+
+    {
+        q: "Tác động quan trọng của Cách mạng công nghiệp lần thứ nhất là gì?",
+        a: ["Làm sản xuất thủ công phát triển hơn", "Làm năng suất lao động tăng và thúc đẩy cơ giới hóa", "Xóa bỏ hoàn toàn công nghiệp", "Làm giao thông ngừng phát triển"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao miền Bắc nước ta có mùa đông lạnh?",
+        a: ["Do chịu ảnh hưởng của gió mùa Đông Bắc", "Do nằm gần xích đạo", "Do có nhiều hoang mạc", "Do chịu ảnh hưởng của gió mùa Tây Nam"],
+        d: 0
+    },
+
+    {
+        q: "Nguyên nhân trực tiếp dẫn đến cuộc khởi nghĩa Yên Thế là gì?",
+        a: ["Nhân dân muốn mở rộng lãnh thổ", "Nông dân Yên Thế bị thực dân Pháp và chính quyền địa phương áp bức, chiếm đất", "Nhà Nguyễn phát triển kinh tế", "Pháp rút khỏi Bắc Kì"],
+        d: 1
+    },
+
+    {
+        q: "Tại sao sông ngòi nước ta có lượng nước lớn?",
+        a: ["Do khí hậu khô hạn", "Do có nhiều hoang mạc", "Do lượng mưa lớn và nguồn nước từ ngoài lãnh thổ", "Do không có mùa khô"],
+        d: 2
+    },
+
+    {
+        q: "Vì sao phong trào Cần Vương thất bại?",
+        a: ["Thiếu sự lãnh đạo thống nhất và lực lượng còn hạn chế", "Không có người tham gia", "Pháp không có quân đội", "Phong trào không diễn ra"],
+        d: 0
+    },
+
+    {
+        q: "Biện pháp quan trọng để hạn chế lũ lụt ở miền núi là gì?",
+        a: ["Chặt phá rừng", "Bảo vệ và phát triển rừng đầu nguồn", "Khai thác đất không kiểm soát", "Lấp các dòng suối"],
+        d: 1
+    },
+
+    {
+        q: "Ai là người chủ trương cải cách ở Việt Nam cuối thế kỉ XIX?",
+        a: ["Nguyễn Trường Tộ", "Trần Hưng Đạo", "Ngô Quyền", "Lý Thường Kiệt"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao vùng núi thường có nhiệt độ thấp hơn vùng đồng bằng?",
+        a: ["Do có nhiều sông", "Do càng lên cao nhiệt độ không khí thường càng giảm", "Do có nhiều cây", "Do lượng mưa luôn bằng không"],
+        d: 1
+    },
+
+    {
+        q: "Điểm giống nhau cơ bản giữa phong trào Cần Vương và khởi nghĩa Yên Thế là gì?",
+        a: ["Đều chống thực dân Pháp", "Đều do Phan Bội Châu lãnh đạo", "Đều giành thắng lợi hoàn toàn", "Đều diễn ra ở Nam Bộ"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao cần bảo vệ nguồn nước sông, hồ ở nước ta?",
+        a: ["Để tăng ô nhiễm", "Để bảo vệ hệ sinh thái và nguồn nước phục vụ đời sống, sản xuất", "Để giảm lượng nước ngọt", "Để làm mất môi trường sống"],
+        d: 1
+    },
+
+    {
+        q: "Phong trào Đông Du nhằm mục đích chủ yếu nào?",
+        a: ["Đưa thanh niên sang Nhật học tập để tìm con đường cứu nước", "Đưa người sang Pháp làm công nhân", "Mở rộng lãnh thổ", "Xây dựng chế độ phong kiến"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao nước ta có nguồn tài nguyên khoáng sản phong phú?",
+        a: ["Do lịch sử phát triển địa chất lâu dài và cấu trúc địa chất đa dạng", "Do không có núi", "Do khí hậu nóng", "Do dân số đông"],
+        d: 0
+    },
+
+    {
+        q: "Hiệp ước Pa-tơ-nốt được kí vào năm nào?",
+        a: ["1858", "1862", "1883", "1884"],
+        d: 3
+    },
+
+    {
+        q: "Đặc điểm nào giúp biển Đông có ảnh hưởng lớn đến khí hậu Việt Nam?",
+        a: ["Diện tích biển rộng và nằm sát lãnh thổ nước ta", "Nằm hoàn toàn trong vùng cực", "Không có dòng biển", "Không có hơi nước"],
+        d: 0
+    },
+
+    {
+        q: "Tác động tiêu cực của quá trình công nghiệp hóa thế kỉ XIX là gì?",
+        a: ["Tăng năng suất lao động", "Ô nhiễm môi trường và bóc lột công nhân", "Phát triển giao thông", "Thúc đẩy khoa học"],
+        d: 1
+    },
+
+    {
+        q: "Nguyên nhân chủ yếu gây xói mòn đất ở vùng đồi núi là gì?",
+        a: ["Trồng rừng", "Bảo vệ thảm thực vật", "Mưa lớn kết hợp với phá rừng và canh tác không hợp lí", "Tăng độ che phủ rừng"],
+        d: 2
+    },
+
+    {
+        q: "Vì sao triều Nguyễn ban hành nhiều chính sách hạn chế sự phát triển của kinh tế hàng hóa?",
+        a: ["Do chính sách bảo thủ và hạn chế ngoại thương", "Do muốn phát triển công nghiệp hiện đại", "Do muốn mở cửa toàn diện", "Do không có hoạt động nông nghiệp"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao cần sử dụng tiết kiệm tài nguyên khoáng sản?",
+        a: ["Vì khoáng sản có thể tái tạo rất nhanh", "Vì khoáng sản là tài nguyên hữu hạn, nhiều loại không thể phục hồi", "Vì khoáng sản không có giá trị", "Vì khoáng sản chỉ tồn tại ở biển"],
+        d: 1
+    },
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.75;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 75% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi8_kho.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi8.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

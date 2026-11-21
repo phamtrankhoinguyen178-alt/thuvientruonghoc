@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHTN 7 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_khtn_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 KHTN KHỐI 7 - CHẾ ĐỘ ĐỊA NGỤC
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+    {
+        q: "Nguyên tử được cấu tạo từ những loại hạt nào?",
+        a: ["Proton, neutron và electron", "Proton và phân tử", "Neutron và phân tử", "Electron và phân tử"],
+        d: 0
+    },
+    {
+        q: "Hạt nhân nguyên tử được cấu tạo bởi những hạt nào?",
+        a: ["Electron và proton", "Proton và neutron", "Electron và neutron", "Chỉ có electron"],
+        d: 1
+    },
+    {
+        q: "Hạt nào mang điện tích âm trong nguyên tử?",
+        a: ["Proton", "Neutron", "Electron", "Hạt nhân"],
+        d: 2
+    },
+    {
+        q: "Nguyên tố hóa học là tập hợp những nguyên tử có cùng số lượng hạt nào?",
+        a: ["Neutron", "Electron lớp ngoài cùng", "Proton", "Phân tử"],
+        d: 2
+    },
+    {
+        q: "Kí hiệu hóa học của nguyên tố oxygen là gì?",
+        a: ["O", "Ox", "Og", "On"],
+        d: 0
+    },
+    {
+        q: "Bảng tuần hoàn các nguyên tố hóa học được sắp xếp theo chiều tăng dần của đại lượng nào?",
+        a: ["Khối lượng riêng", "Số hiệu nguyên tử", "Nhiệt độ nóng chảy", "Thể tích nguyên tử"],
+        d: 1
+    },
+    {
+        q: "Liên kết hóa học giữa các nguyên tử được hình thành nhằm mục đích gì?",
+        a: ["Làm nguyên tử biến mất", "Tạo thành chất mới từ các nguyên tử", "Làm nguyên tử mất khối lượng", "Làm nguyên tử ngừng chuyển động"],
+        d: 1
+    },
+    {
+        q: "Phân tử nước được cấu tạo từ những nguyên tử nào?",
+        a: ["Hai hydrogen và một oxygen", "Một hydrogen và hai oxygen", "Hai oxygen và một carbon", "Một nitrogen và hai hydrogen"],
+        d: 0
+    },
+    {
+        q: "Công thức hóa học của khí carbon dioxide là gì?",
+        a: ["CO", "CO2", "O2", "C2O"],
+        d: 1
+    },
+    {
+        q: "Đơn chất là chất được tạo nên từ bao nhiêu nguyên tố hóa học?",
+        a: ["Một nguyên tố", "Hai nguyên tố", "Ba nguyên tố", "Nhiều nguyên tố"],
+        d: 0
+    },
+    {
+        q: "Tốc độ chuyển động của một vật được tính bằng công thức nào?",
+        a: ["v = t/s", "v = s/t", "v = s × t", "v = s + t"],
+        d: 1
+    },
+    {
+        q: "Đơn vị đo tốc độ thường dùng trong hệ SI là gì?",
+        a: ["km/h", "m/s", "kg/m3", "N"],
+        d: 1
+    },
+    {
+        q: "Một người đi được 120 m trong 20 giây. Tốc độ của người đó là bao nhiêu?",
+        a: ["4 m/s", "5 m/s", "6 m/s", "8 m/s"],
+        d: 2
+    },
+    {
+        q: "Đồ thị quãng đường - thời gian cho biết điều gì?",
+        a: ["Sự thay đổi khối lượng", "Sự phụ thuộc của quãng đường vào thời gian", "Sự thay đổi nhiệt độ", "Sự thay đổi thể tích"],
+        d: 1
+    },
+    {
+        q: "Âm thanh được tạo ra bởi vật nào?",
+        a: ["Vật đứng yên", "Vật dao động", "Vật không có khối lượng", "Vật không có năng lượng"],
+        d: 1
+    },
+    {
+        q: "Âm thanh không thể truyền được trong môi trường nào?",
+        a: ["Chất rắn", "Chất lỏng", "Chất khí", "Chân không"],
+        d: 3
+    },
+    {
+        q: "Độ to của âm được đo bằng đơn vị nào?",
+        a: ["Mét", "Decibel (dB)", "Kilogram", "Giây"],
+        d: 1
+    },
+    {
+        q: "Ánh sáng truyền theo đường nào trong môi trường trong suốt và đồng tính?",
+        a: ["Đường cong", "Đường gấp khúc", "Đường thẳng", "Đường tròn"],
+        d: 2
+    },
+    {
+        q: "Hiện tượng phản xạ ánh sáng xảy ra khi nào?",
+        a: ["Ánh sáng truyền qua vật trong suốt", "Ánh sáng gặp bề mặt và bị hắt trở lại", "Ánh sáng biến mất", "Ánh sáng chuyển thành âm thanh"],
+        d: 1
+    },
+    {
+        q: "Ảnh của một vật tạo bởi gương phẳng có đặc điểm gì?",
+        a: ["Là ảnh thật", "Là ảnh ảo, lớn bằng vật", "Lớn hơn vật", "Nhỏ hơn vật"],
+        d: 1
+    },
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 10;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.85;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 85% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_khtn_khoi7_dianguc.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_khtn_khoi7.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

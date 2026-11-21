@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 7 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 7 - CHẾ ĐỘ ĐỊA NGỤC
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+        q: "Một lãnh địa phong kiến Tây Âu có nền kinh tế chủ yếu tự cung tự cấp. Khi thương nghiệp phát triển, sự thay đổi nào có khả năng xảy ra?",
+        a: ["Các thành thị và tầng lớp thị dân phát triển", "Mọi hoạt động trao đổi biến mất", "Lãnh địa trở nên hoàn toàn độc lập với bên ngoài hơn", "Thủ công nghiệp bị xóa bỏ"],
+        d: 0
+    },
+    {
+        q: "Một khu vực châu Á nằm sâu trong lục địa, xa biển. Đặc điểm khí hậu nào có khả năng xuất hiện?",
+        a: ["Biên độ nhiệt năm nhỏ", "Tính lục địa rõ rệt, mùa đông lạnh và mùa hạ nóng", "Mưa nhiều quanh năm do ảnh hưởng trực tiếp của biển", "Nhiệt độ luôn ổn định"],
+        d: 1
+    },
+    {
+        q: "Nếu một quốc gia phong kiến có vua sáng suốt nhưng quan lại tham nhũng và bóc lột nhân dân, điều gì có thể xảy ra về lâu dài?",
+        a: ["Xã hội chắc chắn ổn định", "Mọi mâu thuẫn xã hội biến mất", "Mâu thuẫn xã hội gia tăng và nguy cơ khủng hoảng chính trị", "Kinh tế tự động phát triển mạnh"],
+        d: 2
+    },
+    {
+        q: "Một khu vực có lượng mưa rất thấp, nhiệt độ cao và thảm thực vật thưa thớt. Biện pháp nào phù hợp nhất để hạn chế hoang mạc hóa?",
+        a: ["Chặt phá cây bụi", "Tăng chăn thả không kiểm soát", "Khai thác nước ngầm liên tục", "Trồng cây phù hợp, bảo vệ đất và sử dụng nước tiết kiệm"],
+        d: 3
+    },
+    {
+        q: "Nếu không có sự đoàn kết của nhân dân trong ba lần kháng chiến chống Mông - Nguyên, kết quả lịch sử có thể thay đổi như thế nào?",
+        a: ["Khả năng kháng chiến thành công sẽ giảm đáng kể", "Quân địch chắc chắn tự rút lui", "Đất nước không cần quân đội", "Mọi cuộc chiến tranh đều không xảy ra"],
+        d: 0
+    },
+    {
+        q: "Một quốc gia có dân số đông nhưng phần lớn dân cư tập trung ở một vài thành phố. Vấn đề nào cần được ưu tiên giải quyết?",
+        a: ["Giảm toàn bộ hoạt động sản xuất", "Quy hoạch đô thị và phân bố lại các hoạt động kinh tế hợp lí", "Ngừng xây dựng trường học", "Xóa bỏ hệ thống giao thông"],
+        d: 1
+    },
+    {
+        q: "Nếu dòng biển lạnh Pê-ru suy yếu, khu vực ven biển phía tây Nam Mỹ có thể chịu tác động nào?",
+        a: ["Chắc chắn xuất hiện băng tuyết quanh năm", "Nhiệt độ giảm mạnh ở mọi nơi", "Điều kiện khí hậu ven biển có thể thay đổi, lượng mưa có khả năng tăng", "Hoang mạc chắc chắn mở rộng ngay lập tức"],
+        d: 2
+    },
+    {
+        q: "Một quốc gia có nhiều sông lớn, địa hình dốc và lượng mưa dồi dào. Ngành kinh tế nào có điều kiện phát triển thuận lợi?",
+        a: ["Khai thác muối trong hoang mạc", "Trồng cây chịu hạn ở mọi nơi", "Đánh bắt cá biển xa bờ בלבד", "Thủy điện"],
+        d: 3
+    },
+    {
+        q: "Tại sao việc nhà Lý chủ động tiến công trước vào các căn cứ chuẩn bị xâm lược của nhà Tống được xem là một chủ trương quân sự đặc biệt?",
+        a: ["Chủ động phá thế chuẩn bị tiến công của đối phương để bảo vệ đất nước", "Nhằm chiếm toàn bộ lãnh thổ nhà Tống", "Nhằm chấm dứt mọi hoạt động ngoại giao", "Vì Đại Việt không có quân đội"],
+        d: 0
+    },
+    {
+        q: "Nếu rừng A-ma-dôn tiếp tục bị thu hẹp trên diện rộng, hậu quả nào có thể xảy ra?",
+        a: ["Đa dạng sinh học tăng vô hạn", "Suy giảm đa dạng sinh học và ảnh hưởng đến cân bằng khí hậu", "Lượng khí nhà kính biến mất", "Toàn bộ hoang mạc biến thành rừng"],
+        d: 1
+    },
+    {
+        q: "Một nhà nước phong kiến tiến hành cải cách nhưng không nhận được sự ủng hộ của các tầng lớp có thế lực. Khó khăn lớn nhất có thể gặp phải là gì?",
+        a: ["Không cần thực hiện cải cách", "Mọi chính sách đều tự động thành công", "Cải cách gặp sự chống đối và khó được thực hiện triệt để", "Đất nước lập tức trở nên giàu mạnh"],
+        d: 2
+    },
+    {
+        q: "Vì sao địa hình châu Âu tạo điều kiện thuận lợi cho giao thông và phát triển kinh tế?",
+        a: ["Toàn bộ lãnh thổ là núi cao hiểm trở", "Không có đồng bằng", "Không có sông ngòi", "Đồng bằng rộng, bờ biển bị chia cắt và có nhiều bán đảo, vịnh biển"],
+        d: 3
+    },
+    {
+        q: "Nếu cuộc khởi nghĩa Lam Sơn chỉ dựa vào lực lượng ban đầu mà không mở rộng sự ủng hộ của nhân dân, điều gì dễ xảy ra?",
+        a: ["Khó phát triển thành cuộc đấu tranh giải phóng dân tộc trên phạm vi rộng", "Chắc chắn đánh thắng ngay quân Minh", "Không cần xây dựng lực lượng", "Quân Minh tự động đầu hàng"],
+        d: 0
+    },
+    {
+        q: "Một khu vực có khí hậu nhiệt đới gió mùa, đất phù sa rộng và nguồn nước dồi dào. Hoạt động sản xuất nào phù hợp nhất?",
+        a: ["Chăn nuôi tuần lộc", "Trồng lúa nước", "Khai thác băng tuyết", "Trồng cây chịu lạnh quanh năm"],
+        d: 1
+    },
+    {
+        q: "Tại sao chiến thuật đánh nhanh thắng nhanh của quân Nguyên gặp khó khăn trong kháng chiến chống nhà Trần?",
+        a: ["Quân Nguyên không biết sử dụng ngựa", "Đại Việt không có sông ngòi", "Nhà Trần sử dụng chiến lược phù hợp, làm suy yếu hậu cần và kéo dài cuộc chiến", "Quân Nguyên không có tướng chỉ huy"],
+        d: 2
+    },
+    {
+        q: "Nếu mực nước biển dâng cao trong nhiều thập kỉ, khu vực nào có nguy cơ chịu ảnh hưởng nghiêm trọng nhất?",
+        a: ["Các cao nguyên xa biển", "Những vùng núi cao", "Các hoang mạc nằm sâu trong lục địa", "Các đồng bằng ven biển thấp và vùng châu thổ"],
+        d: 3
+    },
+    {
+        q: "Một quốc gia có nhiều tài nguyên khoáng sản nhưng quản lí yếu kém và phụ thuộc vào xuất khẩu nguyên liệu thô. Hạn chế lớn nhất của mô hình phát triển này là gì?",
+        a: ["Dễ phụ thuộc vào biến động giá cả và khó tạo giá trị gia tăng cao", "Không thể xuất khẩu tài nguyên", "Không cần phát triển công nghiệp", "Tài nguyên tự động được tái tạo"],
+        d: 0
+    },
+    {
+        q: "Nếu các nước châu Âu không tận dụng lợi thế về biển, sông ngòi và giao thông, ngành kinh tế nào có thể bị hạn chế phát triển?",
+        a: ["Trồng cây trong nhà kính", "Thương mại và vận tải đường biển", "Chăn nuôi gia súc", "Khai thác khoáng sản trong đất liền"],
+        d: 1
+    },
+    {
+        q: "Bài học sâu sắc nhất từ sự thất bại của nhà Hồ trước quân Minh là gì?",
+        a: ["Chỉ cần xây thành cao là đủ", "Không cần quan tâm đến đời sống nhân dân", "Cần củng cố khối đoàn kết toàn dân và có đường lối kháng chiến phù hợp", "Không cần chuẩn bị quốc phòng"],
+        d: 2
+    },
+    {
+        q: "Một quốc gia vừa có vị trí nằm giữa các châu lục, vừa sở hữu nguồn tài nguyên dầu mỏ lớn. Yếu tố nào giải thích đầy đủ nhất tầm quan trọng chiến lược của quốc gia đó?",
+        a: ["Chỉ vì có dân số đông", "Chỉ vì có diện tích rộng", "Chỉ vì có khí hậu nóng", "Kết hợp vị trí giao thông liên lục địa và vai trò cung cấp năng lượng"],
+        d: 3
+    }
+
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 10;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.85;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 85% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi7_dianguc.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi7.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

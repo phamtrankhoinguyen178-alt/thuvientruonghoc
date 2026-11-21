@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiếng Anh 6 - Trung bình</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+
+.top {
+    background: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.bot-time {
+    background: #e74c3c;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.main {
+    max-width: 900px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    font-size: 38px;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result h2 {
+    margin: 12px;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+@media(max-width:600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 15px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ Bạn: <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+
+    <div class="bot-time">
+        ⏱ Bot: <span id="botTimer">10</span>s
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ TIẾNG ANH KHỐI 6 - CẤP ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+
+        <div class="question" id="question"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="status" id="status">
+            🤖 Bot đang suy nghĩ...
+        </div>
+
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+
+{
+    q: "She usually ___ breakfast at 7 o'clock.",
+    a: ["have", "has", "having", "to have"],
+    d: 1
+},
+
+{
+    q: "My brother ___ football every afternoon.",
+    a: ["play", "plays", "playing", "is play"],
+    d: 1
+},
+
+{
+    q: "We ___ English on Mondays and Wednesdays.",
+    a: ["study", "studies", "studying", "studied"],
+    d: 0
+},
+
+{
+    q: "There ___ some milk in the fridge.",
+    a: ["are", "is", "am", "be"],
+    d: 1
+},
+
+{
+    q: "There ___ three books on the table.",
+    a: ["is", "are", "am", "be"],
+    d: 1
+},
+
+{
+    q: "My house is ___ the school.",
+    a: ["near", "under", "between", "from"],
+    d: 0
+},
+
+{
+    q: "The cat is ___ the table.",
+    a: ["on", "between", "at", "from"],
+    d: 0
+},
+
+{
+    q: "We have English ___ Monday.",
+    a: ["at", "in", "on", "from"],
+    d: 2
+},
+
+{
+    q: "I usually go to bed ___ 10 p.m.",
+    a: ["on", "in", "at", "from"],
+    d: 2
+},
+
+{
+    q: "My birthday is ___ May.",
+    a: ["on", "at", "in", "from"],
+    d: 2
+},
+
+{
+    q: "Would you like ___ orange juice?",
+    a: ["a", "an", "some", "any"],
+    d: 2
+},
+
+{
+    q: "There aren't ___ eggs in the fridge.",
+    a: ["some", "a", "an", "any"],
+    d: 3
+},
+
+{
+    q: "How ___ students are there in your class?",
+    a: ["much", "many", "old", "long"],
+    d: 1
+},
+
+{
+    q: "How ___ water do you drink every day?",
+    a: ["many", "much", "old", "long"],
+    d: 1
+},
+
+{
+    q: "My sister is ___ than me.",
+    a: ["tall", "taller", "tallest", "more tall"],
+    d: 1
+},
+
+{
+    q: "This book is ___ than that book.",
+    a: ["interesting", "more interesting", "most interesting", "interest"],
+    d: 1
+},
+
+{
+    q: "Mount Everest is the ___ mountain in the world.",
+    a: ["high", "higher", "highest", "more high"],
+    d: 2
+},
+
+{
+    q: "I am interested ___ playing badminton.",
+    a: ["on", "in", "at", "of"],
+    d: 1
+},
+
+{
+    q: "What ___ you doing now?",
+    a: ["is", "am", "are", "be"],
+    d: 2
+},
+
+{
+    q: "She ___ watching TV at the moment.",
+    a: ["am", "is", "are", "be"],
+    d: 1
+},
+
+{
+    q: "They ___ playing football now.",
+    a: ["is", "am", "are", "be"],
+    d: 2
+},
+
+{
+    q: "We should ___ our homework before dinner.",
+    a: ["do", "does", "doing", "to do"],
+    d: 0
+},
+
+{
+    q: "You shouldn't ___ too much fast food.",
+    a: ["eat", "eats", "eating", "to eating"],
+    d: 0
+},
+
+{
+    q: "What do you do ___ your free time?",
+    a: ["on", "in", "at", "from"],
+    d: 1
+},
+
+{
+    q: "My favorite subject is ___.",
+    a: ["Monday", "English", "football", "breakfast"],
+    d: 1
+},
+
+{
+    q: "Choose the word that is different.",
+    a: ["hospital", "school", "museum", "beautiful"],
+    d: 3
+},
+
+{
+    q: "Choose the word that is different.",
+    a: ["cycling", "swimming", "football", "beautiful"],
+    d: 3
+},
+
+{
+    q: "What is your favorite sport?",
+    a: [
+        "I like football.",
+        "I am thirteen.",
+        "I live in Vietnam.",
+        "I am a student."
+    ],
+    d: 0
+},
+
+{
+    q: "Where is the post office?",
+    a: [
+        "It is next to the bank.",
+        "It is Monday.",
+        "It is beautiful.",
+        "I like it."
+    ],
+    d: 0
+},
+
+{
+    q: "How often do you play sports?",
+    a: [
+        "At school.",
+        "Twice a week.",
+        "With my brother.",
+        "Football."
+    ],
+    d: 1
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+
+let thoiGianBan = 15;
+let thoiGianBot = 10;
+
+let timerBan;
+let timerBot;
+
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+
+    thoiGianBan = 15;
+    thoiGianBot = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = 15;
+    document.getElementById("botTimer").innerText = 10;
+
+    document.getElementById("question").innerText =
+        danhSach[cau].q;
+
+    document.getElementById("status").innerText =
+        "🤖 Bot đang suy nghĩ...";
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+
+        html += `
+        <div class="answer" onclick="traLoi(${i}, this)">
+            ${String.fromCharCode(65 + i)}. ${x}
+        </div>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    timerBan = setInterval(() => {
+
+        thoiGianBan--;
+
+        document.getElementById("timer").innerText =
+            thoiGianBan;
+
+        if (thoiGianBan <= 0) {
+
+            clearInterval(timerBan);
+
+            hetThoiGian();
+
+        }
+
+    }, 1000);
+
+    timerBot = setInterval(() => {
+
+        thoiGianBot--;
+
+        document.getElementById("botTimer").innerText =
+            thoiGianBot;
+
+        if (thoiGianBot <= 0) {
+
+            clearInterval(timerBot);
+
+            botTraLoi();
+
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timerBan);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+
+        diemBan++;
+
+        element.classList.add("correct");
+
+    } else {
+
+        element.classList.add("wrong");
+
+        document.querySelectorAll(".answer")[dung]
+        .classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").innerText =
+        diemBan;
+
+    document.getElementById("status").innerText =
+        "👤 Bạn đã trả lời! Bot vẫn đang suy nghĩ...";
+
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    document.querySelectorAll(".answer")[dung]
+    .classList.add("correct");
+
+    document.getElementById("status").innerText =
+        "⏰ Bạn hết thời gian! Bot vẫn đang suy nghĩ...";
+
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+
+        diemBot++;
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời đúng!";
+
+    } else {
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời sai!";
+
+    }
+
+    document.getElementById("botScore").innerText =
+        diemBot;
+
+    setTimeout(() => {
+
+        cau++;
+
+        if (cau >= 10) {
+
+            ketThucTran();
+
+        } else {
+
+            hienThiCau();
+
+        }
+
+    }, 1000);
+}
+
+function ketThucTran() {
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    document.getElementById("game").style.display =
+        "none";
+
+    document.querySelector(".info").style.display =
+        "none";
+
+    document.querySelector(".title").style.display =
+        "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng!</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có cùng số điểm.</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🤖 Bot: 10 giây/câu</p>
+
+        <p>🎯 Bot có 50% khả năng trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.href='capdo_anh_khoi6.html'">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi6.html'">
+            🏠 Về chọn môn
+        </button>
+
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

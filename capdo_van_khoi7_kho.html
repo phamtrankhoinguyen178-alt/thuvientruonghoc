@@ -1,0 +1,1030 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngữ văn 7 - Khó</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #3b0764, #7f1d1d, #111827);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: #facc15;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    color: #222;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.answer:hover:not(:disabled) {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    color: #2878e8;
+}
+
+.result p {
+    font-size: 19px;
+}
+
+.win {
+    color: #2ecc71 !important;
+}
+
+.lose {
+    color: #e74c3c !important;
+}
+
+.draw {
+    color: #f39c12 !important;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #581c87;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #7e22ce;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_van_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ <span id="timer">15</span>
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 NGỮ VĂN 7 - CẤP ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi=[
+{
+q:"Điểm khác biệt quan trọng giữa đề tài và chủ đề của tác phẩm văn học là gì?",
+a:["Đề tài là phạm vi đời sống được phản ánh, chủ đề là vấn đề tư tưởng chính được tác phẩm đặt ra","Đề tài và chủ đề hoàn toàn giống nhau","Đề tài là bài học, chủ đề là tên tác phẩm","Đề tài chỉ có trong thơ, chủ đề chỉ có trong truyện"],
+d:0
+},
+{
+q:"Khi phân tích một nhân vật văn học, nhận xét nào có sức thuyết phục nhất?",
+a:["Nhận xét dựa trên nhiều chi tiết về hành động, lời nói, suy nghĩ và quan hệ của nhân vật","Nhận xét dựa hoàn toàn vào cảm xúc cá nhân","Nhận xét dựa vào tên nhân vật","Nhận xét dựa vào độ dài của tác phẩm"],
+d:0
+},
+{
+q:"Tác dụng nổi bật của việc xây dựng tình huống truyện là gì?",
+a:["Đặt nhân vật vào hoàn cảnh có ý nghĩa để bộc lộ tính cách và làm nổi bật chủ đề","Làm cho tác phẩm có nhiều trang hơn","Giúp tác giả không cần xây dựng nhân vật","Chỉ tạo phần mở đầu cho tác phẩm"],
+d:0
+},
+{
+q:"Trong một bài phân tích thơ, vì sao không nên chỉ diễn giải lại nội dung?",
+a:["Vì cần làm rõ cách tác giả sử dụng hình ảnh, từ ngữ và nghệ thuật để thể hiện cảm xúc, tư tưởng","Vì diễn giải luôn sai","Vì thơ không có nội dung","Vì không được nhắc đến nội dung"],
+d:0
+},
+{
+q:"Khi một hình ảnh thơ mang ý nghĩa biểu tượng, người đọc nên làm gì?",
+a:["Đặt hình ảnh trong ngữ cảnh toàn bài để tìm lớp nghĩa sâu hơn nghĩa tả thực","Chỉ hiểu theo nghĩa đen","Bỏ qua hình ảnh","Chỉ dựa vào tên tác giả"],
+d:0
+},
+{
+q:"Một luận điểm trong bài nghị luận văn học cần đáp ứng yêu cầu nào?",
+a:["Rõ ràng, có ý nghĩa đối với vấn đề và có thể được chứng minh bằng lí lẽ, dẫn chứng","Càng dài càng tốt","Chỉ cần thể hiện cảm xúc","Không cần liên quan đến tác phẩm"],
+d:0
+},
+{
+q:"Mối quan hệ giữa luận điểm, lí lẽ và bằng chứng trong bài nghị luận là gì?",
+a:["Luận điểm là ý chính, lí lẽ giải thích và bằng chứng làm cơ sở thuyết phục cho luận điểm","Ba yếu tố hoàn toàn độc lập","Bằng chứng thay thế toàn bộ luận điểm","Luận điểm chỉ dùng để trang trí"],
+d:0
+},
+{
+q:"Một dẫn chứng văn học được xem là phù hợp khi nào?",
+a:["Khi nó trực tiếp làm sáng tỏ nhận xét hoặc luận điểm đang được bàn luận","Khi nó càng dài càng tốt","Khi nó nổi tiếng dù không liên quan","Khi nó xuất hiện ở bất kì tác phẩm nào"],
+d:0
+},
+{
+q:"Nếu một bài văn có nhiều dẫn chứng nhưng thiếu phân tích, hạn chế lớn nhất là gì?",
+a:["Dẫn chứng chưa được kết nối với luận điểm nên sức thuyết phục chưa cao","Bài văn chắc chắn quá ngắn","Bài văn không có mở bài","Dẫn chứng luôn không cần thiết"],
+d:0
+},
+{
+q:"Khi phân tích tác dụng của một biện pháp tu từ, cách làm nào đầy đủ nhất?",
+a:["Chỉ ra biện pháp, phân tích tác dụng về hình thức và nội dung, đồng thời liên hệ với cảm xúc hoặc chủ đề","Chỉ gọi tên biện pháp","Chỉ chép lại câu thơ","Chỉ nói biện pháp làm câu văn hay"],
+d:0
+},
+{
+q:"Nhân hóa khác so sánh ở điểm cơ bản nào?",
+a:["Nhân hóa gán đặc điểm hoặc hành động của con người cho sự vật; so sánh đặt các đối tượng trong quan hệ tương đồng","Hai biện pháp hoàn toàn giống nhau","Nhân hóa chỉ dùng cho người","So sánh không dùng trong thơ"],
+d:0
+},
+{
+q:"Ẩn dụ và hoán dụ khác nhau chủ yếu ở cơ sở liên tưởng nào?",
+a:["Ẩn dụ dựa trên sự tương đồng, hoán dụ dựa trên sự gần gũi","Ẩn dụ dựa trên sự gần gũi, hoán dụ dựa trên tương đồng","Cả hai đều dựa trên đối lập","Hai biện pháp không có điểm khác"],
+d:0
+},
+{
+q:"Trong câu thơ có hình ảnh ẩn dụ, nếu chỉ giải thích nghĩa đen thì điều gì có thể xảy ra?",
+a:["Người đọc bỏ lỡ ý nghĩa biểu tượng và tầng nghĩa sâu sắc của hình ảnh","Người đọc hiểu tác phẩm đầy đủ hơn","Không ảnh hưởng đến việc cảm thụ","Giúp xác định thể thơ"],
+d:0
+},
+{
+q:"Tác dụng của điệp ngữ phụ thuộc nhiều nhất vào yếu tố nào?",
+a:["Từ ngữ được lặp lại, vị trí lặp và ngữ cảnh sử dụng","Số trang của tác phẩm","Tên tác giả","Độ dài câu"],
+d:0
+},
+{
+q:"Trong thơ, nhịp điệu có quan hệ như thế nào với cảm xúc?",
+a:["Nhịp điệu có thể góp phần tạo và nhấn mạnh sắc thái cảm xúc của bài thơ","Nhịp điệu không liên quan đến cảm xúc","Nhịp điệu chỉ dùng để đếm tiếng","Nhịp điệu chỉ có trong văn xuôi"],
+d:0
+},
+{
+q:"Tại sao cùng một từ ngữ nhưng đặt trong hai ngữ cảnh khác nhau có thể tạo sắc thái khác nhau?",
+a:["Vì ngữ cảnh chi phối nghĩa và sắc thái biểu cảm của từ ngữ","Vì từ ngữ luôn thay đổi cách viết","Vì mọi từ đều có một nghĩa duy nhất","Vì ngữ cảnh không quan trọng"],
+d:0
+},
+{
+q:"Trong văn bản tự sự, việc thay đổi ngôi kể có thể ảnh hưởng như thế nào?",
+a:["Làm thay đổi điểm nhìn, mức độ hiểu biết và cách người đọc tiếp nhận câu chuyện","Không ảnh hưởng gì","Chỉ thay đổi tên nhân vật","Chỉ làm văn bản dài hơn"],
+d:0
+},
+{
+q:"Ưu điểm nổi bật của ngôi kể thứ nhất là gì?",
+a:["Tạo cảm giác gần gũi và giúp thể hiện trực tiếp suy nghĩ, cảm xúc của người kể","Người kể biết mọi suy nghĩ của tất cả nhân vật","Luôn khách quan tuyệt đối","Không thể bộc lộ cảm xúc"],
+d:0
+},
+{
+q:"Ưu điểm của ngôi kể thứ ba toàn tri là gì?",
+a:["Người kể có thể biết và trình bày suy nghĩ, hành động của nhiều nhân vật","Chỉ được kể những gì nhân vật chính biết","Không thể miêu tả nội tâm","Luôn dùng từ tôi"],
+d:0
+},
+{
+q:"Điểm nhìn trần thuật là gì?",
+a:["Vị trí và góc nhìn mà từ đó câu chuyện được quan sát và kể lại","Tên của người kể chuyện","Thời gian sáng tác","Địa điểm xảy ra câu chuyện"],
+d:0
+},
+{
+q:"Trong truyện, chi tiết nghệ thuật có giá trị thường có đặc điểm nào?",
+a:["Nhỏ nhưng có khả năng gợi nhiều ý nghĩa và góp phần thể hiện nhân vật hoặc chủ đề","Càng dài càng tốt","Không liên quan đến cốt truyện","Chỉ xuất hiện ở phần kết"],
+d:0
+},
+{
+q:"Khi một chi tiết được lặp lại nhiều lần trong tác phẩm, người đọc nên chú ý điều gì?",
+a:["Có thể đó là chi tiết có ý nghĩa quan trọng đối với chủ đề hoặc sự phát triển của câu chuyện","Chắc chắn đó là lỗi của tác giả","Không cần quan tâm","Chỉ có tác dụng làm dài văn bản"],
+d:0
+},
+{
+q:"Sự thay đổi của nhân vật trong truyện thường giúp thể hiện điều gì?",
+a:["Quá trình nhận thức, trưởng thành hoặc biến chuyển tâm lí của nhân vật","Tên tác phẩm","Thể thơ","Nguồn gốc văn bản"],
+d:0
+},
+{
+q:"Nếu nhân vật ban đầu ích kỉ nhưng cuối truyện biết quan tâm người khác, sự thay đổi đó có ý nghĩa gì?",
+a:["Làm nổi bật quá trình trưởng thành và thông điệp nhân văn của tác phẩm","Làm nhân vật mất vai trò","Không có ý nghĩa","Chỉ để tạo bất ngờ"],
+d:0
+},
+{
+q:"Trong truyện ngụ ngôn, đặc điểm nổi bật của hình tượng con vật thường là gì?",
+a:["Mang đặc điểm được nhân hóa để phản ánh tính cách và hành vi của con người","Chỉ dùng để mô tả tự nhiên","Không mang ý nghĩa biểu tượng","Luôn phải là nhân vật chính"],
+d:0
+},
+{
+q:"Bài học của truyện ngụ ngôn thường được thể hiện như thế nào?",
+a:["Thông qua câu chuyện, hành động của nhân vật và kết quả của hành động đó","Chỉ bằng tên truyện","Chỉ bằng một câu hỏi","Không bao giờ có bài học"],
+d:0
+},
+{
+q:"Điều gì khiến một truyện ngụ ngôn có sức sống lâu dài?",
+a:["Bài học có ý nghĩa rộng và vẫn phù hợp với nhiều hoàn cảnh của con người","Chỉ vì truyện rất ngắn","Vì có nhiều nhân vật","Vì luôn có phép thuật"],
+d:0
+},
+{
+q:"Trong “Ếch ngồi đáy giếng”, nguyên nhân chính khiến con ếch có nhận thức sai lệch là gì?",
+a:["Môi trường sống hạn hẹp khiến nó có hiểu biết hạn chế nhưng lại chủ quan","Nó quá thông minh","Nó được học quá nhiều","Nó không có khả năng nói"],
+d:0
+},
+{
+q:"Chi tiết ếch ra khỏi giếng rồi bị trâu giẫm có tác dụng gì?",
+a:["Tạo kết thúc có tính cảnh báo về sự chủ quan và hiểu biết hạn hẹp","Chỉ tạo tiếng cười","Ca ngợi con ếch","Không liên quan bài học"],
+d:0
+},
+{
+q:"Nếu mở rộng bài học từ “Ếch ngồi đáy giếng” vào cuộc sống hiện đại, nhận xét nào phù hợp nhất?",
+a:["Con người cần chủ động học hỏi và không đánh giá thế giới chỉ từ kinh nghiệm hạn hẹp của mình","Chỉ người lớn mới cần học hỏi","Không cần tiếp xúc với thế giới","Chỉ cần tin vào bản thân"],
+d:0
+},
+{
+q:"Văn bản thông tin khác văn bản văn học ở điểm nào?",
+a:["Văn bản thông tin chủ yếu cung cấp và giải thích thông tin, còn văn học chú trọng xây dựng hình tượng và biểu đạt cảm xúc, tư tưởng","Văn bản thông tin luôn ngắn hơn","Văn học không có thông tin","Văn bản thông tin không có ngôn ngữ"],
+d:0
+},
+{
+q:"Khi đọc một văn bản thông tin có nhiều số liệu, điều quan trọng nhất là gì?",
+a:["Xác định số liệu đang chứng minh hoặc làm rõ thông tin nào","Học thuộc tất cả số liệu","Bỏ qua phần chữ","Chỉ nhìn số lớn nhất"],
+d:0
+},
+{
+q:"Tại sao nguồn thông tin lại quan trọng trong văn bản thông tin?",
+a:["Nguồn đáng tin giúp người đọc đánh giá độ chính xác và độ tin cậy của thông tin","Nguồn chỉ để trang trí","Nguồn không ảnh hưởng gì","Nguồn càng dài càng tốt"],
+d:0
+},
+{
+q:"Một biểu đồ trong văn bản thông tin có ưu thế gì?",
+a:["Giúp trình bày dữ liệu trực quan và hỗ trợ người đọc nhận ra xu hướng hoặc sự khác biệt","Thay thế hoàn toàn phần giải thích","Chỉ làm văn bản đẹp","Không cung cấp thông tin"],
+d:0
+},
+{
+q:"Khi kết hợp chữ viết với hình ảnh trong văn bản thông tin, cần đảm bảo điều gì?",
+a:["Hai kênh thông tin hỗ trợ và bổ sung cho nhau","Hình ảnh không cần liên quan","Chỉ cần hình ảnh đẹp","Chữ viết càng ít càng tốt"],
+d:0
+},
+{
+q:"Một thông tin được xem là khách quan khi nào?",
+a:["Được trình bày dựa trên sự kiện, dữ liệu và hạn chế sự áp đặt cảm xúc cá nhân","Chỉ dựa vào ý kiến cá nhân","Có nhiều cảm xúc","Không cần bằng chứng"],
+d:0
+},
+{
+q:"Trong văn bản nghị luận, yếu tố biểu cảm được sử dụng để làm gì?",
+a:["Tăng sức truyền cảm nhưng vẫn phải phục vụ cho việc thuyết phục người đọc","Thay thế hoàn toàn lí lẽ","Làm mất tính thuyết phục","Chỉ để bài văn dài hơn"],
+d:0
+},
+{
+q:"Một bài nghị luận có sự kết hợp giữa lí lẽ và cảm xúc sẽ hiệu quả khi nào?",
+a:["Cảm xúc phù hợp, chân thành và được nâng đỡ bởi lập luận chặt chẽ","Cảm xúc càng mạnh càng tốt","Không cần dẫn chứng","Chỉ cần kể chuyện"],
+d:0
+},
+{
+q:"Trong nghị luận, phản đề có tác dụng gì?",
+a:["Xem xét ý kiến trái chiều để làm rõ và củng cố quan điểm của người viết","Phủ nhận toàn bộ luận điểm","Thay cho kết luận","Chỉ dùng để mở bài"],
+d:0
+},
+{
+q:"Khi phản biện một ý kiến, điều nào quan trọng nhất?",
+a:["Chỉ ra điểm chưa hợp lí bằng lí lẽ và bằng chứng phù hợp","Công kích người đưa ra ý kiến","Nói lớn hơn","Không cần bằng chứng"],
+d:0
+},
+{
+q:"Một lập luận chặt chẽ cần có mối quan hệ như thế nào?",
+a:["Các luận điểm, lí lẽ và bằng chứng phải liên kết logic với nhau","Mỗi phần một nội dung khác nhau","Chỉ cần nhiều dẫn chứng","Không cần trình tự"],
+d:0
+},
+{
+q:"Khi kết luận một vấn đề nghị luận, vì sao không nên đưa ra ý hoàn toàn mới?",
+a:["Vì kết luận cần tổng hợp và khẳng định vấn đề đã được triển khai, không mở ra một luận điểm chưa được chứng minh","Vì kết luận phải ngắn tuyệt đối","Vì không được viết cảm xúc","Vì không được nhắc lại vấn đề"],
+d:0
+},
+{
+q:"Trong bài văn phân tích tác phẩm, liên kết giữa các đoạn có vai trò gì?",
+a:["Giúp mạch lập luận liền mạch và người đọc dễ theo dõi quá trình phân tích","Chỉ làm bài dài hơn","Không có tác dụng","Thay thế dẫn chứng"],
+d:0
+},
+{
+q:"Nếu các đoạn văn đều đúng nhưng sắp xếp không hợp lí, bài viết sẽ gặp vấn đề gì?",
+a:["Mạch lập luận thiếu logic và người đọc khó nắm được trọng tâm","Bài viết vẫn hoàn hảo","Không ảnh hưởng","Chỉ sai chính tả"],
+d:0
+},
+{
+q:"Một đoạn văn phân tích tốt thường kết hợp những yếu tố nào?",
+a:["Nhận xét, lí giải, dẫn chứng và phân tích tác dụng của dẫn chứng","Chỉ có dẫn chứng","Chỉ có cảm xúc","Chỉ có kể chuyện"],
+d:0
+},
+{
+q:"Tại sao cần tránh lạm dụng từ ngữ đánh giá như “rất hay”, “rất xúc động”?",
+a:["Vì cần giải thích cụ thể vì sao tác phẩm hay hoặc xúc động thay vì chỉ khẳng định chung chung","Vì những từ đó luôn sai","Vì không được bộc lộ cảm xúc","Vì bài văn nghị luận không được đánh giá"],
+d:0
+},
+{
+q:"Một nhận xét văn học sâu sắc thường có đặc điểm nào?",
+a:["Không chỉ nêu tác phẩm có gì mà còn giải thích vì sao chi tiết đó có ý nghĩa","Chỉ dùng nhiều tính từ","Càng dài càng sâu sắc","Không cần dẫn chứng"],
+d:0
+},
+{
+q:"Khi phân tích ngôn ngữ nhân vật, cần chú ý điều gì?",
+a:["Cách dùng từ, giọng điệu và hoàn cảnh nói để nhận ra tính cách hoặc tâm trạng","Chỉ đếm số câu thoại","Chỉ xem nhân vật nói với ai","Không cần ngữ cảnh"],
+d:0
+},
+{
+q:"Giọng điệu trần thuật có thể ảnh hưởng đến cảm nhận của người đọc như thế nào?",
+a:["Có thể tạo sắc thái hài hước, nghiêm túc, cảm thương, mỉa mai hoặc trang trọng","Không ảnh hưởng gì","Chỉ thay đổi số lượng nhân vật","Chỉ dùng trong thơ"],
+d:0
+},
+{
+q:"Khi tác giả sử dụng giọng điệu mỉa mai, mục đích thường là gì?",
+a:["Tạo khoảng cách với đối tượng và làm nổi bật điều đáng phê phán","Ca ngợi trực tiếp đối tượng","Tạo cảm giác trang trọng","Không thể hiện thái độ"],
+d:0
+},
+{
+q:"Một tác phẩm có thể vừa mang giá trị nội dung vừa có giá trị nghệ thuật vì sao?",
+a:["Nội dung được truyền tải thông qua cách xây dựng hình tượng và sử dụng ngôn ngữ, kết cấu, nghệ thuật phù hợp","Hai yếu tố không liên quan","Chỉ tác phẩm dài mới có giá trị","Chỉ thơ mới có nghệ thuật"],
+d:0
+},
+{
+q:"Giá trị nhân đạo trong tác phẩm văn học thường thể hiện qua điều gì?",
+a:["Sự trân trọng con người, cảm thông với số phận và hướng tới những giá trị tốt đẹp","Chỉ miêu tả thiên nhiên","Chỉ tạo tiếng cười","Chỉ kể sự kiện"],
+d:0
+},
+{
+q:"Giá trị hiện thực của tác phẩm thường được hiểu là gì?",
+a:["Khả năng phản ánh đời sống và những vấn đề xã hội trong một hoàn cảnh nhất định","Khả năng tưởng tượng hoàn toàn","Chỉ mô tả thiên nhiên","Chỉ thể hiện cảm xúc"],
+d:0
+},
+{
+q:"Khi phân tích giá trị nhân đạo, vì sao cần dựa vào nhân vật và tình huống?",
+a:["Vì thái độ của tác giả thường được thể hiện qua cách xây dựng và giải quyết số phận nhân vật","Vì nhân vật chỉ để trang trí","Vì tình huống không quan trọng","Vì giá trị nhân đạo chỉ nằm ở tiêu đề"],
+d:0
+},
+{
+q:"Một tác phẩm văn học có thể có nhiều cách hiểu khác nhau nhưng vẫn cần căn cứ vào đâu?",
+a:["Văn bản, ngữ cảnh và các chi tiết nghệ thuật","Sở thích cá nhân בלבד","Ý kiến của một người duy nhất","Tên tác phẩm"],
+d:0
+},
+{
+q:"Phân biệt “cảm nhận” và “phân tích” trong bài viết văn học như thế nào?",
+a:["Cảm nhận nhấn mạnh cảm xúc, suy nghĩ; phân tích đi sâu lí giải cách tác phẩm tạo nên ý nghĩa","Hai khái niệm hoàn toàn giống nhau","Phân tích không cần dẫn chứng","Cảm nhận không được nêu suy nghĩ"],
+d:0
+},
+{
+q:"Khi kết hợp cảm nhận với phân tích, bài viết sẽ có ưu điểm gì?",
+a:["Vừa có chiều sâu lí giải vừa thể hiện được sự rung cảm của người viết","Không cần bố cục","Không cần dẫn chứng","Chỉ phù hợp với truyện"],
+d:0
+},
+{
+q:"Nếu một hình ảnh trong thơ xuất hiện ở đầu và cuối bài, có thể có tác dụng gì?",
+a:["Tạo kết cấu tương ứng và nhấn mạnh sự vận động hoặc ý nghĩa của cảm xúc","Chỉ để lặp lại từ","Không có tác dụng","Chỉ giúp tăng số câu"],
+d:0
+},
+{
+q:"Sự thay đổi của một hình ảnh thơ từ đầu đến cuối bài có thể gợi ra điều gì?",
+a:["Sự thay đổi trong nhận thức, tâm trạng hoặc cách nhìn của chủ thể trữ tình","Chỉ thay đổi cảnh vật","Không liên quan chủ đề","Lỗi của tác giả"],
+d:0
+},
+{
+q:"Chủ thể trữ tình trong thơ là gì?",
+a:["Hình tượng người bộc lộ cảm xúc, suy nghĩ trong bài thơ","Luôn là tác giả ngoài đời","Luôn là nhân vật kể chuyện","Người đọc"],
+d:0
+},
+{
+q:"Không nên đồng nhất chủ thể trữ tình với tác giả vì sao?",
+a:["Hình tượng trữ tình là sự sáng tạo nghệ thuật và không nhất thiết hoàn toàn trùng với con người ngoài đời của tác giả","Vì tác giả không viết bài thơ","Vì thơ không có cảm xúc","Vì chủ thể trữ tình luôn là nhân vật phụ"],
+d:0
+},
+{
+q:"Trong thơ trữ tình, cảnh vật thường có quan hệ như thế nào với cảm xúc?",
+a:["Cảnh vật có thể được lựa chọn và miêu tả để phản chiếu hoặc khơi gợi tâm trạng","Cảnh vật luôn độc lập với cảm xúc","Cảnh vật chỉ để cung cấp thông tin","Cảnh vật không có giá trị nghệ thuật"],
+d:0
+},
+{
+q:"Hiện tượng “tả cảnh ngụ tình” là gì?",
+a:["Mượn cảnh vật để gửi gắm hoặc thể hiện tình cảm, tâm trạng","Chỉ tả cảnh thật chi tiết","Chỉ kể chuyện tình cảm","Dùng số liệu để tả cảnh"],
+d:0
+},
+{
+q:"Một hình ảnh thiên nhiên có thể mang sắc thái buồn vui khác nhau tùy thuộc vào đâu?",
+a:["Góc nhìn và tâm trạng của chủ thể trữ tình cùng ngữ cảnh bài thơ","Màu sắc thực tế duy nhất","Độ dài bài thơ","Tên tác giả"],
+d:0
+},
+{
+q:"Khi phân tích nhan đề tác phẩm, cách làm hiệu quả nhất là gì?",
+a:["Xem nghĩa trực tiếp, nghĩa gợi liên tưởng và quan hệ của nhan đề với nội dung tác phẩm","Chỉ giải thích nghĩa từ điển","Bỏ qua nhan đề","Chỉ nói nhan đề ngắn"],
+d:0
+},
+{
+q:"Nhan đề có thể trở nên đặc biệt có ý nghĩa sau khi đọc toàn bộ tác phẩm vì sao?",
+a:["Nội dung tác phẩm có thể mở rộng hoặc làm sâu sắc thêm ý nghĩa ban đầu của nhan đề","Nhan đề luôn thay đổi","Tác phẩm không liên quan nhan đề","Nhan đề chỉ để gây chú ý"],
+d:0
+},
+{
+q:"Khi một tác phẩm sử dụng hình ảnh đối lập, tác dụng thường là gì?",
+a:["Làm nổi bật sự khác biệt, mâu thuẫn hoặc sự chuyển biến của vấn đề được nói tới","Làm nội dung đơn giản hơn","Chỉ tạo vần","Không có tác dụng"],
+d:0
+},
+{
+q:"Đối lập trong xây dựng nhân vật có thể giúp tác giả làm gì?",
+a:["Làm nổi bật phẩm chất hoặc tính cách của nhân vật thông qua sự tương phản","Loại bỏ nhân vật","Giảm ý nghĩa tác phẩm","Chỉ tạo phần kết"],
+d:0
+},
+{
+q:"Khi viết bài nghị luận về một vấn đề đời sống, dẫn chứng thực tế cần có đặc điểm gì?",
+a:["Gần gũi, đáng tin cậy và trực tiếp liên quan đến vấn đề","Càng giật gân càng tốt","Không cần chính xác","Chỉ cần dài"],
+d:0
+},
+{
+q:"Một bài nghị luận về việc đọc sách sẽ thiếu sức thuyết phục nếu người viết chỉ nói “đọc sách rất tốt” vì sao?",
+a:["Nhận xét quá chung chung, chưa có lí do và bằng chứng để chứng minh","Vì đọc sách không tốt","Vì không được nêu ý kiến","Vì bài nghị luận không cần luận điểm"],
+d:0
+},
+{
+q:"Muốn biến một ý kiến chung thành luận điểm rõ ràng, người viết nên làm gì?",
+a:["Xác định cụ thể khía cạnh của vấn đề và nêu quan điểm có thể chứng minh","Viết dài hơn","Thêm nhiều tính từ","Đổi sang kể chuyện"],
+d:0
+},
+{
+q:"Trong nghị luận xã hội, giải pháp tốt cần đáp ứng yêu cầu nào?",
+a:["Cụ thể, khả thi và phù hợp với nguyên nhân của vấn đề","Càng nhiều càng tốt","Chỉ mang tính khẩu hiệu","Không cần thực hiện được"],
+d:0
+},
+{
+q:"Nếu giải pháp không phù hợp với nguyên nhân, hạn chế của nó là gì?",
+a:["Khó giải quyết đúng bản chất vấn đề","Vẫn luôn hiệu quả","Không ảnh hưởng","Chỉ làm bài văn ngắn"],
+d:0
+},
+{
+q:"Khi bàn về một vấn đề gây tranh luận, vì sao cần xem xét nhiều chiều?",
+a:["Giúp lập luận khách quan hơn và tránh nhìn nhận vấn đề phiến diện","Làm mất quan điểm cá nhân","Không cần kết luận","Chỉ để bài viết dài"],
+d:0
+},
+{
+q:"Một quan điểm cá nhân trong bài nghị luận có sức thuyết phục khi nào?",
+a:["Được trình bày rõ và có lí lẽ, bằng chứng hợp lí","Chỉ viết bằng cảm xúc","Viết thật mạnh mẽ","Không cần chứng minh"],
+d:0
+},
+{
+q:"Trong bài viết, việc dự đoán ý kiến phản đối giúp người viết làm gì?",
+a:["Chuẩn bị lí lẽ phản biện và làm lập luận chặt chẽ hơn","Bỏ quan điểm của mình","Không cần dẫn chứng","Chỉ làm phần kết dài hơn"],
+d:0
+},
+{
+q:"Một bài văn có thể được xem là mạch lạc khi nào?",
+a:["Các ý được triển khai theo trình tự hợp lí và cùng hướng tới mục đích chung","Các ý càng khác nhau càng tốt","Không cần câu chủ đề","Mỗi đoạn một chủ đề"],
+d:0
+},
+{
+q:"Tại sao cần sử dụng từ nối khi chuyển từ luận điểm này sang luận điểm khác?",
+a:["Giúp người đọc nhận biết quan hệ logic giữa các ý","Làm câu văn dài hơn","Thay thế bằng chứng","Chỉ để trang trí"],
+d:0
+},
+{
+q:"Khi viết câu chủ đề cho đoạn phân tích, cách nào hiệu quả nhất?",
+a:["Nêu rõ luận điểm mà đoạn văn sẽ tập trung làm sáng tỏ","Nêu toàn bộ nội dung tác phẩm","Đưa một dẫn chứng dài","Đặt một câu hỏi không liên quan"],
+d:0
+},
+{
+q:"Nếu một đoạn văn có nhiều ý ngang nhau nhưng không có ý chính, vấn đề là gì?",
+a:["Đoạn văn thiếu sự tập trung và khó xác định trọng tâm","Đoạn văn càng phong phú","Không có vấn đề","Đoạn văn có tính nghị luận cao"],
+d:0
+},
+{
+q:"Khi sử dụng từ Hán Việt, người viết cần chú ý điều gì?",
+a:["Hiểu đúng nghĩa và sử dụng phù hợp với ngữ cảnh","Càng dùng nhiều càng tốt","Dùng thay cho mọi từ thuần Việt","Không cần biết nghĩa"],
+d:0
+},
+{
+q:"Việc lựa chọn từ ngữ phù hợp với đối tượng giao tiếp thể hiện điều gì?",
+a:["Năng lực sử dụng ngôn ngữ và ý thức giao tiếp","Khả năng viết nhanh","Khả năng nhớ bài","Không có ý nghĩa"],
+d:0
+},
+{
+q:"Trong giao tiếp, vì sao cần chú ý đến hoàn cảnh nói?",
+a:["Vì hoàn cảnh ảnh hưởng đến cách lựa chọn từ ngữ, giọng điệu và mức độ lịch sự","Vì mọi hoàn cảnh đều giống nhau","Vì chỉ người lớn mới cần chú ý","Vì không liên quan ngôn ngữ"],
+d:0
+},
+{
+q:"Khi thuyết trình một vấn đề khó, cách trình bày nào hiệu quả hơn?",
+a:["Chia vấn đề thành các ý nhỏ, giải thích rõ và dùng ví dụ phù hợp","Đọc nguyên văn tài liệu","Dùng thật nhiều thuật ngữ","Nói thật nhanh"],
+d:0
+},
+{
+q:"Một ví dụ trong bài thuyết trình có giá trị khi nào?",
+a:["Giúp người nghe hiểu rõ hơn ý tưởng đang được trình bày","Chỉ để tạo tiếng cười","Càng dài càng tốt","Không cần liên quan nội dung"],
+d:0
+},
+{
+q:"Khi người nghe đặt câu hỏi ngoài dự kiến, cách ứng xử phù hợp là gì?",
+a:["Bình tĩnh xác định vấn đề và trả lời trong phạm vi hiểu biết của mình","Tránh trả lời bằng mọi giá","Chê câu hỏi","Ngắt lời người hỏi"],
+d:0
+},
+{
+q:"Nếu chưa biết câu trả lời khi thuyết trình, cách nào phù hợp nhất?",
+a:["Thẳng thắn thừa nhận và hẹn kiểm tra thêm thông tin nếu cần","Bịa câu trả lời","Đổi chủ đề","Đổ lỗi cho người hỏi"],
+d:0
+},
+{
+q:"Khi đánh giá một bài thuyết trình, nội dung và cách trình bày có quan hệ thế nào?",
+a:["Nội dung chính xác nhưng trình bày khó hiểu vẫn làm giảm hiệu quả tiếp nhận","Hai yếu tố không liên quan","Chỉ cần hình thức","Chỉ cần nói thật to"],
+d:0
+},
+{
+q:"Một bài đọc hiểu tốt không chỉ dừng ở việc tìm đáp án mà còn cần gì?",
+a:["Hiểu cách văn bản được xây dựng và rút ra ý nghĩa từ các chi tiết","Học thuộc văn bản","Chép lại câu hỏi","Đếm số câu"],
+d:0
+},
+{
+q:"Khi câu hỏi đọc hiểu yêu cầu “phân tích”, câu trả lời cần khác “nêu” như thế nào?",
+a:["Phân tích cần giải thích sâu về đặc điểm, tác dụng và ý nghĩa chứ không chỉ chỉ ra","Hai yêu cầu giống nhau","Phân tích chỉ cần chép lại","Nêu luôn dài hơn phân tích"],
+d:0
+},
+{
+q:"Khi câu hỏi yêu cầu “nhận xét”, câu trả lời tốt thường gồm gì?",
+a:["Đánh giá có căn cứ dựa trên những biểu hiện cụ thể trong văn bản","Chỉ nói cảm xúc","Chỉ chép dẫn chứng","Chỉ trả lời một từ"],
+d:0
+},
+{
+q:"Khi câu hỏi yêu cầu “nêu tác dụng”, vì sao cần gắn với ngữ cảnh?",
+a:["Vì cùng một biện pháp hoặc từ ngữ có thể tạo hiệu quả khác nhau tùy cách sử dụng","Vì ngữ cảnh không quan trọng","Vì chỉ cần gọi tên","Vì tác dụng luôn giống nhau"],
+d:0
+},
+{
+q:"Một câu trả lời đọc hiểu có dẫn chứng nhưng không giải thích sẽ hạn chế ở đâu?",
+a:["Chưa thể hiện rõ người viết hiểu ý nghĩa của dẫn chứng","Dẫn chứng trở nên dài hơn","Câu trả lời chắc chắn đúng","Không có hạn chế"],
+d:0
+},
+{
+q:"Khi trả lời câu hỏi liên hệ bản thân, điều gì quan trọng?",
+a:["Liên hệ chân thực, phù hợp vấn đề và rút ra bài học cụ thể","Kể thật nhiều chuyện","Không cần liên quan","Chỉ nói một câu chung chung"],
+d:0
+},
+{
+q:"Nếu đề bài yêu cầu viết đoạn văn khoảng một số câu nhất định, vì sao cần chú ý dung lượng?",
+a:["Để đảm bảo bài viết đáp ứng yêu cầu và có đủ không gian triển khai ý","Vì đoạn dài luôn hay hơn","Vì đoạn ngắn luôn sai","Dung lượng không quan trọng"],
+d:0
+},
+{
+q:"Một đoạn văn nghị luận tốt cần tránh điều gì?",
+a:["Lặp ý, lan man và đưa dẫn chứng không liên quan","Dùng lí lẽ","Có câu chủ đề","Có dẫn chứng"],
+d:0
+},
+{
+q:"Khi sửa một bài văn, nếu phát hiện hai đoạn cùng triển khai một ý, nên làm gì?",
+a:["Gộp hoặc sắp xếp lại để tránh trùng lặp và tăng tính mạch lạc","Giữ nguyên vì càng dài càng tốt","Xóa cả hai đoạn","Thêm thêm dẫn chứng"],
+d:0
+},
+{
+q:"Khi phát hiện một luận điểm chưa có bằng chứng, người viết nên làm gì?",
+a:["Bổ sung bằng chứng phù hợp hoặc điều chỉnh luận điểm nếu không đủ cơ sở","Giữ nguyên và khẳng định mạnh hơn","Xóa toàn bài","Thêm cảm xúc"],
+d:0
+},
+{
+q:"Một kết luận tốt thường tạo cảm giác như thế nào?",
+a:["Khép lại vấn đề nhưng vẫn để lại suy nghĩ hoặc định hướng cho người đọc","Mở ra một vấn đề hoàn toàn khác","Lặp nguyên thân bài","Không liên quan nội dung"],
+d:0
+},
+{
+q:"Khi phân tích một tác phẩm có nhiều lớp nghĩa, cách tiếp cận phù hợp nhất là gì?",
+a:["Kết hợp nghĩa của chi tiết với ngữ cảnh, hình thức nghệ thuật và chủ đề toàn tác phẩm","Chỉ tìm một nghĩa duy nhất","Chỉ dựa vào từ điển","Chỉ dựa vào cảm xúc cá nhân"],
+d:0
+},
+{
+q:"Tại sao một tác phẩm văn học hay thường không chỉ truyền đạt bài học trực tiếp?",
+a:["Vì tác phẩm dùng hình tượng, câu chuyện và nghệ thuật để người đọc tự suy ngẫm và khám phá ý nghĩa","Vì tác giả không có thông điệp","Vì bài học không quan trọng","Vì văn học không có nội dung"],
+d:0
+},
+{
+q:"Khi nhiều chi tiết trong tác phẩm cùng hướng về một vấn đề, điều đó giúp người đọc nhận ra gì?",
+a:["Chủ đề hoặc tư tưởng mà tác giả muốn nhấn mạnh","Tên nhà xuất bản","Số chương","Thể thơ"],
+d:0
+},
+{
+q:"Một chi tiết tưởng như nhỏ nhưng được đặt ở vị trí kết thúc tác phẩm thường có thể mang vai trò gì?",
+a:["Tạo dư âm và cô đọng ý nghĩa hoặc thông điệp của tác phẩm","Không có ý nghĩa","Chỉ để kết thúc câu chuyện","Chỉ để đủ số trang"],
+d:0
+},
+{
+q:"Nếu kết thúc truyện không giải thích hoàn toàn mọi vấn đề, tác giả có thể nhằm mục đích gì?",
+a:["Tạo khoảng trống để người đọc suy nghĩ và tự hoàn thiện cách hiểu","Vì tác giả quên viết","Vì truyện không có chủ đề","Vì nhân vật không quan trọng"],
+d:0
+},
+{
+q:"Khi đọc một tác phẩm, việc đặt câu hỏi “Tại sao tác giả lại chọn chi tiết này?” giúp ích gì?",
+a:["Giúp người đọc chuyển từ hiểu nội dung sang khám phá dụng ý nghệ thuật","Chỉ giúp nhớ chi tiết","Không có tác dụng","Chỉ dùng khi học thơ"],
+d:0
+},
+{
+q:"Một cách để kiểm tra nhận xét văn học của mình có hợp lí hay không là gì?",
+a:["Đối chiếu nhận xét với nhiều chi tiết và toàn bộ mạch phát triển của tác phẩm","Chỉ xem mình có thích hay không","Dựa vào độ dài câu","Chỉ xem ý kiến bạn bè"],
+d:0
+},
+{
+q:"Nếu một nhận xét chỉ đúng với một chi tiết nhưng mâu thuẫn với phần còn lại của tác phẩm, cần làm gì?",
+a:["Xem xét và điều chỉnh nhận xét để phù hợp với toàn văn bản","Giữ nguyên vì đã có dẫn chứng","Bỏ qua phần còn lại","Thêm nhiều tính từ"],
+d:0
+},
+{
+q:"Sự khác nhau giữa “ý nghĩa” và “tác dụng” của một chi tiết nghệ thuật là gì?",
+a:["Ý nghĩa nói chi tiết gợi ra điều gì; tác dụng nhấn mạnh chi tiết góp phần tạo hiệu quả nghệ thuật hoặc nội dung ra sao","Hai khái niệm luôn giống nhau","Tác dụng chỉ là nghĩa từ điển","Ý nghĩa chỉ dùng trong thơ"],
+d:0
+},
+{
+q:"Khi phân tích một hình ảnh thơ, câu trả lời sâu thường đi theo hướng nào?",
+a:["Từ đặc điểm hình ảnh đến cảm xúc, liên tưởng và vai trò của nó trong chủ đề","Chỉ mô tả hình ảnh","Chỉ gọi tên biện pháp","Chỉ nói hình ảnh đẹp"],
+d:0
+},
+{
+q:"Một bài phân tích tốt cần tránh tình trạng nào?",
+a:["Nhận xét chung chung nhưng không chỉ ra bằng chứng và cách tác phẩm thể hiện điều đó","Có luận điểm","Có dẫn chứng","Có phân tích"],
+d:0
+},
+{
+q:"Khi so sánh hai nhân vật, tiêu chí nào quan trọng nhất?",
+a:["Xác định điểm giống và khác có ý nghĩa, đồng thời giải thích nguyên nhân và tác dụng","Chỉ so sánh ngoại hình","Chỉ xem ai xuất hiện nhiều hơn","Chỉ nói nhân vật nào hay hơn"],
+d:0
+},
+{
+q:"Khi so sánh hai đoạn thơ cùng viết về thiên nhiên, cần chú ý gì?",
+a:["Cả điểm chung về đề tài và điểm riêng trong hình ảnh, ngôn ngữ, cảm xúc và cách biểu đạt","Chỉ đếm số câu","Chỉ xem tác giả","Chỉ xem độ dài"],
+d:0
+},
+{
+q:"Việc so sánh trong nghị luận văn học có tác dụng gì?",
+a:["Làm nổi bật đặc điểm của đối tượng được phân tích và giúp nhận xét sâu sắc hơn","Làm bài dài hơn","Thay thế kết luận","Không cần dẫn chứng"],
+d:0
+},
+{
+q:"Khi đưa kiến thức ngoài văn bản vào bài phân tích, cần chú ý điều gì?",
+a:["Kiến thức phải chính xác và phục vụ trực tiếp cho việc hiểu tác phẩm","Càng nhiều càng tốt","Không cần liên quan","Có thể bịa để bài hay"],
+d:0
+},
+{
+q:"Một bài viết có nhiều kiến thức lí luận nhưng ít phân tích văn bản sẽ gặp hạn chế gì?",
+a:["Dễ trở nên chung chung và thiếu sự gắn kết với tác phẩm cụ thể","Chắc chắn sâu sắc hơn","Không có hạn chế","Luôn được điểm cao"],
+d:0
+},
+{
+q:"Khi viết bài nghị luận văn học, điều gì thể hiện năng lực tư duy của người viết rõ nhất?",
+a:["Khả năng đưa ra nhận xét riêng có căn cứ và lí giải thuyết phục","Viết thật dài","Dùng nhiều từ khó","Nhớ nhiều tên tác giả"],
+d:0
+},
+{
+q:"Một cách kết thúc bài văn có chiều sâu là gì?",
+a:["Khẳng định giá trị của vấn đề và mở rộng thành suy ngẫm có ý nghĩa","Chép lại mở bài","Kể thêm một câu chuyện không liên quan","Dừng đột ngột"],
+d:0
+}
+];
+
+let ds = [...cauHoi]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let tg = 15;
+let timer;
+let daTraLoi = false;
+
+function hienThiCau() {
+
+    clearInterval(timer);
+
+    daTraLoi = false;
+    tg = 15;
+
+    document.getElementById("timer").textContent = tg;
+
+    document.getElementById("playerScore").textContent = diemBan;
+    document.getElementById("botScore").textContent = diemBot;
+
+    document.getElementById("number").textContent = cau + 1;
+
+    let c = ds[cau];
+
+    document.getElementById("question").textContent =
+        "Câu " + (cau + 1) + "/10: " + c.q;
+
+    document.getElementById("answers").innerHTML =
+        c.a.map((x, j) => `
+            <button class="answer" onclick="traLoi(${j}, this)">
+                ${String.fromCharCode(65 + j)}. ${x}
+            </button>
+        `).join("");
+
+    timer = setInterval(() => {
+
+        tg--;
+
+        document.getElementById("timer").textContent = tg;
+
+        if (tg <= 0) {
+            hetThoiGian();
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, el) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timer);
+
+    let c = ds[cau];
+
+    let nut = document.querySelectorAll(".answer");
+
+    nut.forEach(button => button.disabled = true);
+
+    if (chon === c.d) {
+
+        diemBan++;
+
+        el.classList.add("correct");
+
+    } else {
+
+        el.classList.add("wrong");
+
+        nut[c.d].classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").textContent = diemBan;
+
+    setTimeout(botTraLoi, 700);
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timer);
+
+    let c = ds[cau];
+
+    let nut = document.querySelectorAll(".answer");
+
+    nut.forEach(button => button.disabled = true);
+
+    nut[c.d].classList.add("correct");
+
+    setTimeout(botTraLoi, 700);
+}
+
+function botTraLoi() {
+
+    let dung = Math.random() < 0.25;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").textContent = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+
+        ketThucTran();
+
+    } else {
+
+        hienThiCau();
+
+    }
+}
+
+function ketThucTran() {
+
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">🤖 BOT THẮNG!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>🔥 Cấp độ: KHÓ</p>
+
+        <p>Bot có 25% xác suất trả lời đúng mỗi câu.</p>
+
+        <br>
+
+        <button onclick="location.reload()">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_van_khoi7.html'">
+            🎚️ Chọn cấp độ
+        </button>
+
+        <button onclick="location.href='khoi7.html'">
+            🏠 Về chọn môn
+        </button>
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

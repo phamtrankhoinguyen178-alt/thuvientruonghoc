@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHTN KHỐI 8 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #333;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_khtn_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ KHTN KHỐI 8 - CHẾ ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+    q: "Phản ứng hóa học là quá trình biến đổi từ chất nào thành chất nào?",
+    a: ["Chất này thành chất khác", "Chất rắn thành chất lỏng בלבד", "Chất lỏng thành chất khí", "Chất không thay đổi"],
+    d: 0
+},
+{
+    q: "Dấu hiệu nào có thể chứng tỏ phản ứng hóa học xảy ra?",
+    a: ["Thay đổi vị trí", "Xuất hiện chất khí", "Thay đổi hình dạng vật", "Thay đổi kích thước"],
+    d: 1
+},
+{
+    q: "Định luật bảo toàn khối lượng cho biết điều gì?",
+    a: ["Khối lượng luôn tăng", "Khối lượng luôn giảm", "Tổng khối lượng chất tham gia bằng tổng khối lượng sản phẩm", "Khối lượng không liên quan phản ứng"],
+    d: 2
+},
+{
+    q: "Trong phản ứng hóa học, số nguyên tử của mỗi nguyên tố được bảo toàn như thế nào?",
+    a: ["Luôn tăng", "Luôn giảm", "Có thể mất đi", "Được bảo toàn"],
+    d: 3
+},
+{
+    q: "Khí carbon dioxide có công thức hóa học là gì?",
+    a: ["CO", "CO2", "O2", "CaO"],
+    d: 1
+},
+{
+    q: "Oxide là hợp chất của oxygen với nguyên tố nào?",
+    a: ["Một nguyên tố khác", "Chỉ hydrogen", "Chỉ nitrogen", "Chỉ carbon"],
+    d: 0
+},
+{
+    q: "Dung dịch có pH nhỏ hơn 7 thường có tính chất gì?",
+    a: ["Trung tính", "Acid", "Base", "Không xác định"],
+    d: 1
+},
+{
+    q: "Dung dịch có pH lớn hơn 7 thường có tính chất gì?",
+    a: ["Acid", "Trung tính", "Base", "Không màu"],
+    d: 2
+},
+{
+    q: "Muối ăn có công thức hóa học là gì?",
+    a: ["NaOH", "HCl", "NaCl", "H2SO4"],
+    d: 2
+},
+{
+    q: "Tác dụng của lực đẩy Archimedes lên vật nhúng trong chất lỏng có phương như thế nào?",
+    a: ["Nằm ngang", "Thẳng đứng hướng lên", "Thẳng đứng hướng xuống", "Không có phương xác định"],
+    d: 1
+},
+{
+    q: "Lực đẩy Archimedes có độ lớn bằng gì?",
+    a: ["Trọng lượng phần chất lỏng bị vật chiếm chỗ", "Khối lượng của vật", "Thể tích của vật", "Diện tích của vật"],
+    d: 0
+},
+{
+    q: "Áp suất chất lỏng phụ thuộc vào yếu tố nào?",
+    a: ["Màu sắc chất lỏng", "Độ sâu và trọng lượng riêng của chất lỏng", "Hình dạng bình בלבד", "Nhiệt độ không khí"],
+    d: 1
+},
+{
+    q: "Đòn bẩy là máy cơ đơn giản có tác dụng gì?",
+    a: ["Làm thay đổi màu vật", "Tạo ra năng lượng", "Thay đổi hướng hoặc độ lớn lực", "Làm vật biến mất"],
+    d: 2
+},
+{
+    q: "Moment lực phụ thuộc vào yếu tố nào?",
+    a: ["Độ lớn lực và cánh tay đòn", "Màu sắc vật", "Nhiệt độ vật", "Khối lượng riêng của không khí"],
+    d: 0
+},
+{
+    q: "Cơ quan nào lọc máu và tạo nước tiểu?",
+    a: ["Tim", "Phổi", "Thận", "Gan"],
+    d: 2
+},
+{
+    q: "Đơn vị cấu tạo và chức năng của thận là gì?",
+    a: ["Neuron", "Nephron", "Phế nang", "Hồng cầu"],
+    d: 1
+},
+{
+    q: "Trao đổi khí ở phổi diễn ra chủ yếu tại đâu?",
+    a: ["Khí quản", "Phế quản", "Phế nang", "Thanh quản"],
+    d: 2
+},
+{
+    q: "Chức năng chính của hệ thần kinh là gì?",
+    a: ["Điều khiển và điều hòa hoạt động cơ thể", "Tiêu hóa thức ăn", "Vận chuyển oxygen", "Tạo nước tiểu"],
+    d: 0
+},
+{
+    q: "Hormone được tiết ra bởi cơ quan nào?",
+    a: ["Tuyến nội tiết", "Xương", "Cơ vân", "Da"],
+    d: 0
+},
+{
+    q: "Vitamin D có vai trò quan trọng trong quá trình nào?",
+    a: ["Tăng hấp thụ calcium", "Tiêu hóa protein", "Tạo hồng cầu trực tiếp", "Trao đổi khí"],
+    d: 0
+}
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_khtn_khoi8_trungbinh.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_khtn_khoi8.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiếng Anh 7 - Khó</title>
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    background:linear-gradient(135deg,#250b0b,#5c1515,#210707);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.game{
+    width:100%;
+    max-width:950px;
+    background:rgba(0,0,0,.65);
+    border:2px solid #ff4b4b;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 0 35px rgba(255,50,50,.25);
+}
+
+h1{
+    text-align:center;
+    color:#ff7373;
+    margin-bottom:25px;
+}
+
+.top{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.box{
+    background:#3a1515;
+    border:1px solid #a52b2b;
+    border-radius:12px;
+    text-align:center;
+    padding:12px;
+}
+
+.box span{
+    display:block;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.progress{
+    text-align:center;
+    color:#ffadad;
+    margin-bottom:15px;
+}
+
+.question{
+    background:#321313;
+    border-radius:15px;
+    padding:25px;
+    border:1px solid #8e2929;
+    margin-bottom:20px;
+}
+
+.question h2{
+    font-size:21px;
+    line-height:1.5;
+}
+
+.answers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.answer{
+    border:2px solid #a33131;
+    border-radius:12px;
+    background:#411919;
+    color:white;
+    padding:16px;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.answer:hover{
+    background:#642222;
+}
+
+.correct{
+    background:#087c48!important;
+    border-color:#20ed91!important;
+}
+
+.wrong{
+    background:#8c2222!important;
+    border-color:#ff5555!important;
+}
+
+.info{
+    text-align:center;
+    min-height:28px;
+    margin-top:18px;
+    font-size:18px;
+}
+
+#next{
+    display:none;
+    margin:20px auto 0;
+    padding:13px 25px;
+    border:none;
+    border-radius:10px;
+    background:#d52d2d;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#result{
+    display:none;
+    text-align:center;
+}
+
+#result h2{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.result-score{
+    font-size:23px;
+    margin-bottom:25px;
+}
+
+.menu{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.menu button{
+    padding:13px 20px;
+    border:none;
+    border-radius:10px;
+    background:#922727;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+@media(max-width:700px){
+    .top{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .answers{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<h1>🔥 TIẾNG ANH 7 - KHÓ 🔥</h1>
+
+<div class="top">
+    <div class="box">
+        BẠN
+        <span id="diem">0</span>
+    </div>
+
+    <div class="box">
+        THỜI GIAN BẠN
+        <span id="tg">15</span>
+    </div>
+
+    <div class="box">
+        BOT
+        <span id="botDiem">0</span>
+    </div>
+
+    <div class="box">
+        THỜI GIAN BOT
+        <span id="botTg">7</span>
+    </div>
+</div>
+
+<div id="gameArea">
+
+<div class="progress" id="progress"></div>
+
+<div class="question">
+    <h2 id="cauHoi"></h2>
+</div>
+
+<div class="answers">
+    <button class="answer" id="a0" onclick="traLoi(0)"></button>
+    <button class="answer" id="a1" onclick="traLoi(1)"></button>
+    <button class="answer" id="a2" onclick="traLoi(2)"></button>
+    <button class="answer" id="a3" onclick="traLoi(3)"></button>
+</div>
+
+<div class="info" id="info"></div>
+
+<button id="next" onclick="cauTiep()">CÂU TIẾP THEO →</button>
+
+</div>
+
+<div id="result">
+    <h2 id="ketQua"></h2>
+
+    <div class="result-score" id="tongDiem"></div>
+
+    <div class="menu">
+        <button onclick="choiLai()">🔄 Chơi lại</button>
+        <button onclick="location.href='capdo_anh_khoi7.html'">🎯 Cấp độ</button>
+        <button onclick="location.href='khoi7.html'">📚 Chọn môn</button>
+    </div>
+</div>
+
+</div>
+
+<script>
+const nganHang=[
+{
+q:"If I ___ enough money, I will buy a new computer.",
+a:["have","had","will have","am having"],
+d:0
+},
+{
+q:"If she studied harder, she ___ better marks.",
+a:["gets","will get","would get","got"],
+d:2
+},
+{
+q:"If you heat water to 100°C, it ___.",
+a:["boils","will boil","boiled","would boil"],
+d:0
+},
+{
+q:"If it ___ tomorrow, we will stay at home.",
+a:["rains","rained","will rain","rain"],
+d:0
+},
+{
+q:"She has lived in this city ___ she was five.",
+a:["for","since","when","during"],
+d:1
+},
+{
+q:"They have studied English ___ six years.",
+a:["since","for","during","from"],
+d:1
+},
+{
+q:"I haven't finished my homework ___.",
+a:["already","just","yet","ever"],
+d:2
+},
+{
+q:"Have you ___ visited Ha Noi?",
+a:["ever","never","yet","since"],
+d:0
+},
+{
+q:"She has ___ finished her project.",
+a:["yet","already","ever","since"],
+d:1
+},
+{
+q:"This is the most interesting book I ___.",
+a:["read","have ever read","am reading","was read"],
+d:1
+},
+{
+q:"The more you practise, ___ you become.",
+a:["good","better","the better","best"],
+d:2
+},
+{
+q:"My sister speaks English ___ than me.",
+a:["fluent","more fluently","most fluent","fluently"],
+d:1
+},
+{
+q:"He is one of the ___ students in the class.",
+a:["intelligent","more intelligent","most intelligent","intelligently"],
+d:2
+},
+{
+q:"This problem is not ___ difficult as I expected.",
+a:["as","more","so much","very"],
+d:0
+},
+{
+q:"The film was ___ boring that we left early.",
+a:["such","so","too","very"],
+d:1
+},
+{
+q:"It was ___ an interesting book that I read it twice.",
+a:["so","such","too","very"],
+d:1
+},
+{
+q:"Although it rained heavily, they ___ playing football.",
+a:["continued","continue","continuing","were continued"],
+d:0
+},
+{
+q:"___ he was tired, he finished his homework.",
+a:["Because","Although","So","And"],
+d:1
+},
+{
+q:"I stayed at home ___ I was sick.",
+a:["although","because","but","so"],
+d:1
+},
+{
+q:"The test was difficult; ___, I passed it.",
+a:["because","however","so","although"],
+d:1
+},
+{
+q:"She is interested in ___ English songs.",
+a:["sing","singing","sings","sang"],
+d:1
+},
+{
+q:"He is good at ___ difficult problems.",
+a:["solve","solving","solves","solved"],
+d:1
+},
+{
+q:"I look forward to ___ from you.",
+a:["hear","hearing","heard","hears"],
+d:1
+},
+{
+q:"She suggested ___ to the cinema.",
+a:["go","going","to go","went"],
+d:1
+},
+{
+q:"Would you mind ___ the door?",
+a:["open","opening","to open","opened"],
+d:1
+},
+{
+q:"It is important ___ enough sleep.",
+a:["get","getting","to get","got"],
+d:2
+},
+{
+q:"I decided ___ English every day.",
+a:["study","studying","to study","studied"],
+d:2
+},
+{
+q:"He enjoys ___ football with his friends.",
+a:["play","playing","to play","played"],
+d:1
+},
+{
+q:"My teacher made us ___ the exercise again.",
+a:["do","to do","doing","did"],
+d:0
+},
+{
+q:"Let me ___ you with your homework.",
+a:["help","to help","helping","helped"],
+d:0
+},
+{
+q:"The teacher asked me ___ the question.",
+a:["answer","to answer","answering","answered"],
+d:1
+},
+{
+q:"She told me ___ late.",
+a:["don't be","not to be","not be","didn't be"],
+d:1
+},
+{
+q:"He asked me where I ___.",
+a:["live","lived","am living","have lived"],
+d:1
+},
+{
+q:"She said that she ___ tired.",
+a:["is","was","has","will"],
+d:1
+},
+{
+q:"The homework ___ by all students yesterday.",
+a:["did","was done","is done","has done"],
+d:1
+},
+{
+q:"English ___ in many countries.",
+a:["speaks","is spoken","spoke","speaking"],
+d:1
+},
+{
+q:"The room ___ every day.",
+a:["cleans","is cleaned","cleaned","cleaning"],
+d:1
+},
+{
+q:"The bridge ___ last year.",
+a:["built","was built","is built","builds"],
+d:1
+},
+{
+q:"A new school ___ next year.",
+a:["will build","will be built","is building","built"],
+d:1
+},
+{
+q:"The book ___ by a famous writer.",
+a:["wrote","was written","writes","writing"],
+d:1
+},
+{
+q:"You should avoid ___ too much fast food.",
+a:["eat","eating","to eat","eaten"],
+d:1
+},
+{
+q:"She stopped ___ because she was tired.",
+a:["run","running","to run","ran"],
+d:1
+},
+{
+q:"He stopped ___ some water.",
+a:["drink","drinking","to drink","drank"],
+d:2
+},
+{
+q:"I remember ___ him before.",
+a:["meet","meeting","to meet","met"],
+d:1
+},
+{
+q:"Remember ___ your homework.",
+a:["do","doing","to do","did"],
+d:2
+},
+{
+q:"I used to ___ football when I was young.",
+a:["play","playing","played","to playing"],
+d:0
+},
+{
+q:"She is used to ___ up early.",
+a:["get","getting","got","to get"],
+d:1
+},
+{
+q:"There is too ___ sugar in this drink.",
+a:["many","much","few","a few"],
+d:1
+},
+{
+q:"There are too ___ people here.",
+a:["much","many","little","a little"],
+d:1
+},
+{
+q:"We have ___ time, so hurry up.",
+a:["a few","few","little","many"],
+d:2
+},
+{
+q:"There are ___ students absent today.",
+a:["a little","much","a few","little"],
+d:2
+},
+{
+q:"Neither Tom nor his friends ___ ready.",
+a:["is","are","was","be"],
+d:1
+},
+{
+q:"Both Lan and Mai ___ good at English.",
+a:["is","are","was","be"],
+d:1
+},
+{
+q:"Either my father or my mother ___ me to school.",
+a:["take","takes","taking","took"],
+d:1
+},
+{
+q:"Everyone in my class ___ English.",
+a:["like","likes","liking","liked"],
+d:1
+},
+{
+q:"There ___ a lot of information on the Internet.",
+a:["are","is","were","have"],
+d:1
+},
+{
+q:"Neither of the answers ___ correct.",
+a:["are","is","were","be"],
+d:1
+},
+{
+q:"The news ___ very interesting.",
+a:["are","is","were","have"],
+d:1
+},
+{
+q:"My friends suggested that I ___ harder.",
+a:["study","studied","studying","to study"],
+d:0
+},
+{
+q:"It is necessary that students ___ on time.",
+a:["arrive","arrives","arrived","arriving"],
+d:0
+},
+{
+q:"I wish I ___ speak English fluently.",
+a:["can","could","will","am"],
+d:1
+},
+{
+q:"I wish I ___ taller.",
+a:["am","was","were","will be"],
+d:2
+},
+{
+q:"If only I ___ more time.",
+a:["have","had","will have","having"],
+d:1
+},
+{
+q:"She wishes she ___ more carefully.",
+a:["studies","studied","had studied","will study"],
+d:2
+},
+{
+q:"You should have ___ me earlier.",
+a:["tell","told","telling","to tell"],
+d:1
+},
+{
+q:"He must ___ his homework before playing.",
+a:["finish","finishes","finished","finishing"],
+d:0
+},
+{
+q:"She might ___ late.",
+a:["be","is","was","being"],
+d:0
+},
+{
+q:"You don't have to ___ tomorrow.",
+a:["come","comes","coming","came"],
+d:0
+},
+{
+q:"We ought to ___ more carefully.",
+a:["listen","listening","listened","listens"],
+d:0
+},
+{
+q:"The teacher asked us ___ quiet.",
+a:["be","being","to be","been"],
+d:2
+},
+{
+q:"He is too young ___ alone.",
+a:["travel","travelling","to travel","travelled"],
+d:2
+},
+{
+q:"The box is ___ heavy for me to carry.",
+a:["too","enough","so","such"],
+d:0
+},
+{
+q:"She isn't old enough ___ a car.",
+a:["drive","driving","to drive","drove"],
+d:2
+},
+{
+q:"The exercise is easy enough for me ___.",
+a:["do","doing","to do","did"],
+d:2
+},
+{
+q:"He speaks English ___ to communicate with foreigners.",
+a:["enough well","well enough","too well","very enough"],
+d:1
+},
+{
+q:"The movie was so ___ that everyone laughed.",
+a:["funny","fun","funnily","funnier"],
+d:0
+},
+{
+q:"She was ___ when she heard the news.",
+a:["surprising","surprised","surprise","surprises"],
+d:1
+},
+{
+q:"The news was ___.",
+a:["surprised","surprising","surprise","surprisingly"],
+d:1
+},
+{
+q:"I am ___ in learning Japanese.",
+a:["interest","interesting","interested","interests"],
+d:2
+},
+{
+q:"The lesson was very ___.",
+a:["bored","boring","bore","bores"],
+d:1
+},
+{
+q:"We were ___ by the beautiful scenery.",
+a:["amazing","amazed","amaze","amazement"],
+d:1
+},
+{
+q:"He drives very ___.",
+a:["careful","carefully","care","caring"],
+d:1
+},
+{
+q:"She sings ___.",
+a:["beautiful","beautifully","beauty","beautify"],
+d:1
+},
+{
+q:"He answered the question ___.",
+a:["correct","correctly","correction","correcting"],
+d:1
+},
+{
+q:"The students worked ___.",
+a:["hard","hardly","hardness","harder"],
+d:0
+},
+{
+q:"The word 'generous' is closest in meaning to ___.",
+a:["kind","selfish","lazy","angry"],
+d:0
+},
+{
+q:"The word 'ancient' is opposite in meaning to ___.",
+a:["modern","old","traditional","historic"],
+d:0
+},
+{
+q:"The word 'protect' is closest in meaning to ___.",
+a:["destroy","keep safe","pollute","damage"],
+d:1
+},
+{
+q:"The word 'reduce' means ___.",
+a:["make less","make more","make bigger","make faster"],
+d:0
+},
+{
+q:"We should use public transport to ___ air pollution.",
+a:["reduce","increase","create","produce"],
+d:0
+},
+{
+q:"Planting trees can help ___ climate change.",
+a:["fight","make","increase","cause"],
+d:0
+},
+{
+q:"Plastic bags are harmful ___ the environment.",
+a:["to","for","at","with"],
+d:0
+},
+{
+q:"We should be responsible ___ protecting nature.",
+a:["for","to","with","at"],
+d:0
+},
+{
+q:"If everyone recycled more, there ___ less waste.",
+a:["is","would be","will be","was"],
+d:1
+},
+{
+q:"If people used less plastic, the oceans ___ cleaner.",
+a:["are","would be","will","were"],
+d:1
+},
+{
+q:"The countryside is not as crowded ___ the city.",
+a:["than","as","so","more"],
+d:1
+},
+{
+q:"The city is much ___ than the village.",
+a:["noisy","noisier","more noisy","noisiest"],
+d:1
+},
+{
+q:"Living in the countryside can be ___ relaxing.",
+a:["much","more","many","most"],
+d:1
+},
+{
+q:"The Internet is one of the most useful ___ of information.",
+a:["sources","source","sourcing","sourced"],
+d:0
+},
+{
+q:"Students can learn English ___ using online resources.",
+a:["by","on","at","in"],
+d:0
+},
+{
+q:"You should check information before ___ it online.",
+a:["share","sharing","shared","shares"],
+d:1
+},
+{
+q:"We need to be careful when ___ the Internet.",
+a:["use","using","used","uses"],
+d:1
+},
+{
+q:"Too much screen time can have a negative ___ on health.",
+a:["effect","affect","effective","effectively"],
+d:0
+},
+{
+q:"A balanced diet and exercise are important ___ good health.",
+a:["for","to","at","with"],
+d:0
+},
+{
+q:"You should cut ___ on sugary drinks.",
+a:["down","up","off","in"],
+d:0
+},
+{
+q:"Getting enough sleep helps you ___ focused.",
+a:["stay","staying","stayed","stays"],
+d:0
+},
+{
+q:"Regular exercise can prevent some ___.",
+a:["diseases","disease","diseased","diseasing"],
+d:0
+},
+{
+q:"The festival is celebrated ___ many countries.",
+a:["in","on","at","from"],
+d:0
+},
+{
+q:"People gather together ___ special occasions.",
+a:["on","in","at","for"],
+d:0
+},
+{
+q:"Traditional festivals help preserve cultural ___.",
+a:["heritage","hereditary","heritageous","inherit"],
+d:0
+},
+{
+q:"Many Vietnamese families prepare special food ___ Tet.",
+a:["for","at","on","in"],
+d:0
+},
+{
+q:"Children look forward to ___ lucky money.",
+a:["receive","receiving","received","receives"],
+d:1
+},
+{
+q:"I am looking forward to ___ the festival.",
+a:["attend","attending","attended","attends"],
+d:1
+},
+{
+q:"The festival provides an opportunity ___ families to meet.",
+a:["for","to","of","with"],
+d:0
+},
+{
+q:"We should respect different cultural ___.",
+a:["traditions","traditional","tradition","traditionally"],
+d:0
+},
+{
+q:"The more we learn, the ___ we understand.",
+a:["much","more","most","many"],
+d:1
+}
+];
+
+let ds=[];
+let i=0;
+let diem=0;
+let bot=0;
+let time=15;
+let botTime=7;
+let daTraLoi=false;
+let timer;
+let botTimer;
+
+function tron(a){
+    return [...a].sort(()=>Math.random()-0.5);
+}
+
+function batDau(){
+    ds=tron(nganHang).slice(0,10);
+    i=0;
+    diem=0;
+    bot=0;
+
+    document.getElementById("diem").textContent=0;
+    document.getElementById("botDiem").textContent=0;
+    document.getElementById("gameArea").style.display="block";
+    document.getElementById("result").style.display="none";
+
+    hienThi();
+}
+
+function hienThi(){
+    clearInterval(timer);
+    clearInterval(botTimer);
+
+    daTraLoi=false;
+    time=15;
+    botTime=7;
+
+    document.getElementById("tg").textContent=time;
+    document.getElementById("botTg").textContent=botTime;
+    document.getElementById("soCau").textContent=(i+1)+"/10";
+    document.getElementById("progress").textContent="Câu "+(i+1)+" / 10";
+    document.getElementById("cauHoi").textContent=ds[i].q;
+
+    for(let j=0;j<4;j++){
+        let b=document.getElementById("a"+j);
+        b.textContent=String.fromCharCode(65+j)+". "+ds[i].a[j];
+        b.className="answer";
+        b.disabled=false;
+    }
+
+    document.getElementById("info").textContent="";
+    document.getElementById("next").style.display="none";
+
+    timer=setInterval(()=>{
+        time--;
+        document.getElementById("tg").textContent=time;
+
+        if(time<=0){
+            clearInterval(timer);
+            hetGio();
+        }
+    },1000);
+
+    botTimer=setInterval(()=>{
+        botTime--;
+        document.getElementById("botTg").textContent=botTime;
+
+        if(botTime<=0){
+            clearInterval(botTimer);
+        }
+    },1000);
+}
+
+function traLoi(x){
+    if(daTraLoi)return;
+
+    daTraLoi=true;
+
+    clearInterval(timer);
+    clearInterval(botTimer);
+
+    let d=ds[i].d;
+
+    for(let j=0;j<4;j++){
+        document.getElementById("a"+j).disabled=true;
+    }
+
+    if(x===d){
+        diem++;
+        document.getElementById("diem").textContent=diem;
+        document.getElementById("a"+x).classList.add("correct");
+        document.getElementById("info").textContent="✓ Chính xác!";
+    }else{
+        document.getElementById("a"+x).classList.add("wrong");
+        document.getElementById("a"+d).classList.add("correct");
+        document.getElementById("info").textContent="✗ Sai rồi!";
+    }
+
+    botTraLoi();
+
+    document.getElementById("next").style.display="block";
+}
+
+function hetGio(){
+    if(daTraLoi)return;
+
+    daTraLoi=true;
+
+    clearInterval(botTimer);
+
+    let d=ds[i].d;
+
+    for(let j=0;j<4;j++){
+        document.getElementById("a"+j).disabled=true;
+    }
+
+    document.getElementById("a"+d).classList.add("correct");
+    document.getElementById("info").textContent="⌛ Hết thời gian!";
+
+    botTraLoi();
+
+    document.getElementById("next").style.display="block";
+}
+
+function botTraLoi(){
+    if(Math.random()<0.75){
+        bot++;
+        document.getElementById("botDiem").textContent=bot;
+    }
+}
+
+function cauTiep(){
+    if(i<9){
+        i++;
+        hienThi();
+    }else{
+        ketThuc();
+    }
+}
+
+function ketThuc(){
+    clearInterval(timer);
+    clearInterval(botTimer);
+
+    document.getElementById("gameArea").style.display="none";
+    document.getElementById("result").style.display="block";
+
+    let kq;
+
+    if(diem>bot){
+        kq="🏆 BẠN THẮNG!";
+    }else if(diem<bot){
+        kq="🤖 BOT THẮNG!";
+    }else{
+        kq="🤝 HÒA!";
+    }
+
+    document.getElementById("ketQua").textContent=kq;
+
+    document.getElementById("tongDiem").textContent=
+        "Bạn: "+diem+" điểm | Bot: "+bot+" điểm";
+}
+
+function choiLai(){
+    batDau();
+}
+
+batDau();
+</script>
+
+</body>
+</html>

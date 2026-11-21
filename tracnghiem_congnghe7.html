@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Trắc nghiệm Công nghệ 7 - Sửa Xe</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    background:
+        radial-gradient(circle at 15% 20%,#14532d 0%,transparent 25%),
+        radial-gradient(circle at 85% 70%,#713f12 0%,transparent 30%),
+        linear-gradient(135deg,#06140d,#123b27,#30200b);
+    color:white;
+}
+
+.back{
+    position:fixed;
+    top:18px;
+    left:18px;
+    z-index:500;
+    padding:12px 20px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    color:white;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.3);
+    backdrop-filter:blur(10px);
+    transition:.3s;
+}
+
+.back:hover{
+    background:#16a34a;
+    transform:translateY(-3px);
+}
+
+h1{
+    text-align:center;
+    margin:70px 10px 8px;
+    font-size:40px;
+    text-shadow:
+        0 0 10px #86efac,
+        0 0 25px #22c55e,
+        0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:25px;
+    color:#bbf7d0;
+}
+
+.game{
+    width:94%;
+    max-width:1150px;
+    margin:auto;
+    padding:22px;
+    border-radius:28px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.workshop{
+    position:relative;
+    height:380px;
+    overflow:hidden;
+    border-radius:22px;
+    border:4px solid #22c55e;
+
+    background:
+        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(135deg,#17202a,#263238,#263b22);
+
+    background-size:35px 35px,35px 35px,cover;
+
+    box-shadow:
+        inset 0 0 60px rgba(34,197,94,.18),
+        0 10px 35px rgba(0,0,0,.5);
+}
+
+/* BÀN */
+
+.workbench{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:75px;
+    background:linear-gradient(180deg,#92400e,#451a03);
+    border-top:8px solid #22c55e;
+}
+
+/* XE */
+
+.bike{
+    position:absolute;
+    left:50%;
+    top:90px;
+    width:440px;
+    height:220px;
+    transform:translateX(-50%);
+}
+
+.wheel{
+    position:absolute;
+    width:120px;
+    height:120px;
+    border:12px solid #111827;
+    border-radius:50%;
+    background:#374151;
+    box-shadow:
+        inset 0 0 0 7px #6b7280,
+        0 8px 15px rgba(0,0,0,.5);
+}
+
+.wheel1{
+    left:20px;
+    top:85px;
+}
+
+.wheel2{
+    right:20px;
+    top:85px;
+}
+
+.wheel:after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:30px;
+    height:30px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:#d1d5db;
+    border:6px solid #4b5563;
+}
+
+.frame1{
+    position:absolute;
+    left:115px;
+    top:100px;
+    width:150px;
+    height:12px;
+    background:#22c55e;
+    transform:rotate(-20deg);
+    border-radius:10px;
+}
+
+.frame2{
+    position:absolute;
+    left:190px;
+    top:70px;
+    width:12px;
+    height:120px;
+    background:#16a34a;
+    transform:rotate(25deg);
+    border-radius:10px;
+}
+
+.frame3{
+    position:absolute;
+    left:110px;
+    top:105px;
+    width:110px;
+    height:12px;
+    background:#84cc16;
+    transform:rotate(35deg);
+    border-radius:10px;
+}
+
+.frame4{
+    position:absolute;
+    left:205px;
+    top:100px;
+    width:120px;
+    height:12px;
+    background:#65a30d;
+    transform:rotate(-35deg);
+    border-radius:10px;
+}
+
+.handle{
+    position:absolute;
+    right:65px;
+    top:45px;
+    width:60px;
+    height:12px;
+    background:#111827;
+    transform:rotate(-15deg);
+    border-radius:10px;
+}
+
+.handle2{
+    position:absolute;
+    right:105px;
+    top:25px;
+    width:12px;
+    height:55px;
+    background:#111827;
+    transform:rotate(10deg);
+    border-radius:10px;
+}
+
+.seat{
+    position:absolute;
+    left:125px;
+    top:45px;
+    width:70px;
+    height:20px;
+    background:#111827;
+    border-radius:50%;
+}
+
+.engine{
+    position:absolute;
+    left:165px;
+    top:125px;
+    width:80px;
+    height:60px;
+    background:linear-gradient(135deg,#6b7280,#111827);
+    border:5px solid #9ca3af;
+    border-radius:12px;
+    box-shadow:0 5px 12px rgba(0,0,0,.5);
+}
+
+/* ỐC VÍT */
+
+.screw{
+    position:absolute;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle,#fef3c7 0 15%,#9ca3af 16% 45%,#374151 46% 100%);
+
+    border:3px solid #d1d5db;
+
+    box-shadow:
+        0 0 15px #86efac,
+        0 4px 8px rgba(0,0,0,.5);
+
+    display:none;
+    animation:screwFloat .8s infinite alternate;
+}
+
+.screw.show{
+    display:block;
+}
+
+.screw1{
+    left:225px;
+    top:110px;
+}
+
+.screw2{
+    left:250px;
+    top:150px;
+}
+
+@keyframes screwFloat{
+    from{
+        transform:translateY(-3px) rotate(0deg);
+    }
+
+    to{
+        transform:translateY(5px) rotate(15deg);
+    }
+}
+
+/* THỢ */
+
+.mechanic{
+    position:absolute;
+    left:70px;
+    bottom:55px;
+    width:130px;
+    height:210px;
+}
+
+.head{
+    position:absolute;
+    left:35px;
+    top:0;
+    width:65px;
+    height:65px;
+    background:#f3c49b;
+    border-radius:50%;
+    border:4px solid #78350f;
+}
+
+.hair{
+    position:absolute;
+    left:30px;
+    top:-4px;
+    width:75px;
+    height:35px;
+    background:#292524;
+    border-radius:50% 50% 20% 20%;
+}
+
+.eye1,.eye2{
+    position:absolute;
+    top:28px;
+    width:7px;
+    height:7px;
+    background:#111827;
+    border-radius:50%;
+}
+
+.eye1{
+    left:47px;
+}
+
+.eye2{
+    left:75px;
+}
+
+.body{
+    position:absolute;
+    left:20px;
+    top:65px;
+    width:95px;
+    height:115px;
+    background:#1f2937;
+    border:5px solid #111827;
+    border-radius:20px 20px 8px 8px;
+}
+
+.shirt{
+    position:absolute;
+    left:48px;
+    top:75px;
+    width:40px;
+    height:80px;
+    background:#22c55e;
+    border-radius:8px;
+}
+
+.arm{
+    position:absolute;
+    width:25px;
+    height:95px;
+    background:#f3c49b;
+    border-radius:20px;
+}
+
+.arm1{
+    left:5px;
+    top:75px;
+    transform:rotate(35deg);
+}
+
+.arm2{
+    right:0;
+    top:75px;
+    transform:rotate(-55deg);
+}
+
+.cap{
+    position:absolute;
+    left:20px;
+    top:-15px;
+    width:90px;
+    height:30px;
+    background:#22c55e;
+    border-radius:50%;
+    border:4px solid #166534;
+    z-index:5;
+}
+
+.wrench{
+    position:absolute;
+    right:105px;
+    top:170px;
+    font-size:65px;
+    transform:rotate(-25deg);
+    filter:drop-shadow(0 5px 4px rgba(0,0,0,.6));
+}
+
+/* START */
+
+.start-area{
+    text-align:center;
+    margin:25px 0;
+}
+
+.start{
+    border:none;
+    padding:16px 42px;
+    border-radius:50px;
+    font-size:22px;
+    font-weight:bold;
+    color:white;
+    cursor:pointer;
+
+    background:linear-gradient(135deg,#16a34a,#15803d);
+
+    box-shadow:
+        0 8px 0 #14532d,
+        0 15px 30px rgba(0,0,0,.4);
+
+    transition:.2s;
+}
+
+.start:hover{
+    transform:translateY(-3px);
+}
+
+.start:active{
+    transform:translateY(5px);
+    box-shadow:0 3px 0 #14532d;
+}
+
+.progress-text{
+    text-align:center;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:10px;
+    color:#dcfce7;
+}
+
+.progress{
+    width:100%;
+    height:25px;
+    padding:3px;
+    border-radius:30px;
+    background:rgba(255,255,255,.15);
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0;
+    border-radius:30px;
+
+    background:linear-gradient(90deg,#86efac,#22c55e,#15803d);
+
+    box-shadow:0 0 15px #22c55e;
+
+    transition:.5s;
+}
+
+.status{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin-top:15px;
+    min-height:28px;
+    color:#bbf7d0;
+}
+
+/* CÂU HỎI */
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:150;
+    background:rgba(2,6,23,.8);
+    backdrop-filter:blur(6px);
+}
+
+.overlay.show{
+    display:block;
+}
+
+.question-box{
+    display:none;
+    position:fixed;
+    z-index:200;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(.8);
+
+    width:92%;
+    max-width:730px;
+
+    padding:30px;
+    border-radius:28px;
+
+    background:linear-gradient(135deg,#ffffff,#f0fdf4);
+
+    box-shadow:0 30px 90px rgba(0,0,0,.7);
+
+    color:#0f172a;
+}
+
+.question-box.show{
+    display:block;
+    animation:popup .3s forwards;
+}
+
+@keyframes popup{
+    to{
+        transform:translate(-50%,-50%) scale(1);
+    }
+}
+
+.question-box h2{
+    text-align:center;
+    margin-top:0;
+    font-size:27px;
+    color:#15803d;
+}
+
+.question{
+    font-size:21px;
+    font-weight:bold;
+    line-height:1.5;
+    margin:20px 0;
+}
+
+.answer{
+    display:block;
+    width:100%;
+    padding:15px 18px;
+    margin:11px 0;
+
+    border:2px solid #e2e8f0;
+    border-radius:14px;
+
+    background:#f8fafc;
+
+    font-size:18px;
+    text-align:left;
+    cursor:pointer;
+
+    transition:.2s;
+
+    color:#1e293b;
+}
+
+.answer:hover{
+    transform:translateX(5px);
+    border-color:#22c55e;
+    background:#f0fdf4;
+}
+
+.answer.selected{
+    background:#dcfce7;
+    border-color:#16a34a;
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,.15);
+}
+
+.check{
+    display:block;
+    margin:22px auto 0;
+    padding:14px 36px;
+
+    border:none;
+    border-radius:50px;
+
+    background:linear-gradient(135deg,#16a34a,#15803d);
+
+    color:white;
+
+    font-size:19px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 20px rgba(22,163,74,.35);
+}
+
+.check:hover{
+    transform:translateY(-2px);
+}
+
+/* KẾT QUẢ */
+
+.result{
+    display:none;
+    position:fixed;
+    z-index:300;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:90%;
+    max-width:580px;
+
+    padding:45px 30px;
+
+    border-radius:30px;
+
+    background:white;
+
+    text-align:center;
+
+    box-shadow:0 30px 90px rgba(0,0,0,.7);
+
+    animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+    from{
+        transform:translate(-50%,-50%) scale(.5);
+        opacity:0;
+    }
+
+    to{
+        transform:translate(-50%,-50%) scale(1);
+        opacity:1;
+    }
+}
+
+.result h2{
+    font-size:38px;
+    color:#15803d;
+    margin:0 0 20px;
+}
+
+.result.lose h2{
+    color:#dc2626;
+}
+
+.result p{
+    font-size:21px;
+    line-height:1.6;
+    color:#334155;
+}
+
+.again{
+    padding:15px 35px;
+
+    border:none;
+    border-radius:50px;
+
+    background:linear-gradient(135deg,#16a34a,#15803d);
+
+    color:white;
+
+    font-size:19px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* HIỆU ỨNG */
+
+.screw-effect{
+    position:fixed;
+    z-index:1000;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    font-size:55px;
+    font-weight:bold;
+
+    color:#86efac;
+
+    text-shadow:0 0 20px #22c55e;
+
+    pointer-events:none;
+
+    animation:screwEffect .9s forwards;
+}
+
+@keyframes screwEffect{
+
+    0%{
+        transform:translate(-50%,-50%) scale(.4);
+        opacity:0;
+    }
+
+    40%{
+        transform:translate(-50%,-50%) scale(1.3);
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(-50%,-100%) scale(1);
+        opacity:0;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    h1{
+        font-size:28px;
+        margin-top:75px;
+    }
+
+    .info{
+        font-size:16px;
+    }
+
+    .game{
+        width:96%;
+        padding:12px;
+    }
+
+    .workshop{
+        height:300px;
+    }
+
+    .bike{
+        transform:translateX(-50%) scale(.65);
+        transform-origin:top center;
+        top:35px;
+    }
+
+    .mechanic{
+        transform:scale(.7);
+        transform-origin:bottom left;
+        left:15px;
+    }
+
+    .wrench{
+        right:30px;
+        top:120px;
+        font-size:45px;
+    }
+
+    .question-box{
+        padding:20px;
+    }
+
+    .question-box h2{
+        font-size:21px;
+    }
+
+    .question{
+        font-size:18px;
+    }
+
+    .answer{
+        font-size:16px;
+        padding:12px;
+    }
+
+    .result h2{
+        font-size:30px;
+    }
+
+    .result p{
+        font-size:18px;
+    }
+
+    .back{
+        padding:9px 14px;
+        font-size:14px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="khoi7tracnghiem.html" class="back">
+⬅ Quay lại
+</a>
+
+<h1>🌱 TRẮC NGHIỆM CÔNG NGHỆ 7</h1>
+
+<div class="info">
+🚜 TRÒ CHƠI SỬA XE - THỬ THÁCH KIẾN THỨC CÔNG NGHỆ 7
+</div>
+
+<div class="game">
+
+<div class="workshop">
+
+<div class="bike">
+
+<div class="wheel wheel1"></div>
+<div class="wheel wheel2"></div>
+
+<div class="frame1"></div>
+<div class="frame2"></div>
+<div class="frame3"></div>
+<div class="frame4"></div>
+
+<div class="handle"></div>
+<div class="handle2"></div>
+
+<div class="seat"></div>
+
+<div class="engine"></div>
+
+</div>
+
+<div class="mechanic">
+
+<div class="cap"></div>
+
+<div class="hair"></div>
+
+<div class="head">
+
+<div class="eye1"></div>
+<div class="eye2"></div>
+
+</div>
+
+<div class="body"></div>
+
+<div class="shirt"></div>
+
+<div class="arm arm1"></div>
+<div class="arm arm2"></div>
+
+</div>
+
+<div class="wrench">
+🔧
+</div>
+
+<div class="screw screw1" id="screw1"></div>
+
+<div class="screw screw2" id="screw2"></div>
+
+<div class="workbench"></div>
+
+</div>
+
+<div class="start-area">
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()">
+
+🔧 BẮT ĐẦU THỬ THÁCH
+
+</button>
+
+</div>
+
+<div class="progress-text" id="progressText">
+🔩 Chưa bắt đầu
+</div>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+id="progressBar">
+</div>
+
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để chinh phục Công nghệ 7!
+</div>
+
+</div>
+
+
+<div class="overlay" id="overlay"></div>
+
+
+<div class="question-box" id="questionBox">
+
+<h2>🔩 THỬ THÁCH KIẾN THỨC!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+🔧 TRẢ LỜI & TÌM ỐC VÍT
+</button>
+
+</div>
+
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 CHƠI LẠI
+</button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   NGÂN HÀNG CÂU HỎI
+   CÔNG NGHỆ 7
+========================= */
+
+const questionBank = [
+
+[
+"Trồng trọt có vai trò quan trọng nào sau đây?",
+[
+"Cung cấp lương thực, thực phẩm cho con người",
+"Chỉ cung cấp nguyên liệu xây dựng",
+"Chỉ tạo ra máy móc",
+"Chỉ phục vụ giao thông"
+],
+0
+],
+
+[
+"Cây trồng cần những yếu tố nào để sinh trưởng?",
+[
+"Nước, ánh sáng, nhiệt độ, không khí và chất dinh dưỡng",
+"Chỉ cần nước",
+"Chỉ cần ánh sáng",
+"Chỉ cần đất"
+],
+0
+],
+
+[
+"Đất trồng có vai trò gì đối với cây?",
+[
+"Cung cấp nước, chất dinh dưỡng và giúp cây đứng vững",
+"Chỉ tạo màu xanh cho cây",
+"Chỉ giúp cây hấp thụ ánh sáng",
+"Không có vai trò gì"
+],
+0
+],
+
+[
+"Đất trồng gồm những thành phần chính nào?",
+[
+"Phần rắn, phần lỏng và phần khí",
+"Chỉ có nước",
+"Chỉ có đất sét",
+"Chỉ có không khí"
+],
+0
+],
+
+[
+"Phân bón có tác dụng chủ yếu là:",
+[
+"Cung cấp chất dinh dưỡng cho cây",
+"Làm cây không cần nước",
+"Làm cây không cần ánh sáng",
+"Thay thế hoàn toàn đất trồng"
+],
+0
+],
+
+[
+"Phân hữu cơ có nguồn gốc chủ yếu từ:",
+[
+"Động vật và thực vật",
+"Kim loại",
+"Nhựa",
+"Thủy tinh"
+],
+0
+],
+
+[
+"Phân hóa học thường có đặc điểm:",
+[
+"Chứa một hoặc nhiều chất dinh dưỡng khoáng",
+"Không chứa chất dinh dưỡng",
+"Chỉ dùng để làm sạch đất",
+"Chỉ dùng để tưới nước"
+],
+0
+],
+
+[
+"Biện pháp nào giúp bảo vệ đất trồng?",
+[
+"Trồng cây, chống xói mòn và sử dụng phân bón hợp lý",
+"Đốt hết cây trên đất",
+"Vứt rác xuống ruộng",
+"Sử dụng phân bón càng nhiều càng tốt"
+],
+0
+],
+
+[
+"Giống cây trồng là:",
+[
+"Quần thể cây có đặc điểm giống nhau và có thể duy trì đặc tính qua các thế hệ",
+"Một loại phân bón",
+"Một loại đất",
+"Một loại thuốc"
+],
+0
+],
+
+[
+"Nhân giống cây trồng bằng hạt thuộc phương pháp:",
+[
+"Nhân giống hữu tính",
+"Nhân giống vô tính",
+"Chiết cành",
+"Giâm cành"
+],
+0
+],
+
+[
+"Giâm cành là phương pháp:",
+[
+"Dùng một đoạn cành để tạo cây mới",
+"Dùng hạt để tạo cây",
+"Dùng lá khô để làm phân",
+"Dùng đất để tạo hạt"
+],
+0
+],
+
+[
+"Chiết cành thường được sử dụng để:",
+[
+"Tạo cây mới từ cành của cây mẹ",
+"Làm đất tơi xốp",
+"Thu hoạch quả",
+"Phòng trừ sâu bệnh"
+],
+0
+],
+
+[
+"Quy trình trồng trọt thường bắt đầu bằng:",
+[
+"Làm đất và chuẩn bị đất trồng",
+"Thu hoạch",
+"Bảo quản",
+"Chế biến"
+],
+0
+],
+
+[
+"Gieo trồng đúng thời vụ giúp:",
+[
+"Cây sinh trưởng và phát triển thuận lợi",
+"Cây không cần chăm sóc",
+"Cây không cần nước",
+"Cây không cần chất dinh dưỡng"
+],
+0
+],
+
+[
+"Chăm sóc cây trồng bao gồm:",
+[
+"Tưới nước, bón phân, làm cỏ và phòng trừ sâu bệnh",
+"Chỉ thu hoạch",
+"Chỉ tưới nước",
+"Chỉ làm cỏ"
+],
+0
+],
+
+[
+"Tưới nước cho cây cần căn cứ vào:",
+[
+"Nhu cầu nước của cây và điều kiện thời tiết",
+"Màu của chậu",
+"Kích thước hạt giống בלבד",
+"Giá tiền của cây"
+],
+0
+],
+
+[
+"Làm cỏ có tác dụng:",
+[
+"Giảm sự cạnh tranh chất dinh dưỡng, nước và ánh sáng với cây trồng",
+"Làm cây ngừng sinh trưởng",
+"Làm đất mất hoàn toàn nước",
+"Làm sâu bệnh tăng lên"
+],
+0
+],
+
+[
+"Sâu bệnh hại cây trồng có thể làm:",
+[
+"Giảm năng suất và chất lượng nông sản",
+"Tăng năng suất trong mọi trường hợp",
+"Cây phát triển nhanh hơn",
+"Không ảnh hưởng đến cây"
+],
+0
+],
+
+[
+"Biện pháp sinh học trong phòng trừ sâu bệnh là:",
+[
+"Sử dụng sinh vật có ích để hạn chế sinh vật gây hại",
+"Phun thuốc hóa học thật nhiều",
+"Đốt toàn bộ cây",
+"Không chăm sóc cây"
+],
+0
+],
+
+[
+"Khi sử dụng thuốc bảo vệ thực vật cần:",
+[
+"Tuân thủ đúng hướng dẫn và đảm bảo an toàn",
+"Sử dụng càng nhiều càng tốt",
+"Không cần đọc hướng dẫn",
+"Phun trực tiếp vào người"
+],
+0
+],
+
+[
+"Thu hoạch nông sản đúng thời điểm giúp:",
+[
+"Đảm bảo năng suất và chất lượng sản phẩm",
+"Làm sản phẩm nhanh hỏng hơn",
+"Giảm chất lượng sản phẩm",
+"Làm cây không thể sinh trưởng"
+],
+0
+],
+
+[
+"Mục đích của bảo quản nông sản là:",
+[
+"Giảm tổn thất và duy trì chất lượng sản phẩm",
+"Làm sản phẩm hỏng nhanh",
+"Làm mất hết chất dinh dưỡng",
+"Chỉ để trang trí"
+],
+0
+],
+
+[
+"Một phương pháp bảo quản nông sản là:",
+[
+"Làm lạnh",
+"Để ngoài nắng lâu ngày",
+"Ngâm trong nước bẩn",
+"Để nơi ẩm ướt"
+],
+0
+],
+
+[
+"Chế biến nông sản nhằm:",
+[
+"Tạo ra sản phẩm có giá trị sử dụng và bảo quản tốt hơn",
+"Làm sản phẩm không thể sử dụng",
+"Loại bỏ hoàn toàn nước trong mọi sản phẩm",
+"Chỉ thay đổi màu sắc"
+],
+0
+],
+
+[
+"Chăn nuôi có vai trò:",
+[
+"Cung cấp thực phẩm và nguyên liệu cho sản xuất",
+"Chỉ cung cấp cây trồng",
+"Chỉ tạo ra máy móc",
+"Chỉ phục vụ giao thông"
+],
+0
+],
+
+[
+"Vật nuôi là:",
+[
+"Những động vật được con người nuôi dưỡng và chăm sóc",
+"Những loại cây trồng",
+"Các loại máy móc",
+"Các loại đất"
+],
+0
+],
+
+[
+"Giống vật nuôi có ảnh hưởng đến:",
+[
+"Năng suất và chất lượng sản phẩm chăn nuôi",
+"Màu của chuồng nuôi בלבד",
+"Thời tiết",
+"Độ dài ngày"
+],
+0
+],
+
+[
+"Thức ăn chăn nuôi cung cấp cho vật nuôi:",
+[
+"Chất dinh dưỡng và năng lượng",
+"Chỉ nước",
+"Chỉ vitamin",
+"Chỉ chất xơ"
+],
+0
+],
+
+[
+"Vật nuôi cần được cung cấp:",
+[
+"Đủ thức ăn, nước uống và điều kiện sống phù hợp",
+"Chỉ thức ăn",
+"Chỉ nước",
+"Chỉ ánh sáng"
+],
+0
+],
+
+[
+"Chuồng nuôi cần đảm bảo:",
+[
+"Thoáng mát, sạch sẽ và phù hợp với vật nuôi",
+"Luôn tối và ẩm ướt",
+"Không cần vệ sinh",
+"Không cần thông thoáng"
+],
+0
+],
+
+[
+"Vệ sinh chuồng nuôi giúp:",
+[
+"Hạn chế mầm bệnh và bảo vệ sức khỏe vật nuôi",
+"Làm vật nuôi yếu hơn",
+"Tăng mầm bệnh",
+"Không có tác dụng"
+],
+0
+],
+
+[
+"Phòng bệnh cho vật nuôi cần:",
+[
+"Vệ sinh, chăm sóc và tiêm phòng theo hướng dẫn",
+"Không cần vệ sinh",
+"Cho ăn thức ăn ôi thiu",
+"Nuôi trong môi trường bẩn"
+],
+0
+],
+
+[
+"Thủy sản là những loài:",
+[
+"Sống và phát triển trong môi trường nước",
+"Chỉ sống trên cạn",
+"Chỉ sống trên cây",
+"Chỉ sống trong đất khô"
+],
+0
+],
+
+[
+"Nuôi thủy sản có vai trò:",
+[
+"Cung cấp thực phẩm và tạo nguồn thu nhập",
+"Chỉ làm cảnh",
+"Chỉ cung cấp gỗ",
+"Chỉ cung cấp phân bón"
+],
+0
+],
+
+[
+"Môi trường nước nuôi thủy sản cần:",
+[
+"Sạch và có các điều kiện phù hợp cho vật nuôi",
+"Luôn ô nhiễm",
+"Không cần oxy",
+"Không cần kiểm tra"
+],
+0
+],
+
+[
+"Trong nuôi thủy sản, cần cho ăn:",
+[
+"Đúng loại, đúng lượng và đúng thời gian",
+"Càng nhiều càng tốt",
+"Thức ăn đã bị hỏng",
+"Không cần theo dõi"
+],
+0
+],
+
+[
+"Một trong những yếu tố ảnh hưởng đến thủy sản là:",
+[
+"Nhiệt độ nước",
+"Màu của quần áo",
+"Chiều cao người nuôi",
+"Loại bàn ghế"
+],
+0
+],
+
+[
+"Thu hoạch thủy sản cần:",
+[
+"Đúng thời điểm và phù hợp với đối tượng nuôi",
+"Bắt bất cứ lúc nào",
+"Không cần dụng cụ",
+"Không cần quan tâm kích thước"
+],
+0
+],
+
+[
+"Biện pháp bảo vệ môi trường trong chăn nuôi là:",
+[
+"Thu gom và xử lý chất thải đúng cách",
+"Xả chất thải trực tiếp ra môi trường",
+"Đổ chất thải xuống sông",
+"Không vệ sinh chuồng"
+],
+0
+],
+
+[
+"Sản xuất nông nghiệp bền vững cần:",
+[
+"Sử dụng tài nguyên hợp lý và bảo vệ môi trường",
+"Sử dụng tài nguyên không giới hạn",
+"Phá bỏ toàn bộ cây xanh",
+"Làm ô nhiễm đất và nước"
+],
+0
+]
+
+];
+
+/* =========================
+   BIẾN GAME
+========================= */
+
+let gameQuestions = [];
+
+let currentQuestion = 0;
+
+let selectedAnswer = null;
+
+let gameRunning = false;
+
+
+/* =========================
+   BẮT ĐẦU GAME
+========================= */
+
+function startGame(){
+
+    gameRunning = true;
+
+    currentQuestion = 0;
+
+    selectedAnswer = null;
+
+    document.getElementById("result").style.display = "none";
+
+    document.getElementById("result").classList.remove("lose");
+
+    document.getElementById("overlay").classList.remove("show");
+
+    document.getElementById("questionBox").classList.remove("show");
+
+    document.getElementById("startButton").innerHTML =
+        "🔄 CHƠI LẠI";
+
+    document.getElementById("status").innerHTML =
+        "🌱 Đang chuẩn bị thử thách Công nghệ 7...";
+
+    document.getElementById("screw1").classList.remove("show");
+
+    document.getElementById("screw2").classList.remove("show");
+
+
+    /* Trộn câu hỏi */
+
+    let shuffled = [...questionBank];
+
+    shuffled.sort(() => Math.random() - 0.5);
+
+    gameQuestions = shuffled.slice(0,10);
+
+
+    updateProgress();
+
+
+    setTimeout(showQuestion,1000);
+
+}
+
+
+/* =========================
+   HIỂN THỊ CÂU HỎI
+========================= */
+
+function showQuestion(){
+
+    if(!gameRunning) return;
+
+    let q = gameQuestions[currentQuestion];
+
+    selectedAnswer = null;
+
+
+    document.getElementById("question").innerHTML =
+        "Câu " + (currentQuestion + 1) + ": " + q[0];
+
+
+    let html = "";
+
+
+    q[1].forEach((answer,index)=>{
+
+        html += `
+        <button class="answer" onclick="selectAnswer(${index})">
+            ${String.fromCharCode(65+index)}. ${answer}
+        </button>
+        `;
+
+    });
+
+
+    document.getElementById("answers").innerHTML = html;
+
+    document.getElementById("overlay").classList.add("show");
+
+    document.getElementById("questionBox").classList.add("show");
+
+}
+
+
+/* =========================
+   CHỌN ĐÁP ÁN
+========================= */
+
+function selectAnswer(index){
+
+    selectedAnswer = index;
+
+
+    document.querySelectorAll(".answer").forEach(button=>{
+
+        button.classList.remove("selected");
+
+    });
+
+
+    document.querySelectorAll(".answer")[index]
+        .classList.add("selected");
+
+}
+
+
+/* =========================
+   HIỆU ỨNG ỐC VÍT
+========================= */
+
+function screwEffect(){
+
+    const effect = document.createElement("div");
+
+    effect.className = "screw-effect";
+
+    effect.innerHTML = "🔩 TÌM ĐƯỢC ỐC VÍT!";
+
+    document.body.appendChild(effect);
+
+
+    setTimeout(()=>{
+
+        effect.remove();
+
+    },900);
+
+}
+
+
+/* =========================
+   KIỂM TRA ĐÁP ÁN
+========================= */
+
+function checkAnswer(){
+
+    if(selectedAnswer === null){
+
+        alert("⚠️ Hãy chọn một đáp án!");
+
+        return;
+
+    }
+
+
+    if(selectedAnswer !== gameQuestions[currentQuestion][2]){
+
+        loseGame();
+
+        return;
+
+    }
+
+
+    screwEffect();
+
+
+    currentQuestion++;
+
+
+    document.getElementById("questionBox")
+        .classList.remove("show");
+
+    document.getElementById("overlay")
+        .classList.remove("show");
+
+
+    if(currentQuestion === 5){
+
+        document.getElementById("screw1")
+            .classList.add("show");
+
+    }
+
+
+    if(currentQuestion === 10){
+
+        document.getElementById("screw2")
+            .classList.add("show");
+
+    }
+
+
+    updateProgress();
+
+
+    if(currentQuestion >= 10){
+
+        winGame();
+
+        return;
+
+    }
+
+
+    document.getElementById("status").innerHTML =
+        "✅ Chính xác! Bạn đã tìm được một chiếc ốc vít!";
+
+
+    setTimeout(showQuestion,900);
+
+}
+
+
+/* =========================
+   TIẾN ĐỘ
+========================= */
+
+function updateProgress(){
+
+    document.getElementById("progressBar").style.width =
+        (currentQuestion / 10 * 100) + "%";
+
+
+    document.getElementById("progressText").innerHTML =
+        "🔩 Đã tìm được " + currentQuestion + "/10 ốc vít";
+
+}
+
+
+/* =========================
+   THUA
+========================= */
+
+function loseGame(){
+
+    gameRunning = false;
+
+
+    document.getElementById("questionBox")
+        .classList.remove("show");
+
+    document.getElementById("overlay")
+        .classList.remove("show");
+
+
+    document.getElementById("result")
+        .style.display = "block";
+
+
+    document.getElementById("result")
+        .classList.add("lose");
+
+
+    document.getElementById("resultTitle").innerHTML =
+        "❌ THỬ THÁCH THẤT BẠI!";
+
+
+    document.getElementById("resultText").innerHTML =
+
+        "❌ Bạn đã trả lời sai câu hỏi!<br><br>" +
+
+        "🔩 Bạn mới tìm được " +
+
+        currentQuestion +
+
+        "/10 ốc vít.<br><br>" +
+
+        "📚 Hãy ôn lại kiến thức Công nghệ 7 và thử lại!";
+
+
+    document.getElementById("status").innerHTML =
+        "🔧 Hãy sửa lại kiến thức và thử lại nhé!";
+
+}
+
+
+/* =========================
+   THẮNG
+========================= */
+
+function winGame(){
+
+    gameRunning = false;
+
+
+    document.getElementById("questionBox")
+        .classList.remove("show");
+
+    document.getElementById("overlay")
+        .classList.remove("show");
+
+
+    document.getElementById("result")
+        .style.display = "block";
+
+
+    document.getElementById("result")
+        .classList.remove("lose");
+
+
+    document.getElementById("resultTitle").innerHTML =
+        "🏆 XUẤT SẮC!";
+
+
+    document.getElementById("resultText").innerHTML =
+
+        "🎉 CHÚC MỪNG!<br><br>" +
+
+        "🔩 Bạn đã tìm đủ 10/10 ốc vít!<br><br>" +
+
+        "🚜 Chiếc xe đã được sửa hoàn chỉnh!<br><br>" +
+
+        "🌱 Bạn đã chinh phục Trắc nghiệm Công nghệ 7!";
+
+
+    document.getElementById("status").innerHTML =
+        "🏆 Hoàn thành thử thách Công nghệ 7!";
+
+
+    document.getElementById("progressBar")
+        .style.width = "100%";
+
+
+    document.getElementById("progressText").innerHTML =
+        "🏆 HOÀN THÀNH 10/10 ỐC VÍT!";
+
+}
+
+</script>
+
+</body>
+</html>

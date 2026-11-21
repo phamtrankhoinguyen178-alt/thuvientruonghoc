@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngữ văn 7 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    color: #2878e8;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #155bb5;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_van_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+
+    <div class="time">
+        ⏱ <span id="timer">15</span>
+    </div>
+
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        📚 NGỮ VĂN 7 - CẤP ĐỘ DỄ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+{
+q:"Văn bản Bầy chim chìa vôi của tác giả nào?",
+a:["Nguyễn Quang Thiều","Đoàn Giỏi","Võ Quảng","Nguyễn Nhật Ánh"],
+d:0
+},
+
+{
+q:"Hai nhân vật chính trong Bầy chim chìa vôi là",
+a:["Mon và Mên","An và Cò","Sơn và Lan","Tí và Tèo"],
+d:0
+},
+
+{
+q:"Đi lấy mật là đoạn trích từ tác phẩm nào?",
+a:["Đất rừng phương Nam","Tuổi thơ dữ dội","Dế Mèn phiêu lưu kí","Quê nội"],
+d:0
+},
+
+{
+q:"Tác giả của Đi lấy mật là",
+a:["Đoàn Giỏi","Võ Quảng","Nguyễn Quang Thiều","Tô Hoài"],
+d:0
+},
+
+{
+q:"Ngàn sao làm việc là sáng tác của",
+a:["Võ Quảng","Đoàn Giỏi","Huy Cận","Chính Hữu"],
+d:0
+},
+
+{
+q:"Đồng dao mùa xuân thuộc thể loại",
+a:["thơ","truyện ngắn","tùy bút","nghị luận"],
+d:0
+},
+
+{
+q:"Tác giả của Đồng dao mùa xuân là",
+a:["Nguyễn Khoa Điềm","Nguyễn Duy","Phạm Tiến Duật","Chính Hữu"],
+d:0
+},
+
+{
+q:"Gặp lá cơm nếp được sáng tác bởi",
+a:["Thanh Thảo","Nguyễn Khoa Điềm","Nguyễn Duy","Huy Cận"],
+d:2
+},
+
+{
+q:"Vừa nhắm mắt vừa mở cửa sổ là tác phẩm của",
+a:["Nguyễn Ngọc Thuần","Nguyễn Nhật Ánh","Nguyễn Quang Thiều","Đoàn Giỏi"],
+d:0
+},
+
+{
+q:"Người thầy đầu tiên là tác phẩm của",
+a:["Trin-ghi-dơ Ai-tơ-ma-tốp","Mác-xim Go-rơ-ki","An-tôn Sê-khốp","Vích-to Huy-gô"],
+d:0
+},
+
+{
+q:"Bài thơ Quê hương trong Bài 3 là sáng tác của",
+a:["Tế Hanh","Nguyễn Duy","Huy Cận","Xuân Quỳnh"],
+d:0
+},
+
+{
+q:"Mùa xuân nho nhỏ là bài thơ của",
+a:["Thanh Hải","Thanh Thảo","Nguyễn Duy","Viễn Phương"],
+d:0
+},
+
+{
+q:"Gò Me là sáng tác của",
+a:["Hoàng Tố Nguyên","Nguyễn Đình Thi","Thanh Hải","Tế Hanh"],
+d:0
+},
+
+{
+q:"Bài thơ Đường núi của Nguyễn Đình Thi thuộc kiểu văn bản",
+a:["thơ","truyện","nghị luận","văn bản thông tin"],
+d:0
+},
+
+{
+q:"Tháng Giêng, mơ về trăng non rét ngọt thuộc thể loại",
+a:["tùy bút","truyện ngắn","thơ","nghị luận"],
+d:0
+},
+
+{
+q:"Chuyện cơm hến gắn với nét văn hóa ẩm thực của",
+a:["Huế","Hà Nội","Nam Định","Tây Nguyên"],
+d:0
+},
+
+{
+q:"Hội lồng tồng là một nét văn hóa truyền thống của",
+a:["các dân tộc vùng Việt Bắc","cư dân Nam Bộ","cư dân đồng bằng sông Cửu Long","cư dân ven biển miền Trung"],
+d:0
+},
+
+{
+q:"Đẽo cày giữa đường thuộc thể loại",
+a:["ngụ ngôn","truyền thuyết","cổ tích","truyện lịch sử"],
+d:0
+},
+
+{
+q:"Ếch ngồi đáy giếng có nguồn gốc từ",
+a:["Trang Tử","Nguyễn Du","Hồ Xuân Hương","Nguyễn Trãi"],
+d:0
+},
+
+{
+q:"Đặc điểm nổi bật của truyện ngụ ngôn là",
+a:["thường mượn chuyện loài vật, đồ vật hoặc con người để nêu bài học","luôn kể về các vị thần","chỉ kể những sự kiện có thật","chỉ nhằm miêu tả thiên nhiên"],
+d:0
+},
+
+{
+q:"Dòng “Sông Đen” thuộc thể loại",
+a:["truyện khoa học viễn tưởng","truyện cổ tích","truyện ngụ ngôn","truyện lịch sử"],
+d:0
+},
+
+{
+q:"Tác giả của Dòng “Sông Đen” là",
+a:["Giuyn Véc-nơ","Rô-an Đan","Mác-xim Go-rơ-ki","Ai-tơ-ma-tốp"],
+d:0
+},
+
+{
+q:"Con hổ có nghĩa là tác phẩm của",
+a:["Vũ Trinh","Nguyễn Dữ","Nguyễn Du","Hồ Biểu Chánh"],
+d:0
+},
+
+{
+q:"Một văn bản tường trình chủ yếu nhằm",
+a:["trình bày một sự việc đã xảy ra một cách tương đối đầy đủ, chính xác","bộc lộ cảm xúc cá nhân","kể một câu chuyện tưởng tượng","miêu tả cảnh thiên nhiên"],
+d:0
+},
+
+{
+q:"Bài 10 Trang sách và cuộc sống hướng học sinh đến việc",
+a:["đọc sách, khám phá sách và tạo ra sản phẩm từ việc đọc","học thuộc tất cả văn bản","chỉ đọc truyện khoa học viễn tưởng","chỉ luyện viết tường trình"],
+d:0
+},
+
+{
+q:"Trong Bầy chim chìa vôi, việc Mon và Mên lo lắng cho đàn chim cho thấy",
+a:["tình yêu thương và sự trân trọng đối với sự sống","hai nhân vật rất sợ chim","hai nhân vật muốn bắt chim","hai nhân vật muốn phá tổ chim"],
+d:0
+},
+
+{
+q:"Điều làm cho đoạn kết Bầy chim chìa vôi trở nên xúc động là",
+a:["hình ảnh những chú chim non cất cánh và niềm vui của các cậu bé","cảnh hai cậu bé bắt được chim","cảnh dòng sông cạn nước","cảnh hai cậu bé trở về nhà ngủ"],
+d:0
+},
+
+{
+q:"Qua Đi lấy mật, hình ảnh thiên nhiên Nam Bộ được thể hiện",
+a:["phong phú, hoang sơ và giàu sức sống","lạnh lẽo và khắc nghiệt","khô cằn, thiếu sức sống","hoàn toàn giống cảnh miền núi phía Bắc"],
+d:0
+},
+
+{
+q:"Trong Ngàn sao làm việc, hình ảnh các vì sao được miêu tả như",
+a:["những người lao động đang làm việc","những chiến binh","những nhân vật lịch sử","những người đang ngủ"],
+d:0
+},
+
+{
+q:"Điểm nổi bật của thơ bốn chữ và năm chữ là",
+a:["số tiếng trong mỗi dòng thơ thường tương ứng với tên thể thơ","luôn có tám câu","luôn phải có niêm luật Đường luật","không có nhịp điệu"],
+d:0
+},
+
+{
+q:"Trong Đồng dao mùa xuân, hình ảnh người lính được thể hiện chủ yếu qua",
+a:["sự hi sinh và vẻ đẹp của tuổi trẻ trong chiến tranh","cuộc sống giàu sang","sự ham muốn danh lợi","cuộc sống bình yên nơi thành thị"],
+d:0
+},
+
+{
+q:"Nỗi nhớ quê hương trong Gặp lá cơm nếp gắn với",
+a:["những kỉ niệm thân thuộc của quê nhà và tình mẹ","cảnh thành phố hiện đại","những chuyến du lịch nước ngoài","cuộc sống nơi chiến trường mà không có gia đình"],
+d:0
+},
+
+{
+q:"Trong Vừa nhắm mắt vừa mở cửa sổ, người cha giúp người con",
+a:["cảm nhận vẻ đẹp của thiên nhiên và cuộc sống bằng nhiều giác quan","trở thành người giàu nhất","học cách cạnh tranh với bạn bè","tránh tiếp xúc với thiên nhiên"],
+d:0
+},
+
+{
+q:"Nhan đề Vừa nhắm mắt vừa mở cửa sổ gợi ra cách cảm nhận thế giới",
+a:["bằng cả giác quan, tâm hồn và sự tinh tế","chỉ bằng thị giác","chỉ bằng lí trí","bằng trí nhớ máy móc"],
+d:0
+},
+
+{
+q:"Trong Người thầy đầu tiên, nhân vật thầy Đuy-sen hiện lên là người",
+a:["tận tâm, giàu lòng yêu thương và có niềm tin vào học trò","lạnh lùng và ích kỉ","chỉ quan tâm đến tiền bạc","không có ảnh hưởng đến học trò"],
+d:0
+},
+
+{
+q:"Bài thơ Quê hương của Tế Hanh nổi bật với hình ảnh",
+a:["làng chài và cuộc sống của người dân miền biển","núi rừng Tây Bắc","phố phường Hà Nội","đồng ruộng miền Bắc"],
+d:0
+},
+
+{
+q:"Trong Mùa xuân nho nhỏ, hình ảnh “mùa xuân nho nhỏ” biểu tượng cho",
+a:["khát vọng được cống hiến phần tốt đẹp của mình cho cuộc đời","mong muốn sống ích kỉ","nỗi buồn tuổi thơ","sự giàu sang vật chất"],
+d:0
+},
+
+{
+q:"Cảm hứng chủ đạo của Mùa xuân nho nhỏ là",
+a:["tình yêu thiên nhiên, đất nước và khát vọng cống hiến","sự châm biếm xã hội","nỗi cô đơn của con người","khát vọng phiêu lưu"],
+d:0
+},
+
+{
+q:"Gò Me chủ yếu thể hiện",
+a:["tình yêu quê hương và vẻ đẹp của vùng đất Nam Bộ","sự phê phán xã hội","cuộc sống nơi đô thị","chiến tranh thế giới"],
+d:0
+},
+
+{
+q:"Một đặc điểm nổi bật của tùy bút là",
+a:["kết hợp ghi chép với cảm xúc, suy ngẫm và cách quan sát giàu tính cá nhân","chỉ trình bày số liệu","luôn có cốt truyện phức tạp","luôn sử dụng nhân vật thần thoại"],
+d:0
+},
+
+{
+q:"Tháng Giêng, mơ về trăng non rét ngọt thể hiện nổi bật",
+a:["tình yêu và sự say mê trước vẻ đẹp của thiên nhiên, mùa xuân","sự phê phán chiến tranh","nỗi sợ hãi trước thiên nhiên","tinh thần khoa học"],
+d:0
+},
+
+{
+q:"Điểm nổi bật của Chuyện cơm hến là",
+a:["từ món ăn gợi lên những nét văn hóa và tình cảm gắn bó với quê hương","chỉ hướng dẫn cách nấu ăn","chỉ giới thiệu lịch sử Việt Nam","kể về một cuộc chiến tranh"],
+d:0
+},
+
+{
+q:"Khi đọc văn bản về một lễ hội truyền thống, điều quan trọng nhất là nhận ra",
+a:["ý nghĩa văn hóa và giá trị cộng đồng của lễ hội","chỉ số lượng người tham gia","giá tiền của các món ăn","thời lượng của lễ hội"],
+d:0
+},
+
+{
+q:"Bài học chính của Đẽo cày giữa đường là",
+a:["cần có chính kiến, biết tiếp thu ý kiến nhưng không nên thiếu chủ động","phải nghe mọi ý kiến của người khác","không bao giờ được nghe người khác","càng thay đổi nhiều càng tốt"],
+d:0
+},
+
+{
+q:"Bài học chính của Ếch ngồi đáy giếng là",
+a:["không nên chủ quan, kiêu ngạo và nhìn nhận thế giới hạn hẹp","cần tránh học hỏi","càng ít hiểu biết càng tốt","chỉ cần tin vào bản thân"],
+d:0
+},
+
+{
+q:"Qua Con mối và con kiến, người đọc có thể nhận ra",
+a:["giá trị của sự chăm chỉ, biết lo xa và lao động","sự vô ích của lao động","lợi ích của việc lười biếng","sự cần thiết phải sống hưởng thụ"],
+d:0
+},
+
+{
+q:"Đặc điểm quan trọng của truyện khoa học viễn tưởng là",
+a:["xây dựng những điều tưởng tượng dựa trên cơ sở khoa học hoặc những giả định khoa học","hoàn toàn không liên quan đến khoa học","chỉ kể chuyện thần tiên","chỉ phản ánh lịch sử"],
+d:0
+},
+
+{
+q:"Một trong những đặc điểm của nhân vật trong truyện khoa học viễn tưởng là",
+a:["thường tham gia vào những tình huống, thế giới hoặc sự kiện vượt khỏi đời sống thông thường","luôn là nhân vật lịch sử","luôn là con vật","không có hành động"],
+d:0
+},
+
+{
+q:"Mục đích chính của văn bản tường trình là",
+a:["cung cấp thông tin về sự việc đã xảy ra để người có trách nhiệm nắm được tình hình","thuyết phục người đọc mua hàng","biểu lộ tình cảm","sáng tác văn học"],
+d:0
+},
+
+{
+q:"Khi phân tích một nhân vật văn học, cần dựa chủ yếu vào",
+a:["ngoại hình, hành động, lời nói, suy nghĩ, quan hệ với nhân vật khác và hoàn cảnh","tên nhân vật","số trang xuất hiện","sở thích của người đọc"],
+d:0
+},
+
+{
+q:"Nếu viết đoạn văn nêu cảm nghĩ về Bầy chim chìa vôi, ý nào phù hợp nhất?",
+a:["Câu chuyện giúp em biết trân trọng sự sống và những tình cảm trong sáng của tuổi thơ","Đây là một văn bản khoa học","Hai nhân vật không có cảm xúc","Tác phẩm chủ yếu nói về cách nuôi chim"],
+d:0
+},
+
+{
+q:"Một học sinh nói: “Trẻ em không thể có những tình cảm sâu sắc với thiên nhiên.” Dựa vào Bầy chim chìa vôi, nhận xét nào phù hợp?",
+a:["Nhận xét đó chưa đúng vì trẻ em cũng có thể có sự quan tâm, yêu thương và đồng cảm sâu sắc với thiên nhiên","Hoàn toàn đúng","Chỉ người lớn mới yêu thiên nhiên","Văn học không thể chứng minh điều này"],
+d:0
+},
+
+{
+q:"Nếu muốn miêu tả cảnh thiên nhiên trong Đi lấy mật, cách viết nào phù hợp nhất?",
+a:["Sử dụng hình ảnh, màu sắc, âm thanh và những chi tiết đặc trưng của rừng phương Nam","Chỉ dùng số liệu","Chỉ kể tên cây cối","Không cần miêu tả"],
+d:0
+},
+
+{
+q:"Từ Ngàn sao làm việc, cách nhìn thiên nhiên nào được khơi gợi?",
+a:["Thiên nhiên có thể được cảm nhận bằng trí tưởng tượng phong phú và tình yêu","Thiên nhiên chỉ có giá trị vật chất","Thiên nhiên hoàn toàn vô nghĩa","Con người không thể giao hòa với thiên nhiên"],
+d:0
+},
+
+{
+q:"Nếu em muốn làm một bài thơ năm chữ về quê hương, yếu tố nào cần chú ý?",
+a:["Mỗi dòng thơ thường có năm tiếng và cần tạo nhịp điệu, hình ảnh, cảm xúc phù hợp","Mỗi dòng bắt buộc có tám tiếng","Bài thơ phải có đúng 20 dòng","Không cần vần hoặc nhịp"],
+d:0
+},
+
+{
+q:"Từ Đồng dao mùa xuân, việc nhớ đến những người đã hi sinh có ý nghĩa",
+a:["thể hiện sự biết ơn đối với thế hệ đã cống hiến cho đất nước","chỉ nhằm kể chuyện lịch sử","nhằm gây cười","không có ý nghĩa"],
+d:0
+},
+
+{
+q:"Một người xa quê chỉ cần nghe một mùi hương quen thuộc đã nhớ đến mẹ và quê nhà. Tình huống này gần nhất với cảm xúc trong",
+a:["Gặp lá cơm nếp","Đẽo cày giữa đường","Ếch ngồi đáy giếng","Dòng “Sông Đen”"],
+d:0
+},
+
+{
+q:"Bài học quan trọng nhất từ Vừa nhắm mắt vừa mở cửa sổ có thể vận dụng vào đời sống là",
+a:["cần biết quan sát, lắng nghe và cảm nhận những điều bình dị xung quanh","chỉ cần nhìn bằng mắt","không cần quan tâm thiên nhiên","cảm xúc không quan trọng"],
+d:0
+},
+
+{
+q:"Một giáo viên tận tụy giúp học sinh nghèo tiếp tục đi học dù gặp nhiều khó khăn. Nhân vật này có điểm tương đồng rõ nhất với",
+a:["thầy Đuy-sen","nhân vật người thợ trong Đẽo cày giữa đường","con ếch","người kể chuyện trong Dòng “Sông Đen”"],
+d:0
+},
+
+{
+q:"Nếu phân tích nhân vật thầy Đuy-sen, luận điểm nào sâu sắc nhất?",
+a:["Thầy là biểu tượng của người giáo viên tận tâm, có niềm tin vào sức mạnh của giáo dục","Thầy chỉ là một nhân vật phụ","Thầy chủ yếu được xây dựng để gây cười","Thầy không có ảnh hưởng đến học trò"],
+d:0
+},
+
+{
+q:"Một người luôn tự hào rằng mình hiểu biết mọi thứ nhưng thực tế chỉ biết rất ít. Bài học từ Ếch ngồi đáy giếng có thể áp dụng để phê phán người này vì",
+a:["sự hiểu biết hạn hẹp dễ dẫn đến chủ quan, kiêu ngạo","người đó quá chăm chỉ","người đó quá khiêm tốn","người đó quá yêu thiên nhiên"],
+d:0
+},
+
+{
+q:"Nếu người thợ trong Đẽo cày giữa đường biết lắng nghe nhưng vẫn giữ được chính kiến, kết quả có thể",
+a:["hợp lí hơn vì biết chọn lọc ý kiến thay vì thay đổi theo tất cả mọi người","chắc chắn thất bại","không có sự khác biệt","càng phụ thuộc vào người khác"],
+d:0
+},
+
+{
+q:"Một câu tục ngữ đưa ra kinh nghiệm về thời tiết có giá trị nhất khi",
+a:["kinh nghiệm đó được đúc kết từ quan sát thực tế và được lưu truyền trong đời sống","người nói tự nghĩ ra","không liên quan đến thực tế","chỉ có tính giải trí"],
+d:0
+},
+
+{
+q:"Khi sử dụng tục ngữ trong bài nghị luận, cách dùng hiệu quả nhất là",
+a:["dùng đúng hoàn cảnh để làm dẫn chứng hoặc tăng sức thuyết phục cho lập luận","chèn càng nhiều càng tốt","dùng tục ngữ thay cho toàn bộ lập luận","không cần giải thích"],
+d:0
+},
+
+{
+q:"Nếu một học sinh bị bạn bè phản đối ý kiến, cách ứng xử phù hợp với tinh thần trao đổi trong chương trình là",
+a:["lắng nghe, tôn trọng ý kiến khác biệt và dùng lí lẽ để bảo vệ quan điểm","lớn tiếng áp đảo người khác","bỏ đi ngay","chế giễu người phản đối"],
+d:0
+},
+
+{
+q:"Một phát minh tưởng tượng có thể du hành dưới đáy đại dương nhưng được xây dựng dựa trên những hiểu biết về khoa học. Đây là đặc điểm phù hợp với",
+a:["truyện khoa học viễn tưởng","truyện ngụ ngôn","tùy bút","văn bản tường trình"],
+d:0
+},
+
+{
+q:"Điểm khác biệt quan trọng giữa truyện khoa học viễn tưởng và truyện cổ tích là",
+a:["khoa học viễn tưởng thường dựa vào giả định khoa học, trong khi cổ tích thường gắn với yếu tố kì ảo dân gian","hai thể loại hoàn toàn giống nhau","cổ tích luôn có số liệu khoa học","khoa học viễn tưởng không có trí tưởng tượng"],
+d:0
+},
+
+{
+q:"Nếu viết tóm tắt một truyện khoa học viễn tưởng, yếu tố nào cần được giữ lại?",
+a:["Nhân vật chính, sự kiện quan trọng, diễn biến chính và kết quả","Tất cả mọi chi tiết nhỏ","Chỉ lời thoại","Chỉ cảnh thiên nhiên"],
+d:0
+},
+
+{
+q:"Một văn bản thông tin về lễ hội sẽ thuyết phục hơn nếu",
+a:["có thông tin chính xác, cách trình bày rõ ràng và hình ảnh phù hợp","có thật nhiều cảm xúc cá nhân","không có nguồn thông tin","chỉ dùng những lời quảng cáo"],
+d:0
+},
+
+{
+q:"Khi viết tường trình một sự việc xảy ra ở trường, người viết cần đặc biệt chú ý",
+a:["tính chính xác, khách quan và trình tự diễn biến của sự việc","phóng đại sự việc","thêm chi tiết tưởng tượng","chỉ nêu cảm xúc cá nhân"],
+d:0
+},
+
+{
+q:"Nếu muốn viết bài biểu cảm về một người, điều quan trọng là",
+a:["kết hợp kể, tả với bộc lộ cảm xúc và suy nghĩ của người viết","chỉ liệt kê ngoại hình","chỉ kể tiểu sử","chỉ đưa số liệu"],
+d:0
+},
+
+{
+q:"Một bài văn phân tích nhân vật sẽ thuyết phục hơn khi",
+a:["nhận xét được chứng minh bằng những chi tiết cụ thể từ tác phẩm","chỉ đưa ra cảm xúc cá nhân","chỉ kể lại toàn bộ cốt truyện","không cần dẫn chứng"],
+d:0
+},
+
+{
+q:"Khi trình bày ý kiến về một hoạt động thiện nguyện, lập luận tốt nhất cần",
+a:["nêu quan điểm, lí do, dẫn chứng và có sự cân nhắc những ý kiến khác","chỉ nói “em rất thích”","chỉ kể một câu chuyện","không cần giải thích"],
+d:0
+},
+
+{
+q:"Nếu một truyền thống văn hóa đang dần mai một, giải pháp phù hợp nhất là",
+a:["tìm cách bảo tồn, giới thiệu và phát huy giá trị truyền thống phù hợp với đời sống hiện đại","loại bỏ hoàn toàn","chỉ giữ lại hình thức","không cần quan tâm"],
+d:0
+},
+
+{
+q:"Từ chủ đề Hòa điệu với tự nhiên, hành động nào thể hiện rõ nhất tinh thần của bài học?",
+a:["Sử dụng tài nguyên tiết kiệm và bảo vệ môi trường sống","Khai thác thiên nhiên không giới hạn","xả rác xuống sông","săn bắt động vật hoang dã"],
+d:0
+},
+
+{
+q:"Điểm chung sâu sắc giữa Bầy chim chìa vôi, Vừa nhắm mắt vừa mở cửa sổ và Quê hương là",
+a:["đều góp phần bồi đắp tình yêu đối với thiên nhiên, quê hương và những điều thân thuộc","đều là truyện khoa học viễn tưởng","đều nhằm phê phán xã hội","đều viết về chiến tranh"],
+d:0
+},
+
+{
+q:"Nếu đặt Mùa xuân nho nhỏ cạnh Đồng dao mùa xuân, điểm gặp gỡ nổi bật là",
+a:["tình yêu đất nước và sự trân trọng những đóng góp của con người cho cộng đồng","tiếng cười trào phúng","tình yêu đôi lứa","sự phê phán thiên nhiên"],
+d:0
+},
+
+{
+q:"Từ Gặp lá cơm nếp và Quê hương, có thể nhận thấy một đặc điểm chung của tình yêu quê hương là",
+a:["thường được đánh thức từ những hình ảnh, mùi vị, cảnh vật và kỉ niệm thân thuộc","chỉ được thể hiện bằng lời tuyên bố trực tiếp","chỉ xuất hiện trong chiến tranh","không liên quan đến kí ức"],
+d:0
+},
+
+{
+q:"Một người nói: “Chỉ cần tiếp thu tất cả ý kiến của người khác thì chắc chắn thành công.” Nếu vận dụng bài học từ Đẽo cày giữa đường, cách phản biện tốt nhất là",
+a:["cần biết lắng nghe nhưng phải chọn lọc và có chính kiến, nếu không dễ rơi vào tình trạng thiếu quyết đoán","hoàn toàn đồng ý","không bao giờ nghe ai","chỉ nghe người lớn"],
+d:0
+},
+
+{
+q:"Một người chỉ nhìn thấy thế giới qua kinh nghiệm rất hạn hẹp nhưng luôn cho rằng mình biết hết. Trường hợp này thể hiện rõ bài học của",
+a:["Ếch ngồi đáy giếng","Mùa xuân nho nhỏ","Quê hương","Chuyện cơm hến"],
+d:0
+},
+
+{
+q:"Điểm chung giữa truyện ngụ ngôn và truyện khoa học viễn tưởng là",
+a:["đều có thể sử dụng những tình huống tưởng tượng để gợi ra suy nghĩ về đời sống","đều phải dựa hoàn toàn trên sự kiện có thật","đều không có nhân vật","đều là văn bản nghị luận"],
+d:0
+},
+
+{
+q:"Điểm khác biệt quan trọng về mục đích giữa một bài văn nghị luận và một văn bản tường trình là",
+a:["nghị luận nhằm thuyết phục bằng lí lẽ, dẫn chứng; tường trình nhằm cung cấp thông tin về sự việc đã xảy ra","hai loại văn bản hoàn toàn giống nhau","tường trình luôn có yếu tố tưởng tượng","nghị luận không cần lập luận"],
+d:0
+},
+
+{
+q:"Nếu một bài viết về lễ hội chỉ miêu tả hoạt động mà không giải thích ý nghĩa văn hóa, hạn chế lớn nhất là",
+a:["người đọc khó hiểu được giá trị và ý nghĩa của lễ hội đối với cộng đồng","bài viết quá giàu thông tin","bài viết quá chính xác","bài viết có quá nhiều cảm xúc"],
+d:0
+},
+
+{
+q:"Một học sinh cho rằng văn hóa truyền thống chỉ thuộc về quá khứ. Từ Màu sắc trăm miền, nhận định phù hợp nhất là",
+a:["văn hóa truyền thống vẫn có giá trị trong hiện tại nếu được bảo tồn và phát huy phù hợp","nhận định hoàn toàn đúng","truyền thống không cần bảo tồn","chỉ người cao tuổi mới cần biết văn hóa"],
+d:0
+},
+
+{
+q:"Nếu Mùa xuân nho nhỏ được đọc trong bối cảnh hiện nay, “mùa xuân nho nhỏ” có thể được hiểu rộng hơn là",
+a:["mỗi người đóng góp một phần tốt đẹp của mình để tạo nên giá trị chung của xã hội","chỉ là mùa xuân của thiên nhiên","chỉ là tuổi trẻ","chỉ là một thời điểm trong năm"],
+d:0
+},
+
+{
+q:"Một người có tài năng nhưng không muốn đóng góp cho cộng đồng. Đặt cạnh tư tưởng của Mùa xuân nho nhỏ, có thể nhận xét",
+a:["tài năng càng có ý nghĩa khi được sử dụng theo hướng tích cực, có ích cho cuộc đời","không cần đóng góp","chỉ cần nổi tiếng","tài năng không có giá trị"],
+d:0
+},
+
+{
+q:"Trong Người thầy đầu tiên, giáo dục có ý nghĩa đặc biệt vì",
+a:["giáo dục có thể mở ra cơ hội thay đổi cuộc đời và tương lai của con người","giáo dục chỉ giúp con người kiếm tiền","giáo dục chỉ dành cho trẻ em thành phố","giáo dục không liên quan đến xã hội"],
+d:0
+},
+
+{
+q:"Nếu phân tích Người thầy đầu tiên mà chỉ kể lại cuộc đời An-tư-nai, bài viết sẽ thiếu",
+a:["sự phân tích ý nghĩa của nhân vật, chi tiết nghệ thuật và tư tưởng tác phẩm","tên tác phẩm","phần mở bài","số lượng nhân vật"],
+d:0
+},
+
+{
+q:"Điểm chung giữa Chuyện cơm hến và Hội lồng tồng là",
+a:["đều giúp người đọc khám phá vẻ đẹp văn hóa đời sống của các vùng miền Việt Nam","đều nói về chiến tranh","đều là truyện khoa học viễn tưởng","đều là truyện ngụ ngôn"],
+d:0
+},
+
+{
+q:"Nếu một món ăn truyền thống được giới trẻ biến đổi để phù hợp với khẩu vị hiện đại nhưng vẫn giữ được giá trị cốt lõi, đây có thể được xem là",
+a:["một cách phát huy văn hóa truyền thống trong đời sống hiện đại","sự xóa bỏ văn hóa","sự phủ nhận truyền thống","không liên quan đến văn hóa"],
+d:0
+},
+
+{
+q:"Một truyện khoa học viễn tưởng có nhiều phát minh kì lạ nhưng hoàn toàn không có cơ sở hoặc giả định khoa học. Điểm yếu lớn nhất là",
+a:["yếu tố khoa học – giả tưởng thiếu sức thuyết phục","truyện quá ngắn","nhân vật quá nhiều","không có phong cảnh"],
+d:0
+},
+
+{
+q:"Tại sao trí tưởng tượng trong truyện khoa học viễn tưởng vẫn cần gắn với hiện thực?",
+a:["Vì sự tưởng tượng thường xuất phát từ những vấn đề, khát vọng hoặc tri thức của con người trong thực tế","Vì không được phép tưởng tượng","Vì truyện khoa học viễn tưởng chỉ kể sự thật","Vì tác giả không được sáng tạo"],
+d:0
+},
+
+{
+q:"Nếu đọc sách chỉ để ghi nhớ nội dung mà không suy nghĩ, liên hệ hoặc đặt câu hỏi, người đọc đã bỏ qua điều quan trọng nào của Trang sách và cuộc sống?",
+a:["khả năng biến việc đọc thành trải nghiệm, nhận thức và sự phát triển của bản thân","số lượng trang sách","hình thức bìa sách","tên nhà xuất bản"],
+d:0
+},
+
+{
+q:"Hai học sinh đọc cùng một cuốn sách nhưng có hai cách hiểu khác nhau. Cách xử lí phù hợp nhất là",
+a:["trao đổi lí lẽ và dẫn chứng để cùng mở rộng cách hiểu, thay vì vội cho rằng một người chắc chắn sai","chỉ chấp nhận ý kiến của người học giỏi hơn","không cần trao đổi","người đọc trước luôn đúng"],
+d:0
+},
+
+{
+q:"Nếu phải lựa chọn một giá trị xuyên suốt từ Bài 1 đến Bài 10, phương án nào phù hợp nhất?",
+a:["Biết yêu thương, trân trọng con người, thiên nhiên, quê hương và chủ động hoàn thiện bản thân","Chỉ tập trung vào việc học thuộc văn bản","Chỉ quan tâm đến văn hóa truyền thống","Chỉ phát triển trí tưởng tượng"],
+d:0
+},
+
+{
+q:"Một bài văn nghị luận có quan điểm rõ ràng nhưng không có dẫn chứng. Bài viết có hạn chế chủ yếu nào?",
+a:["Sức thuyết phục chưa cao vì luận điểm chưa được chứng minh cụ thể","Bài viết chắc chắn sai hoàn toàn","Không cần sửa vì nghị luận không cần dẫn chứng","Chỉ cần viết dài hơn"],
+d:0
+},
+
+{
+q:"Một học sinh đưa ra ý kiến về việc bảo tồn văn hóa truyền thống và gặp ý kiến phản đối. Cách ứng xử tốt nhất là",
+a:["lắng nghe ý kiến đối lập, xác định điểm hợp lí rồi dùng lí lẽ và dẫn chứng để bảo vệ quan điểm của mình","ngắt lời người khác","phủ nhận ngay","chuyển sang công kích cá nhân"],
+d:0
+},
+
+{
+q:"Nếu kết hợp bài học về thiên nhiên ở Bài 9 với kiến thức về văn hóa ở Bài 5, có thể rút ra nhận xét nào?",
+a:["Văn hóa và đời sống con người luôn gắn với môi trường tự nhiên, vì vậy bảo vệ thiên nhiên cũng góp phần bảo vệ đời sống văn hóa","thiên nhiên và văn hóa hoàn toàn tách biệt","chỉ cần bảo tồn văn hóa, không cần bảo vệ thiên nhiên","văn hóa không chịu ảnh hưởng của môi trường"],
+d:0
+},
+
+{
+q:"Một học sinh đọc một cuốn sách, phát hiện một vấn đề xã hội trong đó, sau đó tìm thêm thông tin và trình bày quan điểm của mình. Quá trình này thể hiện rõ nhất tinh thần",
+a:["đọc sách để mở rộng nhận thức và kết nối tri thức với cuộc sống","đọc sách chỉ để giải trí","học thuộc máy móc","đọc sách không cần suy nghĩ"],
+d:0
+},
+
+{
+q:"Nhận định nào toàn diện nhất về mục tiêu của chương trình Ngữ văn 7 – Kết nối tri thức với cuộc sống?",
+a:["Không chỉ hiểu văn bản mà còn hình thành năng lực đọc, viết, nói và nghe; biết cảm nhận văn học, sử dụng tiếng Việt và vận dụng tri thức vào đời sống","Chủ yếu học thuộc tên tác giả và tác phẩm","Chủ yếu học cách kể lại văn bản","Chỉ tập trung vào kiến thức tiếng Việt"],
+d:0
+}
+
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    clearInterval(timer);
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+
+    let dung = Math.random() < 0.25;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>Bot có 25% xác suất trả lời đúng mỗi câu.</p>
+
+        <br>
+
+        <button onclick="location.href='capdo_van_khoi7.html'">
+            Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi7.html'">
+            Về chọn môn
+        </button>
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

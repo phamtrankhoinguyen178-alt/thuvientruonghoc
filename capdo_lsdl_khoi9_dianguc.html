@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 9 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 9 - CHẾ ĐỘ ĐỊA NGỤC
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+        q: "Bài học quan trọng nhất từ thắng lợi của Cách mạng tháng Tám năm 1945 là gì?",
+        a: ["Chuẩn bị lực lượng, xây dựng khối đoàn kết toàn dân và chớp đúng thời cơ", "Chỉ dựa vào sự giúp đỡ nước ngoài", "Không cần tổ chức lãnh đạo", "Chờ đối phương tự rút lui"],
+        d: 0
+    },
+
+    {
+        q: "Nếu dân số thành thị tăng nhanh nhưng cơ sở hạ tầng không phát triển tương ứng, hậu quả nào dễ xảy ra?",
+        a: ["Giảm ùn tắc giao thông", "Quá tải nhà ở, giao thông và dịch vụ công", "Giảm nhu cầu việc làm", "Không có ô nhiễm"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao chiến thắng Điện Biên Phủ được xem là thắng lợi có ý nghĩa quốc tế lớn?",
+        a: ["Chỉ ảnh hưởng đến Việt Nam", "Làm kết thúc Chiến tranh thế giới thứ hai", "Cổ vũ mạnh mẽ phong trào giải phóng dân tộc trên thế giới", "Thành lập ASEAN"],
+        d: 2
+    },
+
+    {
+        q: "Biện pháp nào phù hợp nhất để sử dụng bền vững tài nguyên đất ở Đồng bằng sông Cửu Long?",
+        a: ["Tăng sử dụng hóa chất không kiểm soát", "Đốt rừng ngập mặn", "Khai thác đất quá mức", "Luân canh cây trồng, cải tạo đất và thích ứng với hạn mặn"],
+        d: 3
+    },
+
+    {
+        q: "Nguyên nhân quan trọng khiến phong trào yêu nước Việt Nam đầu thế kỉ XX xuất hiện nhiều khuynh hướng mới là gì?",
+        a: ["Ảnh hưởng của tư tưởng dân chủ tư sản và sự thất bại của con đường cứu nước cũ", "Đất nước đã hoàn toàn độc lập", "Thực dân Pháp rút khỏi Đông Dương", "Chế độ phong kiến phát triển ổn định"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao cần phát triển các vùng kinh tế trọng điểm ở Việt Nam?",
+        a: ["Để tập trung toàn bộ dân cư vào một vùng", "Để tạo động lực tăng trưởng và thúc đẩy các vùng khác phát triển", "Để ngừng phát triển nông nghiệp", "Để hạn chế giao lưu kinh tế"],
+        d: 1
+    },
+
+    {
+        q: "Điểm khác biệt cơ bản giữa chiến lược Chiến tranh đặc biệt và Chiến tranh cục bộ của Mỹ ở miền Nam là gì?",
+        a: ["Chiến tranh đặc biệt không sử dụng quân đội", "Chiến tranh cục bộ không có vũ khí", "Chiến tranh đặc biệt chủ yếu dùng quân đội Sài Gòn, còn Chiến tranh cục bộ có quân Mỹ trực tiếp tham chiến với quy mô lớn", "Hai chiến lược hoàn toàn giống nhau"],
+        d: 2
+    },
+
+    {
+        q: "Nếu diện tích rừng đầu nguồn bị suy giảm nghiêm trọng, hậu quả lâu dài nào có thể xảy ra?",
+        a: ["Tăng khả năng giữ nước", "Giảm nguy cơ sạt lở", "Tăng độ phì nhiêu tự nhiên", "Gia tăng lũ quét, sạt lở và suy giảm nguồn nước"],
+        d: 3
+    },
+
+    {
+        q: "Tại sao thắng lợi ngày 30/4/1975 có ý nghĩa quyết định đối với lịch sử Việt Nam?",
+        a: ["Kết thúc chiến tranh, giải phóng miền Nam và thống nhất đất nước", "Mở đầu thời kì Bắc thuộc", "Thành lập nhà Nguyễn", "Kết thúc Chiến tranh thế giới thứ nhất"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao cần phát triển công nghiệp chế biến nông sản ở các vùng sản xuất nông nghiệp lớn?",
+        a: ["Để làm giảm giá trị nông sản", "Để nâng cao giá trị sản phẩm, giảm tổn thất và mở rộng thị trường", "Để hạn chế việc làm", "Để tăng lượng nông sản hư hỏng"],
+        d: 1
+    },
+
+    {
+        q: "Nguyên nhân chủ yếu khiến cuộc kháng chiến chống Pháp của nhân dân Việt Nam cuối thế kỉ XIX chưa giành thắng lợi là gì?",
+        a: ["Nhân dân không có tinh thần yêu nước", "Pháp không có lực lượng quân sự", "Thiếu đường lối lãnh đạo thống nhất và triều đình từng bước đầu hàng", "Việt Nam không có địa hình thuận lợi"],
+        d: 2
+    },
+
+    {
+        q: "Biến đổi khí hậu ảnh hưởng đến sản xuất nông nghiệp nước ta như thế nào?",
+        a: ["Luôn làm tăng năng suất", "Không ảnh hưởng đến cây trồng", "Làm biến mất hoàn toàn mùa vụ", "Gây hạn hán, lũ lụt, xâm nhập mặn và thay đổi mùa vụ"],
+        d: 3
+    },
+
+    {
+        q: "Vì sao Đảng Cộng sản Việt Nam ra đời được xem là bước ngoặt lịch sử của cách mạng Việt Nam?",
+        a: ["Chấm dứt khủng hoảng về đường lối và tổ chức lãnh đạo cách mạng", "Làm Việt Nam trở thành nước tư bản", "Kết thúc ngay ách thống trị của Pháp", "Thành lập chính quyền ở miền Nam"],
+        d: 0
+    },
+
+    {
+        q: "Giải pháp nào giúp giảm sự chênh lệch phát triển giữa đồng bằng và miền núi?",
+        a: ["Chỉ đầu tư vào thành phố lớn", "Phát triển giao thông, giáo dục, y tế và tạo việc làm ở miền núi", "Hạn chế giao lưu giữa các vùng", "Ngừng phát triển sản xuất"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao chiến thắng Điện Biên Phủ có tác động mạnh đến phong trào giải phóng dân tộc ở châu Á, châu Phi và Mỹ Latinh?",
+        a: ["Do Việt Nam trở thành thuộc địa", "Do chiến tranh thế giới bắt đầu", "Chứng minh một dân tộc thuộc địa có thể đánh bại thực dân xâm lược", "Do các nước ngừng đấu tranh"],
+        d: 2
+    },
+
+    {
+        q: "Tại sao cần phát triển kinh tế biển gắn với bảo vệ chủ quyền biển đảo?",
+        a: ["Để khai thác tài nguyên không giới hạn", "Để giảm hoạt động kinh tế", "Để hạn chế giao thông hàng hải", "Để khai thác hợp lí tài nguyên, phát triển kinh tế và bảo vệ lãnh thổ"],
+        d: 3
+    },
+
+    {
+        q: "Nguyên nhân quan trọng giúp Việt Nam đạt được nhiều thành tựu sau công cuộc Đổi mới là gì?",
+        a: ["Đường lối đổi mới đúng đắn, phát huy nội lực và mở rộng hội nhập quốc tế", "Đóng cửa nền kinh tế", "Không phát triển khoa học công nghệ", "Ngừng giao lưu với các quốc gia"],
+        d: 0
+    },
+
+    {
+        q: "Nếu nguồn nước sông bị ô nhiễm nghiêm trọng, ngành kinh tế nào chịu ảnh hưởng trực tiếp?",
+        a: ["Chỉ ngành du lịch", "Nông nghiệp, thủy sản, công nghiệp và sinh hoạt", "Chỉ ngành giao thông", "Không có ngành nào"],
+        d: 1
+    },
+
+    {
+        q: "Bài học lớn từ quá trình đấu tranh giành độc lập của Việt Nam trong thế kỉ XX là gì?",
+        a: ["Không cần đoàn kết", "Chỉ dựa vào sức mạnh quân sự", "Kết hợp sức mạnh dân tộc với sức mạnh thời đại", "Không cần sự lãnh đạo"],
+        d: 2
+    },
+
+    {
+        q: "Giải pháp quan trọng để phát triển kinh tế bền vững ở Việt Nam là gì?",
+        a: ["Khai thác tài nguyên không giới hạn", "Phá rừng để mở rộng sản xuất", "Ưu tiên tăng trưởng bằng mọi giá", "Kết hợp tăng trưởng kinh tế với bảo vệ môi trường và tiến bộ xã hội"],
+        d: 3
+    }
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 10;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.85;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 85% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi9_dianguc.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

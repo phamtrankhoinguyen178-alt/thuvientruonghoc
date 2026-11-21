@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDCD 9 - Chế độ trung bình</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+    .top {
+        font-size: 16px;
+    }
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_gdcd_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">20</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🌟 GDCD KHỐI 9 - CHẾ ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+
+{
+    q: "Một học sinh đặt mục tiêu trở thành bác sĩ để chăm sóc sức khỏe cộng đồng. Bạn ấy cần làm gì để thực hiện lí tưởng?",
+    a: [
+        "Chỉ nói về ước mơ mà không hành động",
+        "Học tập nghiêm túc, rèn luyện kiến thức và kĩ năng",
+        "Chờ người khác giúp đỡ hoàn toàn",
+        "Bỏ qua các môn học không yêu thích"
+    ],
+    d: 1
+},
+
+{
+    q: "Trong lớp, một bạn mắc lỗi và đã chân thành xin lỗi. Em nên ứng xử thế nào để thể hiện khoan dung?",
+    a: [
+        "Nhắc lại lỗi của bạn trước mọi người",
+        "Không bao giờ nói chuyện với bạn nữa",
+        "Tha thứ và động viên bạn sửa sai",
+        "Rủ các bạn khác xa lánh bạn"
+    ],
+    d: 2
+},
+
+{
+    q: "Trong cuộc tranh luận, em nhận thấy ý kiến của mình chưa chính xác. Cách ứng xử nào thể hiện tính khách quan?",
+    a: [
+        "Thừa nhận điểm chưa đúng và tiếp thu ý kiến hợp lí",
+        "Cố bảo vệ ý kiến dù biết sai",
+        "Tức giận với người góp ý",
+        "Bỏ đi và không tiếp tục trao đổi"
+    ],
+    d: 0
+},
+
+{
+    q: "Một giáo viên chấm bài kiểm tra dựa trên kết quả thực tế, không thiên vị học sinh nào. Điều này thể hiện:",
+    a: [
+        "Tính ích kỉ",
+        "Sự cảm tính",
+        "Sự thiên vị",
+        "Tính công bằng"
+    ],
+    d: 3
+},
+
+{
+    q: "Hai nhóm học sinh xảy ra mâu thuẫn khi làm việc chung. Cách giải quyết phù hợp nhất là:",
+    a: [
+        "Dùng lời nói xúc phạm nhau",
+        "Bình tĩnh trao đổi, lắng nghe và tìm tiếng nói chung",
+        "Không hợp tác nữa",
+        "Lôi kéo người khác đứng về phía mình"
+    ],
+    d: 1
+},
+
+{
+    q: "Khi tìm hiểu về văn hóa của một quốc gia khác, em thấy có phong tục khác với Việt Nam. Em nên:",
+    a: [
+        "Chê bai phong tục đó",
+        "Ép người khác làm theo phong tục Việt Nam",
+        "Tìm hiểu và tôn trọng sự khác biệt văn hóa",
+        "Không cho rằng văn hóa đó có giá trị"
+    ],
+    d: 2
+},
+
+{
+    q: "Nhà trường tổ chức hoạt động quyên góp sách cho học sinh có hoàn cảnh khó khăn. Việc tham gia phù hợp thể hiện:",
+    a: [
+        "Trách nhiệm với cộng đồng",
+        "Mong muốn được khen thưởng",
+        "Sự cạnh tranh cá nhân",
+        "Thái độ thờ ơ"
+    ],
+    d: 0
+},
+
+{
+    q: "Một nhóm bạn phát hiện di tích lịch sử ở địa phương bị xả rác. Việc làm phù hợp là:",
+    a: [
+        "Bỏ mặc vì không liên quan",
+        "Viết tên lên tường di tích",
+        "Quay video chế giễu",
+        "Nhắc nhở phù hợp và báo người có trách nhiệm"
+    ],
+    d: 3
+},
+
+{
+    q: "Gia đình em gặp khó khăn về kinh tế. Em nên thích ứng với hoàn cảnh bằng cách nào?",
+    a: [
+        "Đòi hỏi gia đình đáp ứng mọi mong muốn",
+        "Chia sẻ với gia đình, điều chỉnh chi tiêu và cố gắng học tập",
+        "Bỏ học để không phải chịu khó khăn",
+        "Trách móc cha mẹ"
+    ],
+    d: 1
+},
+
+{
+    q: "Khi một phương pháp học tập cũ không còn hiệu quả, em nên:",
+    a: [
+        "Tiếp tục sử dụng dù kết quả kém",
+        "Ngừng học môn đó",
+        "Tìm hiểu và thử phương pháp học tập phù hợp hơn",
+        "Chờ bạn làm hộ bài tập"
+    ],
+    d: 2
+},
+
+{
+    q: "Một quảng cáo giới thiệu sản phẩm với nhiều lời hứa hấp dẫn. Trước khi mua, em nên:",
+    a: [
+        "Kiểm tra nguồn gốc, chất lượng và thông tin sản phẩm",
+        "Mua ngay vì quảng cáo đẹp",
+        "Mua theo số đông",
+        "Không cần quan tâm giá cả"
+    ],
+    d: 0
+},
+
+{
+    q: "Bạn A sử dụng toàn bộ tiền tiết kiệm để mua một món đồ không cần thiết. Lời khuyên phù hợp là:",
+    a: [
+        "Tiếp tục mua thêm đồ",
+        "Vay tiền để mua nhiều hơn",
+        "Không cần quan tâm đến tiền",
+        "Lập kế hoạch chi tiêu và ưu tiên nhu cầu cần thiết"
+    ],
+    d: 3
+},
+
+{
+    q: "Một người kinh doanh bán hàng giả và quảng cáo sai sự thật. Hành vi này có thể dẫn đến:",
+    a: [
+        "Được người tiêu dùng tin tưởng hơn",
+        "Vi phạm pháp luật và phải chịu trách nhiệm pháp lí",
+        "Được miễn mọi trách nhiệm",
+        "Được khuyến khích trong kinh doanh"
+    ],
+    d: 1
+},
+
+{
+    q: "Một học sinh chứng kiến bạn mình vi phạm nội quy giao thông. Em nên:",
+    a: [
+        "Làm theo bạn",
+        "Cổ vũ hành vi đó",
+        "Giải thích tác hại và khuyên bạn chấp hành quy định",
+        "Che giấu hành vi vi phạm"
+    ],
+    d: 2
+},
+
+{
+    q: "Công dân thực hiện quyền tự do kinh doanh cần:",
+    a: [
+        "Tuân thủ quy định pháp luật về ngành nghề và điều kiện kinh doanh",
+        "Kinh doanh hàng hóa bị cấm",
+        "Không cần thực hiện nghĩa vụ thuế",
+        "Tự ý sử dụng tài sản của người khác"
+    ],
+    d: 0
+},
+
+{
+    q: "Một người có hành vi gây thiệt hại tài sản của người khác. Người đó có thể phải:",
+    a: [
+        "Không chịu trách nhiệm trong mọi trường hợp",
+        "Được miễn trách nhiệm vì không quen biết nạn nhân",
+        "Chỉ cần xin lỗi là luôn đủ",
+        "Bồi thường thiệt hại và chịu trách nhiệm theo quy định pháp luật"
+    ],
+    d: 3
+},
+
+{
+    q: "Trong hoạt động tập thể, một thành viên không hoàn thành nhiệm vụ được giao. Cách ứng xử tốt nhất là:",
+    a: [
+        "Loại bỏ thành viên đó ngay lập tức",
+        "Trao đổi, tìm nguyên nhân và cùng hỗ trợ hoàn thành nhiệm vụ",
+        "Đổ hết lỗi cho thành viên đó",
+        "Không quan tâm đến kết quả chung"
+    ],
+    d: 1
+},
+
+{
+    q: "Một học sinh chia sẻ thông tin chưa được kiểm chứng trên mạng xã hội. Hành động này có thể:",
+    a: [
+        "Luôn mang lại lợi ích",
+        "Không gây ảnh hưởng đến ai",
+        "Gây hiểu lầm và ảnh hưởng đến người khác",
+        "Giúp thông tin trở nên chính xác"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi thấy một hành vi có dấu hiệu vi phạm pháp luật tại địa phương, em nên:",
+    a: [
+        "Thông báo cho người lớn hoặc cơ quan có thẩm quyền",
+        "Tự ý giải quyết bằng bạo lực",
+        "Đăng thông tin cá nhân của người liên quan lên mạng",
+        "Cổ vũ hành vi vi phạm"
+    ],
+    d: 0
+},
+
+{
+    q: "Một học sinh vừa học tập vừa tham gia hoạt động tình nguyện hợp lí. Điều này thể hiện:",
+    a: [
+        "Không có mục tiêu sống",
+        "Thiếu trách nhiệm với bản thân",
+        "Chỉ muốn được chú ý",
+        "Biết kết hợp phát triển bản thân với trách nhiệm cộng đồng"
+    ],
+    d: 3
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 20;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 20;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    document.querySelectorAll(".answer").forEach(x => {
+        x.style.pointerEvents = "none";
+    });
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+
+        <button onclick="location.href='capdo_gdcd_khoi9_tb.html'">
+            Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_gdcd_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

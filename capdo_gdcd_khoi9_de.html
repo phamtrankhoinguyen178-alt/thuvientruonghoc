@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDCD 9 - Chế độ dễ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+    .top {
+        font-size: 16px;
+    }
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_gdcd_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">20</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🌟 GDCD KHỐI 9 - CHẾ ĐỘ DỄ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+
+{
+    q: "Sống có lí tưởng là gì?",
+    a: [
+        "Sống không có mục tiêu",
+        "Xác định mục đích sống tốt đẹp và cố gắng thực hiện",
+        "Chỉ quan tâm đến lợi ích cá nhân",
+        "Sống phụ thuộc vào người khác"
+    ],
+    d: 1
+},
+
+{
+    q: "Người sống có lí tưởng thường có biểu hiện nào?",
+    a: [
+        "Có mục tiêu và nỗ lực thực hiện mục tiêu",
+        "Ngại khó khăn",
+        "Không quan tâm tương lai",
+        "Chỉ làm việc mình thích"
+    ],
+    d: 0
+},
+
+{
+    q: "Khoan dung có nghĩa là gì?",
+    a: [
+        "Luôn tức giận với người khác",
+        "Không quan tâm đến lỗi lầm",
+        "Biết tha thứ và tôn trọng người khác",
+        "Chấp nhận mọi hành vi sai trái"
+    ],
+    d: 2
+},
+
+{
+    q: "Hành vi nào thể hiện lòng khoan dung?",
+    a: [
+        "Chế giễu người mắc lỗi",
+        "Biết tha thứ khi người khác nhận lỗi và sửa sai",
+        "Trả thù người làm mình buồn",
+        "Nói xấu bạn bè"
+    ],
+    d: 1
+},
+
+{
+    q: "Thế nào là khách quan?",
+    a: [
+        "Nhìn nhận sự việc theo ý thích",
+        "Đánh giá người khác theo cảm tính",
+        "Luôn bênh vực bạn thân",
+        "Nhìn nhận sự việc đúng với thực tế"
+    ],
+    d: 3
+},
+
+{
+    q: "Công bằng là gì?",
+    a: [
+        "Đối xử bình đẳng, không thiên vị",
+        "Chỉ giúp đỡ người thân",
+        "Ưu tiên người quen",
+        "Đối xử khác nhau vì sở thích"
+    ],
+    d: 0
+},
+
+{
+    q: "Bảo vệ hòa bình có ý nghĩa gì?",
+    a: [
+        "Làm gia tăng xung đột",
+        "Khuyến khích bạo lực",
+        "Góp phần xây dựng cuộc sống ổn định, hạnh phúc",
+        "Tạo ra sự thù địch"
+    ],
+    d: 2
+},
+
+{
+    q: "Hành động nào góp phần bảo vệ hòa bình?",
+    a: [
+        "Gây gổ với bạn bè",
+        "Giải quyết mâu thuẫn bằng đối thoại",
+        "Cổ vũ bạo lực",
+        "Phân biệt đối xử"
+    ],
+    d: 1
+},
+
+{
+    q: "Tích cực tham gia các hoạt động cộng đồng thể hiện điều gì?",
+    a: [
+        "Trách nhiệm với xã hội",
+        "Sự ích kỉ",
+        "Thái độ thờ ơ",
+        "Sự thiếu quan tâm"
+    ],
+    d: 0
+},
+
+{
+    q: "Hành vi nào thể hiện trách nhiệm với cộng đồng?",
+    a: [
+        "Xả rác nơi công cộng",
+        "Phá hoại tài sản chung",
+        "Thờ ơ với người gặp khó khăn",
+        "Tham gia hoạt động tình nguyện"
+    ],
+    d: 3
+},
+
+{
+    q: "Di sản văn hóa là gì?",
+    a: [
+        "Những tài sản chỉ có giá trị kinh tế",
+        "Sản phẩm văn hóa có giá trị lịch sử, văn hóa, khoa học",
+        "Những đồ vật không còn sử dụng",
+        "Các công trình mới xây dựng"
+    ],
+    d: 1
+},
+
+{
+    q: "Hành vi nào thể hiện bảo vệ di sản văn hóa?",
+    a: [
+        "Vẽ bậy lên di tích",
+        "Phá hoại công trình cổ",
+        "Giữ gìn và giới thiệu giá trị di sản",
+        "Lấy cổ vật làm của riêng"
+    ],
+    d: 2
+},
+
+{
+    q: "Thế nào là thích ứng với thay đổi?",
+    a: [
+        "Chủ động điều chỉnh bản thân phù hợp với hoàn cảnh mới",
+        "Luôn phản đối cái mới",
+        "Trốn tránh khó khăn",
+        "Không thay đổi cách làm dù không hiệu quả"
+    ],
+    d: 0
+},
+
+{
+    q: "Khi gặp một thay đổi trong học tập, em nên:",
+    a: [
+        "Bỏ cuộc",
+        "Phàn nàn và không hợp tác",
+        "Trốn tránh nhiệm vụ",
+        "Bình tĩnh tìm cách thích nghi"
+    ],
+    d: 3
+},
+
+{
+    q: "Tiêu dùng thông minh là gì?",
+    a: [
+        "Mua càng nhiều càng tốt",
+        "Lựa chọn hàng hóa phù hợp với nhu cầu và khả năng",
+        "Mua theo quảng cáo",
+        "Không cần quan tâm chất lượng"
+    ],
+    d: 1
+},
+
+{
+    q: "Khi mua một sản phẩm, em nên quan tâm điều gì?",
+    a: [
+        "Chỉ quan tâm bao bì",
+        "Mua sản phẩm đắt nhất",
+        "Chất lượng, giá cả và nguồn gốc sản phẩm",
+        "Chỉ mua theo bạn bè"
+    ],
+    d: 2
+},
+
+{
+    q: "Vi phạm pháp luật là hành vi nào?",
+    a: [
+        "Hành vi trái pháp luật, có lỗi và phải chịu trách nhiệm pháp lí",
+        "Hành vi giúp đỡ cộng đồng",
+        "Hành vi tuân thủ quy định",
+        "Hành vi thực hiện nghĩa vụ"
+    ],
+    d: 0
+},
+
+{
+    q: "Trách nhiệm pháp lí có tác dụng gì?",
+    a: [
+        "Khuyến khích vi phạm",
+        "Làm mất trật tự xã hội",
+        "Giúp người vi phạm tránh nghĩa vụ",
+        "Giáo dục và ngăn ngừa hành vi vi phạm pháp luật"
+    ],
+    d: 3
+},
+
+{
+    q: "Quyền tự do kinh doanh của công dân được hiểu là:",
+    a: [
+        "Được kinh doanh mọi mặt hàng kể cả hàng cấm",
+        "Được lựa chọn ngành nghề kinh doanh theo quy định pháp luật",
+        "Không cần thực hiện nghĩa vụ thuế",
+        "Được kinh doanh không cần điều kiện"
+    ],
+    d: 1
+},
+
+{
+    q: "Khi phát hiện hành vi vi phạm pháp luật, công dân nên:",
+    a: [
+        "Cổ vũ hành vi đó",
+        "Che giấu người vi phạm",
+        "Thông báo cho cơ quan có thẩm quyền khi cần thiết",
+        "Tự ý xử phạt người vi phạm"
+    ],
+    d: 2
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 20;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 20;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    document.querySelectorAll(".answer").forEach(x => {
+        x.style.pointerEvents = "none";
+    });
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+
+        <button onclick="location.href='capdo_gdcd_khoi9_de.html'">
+            Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_gdcd_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toán 6 - Địa ngục</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #000000, #4b0000, #a00000);
+    min-height: 100vh;
+}
+
+.top {
+    background: #111;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 3px 15px #000;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #4da6ff;
+}
+
+.bot {
+    color: #ff3333;
+}
+
+.time {
+    background: #333;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.bot-time {
+    background: #b00000;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.main {
+    max-width: 950px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px red;
+}
+
+.card {
+    background: #171717;
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px #000;
+    border: 2px solid #8b0000;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #555;
+    border-radius: 12px;
+    background: #242424;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #420000;
+    border-color: red;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #155d25;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #700000;
+    border-color: #ff3333;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: #171717;
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 30px #000;
+    border: 2px solid #8b0000;
+}
+
+.result h1 {
+    font-size: 40px;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #ff3333;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result h2 {
+    margin: 12px;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #b00000;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #e00000;
+}
+
+@media(max-width:600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 15px;
+    }
+
+    .title {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ Bạn: <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+
+    <div class="bot-time">
+        🔥 Bot: <span id="botTimer">5</span>s
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ☠️ TOÁN KHỐI 6 - ĐỊA NGỤC ☠️
+    </div>
+
+    <div id="game" class="card">
+
+        <div class="question" id="question"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="status" id="status">
+            ☠️ Bot đang suy nghĩ...
+        </div>
+
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+
+{
+    q: "Tính: (-3)² - 2³ + (-4) × (-2) = ?",
+    a: ["9", "17", "25", "33"],
+    d: 1
+},
+
+{
+    q: "Tính: 3/4 - 5/6 + 7/12 = ?",
+    a: ["1/2", "5/12", "7/12", "3/4"],
+    d: 0
+},
+
+{
+    q: "Tính: (-2)⁴ - 3² × 2 = ?",
+    a: ["-2", "2", "7", "14"],
+    d: 1
+},
+
+{
+    q: "ƯCLN(144, 216) = ?",
+    a: ["24", "36", "48", "72"],
+    d: 1
+},
+
+{
+    q: "BCNN(36, 48) = ?",
+    a: ["72", "96", "144", "192"],
+    d: 1
+},
+
+{
+    q: "Tìm x: 3(2x - 5) = 4x + 7",
+    a: ["9", "10", "11", "12"],
+    d: 2
+},
+
+{
+    q: "Tính: 2⁵ - 3² + 4³ : 8 = ?",
+    a: ["23", "31", "41", "55"],
+    d: 2
+},
+
+{
+    q: "Một số tự nhiên khi chia cho 12 dư 7. Khi chia số đó cho 6 thì số dư là?",
+    a: ["0", "1", "5", "7"],
+    d: 2
+},
+
+{
+    q: "Phân tích 360 thành thừa số nguyên tố là?",
+    a: [
+        "2³ × 3² × 5",
+        "2² × 3³ × 5",
+        "2³ × 3 × 5²",
+        "2⁴ × 3² × 5"
+    ],
+    d: 0
+},
+
+{
+    q: "Tính: 5/8 × 16/15 + 1/3 = ?",
+    a: ["2/3", "1", "4/5", "5/6"],
+    d: 1
+},
+
+{
+    q: "Tìm x: (x - 3)/4 = 5",
+    a: ["17", "20", "23", "27"],
+    d: 2
+},
+
+{
+    q: "Một số có hai chữ số. Tổng hai chữ số bằng 11 và số đó chia hết cho 9. Số đó là?",
+    a: ["29", "38", "47", "56"],
+    d: 1
+},
+
+{
+    q: "Tổng của 7 số tự nhiên liên tiếp là 84. Số lớn nhất là?",
+    a: ["14", "15", "16", "17"],
+    d: 3
+},
+
+{
+    q: "Tìm x: 2(x + 3) - 5 = 3x - 4",
+    a: ["3", "4", "5", "6"],
+    d: 2
+},
+
+{
+    q: "Một hình chữ nhật có diện tích 240 cm². Nếu tăng chiều dài 4 cm thì diện tích tăng 40 cm². Chiều rộng là?",
+    a: ["8 cm", "9 cm", "10 cm", "12 cm"],
+    d: 2
+},
+
+{
+    q: "Tính: 1/2 + 2/3 - 3/4 + 5/6 = ?",
+    a: ["5/4", "7/6", "4/3", "3/2"],
+    d: 2
+},
+
+{
+    q: "Số nhỏ nhất khác 0 chia hết cho cả 12, 18 và 30 là?",
+    a: ["90", "120", "180", "360"],
+    d: 2
+},
+
+{
+    q: "Một số tự nhiên chia cho 15 dư 4. Số nào sau đây có thể là số đó?",
+    a: ["49", "52", "58", "64"],
+    d: 0
+},
+
+{
+    q: "Tìm x: 5(x - 2) - 2(x + 1) = 19",
+    a: ["5", "6", "7", "8"],
+    d: 2
+},
+
+{
+    q: "Một lớp có số học sinh từ 30 đến 50. Khi chia thành nhóm 4 hoặc nhóm 6 đều dư 2. Số học sinh của lớp là?",
+    a: ["32", "38", "42", "50"],
+    d: 1
+},
+
+{
+    q: "Tính: (-5)² - [3² + (-4)²] = ?",
+    a: ["0", "2", "4", "8"],
+    d: 1
+},
+
+{
+    q: "Tìm số tự nhiên nhỏ nhất có ba chữ số chia hết cho cả 8 và 15.",
+    a: ["100", "120", "150", "180"],
+    d: 1
+},
+
+{
+    q: "Một số có ba chữ số chia hết cho 5, 9 và 2. Số nào sau đây nhỏ nhất?",
+    a: ["180", "270", "360", "450"],
+    d: 0
+},
+
+{
+    q: "Tìm x: 4x - 3(2x - 1) = 9",
+    a: ["-4", "-3", "3", "4"],
+    d: 0
+},
+
+{
+    q: "Một hình vuông có chu vi 52 cm. Diện tích là?",
+    a: ["144 cm²", "156 cm²", "169 cm²", "196 cm²"],
+    d: 2
+},
+
+{
+    q: "Tính: 2/3 : 4/9 - 1/2 = ?",
+    a: ["1", "5/4", "3/2", "2"],
+    d: 1
+},
+
+{
+    q: "Nếu x + y = 20 và x - y = 6 thì x bằng?",
+    a: ["7", "10", "13", "14"],
+    d: 2
+},
+
+{
+    q: "Số nào sau đây là số nguyên tố?",
+    a: ["51", "57", "61", "69"],
+    d: 2
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+
+let thoiGianBan = 15;
+let thoiGianBot = 5;
+
+let timerBan;
+let timerBot;
+
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+
+    thoiGianBan = 15;
+    thoiGianBot = 5;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = 15;
+    document.getElementById("botTimer").innerText = 5;
+
+    document.getElementById("question").innerText =
+        danhSach[cau].q;
+
+    document.getElementById("status").innerText =
+        "☠️ Bot đang suy nghĩ...";
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+
+        html += `
+        <div class="answer" onclick="traLoi(${i}, this)">
+            ${String.fromCharCode(65 + i)}. ${x}
+        </div>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    timerBan = setInterval(() => {
+
+        thoiGianBan--;
+
+        document.getElementById("timer").innerText =
+            thoiGianBan;
+
+        if (thoiGianBan <= 0) {
+
+            clearInterval(timerBan);
+
+            hetThoiGian();
+
+        }
+
+    }, 1000);
+
+    timerBot = setInterval(() => {
+
+        thoiGianBot--;
+
+        document.getElementById("botTimer").innerText =
+            thoiGianBot;
+
+        if (thoiGianBot <= 0) {
+
+            clearInterval(timerBot);
+
+            botTraLoi();
+
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timerBan);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+
+        diemBan++;
+
+        element.classList.add("correct");
+
+    } else {
+
+        element.classList.add("wrong");
+
+        document.querySelectorAll(".answer")[dung]
+        .classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").innerText =
+        diemBan;
+
+    document.getElementById("status").innerText =
+        "👤 Bạn đã trả lời! Bot vẫn đang suy nghĩ...";
+
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    document.querySelectorAll(".answer")[dung]
+    .classList.add("correct");
+
+    document.getElementById("status").innerText =
+        "⏰ Bạn hết thời gian! Bot vẫn đang suy nghĩ...";
+
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.9;
+
+    if (dung) {
+
+        diemBot++;
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời đúng!";
+
+    } else {
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời sai!";
+
+    }
+
+    document.getElementById("botScore").innerText =
+        diemBot;
+
+    setTimeout(() => {
+
+        cau++;
+
+        if (cau >= 10) {
+
+            ketThucTran();
+
+        } else {
+
+            hienThiCau();
+
+        }
+
+    }, 1000);
+}
+
+function ketThucTran() {
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    document.getElementById("game").style.display =
+        "none";
+
+    document.querySelector(".info").style.display =
+        "none";
+
+    document.querySelector(".title").style.display =
+        "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">☠️ BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🔥 HÒA!</h1>
+            <p>Bạn đã sống sót trước Bot Địa Ngục!</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🔥 Bot: 5 giây/câu</p>
+
+        <p>☠️ Bot có 90% khả năng trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.href='capdo_toan_khoi6.html'">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi6.html'">
+            🏠 Về chọn môn
+        </button>
+
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

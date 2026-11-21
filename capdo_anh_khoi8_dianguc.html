@@ -1,0 +1,743 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiếng Anh 8 - Địa ngục</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #8e0e00);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 10px 18px;
+    background: white;
+    color: #d63031;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 3px 8px #0002;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px #000;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0005;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #ffe0d6;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.answer.disabled {
+    pointer-events: none;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    font-size: 36px;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result h2 {
+    margin: 12px;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #d63031;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #a00000;
+}
+
+@media(max-width:600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 14px;
+        gap: 5px;
+    }
+
+    .time {
+        padding: 9px 4px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+
+    .answer {
+        font-size: 16px;
+    }
+
+    .result {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<a class="back" href="capdo_anh_khoi8.html">
+    ⬅ Quay về
+</a>
+
+<div class="top">
+
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ Bạn: <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 TIẾNG ANH KHỐI 8 - ĐỊA NGỤC 🔥
+    </div>
+
+    <div id="game" class="card">
+
+        <div class="question" id="question"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="status" id="status">
+            🤖 Bot đang suy nghĩ...
+        </div>
+
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/20
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+
+{
+    q: "Had I known the truth, I _____ differently.",
+    a: [
+        "would act",
+        "would have acted",
+        "will act",
+        "had acted"
+    ],
+    d: 1
+},
+
+{
+    q: "Rarely _____ such an extraordinary performance.",
+    a: [
+        "I have seen",
+        "have I seen",
+        "I saw",
+        "did I have seen"
+    ],
+    d: 1
+},
+
+{
+    q: "No sooner _____ the station than the train departed.",
+    a: [
+        "we reached",
+        "had we reached",
+        "we had reached",
+        "did we reached"
+    ],
+    d: 1
+},
+
+{
+    q: "If she _____ harder last year, she would be more confident now.",
+    a: [
+        "studied",
+        "had studied",
+        "would study",
+        "has studied"
+    ],
+    d: 1
+},
+
+{
+    q: "The proposal, _____ was discussed yesterday, has finally been approved.",
+    a: [
+        "that",
+        "what",
+        "which",
+        "whose"
+    ],
+    d: 2
+},
+
+{
+    q: "Not until he apologized _____ willing to forgive him.",
+    a: [
+        "she was",
+        "was she",
+        "she had",
+        "did she was"
+    ],
+    d: 1
+},
+
+{
+    q: "Choose the correct answer: The more carefully you examine the evidence, _____ the conclusion becomes.",
+    a: [
+        "the clearer",
+        "the clearest",
+        "clearer",
+        "the more clearly"
+    ],
+    d: 0
+},
+
+{
+    q: "Which word is closest in meaning to 'inevitable'?",
+    a: [
+        "Unavoidable",
+        "Unbelievable",
+        "Unnecessary",
+        "Unusual"
+    ],
+    d: 0
+},
+
+{
+    q: "The teacher insisted that every student _____ the assignment on time.",
+    a: [
+        "submits",
+        "submitted",
+        "submit",
+        "submitting"
+    ],
+    d: 2
+},
+
+{
+    q: "Were I in your position, I _____ the opportunity immediately.",
+    a: [
+        "accept",
+        "will accept",
+        "would accept",
+        "accepted"
+    ],
+    d: 2
+},
+
+{
+    q: "Choose the correct answer: By next December, she _____ English for five years.",
+    a: [
+        "will study",
+        "will have been studying",
+        "has studied",
+        "had studied"
+    ],
+    d: 1
+},
+
+{
+    q: "The project _____ by the students before the deadline.",
+    a: [
+        "must complete",
+        "must be completed",
+        "must completed",
+        "must have complete"
+    ],
+    d: 1
+},
+
+{
+    q: "He speaks as though he _____ everything about the subject.",
+    a: [
+        "knows",
+        "knew",
+        "has known",
+        "will know"
+    ],
+    d: 1
+},
+
+{
+    q: "Which sentence contains a correctly used reduced relative clause?",
+    a: [
+        "The girl standing near the door is my sister.",
+        "The girl stands near the door is my sister.",
+        "The girl stood near the door is my sister.",
+        "The girl to standing near the door is my sister."
+    ],
+    d: 0
+},
+
+{
+    q: "Choose the correct answer: Despite _____ repeatedly, he refused to change his decision.",
+    a: [
+        "warn",
+        "warning",
+        "having been warned",
+        "to have warned"
+    ],
+    d: 2
+},
+
+{
+    q: "Which word is closest in meaning to 'meticulous'?",
+    a: [
+        "Careless",
+        "Extremely careful",
+        "Impatient",
+        "Confused"
+    ],
+    d: 1
+},
+
+{
+    q: "Scarcely _____ the announcement when everyone started applauding.",
+    a: [
+        "had he finished",
+        "he had finished",
+        "did he finished",
+        "he finishes"
+    ],
+    d: 0
+},
+
+{
+    q: "I would rather you _____ this information to anyone.",
+    a: [
+        "don't reveal",
+        "didn't reveal",
+        "not reveal",
+        "won't reveal"
+    ],
+    d: 1
+},
+
+{
+    q: "Choose the correct answer: It is essential that the documents _____ immediately.",
+    a: [
+        "are checked",
+        "be checked",
+        "were checking",
+        "checked"
+    ],
+    d: 1
+},
+
+{
+    q: "Which sentence is grammatically correct?",
+    a: [
+        "Hardly had I arrived when the meeting began.",
+        "Hardly I had arrived when the meeting began.",
+        "Hardly had I arrived than the meeting began.",
+        "Hardly I arrived when the meeting began."
+    ],
+    d: 0
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+
+danhSach = danhSach.slice(0, 20);
+
+let cau = 0;
+
+let diemBan = 0;
+let diemBot = 0;
+
+let thoiGianBan = 15;
+
+let timerBan;
+let timerBot;
+
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+
+    thoiGianBan = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = 15;
+
+    document.getElementById("question").innerText =
+        danhSach[cau].q;
+
+    document.getElementById("status").innerText =
+        "🤖 Bot đang suy nghĩ...";
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+
+        html += `
+            <div class="answer"
+                onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timerBan);
+    clearTimeout(timerBot);
+
+    timerBan = setInterval(() => {
+
+        thoiGianBan--;
+
+        document.getElementById("timer").innerText =
+            thoiGianBan;
+
+        if (thoiGianBan <= 0) {
+
+            clearInterval(timerBan);
+
+            hetThoiGian();
+
+        }
+
+    }, 1000);
+
+    timerBot = setTimeout(() => {
+
+        botTraLoi();
+
+    }, 10000);
+
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timerBan);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+
+        diemBan++;
+
+        element.classList.add("correct");
+
+    } else {
+
+        element.classList.add("wrong");
+
+        document.querySelectorAll(".answer")[dung]
+        .classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").innerText =
+        diemBan;
+
+    document.getElementById("status").innerText =
+        "👤 Bạn đã trả lời! Bot vẫn đang suy nghĩ...";
+
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    document.querySelectorAll(".answer")[dung]
+    .classList.add("correct");
+
+    document.getElementById("status").innerText =
+        "⏰ Bạn hết thời gian! Bot vẫn đang suy nghĩ...";
+
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+
+        diemBot++;
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời đúng!";
+
+    } else {
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời sai!";
+
+    }
+
+    document.getElementById("botScore").innerText =
+        diemBot;
+
+    setTimeout(() => {
+
+        cau++;
+
+        if (cau >= 20) {
+
+            ketThucTran();
+
+        } else {
+
+            hienThiCau();
+
+        }
+
+    }, 1000);
+
+}
+
+function ketThucTran() {
+
+    clearInterval(timerBan);
+    clearTimeout(timerBot);
+
+    document.getElementById("game").style.display =
+        "none";
+
+    document.querySelector(".info").style.display =
+        "none";
+
+    document.querySelector(".title").style.display =
+        "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN CHIẾN THẮNG!</h1>
+            <p>🔥 Không thể tin được! Bạn đã vượt qua địa ngục!</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">💀 BẠN THẤT BẠI!</h1>
+            <p>Bot đã chiến thắng thử thách địa ngục!</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Cả hai đã vượt qua thử thách ngang tài ngang sức!</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🎯 Bot có 50% xác suất trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.reload()">
+            🔄 Thử thách lại
+        </button>
+
+        <button onclick="location.href='khoi8.html'">
+            🏠 Về chọn môn
+        </button>
+
+    `;
+
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

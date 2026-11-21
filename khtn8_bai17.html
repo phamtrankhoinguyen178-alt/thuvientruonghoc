@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài 17: Lực đẩy Archimedes</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f2f2f2;
+}
+
+.back{
+position:fixed;
+top:15px;
+left:15px;
+background:#ff6a00;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+z-index:1000;
+}
+
+.back:hover{
+background:#e65c00;
+}
+
+.box{
+background:white;
+max-width:1100px;
+margin:60px auto;
+padding:40px;
+border-radius:15px;
+box-shadow:0 3px 15px rgba(0,0,0,0.1);
+color:#333;
+font-size:24px;
+line-height:2;
+}
+
+.box h2{
+font-size:42px;
+color:#0b2a88;
+border-bottom:4px solid #ff6a00;
+padding-bottom:12px;
+margin-bottom:25px;
+}
+
+.box h3{
+font-size:32px;
+color:#ff6a00;
+margin-top:30px;
+margin-bottom:15px;
+}
+
+.box h4{
+font-size:27px;
+color:#0b2a88;
+margin-top:25px;
+}
+
+.box p{
+font-size:24px;
+margin:12px 0;
+}
+
+.formula{
+background:#fff3e0;
+padding:15px;
+border-left:5px solid #ff6a00;
+border-radius:8px;
+font-weight:bold;
+text-align:center;
+margin:20px 0;
+}
+
+.note{
+background:#e8f0ff;
+padding:18px;
+border-left:5px solid #0b2a88;
+border-radius:8px;
+margin:20px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+font-size:21px;
+}
+
+table th,
+table td{
+border:1px solid #999;
+padding:12px;
+text-align:center;
+}
+
+table th{
+background:#0b2a88;
+color:white;
+}
+
+table tr:nth-child(even){
+background:#f8f8f8;
+}
+
+footer{
+background:#0b2a88;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+font-size:20px;
+}
+
+@media(max-width:900px){
+
+.box{
+margin:20px;
+padding:25px;
+}
+
+.box h2{
+font-size:30px;
+}
+
+.box h3{
+font-size:26px;
+}
+
+.box h4{
+font-size:23px;
+}
+
+.box p{
+font-size:20px;
+}
+
+table{
+font-size:17px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="khtn8.html" class="back">
+⬅ Quay lại
+</a>
+
+<div class="box">
+
+<h2>💧 Bài 17: Lực đẩy Archimedes</h2>
+
+<h3>🌊 I. Lực đẩy tác dụng lên vật đặt trong chất lỏng</h3>
+
+<p><b>Lực đẩy Archimedes</b> là lực đẩy do chất lỏng tác dụng lên vật đặt trong nó.</p>
+
+<p>Lực đẩy Archimedes có:</p>
+
+<p>• <b>Phương:</b> thẳng đứng.</p>
+
+<p>• <b>Chiều:</b> từ dưới lên trên.</p>
+
+<p>• Tác dụng lên mọi vật đặt trong lòng chất lỏng.</p>
+
+<div class="note">
+<b>📌 Ghi nhớ:</b> Khi một vật được đặt trong chất lỏng, chất lỏng tác dụng lên vật một lực đẩy hướng từ dưới lên trên. Lực này gọi là lực đẩy Archimedes.
+</div>
+
+<h3>⚖️ II. Độ lớn của lực đẩy Archimedes</h3>
+
+<h4>1. Thí nghiệm</h4>
+
+<p>Khi nhúng một vật vào bình tràn chứa nước, một phần nước sẽ tràn ra ngoài.</p>
+
+<p>Độ lớn của lực đẩy Archimedes <b>bằng trọng lượng của phần nước bị vật chiếm chỗ</b>.</p>
+
+<div class="formula">
+Lực đẩy Archimedes = Trọng lượng phần chất lỏng bị vật chiếm chỗ
+</div>
+
+<p>Điều này cho thấy độ lớn của lực đẩy Archimedes phụ thuộc vào:</p>
+
+<p>• <b>Trọng lượng riêng của chất lỏng.</b></p>
+
+<p>• <b>Thể tích phần chất lỏng bị vật chiếm chỗ.</b></p>
+
+<h4>2. Định luật Archimedes</h4>
+
+<p>Một vật đặt trong chất lỏng chịu tác dụng của một lực đẩy hướng thẳng đứng từ dưới lên trên.</p>
+
+<p>Độ lớn của lực đẩy Archimedes được tính bằng công thức:</p>
+
+<div class="formula">
+F<sub>A</sub> = d × V
+</div>
+
+<p>Trong đó:</p>
+
+<p>• <b>F<sub>A</sub></b> là lực đẩy Archimedes, đơn vị là <b>N</b>.</p>
+
+<p>• <b>d</b> là trọng lượng riêng của chất lỏng, đơn vị là <b>N/m³</b>.</p>
+
+<p>• <b>V</b> là thể tích phần chất lỏng bị vật chiếm chỗ, đơn vị là <b>m³</b>.</p>
+
+<div class="note">
+<b>📌 Lưu ý:</b> Khi vật chìm hoàn toàn trong chất lỏng thì V là thể tích của vật. Khi vật chỉ chìm một phần thì V là thể tích phần vật chìm trong chất lỏng.
+</div>
+
+<h3>🧮 III. Công thức tính lực đẩy Archimedes</h3>
+
+<div class="formula">
+F<sub>A</sub> = d × V
+</div>
+
+<p>Từ công thức trên, ta có:</p>
+
+<div class="formula">
+d = F<sub>A</sub> / V
+</div>
+
+<div class="formula">
+V = F<sub>A</sub> / d
+</div>
+
+<table>
+
+<tr>
+<th>Đại lượng</th>
+<th>Kí hiệu</th>
+<th>Đơn vị</th>
+</tr>
+
+<tr>
+<td>Lực đẩy Archimedes</td>
+<td>F<sub>A</sub></td>
+<td>N</td>
+</tr>
+
+<tr>
+<td>Trọng lượng riêng của chất lỏng</td>
+<td>d</td>
+<td>N/m³</td>
+</tr>
+
+<tr>
+<td>Thể tích chất lỏng bị vật chiếm chỗ</td>
+<td>V</td>
+<td>m³</td>
+</tr>
+
+</table>
+
+<h3>📈 IV. Các yếu tố ảnh hưởng đến lực đẩy Archimedes</h3>
+
+<p>Độ lớn của lực đẩy Archimedes phụ thuộc vào <b>trọng lượng riêng của chất lỏng</b> và <b>thể tích phần chất lỏng bị vật chiếm chỗ</b>.</p>
+
+<p>• Nếu trọng lượng riêng của chất lỏng tăng thì lực đẩy Archimedes tăng.</p>
+
+<p>• Nếu thể tích phần chất lỏng bị vật chiếm chỗ tăng thì lực đẩy Archimedes tăng.</p>
+
+<div class="formula">
+d tăng → F<sub>A</sub> tăng
+<br>
+V tăng → F<sub>A</sub> tăng
+</div>
+
+<h3>🚢 V. Ứng dụng của lực đẩy Archimedes</h3>
+
+<h4>1. Tàu thuyền</h4>
+
+<p>Tàu thuyền có thể nổi trên mặt nước nhờ lực đẩy của nước tác dụng lên tàu.</p>
+
+<p>Khi tàu chiếm chỗ một lượng nước thích hợp, lực đẩy Archimedes có thể cân bằng với trọng lượng của tàu.</p>
+
+<div class="formula">
+F<sub>A</sub> = P
+<br>
+→ Vật nổi cân bằng trên mặt chất lỏng
+</div>
+
+<h4>2. Áo phao</h4>
+
+<p>Áo phao chứa vật liệu nhẹ hoặc không khí, giúp tăng thể tích phần cơ thể chiếm chỗ trong nước.</p>
+
+<p>Nhờ đó lực đẩy Archimedes tác dụng lên người tăng, giúp người nổi trên mặt nước dễ dàng hơn.</p>
+
+<h4>3. Khinh khí cầu</h4>
+
+<p>Lực đẩy Archimedes cũng xuất hiện trong chất khí.</p>
+
+<p>Không khí tác dụng lực đẩy hướng từ dưới lên trên đối với các vật ở trong không khí. Khinh khí cầu có thể bay lên khi lực đẩy của không khí lớn hơn trọng lượng của nó.</p>
+
+<h3>🧪 VI. Bài tập vận dụng</h3>
+
+<h4>Ví dụ 1: Tính lực đẩy Archimedes</h4>
+
+<p>Một vật có thể tích phần chìm trong nước là <b>0,002 m³</b>. Biết trọng lượng riêng của nước là <b>10 000 N/m³</b>. Tính lực đẩy Archimedes tác dụng lên vật.</p>
+
+<p><b>Giải:</b></p>
+
+<div class="formula">
+F<sub>A</sub> = d × V
+</div>
+
+<div class="formula">
+F<sub>A</sub> = 10 000 × 0,002 = 20 N
+</div>
+
+<p>Vậy lực đẩy Archimedes tác dụng lên vật là <b>20 N</b>.</p>
+
+<h4>Ví dụ 2: Tính thể tích phần chất lỏng bị chiếm chỗ</h4>
+
+<p>Một vật chịu lực đẩy Archimedes có độ lớn <b>30 N</b> khi nhúng trong nước. Biết trọng lượng riêng của nước là <b>10 000 N/m³</b>. Tính thể tích phần nước bị vật chiếm chỗ.</p>
+
+<p><b>Giải:</b></p>
+
+<div class="formula">
+V = F<sub>A</sub> / d
+</div>
+
+<div class="formula">
+V = 30 / 10 000 = 0,003 m³
+</div>
+
+<p>Vậy thể tích phần nước bị vật chiếm chỗ là <b>0,003 m³</b>.</p>
+
+<h4>Ví dụ 3: So sánh lực đẩy</h4>
+
+<p>Hai vật có cùng thể tích chìm trong hai chất lỏng khác nhau. Chất lỏng nào có trọng lượng riêng lớn hơn thì vật chịu lực đẩy Archimedes lớn hơn.</p>
+
+<div class="formula">
+Cùng V → d lớn hơn → F<sub>A</sub> lớn hơn
+</div>
+
+<h3>📝 VII. Ghi nhớ</h3>
+
+<p>• Lực đẩy Archimedes do chất lỏng tác dụng lên vật đặt trong nó.</p>
+
+<p>• Lực đẩy Archimedes có <b>phương thẳng đứng, chiều từ dưới lên trên</b>.</p>
+
+<p>• Độ lớn của lực đẩy Archimedes bằng trọng lượng phần chất lỏng bị vật chiếm chỗ.</p>
+
+<p>• Công thức:</p>
+
+<div class="formula">
+F<sub>A</sub> = d × V
+</div>
+
+<p>• <b>F<sub>A</sub></b> có đơn vị N, <b>d</b> có đơn vị N/m³ và <b>V</b> có đơn vị m³.</p>
+
+<p>• Lực đẩy Archimedes phụ thuộc vào <b>trọng lượng riêng của chất lỏng</b> và <b>thể tích phần chất lỏng bị vật chiếm chỗ</b>.</p>
+
+</div>
+
+<footer>
+© 2026 THCS QUẢNG PHƯƠNG
+</footer>
+
+</body>
+</html>

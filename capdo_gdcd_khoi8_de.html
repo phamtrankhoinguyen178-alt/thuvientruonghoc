@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDCD 8 - Chế độ dễ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+    .top {
+        font-size: 16px;
+    }
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_gdcd_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">20</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🌟 GDCD KHỐI 8 - CHẾ ĐỘ DỄ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+
+{
+    q: "Tôn trọng lẽ phải có nghĩa là gì?",
+    a: [
+        "Ủng hộ những điều đúng đắn",
+        "Bênh vực người làm sai",
+        "Chỉ nghe theo bạn bè",
+        "Không quan tâm đúng sai"
+    ],
+    d: 0
+},
+
+{
+    q: "Hành vi nào thể hiện sự tôn trọng sự đa dạng của các dân tộc?",
+    a: [
+        "Chê bai phong tục dân tộc khác",
+        "Tôn trọng phong tục và văn hóa của các dân tộc",
+        "Bắt mọi người theo văn hóa của mình",
+        "Phân biệt đối xử"
+    ],
+    d: 1
+},
+
+{
+    q: "Lao động cần cù, sáng tạo là gì?",
+    a: [
+        "Lười biếng trong công việc",
+        "Chỉ làm việc khi bị nhắc nhở",
+        "Chăm chỉ và luôn tìm cách cải tiến công việc",
+        "Sao chép kết quả của người khác"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi gặp một việc khó khăn, người có ý chí sẽ:",
+    a: [
+        "Bỏ cuộc ngay lập tức",
+        "Kiên trì tìm cách giải quyết",
+        "Đổ lỗi cho người khác",
+        "Trốn tránh nhiệm vụ"
+    ],
+    d: 1
+},
+
+{
+    q: "Bảo vệ lẽ phải giúp chúng ta:",
+    a: [
+        "Xây dựng môi trường công bằng",
+        "Khuyến khích hành vi sai trái",
+        "Gây mất đoàn kết",
+        "Làm cho mọi người thiếu tin tưởng"
+    ],
+    d: 0
+},
+
+{
+    q: "Việc làm nào thể hiện bảo vệ môi trường?",
+    a: [
+        "Vứt rác xuống sông",
+        "Đốt rác bừa bãi",
+        "Trồng cây và bỏ rác đúng nơi quy định",
+        "Chặt phá rừng"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi thấy bạn có hành vi vi phạm nội quy trường học, em nên:",
+    a: [
+        "Làm theo bạn",
+        "Nhắc nhở bạn sửa đổi",
+        "Cổ vũ bạn",
+        "Che giấu mọi việc"
+    ],
+    d: 1
+},
+
+{
+    q: "Tôn trọng sự khác biệt giữa các dân tộc thể hiện điều gì?",
+    a: [
+        "Thái độ bình đẳng và đoàn kết",
+        "Sự phân biệt đối xử",
+        "Thái độ coi thường",
+        "Sự ích kỉ"
+    ],
+    d: 0
+},
+
+{
+    q: "Hành vi nào thể hiện lao động sáng tạo?",
+    a: [
+        "Làm việc qua loa",
+        "Không tìm hiểu cách làm mới",
+        "Tìm ra phương pháp học tập hiệu quả hơn",
+        "Sao chép bài của bạn"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi gặp thất bại trong học tập, em nên:",
+    a: [
+        "Bỏ học",
+        "Nản chí và không cố gắng",
+        "Đổ lỗi cho thầy cô",
+        "Rút kinh nghiệm và tiếp tục cố gắng"
+    ],
+    d: 3
+},
+
+{
+    q: "Phòng, chống bạo lực gia đình là trách nhiệm của ai?",
+    a: [
+        "Chỉ người lớn",
+        "Chỉ cơ quan nhà nước",
+        "Mọi cá nhân và gia đình, xã hội",
+        "Chỉ trẻ em"
+    ],
+    d: 2
+},
+
+{
+    q: "Hành vi nào là bạo lực gia đình?",
+    a: [
+        "Quan tâm các thành viên",
+        "Xúc phạm và đánh đập người thân",
+        "Chia sẻ công việc nhà",
+        "Giúp đỡ cha mẹ"
+    ],
+    d: 1
+},
+
+{
+    q: "Lập kế hoạch chi tiêu giúp chúng ta:",
+    a: [
+        "Sử dụng tiền hợp lí",
+        "Tiêu tiền không kiểm soát",
+        "Mua mọi thứ mình thích",
+        "Lãng phí tiền bạc"
+    ],
+    d: 0
+},
+
+{
+    q: "Khi nhận được tiền tiêu vặt, em nên:",
+    a: [
+        "Tiêu hết ngay lập tức",
+        "Mua những thứ không cần thiết",
+        "Lập kế hoạch sử dụng và tiết kiệm",
+        "Cho người khác toàn bộ"
+    ],
+    d: 2
+},
+
+{
+    q: "Quyền và nghĩa vụ lao động của công dân có nghĩa là:",
+    a: [
+        "Chỉ có quyền mà không có nghĩa vụ",
+        "Lao động là trách nhiệm và quyền của công dân",
+        "Không cần lao động",
+        "Chỉ người lớn mới cần lao động"
+    ],
+    d: 1
+},
+
+{
+    q: "Việc làm nào thể hiện trách nhiệm với gia đình?",
+    a: [
+        "Không giúp đỡ ai",
+        "Ỷ lại vào cha mẹ",
+        "Chia sẻ công việc nhà phù hợp",
+        "Không quan tâm người thân"
+    ],
+    d: 2
+},
+
+{
+    q: "Khi thấy người khác bị bắt nạt, em nên:",
+    a: [
+        "Cổ vũ người bắt nạt",
+        "Quay video để chế giễu",
+        "Bỏ mặc nạn nhân",
+        "Tìm sự hỗ trợ của người lớn và giúp đỡ phù hợp"
+    ],
+    d: 3
+},
+
+{
+    q: "Hành vi nào thể hiện sự tôn trọng pháp luật?",
+    a: [
+        "Chấp hành quy định của pháp luật",
+        "Vi phạm luật giao thông",
+        "Phá hoại tài sản công cộng",
+        "Che giấu hành vi vi phạm"
+    ],
+    d: 0
+},
+
+{
+    q: "Tiết kiệm tiền có tác dụng gì?",
+    a: [
+        "Làm tăng sự lãng phí",
+        "Giúp dự phòng cho những việc cần thiết",
+        "Khiến chúng ta không được học tập",
+        "Làm mất giá trị của tiền"
+    ],
+    d: 1
+},
+
+{
+    q: "Biểu hiện nào thể hiện sự tự giác trong học tập?",
+    a: [
+        "Chờ bố mẹ nhắc mới học",
+        "Không làm bài tập",
+        "Chủ động học bài và hoàn thành nhiệm vụ",
+        "Chép bài của bạn"
+    ],
+    d: 2
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 20;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 20;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    document.querySelectorAll(".answer").forEach(x => {
+        x.style.pointerEvents = "none";
+    });
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+
+        <button onclick="location.href='capdo_gdcd_khoi8_de.html'">
+            Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_gdcd_khoi8.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

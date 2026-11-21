@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDCD 9 - Chế độ khó</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+    .top {
+        font-size: 16px;
+    }
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_gdcd_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">20</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🌟 GDCD KHỐI 9 - CHẾ ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+
+{
+    q: "Một học sinh cho rằng chỉ cần có ước mơ là đã được xem là người sống có lí tưởng. Nhận định nào đúng nhất?",
+    a: [
+        "Đúng, vì ước mơ luôn đồng nghĩa với lí tưởng sống",
+        "Sai, vì sống có lí tưởng còn cần mục tiêu đúng đắn và hành động cụ thể",
+        "Đúng, vì không cần phải cố gắng thực hiện ước mơ",
+        "Sai, vì học sinh chưa cần có lí tưởng sống"
+    ],
+    d: 1
+},
+
+{
+    q: "Trong một cuộc thảo luận, đa số học sinh đồng ý với một ý kiến sai. Em là người duy nhất nhận ra điều đó. Em nên làm gì?",
+    a: [
+        "Im lặng để không bị phản đối",
+        "Thay đổi ý kiến để giống số đông",
+        "Bình tĩnh đưa ra lập luận và bằng chứng để bảo vệ ý kiến đúng",
+        "Chỉ trích những người không đồng ý với mình"
+    ],
+    d: 2
+},
+
+{
+    q: "Một người bạn nhiều lần mắc lỗi nhưng luôn nhận lỗi và cố gắng sửa chữa. Cách ứng xử thể hiện khoan dung phù hợp nhất là:",
+    a: [
+        "Tha thứ, động viên nhưng vẫn góp ý để bạn không tái phạm",
+        "Bỏ qua mọi lỗi lầm dù bạn không sửa đổi",
+        "Công khai lỗi của bạn để mọi người phê phán",
+        "Cắt đứt quan hệ ngay lập tức"
+    ],
+    d: 0
+},
+
+{
+    q: "Một học sinh được điểm cao nhờ chép bài của bạn. Khi được khen, bạn ấy nhận toàn bộ thành tích về mình. Hành vi này thiếu phẩm chất nào?",
+    a: [
+        "Khoan dung và đoàn kết",
+        "Tiết kiệm và khiêm tốn",
+        "Tự chủ và sáng tạo",
+        "Trung thực và công bằng"
+    ],
+    d: 3
+},
+
+{
+    q: "Trong lớp có hai học sinh thuộc hai dân tộc khác nhau. Một số bạn chế giễu trang phục truyền thống của một bạn. Cách ứng xử đúng là:",
+    a: [
+        "Cùng tham gia chế giễu để tạo không khí vui vẻ",
+        "Giải thích về sự đa dạng văn hóa và khuyên các bạn tôn trọng nhau",
+        "Yêu cầu bạn đó không mặc trang phục truyền thống nữa",
+        "Không quan tâm vì đó là chuyện riêng"
+    ],
+    d: 1
+},
+
+{
+    q: "Hai quốc gia xảy ra bất đồng về lợi ích. Biện pháp phù hợp nhất để góp phần bảo vệ hòa bình là:",
+    a: [
+        "Sử dụng vũ lực để giải quyết nhanh chóng",
+        "Cắt đứt mọi hoạt động giao lưu",
+        "Ưu tiên đối thoại, thương lượng và tôn trọng luật pháp quốc tế",
+        "Kích động người dân chống đối nhau"
+    ],
+    d: 2
+},
+
+{
+    q: "Một học sinh phát hiện bạn thân làm hỏng tài sản chung của trường nhưng muốn che giấu sự việc. Em nên:",
+    a: [
+        "Khuyên bạn nhận trách nhiệm và cùng tìm cách khắc phục hậu quả",
+        "Giấu sự việc để bảo vệ tình bạn",
+        "Đổ lỗi cho học sinh khác",
+        "Không quan tâm vì không phải tài sản của mình"
+    ],
+    d: 0
+},
+
+{
+    q: "Một nhóm học sinh tự ý khắc tên lên công trình di tích lịch sử. Nhận định nào chính xác nhất?",
+    a: [
+        "Đây là cách lưu giữ kỉ niệm",
+        "Không có vấn đề nếu công trình vẫn còn nguyên vẹn",
+        "Đây là hành động bình thường của khách tham quan",
+        "Đây là hành vi làm ảnh hưởng đến việc bảo vệ di sản văn hóa"
+    ],
+    d: 3
+},
+
+{
+    q: "Một học sinh gặp khó khăn khi chuyển sang môi trường học tập mới. Sau một thời gian, bạn chủ động tìm hiểu phương pháp học và kết bạn. Điều này thể hiện:",
+    a: [
+        "Sự phụ thuộc vào người khác",
+        "Khả năng thích ứng tích cực với thay đổi",
+        "Thái độ né tránh trách nhiệm",
+        "Sự thiếu tự tin"
+    ],
+    d: 1
+},
+
+{
+    q: "Gia đình có thu nhập giảm nhưng một thành viên vẫn muốn mua điện thoại đắt tiền dù chưa cần thiết. Lựa chọn hợp lí nhất là:",
+    a: [
+        "Vay tiền để mua ngay",
+        "Mua trả góp bằng mọi cách",
+        "Xem xét lại nhu cầu, điều kiện tài chính và ưu tiên khoản chi cần thiết",
+        "Dùng hết tiền tiết kiệm của gia đình"
+    ],
+    d: 2
+},
+
+{
+    q: "Một cửa hàng quảng cáo sản phẩm có công dụng đặc biệt nhưng không có bằng chứng xác thực. Người tiêu dùng nên làm gì?",
+    a: [
+        "Tìm hiểu thông tin từ nguồn đáng tin cậy trước khi quyết định mua",
+        "Tin ngay vì cửa hàng quảng cáo nhiều lần",
+        "Mua thử số lượng lớn",
+        "Chia sẻ quảng cáo cho mọi người"
+    ],
+    d: 0
+},
+
+{
+    q: "Một cá nhân kinh doanh hợp pháp nhưng cố tình không thực hiện nghĩa vụ thuế theo quy định. Nhận định nào đúng?",
+    a: [
+        "Được phép vì đó là tiền của cá nhân",
+        "Không có vấn đề nếu kinh doanh có lãi",
+        "Chỉ cần thực hiện nghĩa vụ thuế khi bị kiểm tra",
+        "Có thể bị xử lí theo quy định pháp luật"
+    ],
+    d: 3
+},
+
+{
+    q: "Một người sử dụng mạng xã hội đăng thông tin bịa đặt làm ảnh hưởng danh dự người khác. Hành vi này có thể:",
+    a: [
+        "Được bảo vệ tuyệt đối bởi quyền tự do ngôn luận",
+        "Vi phạm quyền của người khác và có thể phải chịu trách nhiệm pháp lí",
+        "Không gây hậu quả vì chỉ đăng trên mạng",
+        "Luôn được xem là ý kiến cá nhân hợp pháp"
+    ],
+    d: 1
+},
+
+{
+    q: "Một học sinh chứng kiến hành vi có dấu hiệu vi phạm pháp luật nhưng chưa có đầy đủ thông tin. Cách xử lí phù hợp là:",
+    a: [
+        "Tự kết luận và công khai buộc tội người khác",
+        "Tự ý trừng phạt người bị nghi ngờ",
+        "Không lan truyền thông tin chưa kiểm chứng và báo người có trách nhiệm",
+        "Đăng hình ảnh người bị nghi ngờ lên mạng"
+    ],
+    d: 2
+},
+
+{
+    q: "Một người kinh doanh tự ý bán mặt hàng thuộc danh mục bị pháp luật cấm. Nhận định nào đúng?",
+    a: [
+        "Quyền tự do kinh doanh không cho phép kinh doanh ngành nghề bị cấm",
+        "Có thể kinh doanh nếu thu được nhiều lợi nhuận",
+        "Được phép nếu không gây thiệt hại ngay lập tức",
+        "Chỉ cần có khách hàng đồng ý là hợp pháp"
+    ],
+    d: 0
+},
+
+{
+    q: "Một học sinh thấy bạn bị bắt nạt nhưng sợ bị liên lụy nên không giúp đỡ. Cách xử lí tốt hơn là:",
+    a: [
+        "Trực tiếp đối đầu bằng bạo lực với người bắt nạt",
+        "Quay video và đăng lên mạng",
+        "Khuyến khích người khác trả thù",
+        "Tìm sự hỗ trợ của giáo viên, người lớn đáng tin cậy và giúp bạn an toàn"
+    ],
+    d: 3
+},
+
+{
+    q: "Một người gây thiệt hại cho tài sản của người khác do hành vi vi phạm pháp luật. Việc xác định trách nhiệm pháp lí cần căn cứ vào:",
+    a: [
+        "Mức độ giàu nghèo của người vi phạm",
+        "Quy định pháp luật, tính chất hành vi, lỗi và các tình tiết liên quan",
+        "Mối quan hệ giữa người vi phạm và người bị thiệt hại",
+        "Ý kiến của những người xung quanh בלבד"
+    ],
+    d: 1
+},
+
+{
+    q: "Một học sinh tham gia hoạt động bảo vệ môi trường chỉ để được nhận giấy khen, sau đó không còn quan tâm. Nhận định phù hợp nhất là:",
+    a: [
+        "Đã thể hiện đầy đủ trách nhiệm cộng đồng",
+        "Không cần quan tâm đến động cơ",
+        "Cần nâng cao ý thức tự giác và trách nhiệm lâu dài với cộng đồng",
+        "Chỉ cần có giấy khen là đủ"
+    ],
+    d: 2
+},
+
+{
+    q: "Một người có quyền lựa chọn nghề nghiệp nhưng gia đình muốn ép người đó làm công việc không phù hợp. Cách giải quyết phù hợp nhất là:",
+    a: [
+        "Trao đổi, phân tích nguyện vọng, năng lực và điều kiện để tìm hướng lựa chọn phù hợp",
+        "Làm theo gia đình trong mọi trường hợp",
+        "Từ bỏ mọi dự định cá nhân",
+        "Không trao đổi và tự ý quyết định"
+    ],
+    d: 0
+},
+
+{
+    q: "Một học sinh vừa có mục tiêu học tập tốt vừa tham gia hoạt động cộng đồng phù hợp với khả năng. Điều này cho thấy:",
+    a: [
+        "Chỉ quan tâm đến thành tích cá nhân",
+        "Không biết sắp xếp thời gian",
+        "Thiếu trách nhiệm với bản thân",
+        "Biết kết hợp lí tưởng sống với trách nhiệm đối với cộng đồng"
+    ],
+    d: 3
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 20;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 20;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    document.querySelectorAll(".answer").forEach(x => {
+        x.style.pointerEvents = "none";
+    });
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Xuất sắc! Bạn đã vượt qua thử thách khó!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+
+        <button onclick="location.href='capdo_gdcd_khoi9_kho.html'">
+            Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_gdcd_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

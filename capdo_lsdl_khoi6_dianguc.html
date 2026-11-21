@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 6 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #111;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi6.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 6 - CHẾ ĐỘ ĐỊA NGỤC
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+ {
+        q: "Vì sao các nền văn minh cổ đại phương Đông thường hình thành ở lưu vực các con sông lớn?",
+        a: ["Vì có nguồn nước, đất phù sa màu mỡ thuận lợi cho nông nghiệp", "Vì không có thiên tai", "Vì không có núi", "Vì khí hậu luôn lạnh"],
+        d: 0
+    },
+
+    {
+        q: "Nếu Trái Đất không tự quay quanh trục thì hiện tượng nào sẽ thay đổi rõ rệt?",
+        a: ["Sự hình thành núi", "Sự luân phiên ngày và đêm", "Sự hình thành đại dương", "Sự xuất hiện động đất"],
+        d: 1
+    },
+
+    {
+        q: "Tại sao nghề trồng lúa nước phát triển ở khu vực Văn Lang – Âu Lạc?",
+        a: ["Có nhiều sa mạc", "Có khí hậu lạnh quanh năm", "Có đồng bằng phù sa và nguồn nước dồi dào", "Không có sông ngòi"],
+        d: 2
+    },
+
+    {
+        q: "Một bản đồ có tỉ lệ 1:200.000. Khoảng cách giữa hai địa điểm trên bản đồ là 5 cm. Khoảng cách thực tế là bao nhiêu?",
+        a: ["1 km", "5 km", "10 km", "20 km"],
+        d: 2
+    },
+
+    {
+        q: "Vì sao sự xuất hiện của công cụ kim loại làm xã hội nguyên thủy thay đổi?",
+        a: ["Làm năng suất lao động tăng lên và tạo ra sản phẩm dư thừa", "Làm con người không cần lao động", "Làm biến mất mọi hình thức sản xuất", "Làm con người không cần cộng đồng"],
+        d: 0
+    },
+
+    {
+        q: "Khi đi từ xích đạo về hai cực, nhiệt độ trung bình năm thường thay đổi như thế nào?",
+        a: ["Tăng dần", "Giảm dần", "Không thay đổi", "Tăng rồi giảm liên tục"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao thành Cổ Loa được xem là công trình quân sự quan trọng của nước Âu Lạc?",
+        a: ["Có nhiều cung điện", "Có nhiều chợ lớn", "Có hệ thống thành lũy nhiều vòng bảo vệ", "Có nhiều cảng biển"],
+        d: 2
+    },
+
+    {
+        q: "Tại sao khu vực gần biển thường có khí hậu điều hòa hơn sâu trong lục địa?",
+        a: ["Biển hấp thụ và tỏa nhiệt chậm hơn đất liền", "Biển không chịu tác động của Mặt Trời", "Biển không có gió", "Nước biển luôn lạnh"],
+        d: 0
+    },
+
+    {
+        q: "Nguyên nhân chủ yếu làm cho xã hội nguyên thủy chuyển sang xã hội có giai cấp là gì?",
+        a: ["Con người ngừng săn bắt", "Sự phát triển sản xuất tạo ra sản phẩm dư thừa và tư hữu", "Con người không còn sống theo nhóm", "Sự xuất hiện của đại dương"],
+        d: 1
+    },
+
+    {
+        q: "Nếu một địa điểm nằm ở kinh tuyến 105°Đ thì địa điểm đó thuộc bán cầu nào?",
+        a: ["Bán cầu Tây", "Bán cầu Nam", "Bán cầu Đông", "Bán cầu Bắc"],
+        d: 2
+    },
+
+    {
+        q: "Tại sao các con sông có vai trò quan trọng đối với đời sống con người?",
+        a: ["Cung cấp nước, phù sa và giao thông", "Làm cho mọi vùng đất trở thành sa mạc", "Ngăn cản hoàn toàn hoạt động sản xuất", "Làm khí hậu không thay đổi"],
+        d: 0
+    },
+
+    {
+        q: "Một địa điểm có tọa độ 20°B, 105°Đ. Số 20°B thể hiện điều gì?",
+        a: ["Kinh độ", "Vĩ độ", "Độ cao", "Khoảng cách"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao trống đồng Đông Sơn có giá trị lịch sử quan trọng?",
+        a: ["Chỉ dùng để trang trí", "Thể hiện trình độ luyện kim và đời sống văn hóa của cư dân cổ", "Là công cụ sản xuất hiện đại", "Là sản phẩm nhập khẩu"],
+        d: 1
+    },
+
+    {
+        q: "Quá trình nào sau đây góp phần hình thành đất?",
+        a: ["Phong hóa đá và hoạt động của sinh vật", "Chỉ có hoạt động của gió", "Chỉ có hoạt động của con người", "Sự quay quanh Mặt Trời"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao cần bảo vệ rừng đầu nguồn?",
+        a: ["Để tăng diện tích sa mạc", "Để hạn chế xói mòn, lũ lụt và bảo vệ nguồn nước", "Để giảm lượng ô-xi", "Để làm mất môi trường sống của động vật"],
+        d: 1
+    },
+
+    {
+        q: "Khi hai mảng kiến tạo dịch chuyển và va chạm, hiện tượng nào có thể xảy ra?",
+        a: ["Xuất hiện động đất và hình thành núi", "Không có bất kỳ thay đổi nào", "Nhiệt độ không khí giảm ngay lập tức", "Đại dương biến mất hoàn toàn"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao cần sử dụng bản đồ kết hợp với bảng chú giải?",
+        a: ["Để bản đồ có nhiều màu hơn", "Để xác định ý nghĩa các kí hiệu trên bản đồ", "Để thay đổi tỉ lệ bản đồ", "Để làm bản đồ lớn hơn"],
+        d: 1
+    },
+
+    {
+        q: "Một khu vực có nhiệt độ cao, lượng mưa lớn quanh năm và rừng rậm phát triển. Khu vực đó có thể thuộc môi trường nào?",
+        a: ["Môi trường hoang mạc", "Môi trường hàn đới", "Môi trường xích đạo", "Môi trường ôn đới"],
+        d: 2
+    },
+
+    {
+        q: "Vì sao việc phát minh ra lửa được xem là bước tiến quan trọng của người nguyên thủy?",
+        a: ["Giúp con người thích nghi tốt hơn với môi trường và cải thiện đời sống", "Giúp con người tạo ra điện", "Giúp con người chế tạo máy bay", "Giúp con người xây dựng nhà máy"],
+        d: 0
+    },
+
+    {
+        q: "Biện pháp nào dưới đây góp phần sử dụng hợp lí tài nguyên thiên nhiên?",
+        a: ["Khai thác tài nguyên không giới hạn", "Chặt phá rừng để mở rộng đất", "Khai thác tiết kiệm, phục hồi tài nguyên và bảo vệ môi trường", "Xả chất thải trực tiếp ra sông"],
+        d: 2
+    }
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 10;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 10;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.85;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">🔥 BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã ngang tài ngang sức với Bot!</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 85% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi6_dianguc.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi6.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

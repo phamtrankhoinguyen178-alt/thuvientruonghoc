@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngữ văn 8 - Khó</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #3b0764, #7f1d1d, #111827);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: #facc15;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    color: #222;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.answer:hover:not(:disabled) {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    color: #2878e8;
+}
+
+.result p {
+    font-size: 19px;
+}
+
+.win {
+    color: #2ecc71 !important;
+}
+
+.lose {
+    color: #e74c3c !important;
+}
+
+.draw {
+    color: #f39c12 !important;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #581c87;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #7e22ce;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_van_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ <span id="timer">15</span>
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 NGỮ VĂN 8 - CẤP ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi=[
+{
+    q: "Thơ thất ngôn bát cú Đường luật gồm bao nhiêu câu?",
+    a: ["4 câu", "6 câu", "8 câu", "10 câu"],
+    d: 2
+},
+{
+    q: "Mỗi câu thơ thất ngôn có bao nhiêu tiếng?",
+    a: ["5 tiếng", "6 tiếng", "7 tiếng", "8 tiếng"],
+    d: 2
+},
+{
+    q: "Thơ lục bát thường có đặc điểm nào?",
+    a: ["Một câu 6 tiếng, một câu 8 tiếng", "Mỗi câu 7 tiếng", "Mỗi khổ 4 câu 5 tiếng", "Không có vần"],
+    d: 0
+},
+{
+    q: "Thơ song thất lục bát có cấu trúc nào?",
+    a: ["5 - 5 - 5 - 5", "7 - 7 - 6 - 8", "6 - 8 - 6 - 8", "7 - 7 - 7 - 7"],
+    d: 1
+},
+{
+    q: "Truyện cười thường hướng đến mục đích nào?",
+    a: ["Gây cười và phê phán thói xấu", "Chỉ miêu tả thiên nhiên", "Trình bày số liệu", "Hướng dẫn nấu ăn"],
+    d: 0
+},
+{
+    q: "Truyện lịch sử thường lấy chất liệu từ đâu?",
+    a: ["Các sự kiện, nhân vật lịch sử", "Các công thức khoa học", "Những câu chuyện không có bối cảnh", "Các bản tin thời tiết"],
+    d: 0
+},
+{
+    q: "Truyện ngắn thường có đặc điểm nào?",
+    a: ["Dung lượng tương đối ngắn, tập trung vào một tình huống", "Luôn có hàng trăm chương", "Chỉ gồm thơ", "Không có nhân vật"],
+    d: 0
+},
+{
+    q: "Kí là thể loại văn học chủ yếu ghi lại điều gì?",
+    a: ["Người thật, việc thật theo cảm nhận của người viết", "Các công thức", "Những sự kiện hoàn toàn tưởng tượng", "Các quy tắc ngữ pháp"],
+    d: 0
+},
+{
+    q: "Hồi kí thường kể về điều gì?",
+    a: ["Những sự việc đã xảy ra trong quá khứ mà người viết từng trải qua", "Một tương lai chưa xảy ra", "Các truyền thuyết cổ tích", "Những công thức"],
+    d: 0
+},
+{
+    q: "Tùy bút thường nổi bật ở yếu tố nào?",
+    a: ["Cảm xúc và suy nghĩ của người viết", "Các số liệu khô khan", "Cách trình bày công thức", "Quy tắc pháp luật"],
+    d: 0
+},
+{
+    q: "Văn bản nghị luận văn học thường bàn về điều gì?",
+    a: ["Một tác phẩm, nhân vật hoặc vấn đề văn học", "Một quy trình sản xuất", "Một bảng thống kê", "Một công thức toán"],
+    d: 0
+},
+{
+    q: "Thơ trào phúng thường sử dụng tiếng cười để làm gì?",
+    a: ["Châm biếm, phê phán những điều đáng cười", "Chỉ ca ngợi thiên nhiên", "Miêu tả thời tiết", "Giải thích hiện tượng vật lí"],
+    d: 0
+},
+{
+    q: "Thơ trữ tình chủ yếu thể hiện điều gì?",
+    a: ["Tình cảm và cảm xúc của con người", "Các số liệu lịch sử", "Quy trình khoa học", "Luật lệ xã hội"],
+    d: 0
+},
+{
+    q: "Vần chân là vần được gieo ở vị trí nào?",
+    a: ["Cuối dòng thơ", "Đầu dòng thơ", "Giữa câu văn", "Đầu đoạn văn"],
+    d: 0
+},
+{
+    q: "Nhịp thơ có vai trò gì?",
+    a: ["Tạo âm điệu và góp phần biểu đạt cảm xúc", "Chỉ xác định số trang", "Thay thế nhan đề", "Xác định tên tác giả"],
+    d: 0
+},
+{
+    q: "Hình ảnh thơ có tác dụng gì?",
+    a: ["Gợi hình, gợi cảm và thể hiện tư tưởng", "Chỉ để trang trí", "Làm văn bản mất nghĩa", "Thay thế hoàn toàn nhan đề"],
+    d: 0
+},
+{
+    q: "Yếu tố Hán Việt là yếu tố có nguồn gốc từ đâu?",
+    a: ["Tiếng Hán", "Tiếng Anh", "Tiếng Pháp", "Tiếng Nga"],
+    d: 0
+},
+{
+    q: "Thành ngữ thường có đặc điểm nào?",
+    a: ["Cụm từ cố định, biểu thị một ý nghĩa hoàn chỉnh", "Một câu dài tùy ý", "Một từ chỉ tên riêng", "Một dấu câu"],
+    d: 0
+},
+{
+    q: "Tục ngữ thường đúc kết điều gì?",
+    a: ["Kinh nghiệm và nhận xét của nhân dân", "Tên các tác giả", "Các công thức hóa học", "Các câu chuyện viễn tưởng"],
+    d: 0
+},
+{
+    q: "Điểm khác biệt cơ bản giữa thành ngữ và tục ngữ là gì?",
+    a: ["Thành ngữ là cụm từ, tục ngữ thường là câu diễn đạt kinh nghiệm hoặc nhận xét", "Hai loại hoàn toàn giống nhau", "Tục ngữ chỉ có một tiếng", "Thành ngữ luôn là câu hỏi"],
+    d: 0
+},
+];
+
+let ds = [...cauHoi]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let tg = 15;
+let timer;
+let daTraLoi = false;
+
+function hienThiCau() {
+
+    clearInterval(timer);
+
+    daTraLoi = false;
+    tg = 15;
+
+    document.getElementById("timer").textContent = tg;
+
+    document.getElementById("playerScore").textContent = diemBan;
+    document.getElementById("botScore").textContent = diemBot;
+
+    document.getElementById("number").textContent = cau + 1;
+
+    let c = ds[cau];
+
+    document.getElementById("question").textContent =
+        "Câu " + (cau + 1) + "/10: " + c.q;
+
+    document.getElementById("answers").innerHTML =
+        c.a.map((x, j) => `
+            <button class="answer" onclick="traLoi(${j}, this)">
+                ${String.fromCharCode(65 + j)}. ${x}
+            </button>
+        `).join("");
+
+    timer = setInterval(() => {
+
+        tg--;
+
+        document.getElementById("timer").textContent = tg;
+
+        if (tg <= 0) {
+            hetThoiGian();
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, el) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timer);
+
+    let c = ds[cau];
+
+    let nut = document.querySelectorAll(".answer");
+
+    nut.forEach(button => button.disabled = true);
+
+    if (chon === c.d) {
+
+        diemBan++;
+
+        el.classList.add("correct");
+
+    } else {
+
+        el.classList.add("wrong");
+
+        nut[c.d].classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").textContent = diemBan;
+
+    setTimeout(botTraLoi, 700);
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timer);
+
+    let c = ds[cau];
+
+    let nut = document.querySelectorAll(".answer");
+
+    nut.forEach(button => button.disabled = true);
+
+    nut[c.d].classList.add("correct");
+
+    setTimeout(botTraLoi, 700);
+}
+
+function botTraLoi() {
+
+    let dung = Math.random() < 0.25;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").textContent = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+
+        ketThucTran();
+
+    } else {
+
+        hienThiCau();
+
+    }
+}
+
+function ketThucTran() {
+
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">🤖 BOT THẮNG!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>🔥 Cấp độ: KHÓ</p>
+
+        <p>Bot có 25% xác suất trả lời đúng mỗi câu.</p>
+
+        <br>
+
+        <button onclick="location.reload()">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_van_khoi8.html'">
+            🎚️ Chọn cấp độ
+        </button>
+
+        <button onclick="location.href='khoi8.html'">
+            🏠 Về chọn môn
+        </button>
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiếng Anh 6 - Cấp độ Địa ngục</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1a0000, #8b0000, #ff4500);
+    min-height: 100vh;
+}
+
+.top {
+    background: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 3px 10px #0005;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #d00000;
+}
+
+.time {
+    background: #222;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.bot-time {
+    background: #d00000;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.main {
+    max-width: 900px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #ff0;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px #0006;
+}
+
+.question {
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f5f5;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #ffe0e0;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px #0006;
+}
+
+.result h1 {
+    font-size: 38px;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result h2 {
+    margin: 12px;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #d00000;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+@media(max-width:600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 15px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ Bạn: <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+
+    <div class="bot-time">
+        ⏱ Bot: <span id="botTimer">5</span>s
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ☠️ TIẾNG ANH KHỐI 6 - CẤP ĐỘ ĐỊA NGỤC ☠️
+    </div>
+
+    <div id="game" class="card">
+
+        <div class="question" id="question"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="status" id="status">
+            🤖 Bot đang suy nghĩ...
+        </div>
+
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+
+{
+    q: "If you want to stay healthy, you should ___ regular exercise.",
+    a: ["do", "make", "play", "take"],
+    d: 0
+},
+
+{
+    q: "My brother is interested ___ collecting stamps.",
+    a: ["at", "on", "in", "for"],
+    d: 2
+},
+
+{
+    q: "She usually goes to school ___ foot.",
+    a: ["by", "on", "in", "with"],
+    d: 1
+},
+
+{
+    q: "There isn't ___ water left in the bottle.",
+    a: ["many", "a few", "much", "few"],
+    d: 2
+},
+
+{
+    q: "How ___ students are there in your class?",
+    a: ["much", "many", "little", "any"],
+    d: 1
+},
+
+{
+    q: "My sister is ___ person in my family.",
+    a: ["young", "younger", "the youngest", "youngest"],
+    d: 2
+},
+
+{
+    q: "This exercise is ___ than I expected.",
+    a: ["difficult", "more difficult", "most difficult", "the difficult"],
+    d: 1
+},
+
+{
+    q: "The red car is ___ expensive than the blue one.",
+    a: ["more", "most", "much", "many"],
+    d: 0
+},
+
+{
+    q: "Look! The boys ___ basketball in the playground.",
+    a: ["play", "plays", "are playing", "is playing"],
+    d: 2
+},
+
+{
+    q: "She ___ her homework before she went to bed.",
+    a: ["does", "did", "has done", "doing"],
+    d: 1
+},
+
+{
+    q: "Which sentence is correct?",
+    a: [
+        "He don't like swimming.",
+        "He doesn't likes swimming.",
+        "He doesn't like swimming.",
+        "He not likes swimming."
+    ],
+    d: 2
+},
+
+{
+    q: "Which sentence is correct?",
+    a: [
+        "There are some milk in the fridge.",
+        "There is some milk in the fridge.",
+        "There is many milk in the fridge.",
+        "There are a milk in the fridge."
+    ],
+    d: 1
+},
+
+{
+    q: "___ you ever been to Ha Noi?",
+    a: ["Did", "Have", "Do", "Are"],
+    d: 1
+},
+
+{
+    q: "I have lived here ___ five years.",
+    a: ["since", "for", "at", "from"],
+    d: 1
+},
+
+{
+    q: "We have studied English ___ 2022.",
+    a: ["for", "since", "from", "at"],
+    d: 1
+},
+
+{
+    q: "You ___ eat too much fast food because it is unhealthy.",
+    a: ["should", "shouldn't", "can", "must to"],
+    d: 1
+},
+
+{
+    q: "You ___ wear a helmet when riding a motorbike.",
+    a: ["should", "shouldn't", "don't", "aren't"],
+    d: 0
+},
+
+{
+    q: "What ___ your parents doing now?",
+    a: ["is", "am", "are", "do"],
+    d: 2
+},
+
+{
+    q: "My father ___ to work by car every day.",
+    a: ["go", "goes", "going", "is go"],
+    d: 1
+},
+
+{
+    q: "I don't have ___ brothers or sisters.",
+    a: ["some", "much", "any", "a"],
+    d: 2
+},
+
+{
+    q: "Would you like ___ orange juice?",
+    a: ["a", "an", "some", "any"],
+    d: 2
+},
+
+{
+    q: "How often do you go swimming?",
+    a: [
+        "For two hours.",
+        "Twice a week.",
+        "At the swimming pool.",
+        "With my friends."
+    ],
+    d: 1
+},
+
+{
+    q: "How can we get to the museum?",
+    a: [
+        "It is very interesting.",
+        "Go straight and turn right.",
+        "I like museums.",
+        "It opens at eight."
+    ],
+    d: 1
+},
+
+{
+    q: "What is your favorite hobby?",
+    a: [
+        "I like reading books.",
+        "I am twelve years old.",
+        "I live in Vietnam.",
+        "I am a student."
+    ],
+    d: 0
+},
+
+{
+    q: "Which word has a different meaning?",
+    a: ["beautiful", "pretty", "attractive", "dangerous"],
+    d: 3
+},
+
+{
+    q: "Which word is different from the others?",
+    a: ["doctor", "teacher", "engineer", "hospital"],
+    d: 3
+},
+
+{
+    q: "Choose the correct sentence.",
+    a: [
+        "She can sings very well.",
+        "She can singing very well.",
+        "She can sing very well.",
+        "She cans sing very well."
+    ],
+    d: 2
+},
+
+{
+    q: "Choose the correct sentence.",
+    a: [
+        "I am play football now.",
+        "I am playing football now.",
+        "I playing football now.",
+        "I plays football now."
+    ],
+    d: 1
+},
+
+{
+    q: "The library is ___ the bank and the post office.",
+    a: ["between", "opposite", "under", "behind"],
+    d: 0
+},
+
+{
+    q: "My school is ___ than my old school.",
+    a: ["large", "larger", "largest", "more large"],
+    d: 1
+},
+
+{
+    q: "We should recycle bottles and cans to protect the ___.",
+    a: ["environment", "traffic", "building", "language"],
+    d: 0
+},
+
+{
+    q: "Ha Long Bay is famous ___ its beautiful islands.",
+    a: ["at", "for", "in", "on"],
+    d: 1
+},
+
+{
+    q: "The weather today is ___ than yesterday.",
+    a: ["bad", "worse", "worst", "more bad"],
+    d: 1
+},
+
+{
+    q: "My mother is a teacher, ___ she works at a school.",
+    a: ["but", "so", "because", "or"],
+    d: 1
+},
+
+{
+    q: "I like football, ___ my brother likes basketball.",
+    a: ["and", "but", "because", "so"],
+    d: 1
+},
+
+{
+    q: "We should turn off the lights ___ we leave the room.",
+    a: ["before", "because", "but", "or"],
+    d: 0
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+
+let thoiGianBan = 15;
+let thoiGianBot = 5;
+
+let timerBan;
+let timerBot;
+
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+
+    thoiGianBan = 15;
+    thoiGianBot = 5;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = 15;
+    document.getElementById("botTimer").innerText = 5;
+
+    document.getElementById("question").innerText =
+        danhSach[cau].q;
+
+    document.getElementById("status").innerText =
+        "🤖 Bot đang suy nghĩ...";
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+
+        html += `
+        <div class="answer" onclick="traLoi(${i}, this)">
+            ${String.fromCharCode(65 + i)}. ${x}
+        </div>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    timerBan = setInterval(() => {
+
+        thoiGianBan--;
+
+        document.getElementById("timer").innerText =
+            thoiGianBan;
+
+        if (thoiGianBan <= 0) {
+
+            clearInterval(timerBan);
+
+            hetThoiGian();
+
+        }
+
+    }, 1000);
+
+    timerBot = setInterval(() => {
+
+        thoiGianBot--;
+
+        document.getElementById("botTimer").innerText =
+            thoiGianBot;
+
+        if (thoiGianBot <= 0) {
+
+            clearInterval(timerBot);
+
+            botTraLoi();
+
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timerBan);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+
+        diemBan++;
+
+        element.classList.add("correct");
+
+    } else {
+
+        element.classList.add("wrong");
+
+        document.querySelectorAll(".answer")[dung]
+        .classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").innerText =
+        diemBan;
+
+    document.getElementById("status").innerText =
+        "👤 Bạn đã trả lời! Bot vẫn đang suy nghĩ...";
+
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    document.querySelectorAll(".answer")[dung]
+    .classList.add("correct");
+
+    document.getElementById("status").innerText =
+        "⏰ Bạn hết thời gian! Bot vẫn đang suy nghĩ...";
+
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.9;
+
+    if (dung) {
+
+        diemBot++;
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời đúng!";
+
+    } else {
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời sai!";
+
+    }
+
+    document.getElementById("botScore").innerText =
+        diemBot;
+
+    setTimeout(() => {
+
+        cau++;
+
+        if (cau >= 10) {
+
+            ketThucTran();
+
+        } else {
+
+            hienThiCau();
+
+        }
+
+    }, 1000);
+}
+
+function ketThucTran() {
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    document.getElementById("game").style.display =
+        "none";
+
+    document.querySelector(".info").style.display =
+        "none";
+
+    document.querySelector(".title").style.display =
+        "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">☠️ BẠN THUA!</h1>
+            <p>Bot Địa Ngục đã chiến thắng!</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Bạn đã sống sót trước Bot Địa Ngục!</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🤖 Bot: 5 giây/câu</p>
+
+        <p>🎯 Bot có 90% khả năng trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.href='capdo_anh_khoi6.html'">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi6.html'">
+            🏠 Về chọn môn
+        </button>
+
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

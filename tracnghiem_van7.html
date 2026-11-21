@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Ngữ Văn 7 - Lái máy bay</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,rgba(255,255,255,.25),transparent 20%),
+linear-gradient(135deg,#667eea,#764ba2)
+}
+.star{
+position:fixed;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:.7;
+animation:twinkle 2s infinite alternate
+}
+.star:nth-child(1){top:12%;left:8%}
+.star:nth-child(2){top:25%;left:20%}
+.star:nth-child(3){top:8%;left:40%}
+.star:nth-child(4){top:35%;left:80%}
+.star:nth-child(5){top:15%;left:90%}
+.star:nth-child(6){top:55%;left:12%}
+.star:nth-child(7){top:70%;left:85%}
+.star:nth-child(8){top:80%;left:30%}
+.star:nth-child(9){top:65%;left:55%}
+.star:nth-child(10){top:40%;left:50%}
+@keyframes twinkle{
+from{transform:scale(.5);opacity:.3}
+to{transform:scale(1.5);opacity:1}
+}
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+color:white;
+text-decoration:none;
+font-weight:bold;
+font-size:16px;
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.3);
+border-radius:30px;
+box-shadow:0 5px 20px rgba(0,0,0,.25);
+transition:.3s
+}
+.back:hover{
+transform:translateY(-3px) scale(1.05);
+background:#ff6a00
+}
+h1{
+text-align:center;
+color:white;
+margin:70px 10px 8px;
+font-size:40px;
+text-shadow:0 4px 0 #4a148c,0 8px 20px rgba(0,0,0,.3)
+}
+.info{
+text-align:center;
+color:white;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px
+}
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.35);
+border-radius:28px;
+box-shadow:0 20px 60px rgba(0,0,0,.3)
+}
+.sky{
+position:relative;
+height:340px;
+overflow:hidden;
+border-radius:22px;
+background:linear-gradient(to bottom,#38bdf8,#7dd3fc 45%,#bae6fd);
+border:5px solid rgba(255,255,255,.8);
+box-shadow:inset 0 0 40px rgba(255,255,255,.3),0 10px 30px rgba(0,0,0,.25)
+}
+.sun{
+position:absolute;
+width:80px;
+height:80px;
+right:60px;
+top:35px;
+border-radius:50%;
+background:#ffe066;
+box-shadow:0 0 20px #fff,0 0 50px #ffd43b,0 0 90px rgba(255,214,59,.7);
+animation:sunPulse 3s infinite alternate
+}
+@keyframes sunPulse{
+from{transform:scale(1)}
+to{transform:scale(1.12)}
+}
+.cloud{
+position:absolute;
+width:120px;
+height:40px;
+background:white;
+border-radius:40px;
+opacity:.9;
+filter:drop-shadow(0 5px 5px rgba(0,0,0,.08));
+animation:cloudMove 18s linear infinite
+}
+.cloud:before,.cloud:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%
+}
+.cloud:before{
+width:55px;
+height:55px;
+left:15px;
+top:-25px
+}
+.cloud:after{
+width:65px;
+height:65px;
+right:10px;
+top:-30px
+}
+.cloud1{
+top:55px;
+left:-150px
+}
+.cloud2{
+top:130px;
+left:35%;
+transform:scale(.8);
+animation-delay:-8s
+}
+.cloud3{
+top:230px;
+left:70%;
+transform:scale(.65);
+animation-delay:-12s
+}
+@keyframes cloudMove{
+from{left:-180px}
+to{left:110%}
+}
+.plane{
+position:absolute;
+left:55px;
+top:120px;
+width:150px;
+height:90px;
+z-index:20;
+transition:left .15s linear;
+filter:drop-shadow(0 10px 8px rgba(0,0,0,.25));
+animation:planeFloat 1s infinite alternate
+}
+@keyframes planeFloat{
+from{transform:translateY(-3px) rotate(-1deg)}
+to{transform:translateY(4px) rotate(1deg)}
+}
+.plane-body{
+position:absolute;
+left:20px;
+top:32px;
+width:105px;
+height:30px;
+background:linear-gradient(180deg,#ff5252,#c62828);
+border-radius:25px 50px 40px 25px;
+box-shadow:inset 0 5px 8px rgba(255,255,255,.25)
+}
+.nose{
+position:absolute;
+right:0;
+top:32px;
+width:38px;
+height:30px;
+background:#d32f2f;
+border-radius:0 30px 30px 0
+}
+.wing{
+position:absolute;
+left:45px;
+top:8px;
+width:65px;
+height:35px;
+background:#b71c1c;
+clip-path:polygon(0 100%,100% 0,75% 100%)
+}
+.tail{
+position:absolute;
+left:17px;
+top:4px;
+width:35px;
+height:38px;
+background:#b71c1c;
+clip-path:polygon(0 100%,45% 0,100% 100%)
+}
+.window-plane,.window-plane2{
+position:absolute;
+top:37px;
+width:14px;
+height:14px;
+background:#81d4fa;
+border:2px solid white;
+border-radius:50%;
+z-index:3
+}
+.window-plane{left:76px}
+.window-plane2{left:96px}
+.smoke{
+position:absolute;
+left:-20px;
+top:52px;
+width:18px;
+height:18px;
+background:white;
+border-radius:50%;
+opacity:.7;
+animation:smoke 1s infinite
+}
+@keyframes smoke{
+from{transform:scale(.5);opacity:.8}
+to{transform:translateX(-25px) scale(1.7);opacity:0}
+}
+.cloud-obstacle{
+display:none;
+position:absolute;
+right:70px;
+top:115px;
+width:180px;
+height:110px;
+z-index:15;
+animation:obstacleFloat .8s infinite alternate
+}
+.cloud-obstacle.show{display:block}
+@keyframes obstacleFloat{
+from{transform:translateY(-4px)}
+to{transform:translateY(5px)}
+}
+.cloud-obstacle .c1,
+.cloud-obstacle .c2,
+.cloud-obstacle .c3{
+position:absolute;
+background:linear-gradient(135deg,#64748b,#334155);
+border:5px solid #1e293b;
+border-radius:50%;
+box-shadow:inset 0 5px 10px rgba(255,255,255,.15),0 8px 15px rgba(0,0,0,.25)
+}
+.cloud-obstacle .c1{
+width:85px;
+height:70px;
+left:15px;
+top:30px
+}
+.cloud-obstacle .c2{
+width:95px;
+height:85px;
+left:55px;
+top:8px
+}
+.cloud-obstacle .c3{
+width:80px;
+height:65px;
+left:100px;
+top:35px
+}
+.start-area{
+text-align:center;
+margin:25px 0
+}
+.start{
+border:none;
+padding:16px 40px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#00c853,#00a86b);
+box-shadow:0 8px 0 #087f5b,0 15px 25px rgba(0,0,0,.25);
+transition:.2s
+}
+.start:hover{transform:translateY(-3px)}
+.start:active{
+transform:translateY(5px);
+box-shadow:0 3px 0 #087f5b
+}
+.progress-box{margin-top:20px}
+.progress-text{
+text-align:center;
+color:white;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+text-shadow:0 2px 4px rgba(0,0,0,.3)
+}
+.progress{
+width:100%;
+height:25px;
+background:rgba(255,255,255,.35);
+border-radius:30px;
+padding:3px;
+overflow:hidden
+}
+.progress-bar{
+height:100%;
+width:0%;
+border-radius:30px;
+background:linear-gradient(90deg,#00e676,#69f0ae,#00c853);
+transition:.5s;
+box-shadow:0 0 15px rgba(0,255,120,.7)
+}
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+color:white;
+margin-top:15px;
+min-height:28px;
+text-shadow:0 2px 5px rgba(0,0,0,.4)
+}
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(5px);
+z-index:150
+}
+.overlay.show{display:block}
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:720px;
+max-height:90vh;
+overflow-y:auto;
+background:linear-gradient(135deg,#ffffff,#f1f5f9);
+padding:30px;
+border-radius:25px;
+box-shadow:0 25px 70px rgba(0,0,0,.55);
+animation:popup .3s forwards
+}
+.question-box.show{display:block}
+@keyframes popup{
+to{transform:translate(-50%,-50%) scale(1)}
+}
+.question-box h2{
+text-align:center;
+color:#4f46e5;
+font-size:27px;
+margin-top:0
+}
+.question{
+font-size:22px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+color:#1e293b
+}
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:12px 0;
+border:2px solid #e2e8f0;
+border-radius:14px;
+background:#f8fafc;
+text-align:left;
+font-size:18px;
+cursor:pointer;
+transition:.2s
+}
+.answer:hover{
+transform:translateX(5px);
+border-color:#6366f1;
+background:#eef2ff
+}
+.answer.selected{
+background:#dbeafe;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,.12)
+}
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#2563eb,#4f46e5);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 7px 15px rgba(37,99,235,.35);
+transition:.2s
+}
+.check:hover{transform:translateY(-3px)}
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:570px;
+background:white;
+padding:45px 30px;
+border-radius:30px;
+text-align:center;
+box-shadow:0 25px 80px rgba(0,0,0,.55);
+animation:resultShow .4s
+}
+@keyframes resultShow{
+from{
+transform:translate(-50%,-50%) scale(.5) rotate(-5deg);
+opacity:0
+}
+to{
+transform:translate(-50%,-50%) scale(1) rotate(0);
+opacity:1
+}
+}
+.result h2{
+font-size:38px;
+color:#00a86b;
+margin:0 0 20px
+}
+.result.lose h2{color:#e53935}
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#334155
+}
+.again{
+background:linear-gradient(135deg,#ff6a00,#ff8f00);
+color:white;
+border:none;
+padding:15px 35px;
+border-radius:50px;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 7px 15px rgba(255,106,0,.3);
+transition:.2s
+}
+.again:hover{transform:translateY(-3px) scale(1.03)}
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:60px;
+font-weight:bold;
+color:#00e676;
+text-shadow:0 5px 20px rgba(0,0,0,.4);
+pointer-events:none;
+animation:correctEffect .8s forwards
+}
+@keyframes correctEffect{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:0
+}
+40%{
+transform:translate(-50%,-50%) scale(1.3);
+opacity:1
+}
+100%{
+transform:translate(-50%,-100%) scale(1);
+opacity:0
+}
+}
+@media(max-width:700px){
+h1{
+font-size:28px;
+margin-top:75px
+}
+.info{font-size:16px}
+.game{
+width:96%;
+padding:12px
+}
+.sky{height:250px}
+.plane{
+top:85px;
+transform:scale(.8);
+transform-origin:left center
+}
+.sun{
+width:55px;
+height:55px;
+right:25px;
+top:25px
+}
+.cloud-obstacle{
+right:20px;
+top:80px;
+transform:scale(.75)
+}
+.question-box{padding:20px}
+.question-box h2{font-size:21px}
+.question{font-size:18px}
+.answer{
+font-size:16px;
+padding:12px
+}
+.result h2{font-size:30px}
+.result p{font-size:18px}
+.back{
+padding:9px 14px;
+font-size:14px
+}
+}
+</style>
+</head>
+<body>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi7tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>✈️ TRẮC NGHIỆM NGỮ VĂN 7</h1>
+
+<div class="info">
+🎮 TRÒ CHƠI LÁI MÁY BAY - VƯỢT MÂY
+</div>
+
+<div class="game">
+
+<div class="sky">
+
+<div class="sun"></div>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+<div class="cloud cloud3"></div>
+
+<div class="plane" id="plane">
+<div class="smoke"></div>
+<div class="tail"></div>
+<div class="wing"></div>
+<div class="plane-body"></div>
+<div class="nose"></div>
+<div class="window-plane"></div>
+<div class="window-plane2"></div>
+</div>
+
+<div class="cloud-obstacle" id="cloudObstacle">
+<div class="c1"></div>
+<div class="c2"></div>
+<div class="c3"></div>
+</div>
+
+</div>
+
+<div class="start-area">
+<button class="start" id="startButton" onclick="startGame()">
+▶ BẮT ĐẦU
+</button>
+</div>
+
+<div class="progress-box">
+<div class="progress-text" id="progressText">
+🏁 Chưa bắt đầu
+</div>
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để chơi!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+
+<h2>☁️ ĐÁM MÂY CẢN ĐƯỜNG!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+✅ TRẢ LỜI
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 CHƠI LẠI
+</button>
+
+</div>
+
+<script>
+
+const questionBank=[
+
+["Văn bản nghị luận thường nhằm mục đích gì?",["Kể chuyện","Trình bày ý kiến và thuyết phục người đọc","Miêu tả cảnh vật","Bộc lộ cảm xúc"],1],
+["Luận đề là gì?",["Vấn đề chính được bàn luận trong văn bản","Một nhân vật","Một hình ảnh thơ","Tên tác giả"],0],
+["Luận điểm là gì?",["Một chi tiết nhỏ","Ý kiến chính được dùng để làm sáng tỏ luận đề","Tên tác phẩm","Một câu hỏi"],1],
+["Lí lẽ trong văn nghị luận có tác dụng gì?",["Làm rõ và bảo vệ luận điểm","Tạo nhân vật","Miêu tả cảnh vật","Tạo vần"],0],
+["Bằng chứng trong văn nghị luận dùng để làm gì?",["Làm cơ sở chứng minh cho lí lẽ và luận điểm","Tạo nhịp thơ","Kể chuyện","Đặt tên văn bản"],0],
+["Người kể chuyện ngôi thứ nhất thường sử dụng từ nào?",["Tôi, chúng tôi","Nó, họ","Tên nhân vật","Các số từ"],0],
+["Người kể chuyện ngôi thứ ba thường làm gì?",["Xưng tôi","Gọi nhân vật bằng tên hoặc đại từ","Không kể được sự việc","Chỉ kể chuyện bản thân"],1],
+["Cốt truyện là gì?",["Hệ thống các sự việc chính được sắp xếp trong câu chuyện","Tên tác phẩm","Một đoạn văn","Một câu thơ"],0],
+["Chi tiết trong truyện có tác dụng gì?",["Góp phần thể hiện nhân vật và nội dung tác phẩm","Chỉ làm văn bản dài","Không có ý nghĩa","Chỉ để trang trí"],0],
+["Thơ bốn chữ là thể thơ như thế nào?",["Mỗi dòng thường có bốn tiếng","Mỗi dòng có năm tiếng","Mỗi dòng có sáu tiếng","Mỗi dòng có tám tiếng"],0],
+["Thơ năm chữ là thể thơ như thế nào?",["Mỗi dòng thường có năm tiếng","Mỗi dòng có bốn tiếng","Mỗi dòng có sáu tiếng","Mỗi dòng có tám tiếng"],0],
+["Thơ lục bát gồm những câu nào?",["Các cặp câu sáu và tám tiếng","Các câu bốn tiếng","Các câu năm tiếng","Các câu bảy tiếng"],0],
+["Hình ảnh thơ có tác dụng gì?",["Gợi hình, gợi cảm và thể hiện cảm xúc","Chỉ cung cấp số liệu","Chỉ kể chuyện","Chỉ giải thích khái niệm"],0],
+["Điệp ngữ là biện pháp gì?",["Lặp lại từ ngữ có chủ ý","So sánh hai sự vật","Gọi vật như người","Nói quá"],0],
+["So sánh là biện pháp gì?",["Đối chiếu sự vật này với sự vật khác có nét tương đồng","Lặp lại từ","Nói giảm","Đảo ngữ"],0],
+["Nhân hóa là gì?",["Gọi hoặc tả sự vật bằng những cách vốn dùng cho con người","So sánh số lượng","Lặp từ","Nói quá"],0],
+["Ẩn dụ dựa trên điều gì?",["Sự tương đồng giữa các sự vật, hiện tượng","Sự đối lập","Quan hệ gần gũi","Vần thơ"],0],
+["Hoán dụ dựa trên điều gì?",["Mối quan hệ gần gũi giữa các sự vật","Sự tương đồng","Nhịp thơ","Số tiếng"],0],
+["Từ đồng nghĩa là những từ như thế nào?",["Có nghĩa giống hoặc gần giống nhau","Có nghĩa trái ngược","Giống âm khác nghĩa","Có nhiều nghĩa"],0],
+["Từ trái nghĩa là những từ như thế nào?",["Có nghĩa trái ngược nhau","Có nghĩa giống nhau","Giống âm","Giống cách viết"],0],
+["Từ đồng âm là những từ như thế nào?",["Giống âm nhưng khác nghĩa","Giống nghĩa","Trái nghĩa","Giống cả âm và nghĩa"],0],
+["Từ Hán Việt là gì?",["Những từ có nguồn gốc từ tiếng Hán và được sử dụng trong tiếng Việt","Từ chỉ hoạt động","Từ láy","Từ địa phương"],0],
+["Thành ngữ là gì?",["Cụm từ cố định, có nghĩa hoàn chỉnh và thường có tính hình tượng","Một câu hỏi","Một đoạn văn","Một từ đơn"],0],
+["Tục ngữ thường làm gì?",["Đúc kết kinh nghiệm và tri thức của nhân dân","Kể một câu chuyện dài","Miêu tả nhân vật","Chỉ bộc lộ cảm xúc"],0],
+["Văn bản thông tin có mục đích chủ yếu là gì?",["Cung cấp thông tin về sự vật, hiện tượng hoặc vấn đề","Kể chuyện hư cấu","Bộc lộ cảm xúc","Trình bày luận điểm"],0],
+["Nhan đề văn bản thông tin giúp gì?",["Gợi nội dung chính của văn bản","Chỉ để trang trí","Thay hình ảnh","Kết thúc văn bản"],0],
+["Đề mục trong văn bản thông tin có tác dụng gì?",["Tổ chức và định hướng nội dung","Làm văn bản dài hơn","Thay nhan đề","Tạo nhân vật"],0],
+["Số liệu trong văn bản thông tin giúp gì?",["Làm thông tin cụ thể và đáng tin cậy hơn","Tạo vần","Bộc lộ cảm xúc","Tạo tình huống truyện"],0],
+["Biểu đồ trong văn bản thông tin giúp gì?",["Trình bày và so sánh số liệu trực quan","Tạo nhân vật","Kể chuyện","Tạo nhịp thơ"],0],
+["Chủ đề của tác phẩm là gì?",["Vấn đề chính được tác phẩm thể hiện","Tên tác giả","Tên nhân vật","Số trang"],0],
+["Thông điệp của tác phẩm là gì?",["Điều tác giả muốn gửi gắm tới người đọc","Tên chương","Tên nhân vật","Một câu hỏi"],0],
+["Tình huống truyện là gì?",["Hoàn cảnh đặc biệt làm nảy sinh sự việc và bộc lộ nhân vật","Tên nhân vật","Một hình ảnh","Một câu hỏi"],0],
+["Nhân vật trong truyện có thể được thể hiện qua gì?",["Ngoại hình, hành động, lời nói và suy nghĩ","Chỉ tên gọi","Chỉ tuổi","Chỉ quê quán"],0],
+["Câu đặc biệt là gì?",["Câu không có cấu tạo theo mô hình chủ ngữ - vị ngữ nhưng vẫn có ý nghĩa","Luôn có hai chủ ngữ","Luôn có vị ngữ","Chỉ có một từ"],0],
+["Câu rút gọn là gì?",["Lược bỏ một số thành phần nhưng vẫn có thể hiểu được nội dung","Không có nghĩa","Luôn có đầy đủ thành phần","Chỉ dùng trong thơ"],0],
+["Câu ghép là gì?",["Có từ hai cụm chủ - vị trở lên và các vế có quan hệ với nhau","Chỉ có một cụm chủ - vị","Chỉ có một từ","Không có chủ ngữ"],0],
+["Quan hệ từ dùng để làm gì?",["Biểu thị quan hệ giữa các từ hoặc các bộ phận của câu","Chỉ người","Chỉ hoạt động","Chỉ số lượng"],0],
+["Trạng ngữ có tác dụng gì?",["Bổ sung hoàn cảnh cho sự việc được nói đến","Làm chủ ngữ","Thay vị ngữ","Chỉ tên người"],0],
+["Trong câu 'Buổi sáng, em đi học', 'Buổi sáng' là gì?",["Trạng ngữ","Chủ ngữ","Vị ngữ","Bổ ngữ"],0],
+["Trong câu 'Vì trời mưa nên chúng em nghỉ học', hai vế có quan hệ gì?",["Nguyên nhân - kết quả","Điều kiện - kết quả","Tương phản","Lựa chọn"],0],
+["Trong câu 'Nếu chăm chỉ thì em sẽ tiến bộ', hai vế có quan hệ gì?",["Điều kiện - kết quả","Nguyên nhân - kết quả","Tương phản","Bổ sung"],0],
+["Trong câu 'Tuy trời mưa nhưng em vẫn đi học', hai vế có quan hệ gì?",["Tương phản","Nguyên nhân - kết quả","Điều kiện - kết quả","Lựa chọn"],0],
+["Dấu chấm phẩy có thể dùng để làm gì?",["Ngăn cách các vế của câu ghép hoặc các bộ phận phức tạp","Kết thúc câu hỏi","Thay dấu ngoặc kép","Đánh dấu lời nói"],0],
+["Dấu ngoặc kép thường dùng để làm gì?",["Đánh dấu lời dẫn trực tiếp hoặc từ ngữ được dùng với ý đặc biệt","Kết thúc câu hỏi","Ngăn cách chủ ngữ","Đánh dấu đoạn văn"],0],
+["Dấu gạch ngang có thể dùng để làm gì?",["Đánh dấu lời nói trực tiếp trong đối thoại","Kết thúc câu kể","Đánh dấu câu hỏi","Thay dấu phẩy"],0],
+["Bài văn nghị luận cần có gì?",["Luận đề, luận điểm, lí lẽ và bằng chứng","Chỉ có nhân vật","Chỉ có hình ảnh","Chỉ có cảm xúc"],0],
+["Muốn bài nghị luận thuyết phục, bằng chứng cần như thế nào?",["Cụ thể, phù hợp và có sức thuyết phục","Không liên quan đến luận điểm","Càng dài càng tốt","Chỉ là cảm xúc"],0],
+["Mở bài của bài văn nghị luận thường làm gì?",["Giới thiệu vấn đề cần nghị luận","Nêu toàn bộ bằng chứng","Kết luận vấn đề","Kể một câu chuyện bất kỳ"],0],
+["Thân bài của bài văn nghị luận thường làm gì?",["Triển khai luận điểm bằng lí lẽ và bằng chứng","Chỉ giới thiệu vấn đề","Chỉ kết luận","Chỉ nêu cảm xúc"],0],
+["Kết bài của bài văn nghị luận thường làm gì?",["Khẳng định hoặc mở rộng vấn đề","Đưa luận điểm đầu tiên","Giới thiệu nhân vật","Đưa toàn bộ bằng chứng"],0],
+["Khi viết bài văn biểu cảm, người viết cần gì?",["Bộc lộ cảm xúc chân thành về đối tượng","Chỉ đưa số liệu","Chỉ kể sự việc","Không cần cảm xúc"],0],
+["Khi tóm tắt văn bản, cần làm gì?",["Giữ lại các sự việc và nội dung quan trọng","Chép nguyên văn","Giữ tất cả chi tiết","Chỉ giữ lời thoại"],0],
+["Khi kể lại một trải nghiệm, cần chú ý gì?",["Sự việc, thời gian, địa điểm, nhân vật và cảm xúc","Chỉ địa điểm","Chỉ kết quả","Chỉ tên người"],0],
+["Một đoạn văn cần đảm bảo gì?",["Tính thống nhất về chủ đề và sự liên kết","Nhiều chủ đề không liên quan","Không cần câu chủ đề","Không cần dấu câu"],0],
+["Câu chủ đề thường làm gì?",["Nêu ý chính của đoạn văn","Chỉ nêu tên tác giả","Luôn là câu hỏi","Không có nội dung"],0],
+["Liên kết trong văn bản giúp gì?",["Các câu và đoạn gắn bó chặt chẽ với nhau","Làm văn bản dài hơn","Xóa ý chính","Thay đổi chủ đề"],0],
+["Mạch lạc trong văn bản là gì?",["Các ý được sắp xếp hợp lí và thống nhất","Các ý rời rạc","Chỉ dùng câu ngắn","Chỉ dùng câu hỏi"],0],
+["Đọc thơ cần chú ý gì?",["Hình ảnh, từ ngữ, vần, nhịp và cảm xúc","Chỉ số liệu","Chỉ tên tác giả","Chỉ số câu"],0],
+["Vần và nhịp trong thơ có tác dụng gì?",["Tạo âm hưởng và nhạc điệu cho bài thơ","Làm bài thơ dài hơn","Thay đổi chủ đề","Tạo nhân vật"],0],
+["Ngôn ngữ thơ thường như thế nào?",["Cô đọng, giàu hình ảnh và cảm xúc","Luôn dài dòng","Chỉ dùng số liệu","Không có hình ảnh"],0],
+["Biện pháp tu từ giúp văn bản như thế nào?",["Tăng sức gợi hình, gợi cảm và biểu đạt","Làm văn bản khó hiểu hơn","Xóa chủ đề","Thay tác giả"],0],
+["Mục đích của việc lập dàn ý là gì?",["Sắp xếp các ý trước khi viết","Làm bài dài hơn","Thay việc viết bài","Xóa các ý chính"],0],
+["Dàn ý bài văn thường gồm gì?",["Mở bài, thân bài và kết bài","Chỉ mở bài","Chỉ thân bài","Chỉ kết bài"],0],
+["Khi viết bài, cần chú ý gì?",["Chính tả, ngữ pháp, bố cục và cách diễn đạt","Chỉ viết thật dài","Không cần dấu câu","Không cần kiểm tra"],0],
+["Đọc sách giúp học sinh như thế nào?",["Mở rộng hiểu biết, vốn từ và khả năng cảm thụ","Chỉ ghi nhớ tên sách","Không có tác dụng","Chỉ học thuộc lòng"],0],
+["Học Ngữ văn giúp phát triển điều gì?",["Đọc, viết, nói, nghe và khả năng cảm thụ","Chỉ khả năng tính toán","Chỉ trí nhớ","Chỉ khả năng vẽ"],0],
+["Một bài viết tốt cần gì?",["Có ý tưởng rõ ràng, bố cục hợp lí và diễn đạt mạch lạc","Càng dài càng tốt","Nhiều từ khó","Không cần liên kết"],0],
+["Khi sử dụng dẫn chứng, cần làm gì?",["Chọn dẫn chứng phù hợp với nội dung đang trình bày","Chọn bất kỳ dẫn chứng nào","Càng nhiều càng tốt","Không cần giải thích"],0],
+["Suy luận khi đọc văn bản giúp gì?",["Hiểu những điều không được nói trực tiếp","Chỉ tìm tên tác giả","Đếm số câu","Tìm dấu chấm"],0],
+["Chủ đề và thông điệp của tác phẩm có quan hệ như thế nào?",["Có quan hệ chặt chẽ với nội dung tác phẩm","Luôn giống tên tác phẩm","Không liên quan","Chỉ phụ thuộc số trang"],0],
+["Khi học một tác phẩm văn học, cần làm gì?",["Kết hợp đọc hiểu nội dung và phân tích nghệ thuật","Chỉ học thuộc tiểu sử tác giả","Chỉ nhớ tên nhân vật","Chỉ chép văn bản"],0],
+["Mục tiêu quan trọng của môn Ngữ văn 7 là gì?",["Phát triển năng lực đọc, viết, nói, nghe và cảm thụ văn học","Chỉ học thuộc bài","Chỉ làm trắc nghiệm","Chỉ chép bài"],0]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let planePosition=55;
+let planeTimer=null;
+let obstacleTimer=null;
+
+function startGame(){
+
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+planePosition=55;
+
+document.getElementById("plane").style.left=planePosition+"px";
+document.getElementById("cloudObstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+document.getElementById("startButton").innerHTML="🔄 CHƠI LẠI";
+document.getElementById("status").innerHTML="✈️ Máy bay đang bay... Hãy chuẩn bị vượt mây!";
+
+let shuffled=[...questionBank];
+shuffled.sort(()=>Math.random()-.5);
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+clearInterval(planeTimer);
+clearTimeout(obstacleTimer);
+
+planeTimer=setInterval(movePlane,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+
+}
+
+function movePlane(){
+
+if(!gameRunning||waiting)return;
+
+planePosition+=2;
+
+let w=document.querySelector(".sky").clientWidth;
+
+if(planePosition>w-180){
+planePosition=55;
+}
+
+document.getElementById("plane").style.left=planePosition+"px";
+
+}
+
+function showObstacle(){
+
+if(!gameRunning)return;
+
+waiting=true;
+
+document.getElementById("cloudObstacle").classList.add("show");
+
+document.getElementById("status").innerHTML="☁️ ĐÁM MÂY CẢN ĐƯỜNG! Hãy trả lời thật chính xác!";
+
+clearInterval(planeTimer);
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=gameQuestions[currentQuestion];
+
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML="Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+
+});
+
+document.getElementById("answers").innerHTML=html;
+
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function correctEffect(){
+
+const effect=document.createElement("div");
+
+effect.className="correct-effect";
+effect.innerHTML="✨ CHÍNH XÁC!";
+
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},800);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+
+alert("⚠️ Hãy chọn một đáp án!");
+
+return;
+
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+
+loseGame();
+
+return;
+
+}
+
+correctEffect();
+
+currentQuestion++;
+
+document.getElementById("cloudObstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+updateProgress();
+
+if(currentQuestion>=10){
+
+winGame();
+
+return;
+
+}
+
+waiting=false;
+
+document.getElementById("status").innerHTML="✅ Chính xác! Máy bay tiếp tục bay...";
+
+planeTimer=setInterval(movePlane,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML="✈️ Đã vượt qua "+currentQuestion+"/10 đám mây";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(planeTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("cloudObstacle").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML="💥 MÁY BAY GẶP NẠN!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Rất tiếc! Bạn đã trả lời sai.<br><br>"+
+"✈️ Đã vượt qua "+currentQuestion+"/10 đám mây.<br><br>"+
+"📖 Hãy thử lại và chinh phục bầu trời!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(planeTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("cloudObstacle").classList.remove("show");
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("progressText").innerHTML="🏆 HOÀN THÀNH 10/10!";
+
+document.getElementById("status").innerHTML="🎉 Tuyệt vời! Bạn đã chinh phục bầu trời Ngữ Văn 7!";
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("resultTitle").innerHTML="🏆 CHIẾN THẮNG!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"✈️ Bạn đã vượt qua cả 10 đám mây!<br><br>"+
+"📖 Hoàn thành màn chơi Trắc nghiệm Ngữ Văn 7!";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 9 - CHẾ ĐỘ KHÓ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #333;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ LỊCH SỬ VÀ ĐỊA LÝ KHỐI 9 - CHẾ ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+ {
+        q: "Vì sao Cách mạng tháng Tám năm 1945 giành được thắng lợi nhanh chóng?",
+        a: ["Do Nhật chủ động trao độc lập", "Do thời cơ cách mạng chín muồi và sự chuẩn bị lâu dài của lực lượng cách mạng", "Do Pháp giúp đỡ", "Do không có lực lượng chống đối"],
+        d: 1
+    },
+
+    {
+        q: "Vì sao Đồng bằng sông Hồng có mật độ dân số cao?",
+        a: ["Địa hình hiểm trở", "Khí hậu lạnh quanh năm", "Lịch sử khai thác lâu đời, đất đai màu mỡ và kinh tế phát triển", "Không có hoạt động công nghiệp"],
+        d: 2
+    },
+
+    {
+        q: "Ý nghĩa lịch sử quan trọng nhất của chiến thắng Điện Biên Phủ là gì?",
+        a: ["Kết thúc chiến tranh thế giới thứ hai", "Thành lập Liên Hợp Quốc", "Mở đầu công cuộc Đổi mới", "Buộc Pháp kí Hiệp định Giơ-ne-vơ, chấm dứt chiến tranh ở Đông Dương"],
+        d: 3
+    },
+
+    {
+        q: "Vì sao Tây Nguyên có điều kiện thuận lợi phát triển cây cà phê?",
+        a: ["Có đất badan rộng và khí hậu thích hợp", "Có nhiều đất mặn", "Có khí hậu hàn đới", "Có nhiều đồng bằng phù sa"],
+        d: 0
+    },
+
+    {
+        q: "Nguyên nhân quan trọng dẫn đến thắng lợi của cuộc kháng chiến chống Mỹ, cứu nước là gì?",
+        a: ["Chỉ nhờ sự giúp đỡ quốc tế", "Sự lãnh đạo đúng đắn của Đảng và sức mạnh đoàn kết toàn dân", "Do Mỹ không có quân đội", "Do không xảy ra chiến tranh"],
+        d: 1
+    },
+
+    {
+        q: "Tại sao Duyên hải Nam Trung Bộ có tiềm năng phát triển kinh tế biển?",
+        a: ["Không có bờ biển", "Có nhiều sông băng", "Có bờ biển dài, nhiều vũng vịnh và ngư trường", "Có khí hậu hàn đới"],
+        d: 2
+    },
+
+    {
+        q: "Mặt trận Việt Minh được thành lập vào năm nào?",
+        a: ["1930", "1936", "1941", "1945"],
+        d: 2
+    },
+
+    {
+        q: "Nguyên nhân chủ yếu khiến vùng núi có mật độ dân số thấp hơn đồng bằng là gì?",
+        a: ["Không có tài nguyên", "Không có đất đai", "Không có sông", "Địa hình khó khăn và điều kiện sinh sống, sản xuất hạn chế hơn"],
+        d: 3
+    },
+
+    {
+        q: "Tại sao Đảng và Chính phủ quyết định phát động toàn quốc kháng chiến chống Pháp ngày 19/12/1946?",
+        a: ["Do Pháp liên tiếp phá hoại các thỏa thuận và gửi tối hậu thư đòi tước vũ khí lực lượng tự vệ", "Do Việt Nam muốn mở rộng lãnh thổ", "Do chiến tranh thế giới thứ nhất bùng nổ", "Do Nhật quay lại xâm lược"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao ngành dịch vụ ngày càng có vai trò quan trọng trong nền kinh tế nước ta?",
+        a: ["Do nông nghiệp biến mất", "Do đáp ứng nhu cầu sản xuất, đời sống và thúc đẩy các ngành kinh tế khác", "Do không cần lao động", "Do không cần vốn"],
+        d: 1
+    },
+
+    {
+        q: "Phong trào Đồng khởi đã làm phá sản chiến lược chiến tranh nào của Mỹ?",
+        a: ["Chiến tranh cục bộ", "Việt Nam hóa chiến tranh", "Chiến tranh đơn phương", "Chiến tranh tổng lực"],
+        d: 2
+    },
+
+    {
+        q: "Tại sao Đồng bằng sông Cửu Long dễ bị ảnh hưởng bởi xâm nhập mặn?",
+        a: ["Do có nhiều núi cao", "Do có khí hậu lạnh", "Do không tiếp giáp biển", "Do địa hình thấp, hệ thống sông ngòi dày đặc và ảnh hưởng của thủy triều, hạn hán"],
+        d: 3
+    },
+
+    {
+        q: "Vai trò quan trọng của hậu phương miền Bắc trong kháng chiến chống Mỹ là gì?",
+        a: ["Cung cấp nhân lực, vật lực cho tiền tuyến miền Nam", "Chỉ phát triển du lịch", "Không tham gia hỗ trợ miền Nam", "Chỉ phát triển thương mại"],
+        d: 0
+    },
+
+    {
+        q: "Vì sao Đông Nam Bộ trở thành vùng kinh tế phát triển năng động?",
+        a: ["Do có khí hậu lạnh", "Vị trí thuận lợi, cơ sở hạ tầng phát triển và thu hút đầu tư", "Do không có dân cư", "Do không có hoạt động công nghiệp"],
+        d: 1
+    },
+
+    {
+        q: "Nội dung nào thể hiện rõ nhất ý nghĩa của công cuộc Đổi mới năm 1986?",
+        a: ["Xóa bỏ toàn bộ hoạt động kinh tế", "Quay lại cơ chế bao cấp hoàn toàn", "Đưa đất nước từng bước thoát khỏi khủng hoảng và phát triển kinh tế", "Đóng cửa với thế giới"],
+        d: 2
+    },
+
+    {
+        q: "Biện pháp nào giúp hạn chế tình trạng xói mòn đất ở vùng đồi núi?",
+        a: ["Phá rừng", "Đốt rừng làm nương", "Canh tác trên đất dốc không có biện pháp bảo vệ", "Trồng rừng và canh tác theo đường đồng mức"],
+        d: 3
+    },
+
+    {
+        q: "Tại sao chiến dịch Hồ Chí Minh được lựa chọn là chiến dịch quyết định giải phóng miền Nam?",
+        a: ["Do thời cơ chiến lược đã chín muồi và lực lượng cách mạng có ưu thế", "Do Mỹ trực tiếp yêu cầu", "Do miền Bắc không còn quân đội", "Do chiến tranh đã kết thúc từ năm 1954"],
+        d: 0
+    },
+
+    {
+        q: "Tại sao giao thông vận tải có vai trò quan trọng đối với phát triển kinh tế?",
+        a: ["Làm giảm trao đổi hàng hóa", "Kết nối các vùng, thúc đẩy lưu thông hàng hóa và phát triển kinh tế", "Làm giảm giao lưu giữa các địa phương", "Không liên quan đến sản xuất"],
+        d: 1
+    },
+
+    {
+        q: "Ý nghĩa của việc Việt Nam gia nhập ASEAN năm 1995 là gì?",
+        a: ["Chấm dứt mọi quan hệ quốc tế", "Làm mất độc lập dân tộc", "Mở rộng hợp tác khu vực và nâng cao vị thế quốc tế", "Rút khỏi các tổ chức quốc tế"],
+        d: 2
+    },
+
+    {
+        q: "Vì sao cần bảo vệ rừng ngập mặn ở ven biển nước ta?",
+        a: ["Để tăng xói lở bờ biển", "Để giảm đa dạng sinh học", "Để mở rộng khai thác trái phép", "Để bảo vệ bờ biển, hệ sinh thái và nguồn lợi thủy sản"],
+        d: 3
+    },
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.75;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 75% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi9_kho.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngữ văn 8 - Khó</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #3b0764, #7f1d1d, #111827);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: #facc15;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    color: #222;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.answer:hover:not(:disabled) {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    color: #2878e8;
+}
+
+.result p {
+    font-size: 19px;
+}
+
+.win {
+    color: #2ecc71 !important;
+}
+
+.lose {
+    color: #e74c3c !important;
+}
+
+.draw {
+    color: #f39c12 !important;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #581c87;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #7e22ce;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_van_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ <span id="timer">15</span>
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        🔥 NGỮ VĂN 8 - CẤP ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi=[
+{
+    q: "Trong câu 'Mặt trời xuống biển như hòn lửa', biện pháp tu từ nổi bật là gì?",
+    a: ["Nhân hóa", "So sánh", "Nói quá", "Điệp ngữ"],
+    d: 1
+},
+{
+    q: "Câu 'Tiếng suối trong như tiếng hát xa' sử dụng biện pháp tu từ nào?",
+    a: ["So sánh", "Nói giảm", "Nói quá", "Hoán dụ"],
+    d: 0
+},
+{
+    q: "Trong câu 'Áo chàm đưa buổi phân li', hình ảnh 'áo chàm' có thể được hiểu là gì?",
+    a: ["Hoán dụ chỉ người dân Việt Bắc", "So sánh chỉ màu sắc", "Nói quá về trang phục", "Nhân hóa chiếc áo"],
+    d: 0
+},
+{
+    q: "Câu 'Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao' gửi gắm bài học gì?",
+    a: ["Đề cao tinh thần đoàn kết", "Khuyên con người sống ích kỉ", "Đề cao sức mạnh cá nhân tuyệt đối", "Khuyên tránh làm việc chung"],
+    d: 0
+},
+{
+    q: "Câu 'Gần mực thì đen, gần đèn thì sáng' khuyên con người điều gì?",
+    a: ["Biết lựa chọn môi trường và bạn bè tốt", "Không cần quan tâm đến bạn bè", "Chỉ nên học vào ban đêm", "Không nên giúp đỡ người khác"],
+    d: 0
+},
+{
+    q: "Trong câu 'Trẻ em như búp trên cành', hình ảnh 'búp trên cành' gợi điều gì?",
+    a: ["Sự non trẻ, cần được chăm sóc", "Sự già nua", "Sự mạnh mẽ tuyệt đối", "Sự cô đơn"],
+    d: 0
+},
+{
+    q: "Một bài văn nghị luận muốn thuyết phục người đọc cần có yếu tố nào?",
+    a: ["Luận điểm rõ ràng, lí lẽ hợp lí và bằng chứng xác thực", "Chỉ có cảm xúc", "Nhiều câu dài khó hiểu", "Không cần dẫn chứng"],
+    d: 0
+},
+{
+    q: "Khi đưa bằng chứng vào bài nghị luận, cần chú ý điều gì?",
+    a: ["Bằng chứng phù hợp và có liên quan đến luận điểm", "Càng dài càng tốt", "Không cần kiểm chứng", "Chỉ dùng bằng chứng tưởng tượng"],
+    d: 0
+},
+{
+    q: "Trong đoạn văn diễn dịch, câu chủ đề thường nằm ở đâu?",
+    a: ["Đầu đoạn", "Cuối đoạn", "Giữa hai đoạn", "Không có vị trí xác định"],
+    d: 0
+},
+{
+    q: "Trong đoạn văn quy nạp, câu chủ đề thường nằm ở đâu?",
+    a: ["Đầu đoạn", "Cuối đoạn", "Ngay giữa đoạn", "Ngoài đoạn"],
+    d: 1
+},
+{
+    q: "Đoạn văn song song có đặc điểm nào?",
+    a: ["Các câu cùng làm rõ một chủ đề, không có câu chủ đề bao quát theo kiểu diễn dịch hoặc quy nạp", "Chỉ có một câu", "Luôn có câu chủ đề ở cuối", "Không có nội dung liên kết"],
+    d: 0
+},
+{
+    q: "Khi phân tích tác dụng của biện pháp tu từ, cần nêu điều gì?",
+    a: ["Tên biện pháp, biểu hiện và tác dụng trong ngữ cảnh", "Chỉ cần chép lại câu thơ", "Chỉ nêu tên tác giả", "Chỉ đếm số từ"],
+    d: 0
+},
+{
+    q: "Trong câu 'Những ngôi sao thức ngoài kia', từ 'thức' gợi cách diễn đạt nào?",
+    a: ["Nhân hóa", "Nói giảm", "Liệt kê", "Đảo ngữ"],
+    d: 0
+},
+{
+    q: "Câu 'Bàn tay ta làm nên tất cả' có thể sử dụng hình ảnh hoán dụ để chỉ điều gì?",
+    a: ["Sức lao động của con người", "Một bộ phận không liên quan", "Một đồ vật vô tri", "Một hiện tượng thời tiết"],
+    d: 0
+},
+{
+    q: "Khi viết bài văn phân tích tác phẩm, phần thân bài cần làm gì?",
+    a: ["Phân tích các khía cạnh nội dung và nghệ thuật bằng lí lẽ, dẫn chứng", "Chỉ kể lại toàn bộ tác phẩm", "Chỉ giới thiệu tên tác giả", "Chỉ nêu cảm nghĩ một câu"],
+    d: 0
+},
+{
+    q: "Mục đích của việc liên kết các câu trong đoạn văn là gì?",
+    a: ["Tạo sự thống nhất và mạch lạc", "Làm các câu rời rạc", "Tăng số lượng dấu câu", "Loại bỏ chủ đề"],
+    d: 0
+},
+{
+    q: "Trong văn bản, từ ngữ liên kết có tác dụng gì?",
+    a: ["Kết nối các câu và các đoạn", "Thay thế toàn bộ nội dung", "Làm mất quan hệ ý nghĩa", "Chỉ dùng để trang trí"],
+    d: 0
+},
+{
+    q: "Khi viết đoạn văn cảm nhận về nhân vật, điều quan trọng nhất là gì?",
+    a: ["Nhận xét có căn cứ từ chi tiết trong tác phẩm", "Chỉ kể tên nhân vật", "Chép nguyên văn tác phẩm", "Không cần dẫn chứng"],
+    d: 0
+},
+{
+    q: "Một kết bài tốt trong bài văn nghị luận thường có nhiệm vụ gì?",
+    a: ["Khẳng định lại vấn đề và mở rộng suy nghĩ phù hợp", "Đưa ra một vấn đề hoàn toàn khác", "Kể thêm một câu chuyện dài không liên quan", "Lặp lại toàn bộ thân bài"],
+    d: 0
+},
+{
+    q: "Để đánh giá một tác phẩm văn học toàn diện, cần kết hợp điều gì?",
+    a: ["Nội dung tư tưởng và đặc sắc nghệ thuật", "Chỉ số trang và giá tiền", "Chỉ tên nhân vật", "Chỉ thời điểm xuất bản"],
+    d: 0
+}
+];
+
+let ds = [...cauHoi]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let tg = 15;
+let timer;
+let daTraLoi = false;
+
+function hienThiCau() {
+
+    clearInterval(timer);
+
+    daTraLoi = false;
+    tg = 15;
+
+    document.getElementById("timer").textContent = tg;
+
+    document.getElementById("playerScore").textContent = diemBan;
+    document.getElementById("botScore").textContent = diemBot;
+
+    document.getElementById("number").textContent = cau + 1;
+
+    let c = ds[cau];
+
+    document.getElementById("question").textContent =
+        "Câu " + (cau + 1) + "/10: " + c.q;
+
+    document.getElementById("answers").innerHTML =
+        c.a.map((x, j) => `
+            <button class="answer" onclick="traLoi(${j}, this)">
+                ${String.fromCharCode(65 + j)}. ${x}
+            </button>
+        `).join("");
+
+    timer = setInterval(() => {
+
+        tg--;
+
+        document.getElementById("timer").textContent = tg;
+
+        if (tg <= 0) {
+            hetThoiGian();
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, el) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timer);
+
+    let c = ds[cau];
+
+    let nut = document.querySelectorAll(".answer");
+
+    nut.forEach(button => button.disabled = true);
+
+    if (chon === c.d) {
+
+        diemBan++;
+
+        el.classList.add("correct");
+
+    } else {
+
+        el.classList.add("wrong");
+
+        nut[c.d].classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").textContent = diemBan;
+
+    setTimeout(botTraLoi, 700);
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timer);
+
+    let c = ds[cau];
+
+    let nut = document.querySelectorAll(".answer");
+
+    nut.forEach(button => button.disabled = true);
+
+    nut[c.d].classList.add("correct");
+
+    setTimeout(botTraLoi, 700);
+}
+
+function botTraLoi() {
+
+    let dung = Math.random() < 0.25;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").textContent = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+
+        ketThucTran();
+
+    } else {
+
+        hienThiCau();
+
+    }
+}
+
+function ketThucTran() {
+
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">🤖 BOT THẮNG!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>🔥 Cấp độ: KHÓ</p>
+
+        <p>Bot có 25% xác suất trả lời đúng mỗi câu.</p>
+
+        <br>
+
+        <button onclick="location.reload()">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='capdo_van_khoi8.html'">
+            🎚️ Chọn cấp độ
+        </button>
+
+        <button onclick="location.href='khoi8.html'">
+            🏠 Về chọn môn
+        </button>
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toán 7 - Thi đấu với Bot - Khó</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9966, #ff5e62);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    min-width: 90px;
+    text-align: center;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    font-size: 32px;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #155bb5;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_toan_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ TOÁN KHỐI 7 - CẤP ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+    {
+        q: "Tính: 3/4 - 5/6 + 7/12 = ?",
+        a: ["5/12", "1/2", "7/12", "2/3"],
+        d: 1
+    },
+    {
+        q: "Tính: (-2/3)² + 5/9 = ?",
+        a: ["7/9", "8/9", "1", "11/9"],
+        d: 2
+    },
+    {
+        q: "Tính: 2/5 : 4/15 = ?",
+        a: ["1/2", "3/4", "3/2", "2"],
+        d: 2
+    },
+    {
+        q: "Tìm x: 5x - 3 = 2x + 12",
+        a: ["3", "4", "5", "6"],
+        d: 2
+    },
+    {
+        q: "Tìm x: 2(x - 3) + 5 = 3x - 4",
+        a: ["1", "2", "3", "4"],
+        d: 2
+    },
+    {
+        q: "Tìm x: (x - 2)/3 = (x + 4)/5",
+        a: ["9", "10", "11", "12"],
+        d: 2
+    },
+    {
+        q: "Giá trị của biểu thức 2x² - 3x + 1 tại x = -2 là?",
+        a: ["9", "11", "15", "17"],
+        d: 2
+    },
+    {
+        q: "Nếu x và y tỉ lệ thuận, x = 4 thì y = 10. Khi x = 6 thì y bằng?",
+        a: ["12", "15", "18", "20"],
+        d: 1
+    },
+    {
+        q: "Nếu x và y tỉ lệ nghịch, x = 4 thì y = 12. Khi x = 6 thì y bằng?",
+        a: ["6", "8", "10", "12"],
+        d: 1
+    },
+    {
+        q: "Cho x/3 = y/5 = 2. Giá trị của x + y là?",
+        a: ["8", "12", "16", "20"],
+        d: 2
+    },
+    {
+        q: "Một tam giác có ba góc tỉ lệ với 2 : 3 : 4. Góc lớn nhất bằng?",
+        a: ["60°", "70°", "80°", "90°"],
+        d: 2
+    },
+    {
+        q: "Một tam giác cân có góc ở đáy bằng 72°. Góc ở đỉnh bằng?",
+        a: ["24°", "36°", "48°", "72°"],
+        d: 1
+    },
+    {
+        q: "Hai đường thẳng song song bị cắt bởi một đường thẳng. Một góc bằng 65°. Góc đồng vị với nó bằng?",
+        a: ["25°", "65°", "115°", "125°"],
+        d: 1
+    },
+    {
+        q: "Một góc bằng 125°. Góc kề bù với nó bằng?",
+        a: ["45°", "55°", "65°", "75°"],
+        d: 1
+    },
+    {
+        q: "Tam giác ABC có AB = AC và góc A = 40°. Góc B bằng?",
+        a: ["40°", "60°", "70°", "80°"],
+        d: 2
+    },
+    {
+        q: "Cho hai đường thẳng song song. Một cặp góc trong cùng phía có số đo 3x và x. Giá trị x là?",
+        a: ["30°", "45°", "60°", "90°"],
+        d: 1
+    },
+    {
+        q: "Tính: 2⁵ × 2³ : 2⁴ = ?",
+        a: ["8", "16", "32", "64"],
+        d: 1
+    },
+    {
+        q: "Tính: 3⁴ - 2⁵ = ?",
+        a: ["49", "51", "55", "57"],
+        d: 0
+    },
+    {
+        q: "Số nào sau đây là số vô tỉ?",
+        a: ["√16", "√25", "√36", "√7"],
+        d: 3
+    },
+    {
+        q: "Giá trị của √144 + √81 là?",
+        a: ["19", "20", "21", "22"],
+        d: 2
+    },
+    {
+        q: "Tìm x biết |x| = 7.",
+        a: ["x = 7", "x = -7", "x = ±7", "x = 0"],
+        d: 2
+    },
+    {
+        q: "Cho A = 2x - 3 và x = 5. Giá trị của A² là?",
+        a: ["25", "36", "49", "64"],
+        d: 2
+    },
+    {
+        q: "Một lớp có 40 học sinh. Số học sinh giỏi chiếm 25%. Có bao nhiêu học sinh giỏi?",
+        a: ["8", "10", "12", "15"],
+        d: 1
+    },
+    {
+        q: "Một cửa hàng giảm giá 20% một sản phẩm có giá 500 000 đồng. Giá sau khi giảm là?",
+        a: ["350 000", "380 000", "400 000", "420 000"],
+        d: 2
+    },
+    {
+        q: "Một ô tô đi 120 km trong 2 giờ. Với vận tốc không đổi, trong 5 giờ ô tô đi được bao nhiêu km?",
+        a: ["240 km", "300 km", "360 km", "400 km"],
+        d: 1
+    }
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let botDaTraLoi = false;
+let timer;
+let timerBot;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <button class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </button>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+    clearTimeout(timerBot);
+
+    timer = setInterval(() => {
+
+        if (daTraLoi) return;
+
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            hetThoiGian();
+        }
+
+    }, 1000);
+
+    timerBot = setTimeout(() => {
+        botTraLoi();
+    }, 7000);
+}
+
+function khoaDapAn() {
+    document.querySelectorAll(".answer").forEach(button => {
+        button.disabled = true;
+    });
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung].classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    khoaDapAn();
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    document.querySelectorAll(".answer")[dung].classList.add("correct");
+
+    khoaDapAn();
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.75;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    if (!daTraLoi) {
+        daTraLoi = true;
+        clearInterval(timer);
+
+        document.querySelectorAll(".answer")[danhSach[cau].d].classList.add("correct");
+
+        khoaDapAn();
+    }
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+
+    clearInterval(timer);
+    clearTimeout(timerBot);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+    document.querySelector(".title").style.display = "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🤖 Bot: 7 giây/câu</p>
+
+        <p>🎯 Bot có 75% khả năng trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.href='capdo_toan_khoi7.html'">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi7.html'">
+            🏠 Về chọn môn
+        </button>
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

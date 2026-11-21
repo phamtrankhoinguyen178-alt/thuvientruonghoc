@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 7 - CHẾ ĐỘ KHÓ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #333;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ LỊCH SỬ VÀ ĐỊA LÝ KHỐI 7 - CHẾ ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+ {
+        q: "Vì sao phong trào Văn hóa Phục hưng được xem là bước tiến lớn của lịch sử nhân loại?",
+        a: ["Đề cao con người, thúc đẩy khoa học và tư tưởng tiến bộ", "Củng cố hoàn toàn chế độ phong kiến", "Xóa bỏ mọi hoạt động thương mại", "Ngăn cản sự phát triển của khoa học"],
+        d: 0
+    },
+    {
+        q: "Vì sao dân cư châu Á phân bố không đồng đều?",
+        a: ["Các quốc gia có diện tích bằng nhau", "Điều kiện tự nhiên và kinh tế - xã hội khác nhau", "Toàn châu lục có khí hậu giống nhau", "Không có hoạt động sản xuất"],
+        d: 1
+    },
+    {
+        q: "Ý nghĩa lớn nhất của chiến thắng Bạch Đằng năm 1288 là gì?",
+        a: ["Mở đầu thời Bắc thuộc", "Thành lập nhà Lý", "Đập tan ý chí xâm lược của quân Nguyên, bảo vệ độc lập", "Kết thúc cuộc khởi nghĩa Lam Sơn"],
+        d: 2
+    },
+    {
+        q: "Vì sao hoang mạc Xa-ha-ra có diện tích rất rộng?",
+        a: ["Do có nhiều rừng rậm", "Do mưa quanh năm", "Do nằm hoàn toàn ở vùng cực", "Do ảnh hưởng của áp cao cận chí tuyến và khí hậu khô hạn"],
+        d: 3
+    },
+    {
+        q: "Điểm khác biệt cơ bản giữa lãnh địa phong kiến và thành thị trung đại là gì?",
+        a: ["Lãnh địa tự cung tự cấp, thành thị phát triển thủ công nghiệp và thương mại", "Cả hai đều không có dân cư", "Thành thị chỉ sản xuất nông nghiệp", "Lãnh địa phát triển thương mại hơn thành thị"],
+        d: 0
+    },
+    {
+        q: "Tại sao khí hậu châu Âu có sự phân hóa từ tây sang đông?",
+        a: ["Do châu Âu nằm hoàn toàn trong vùng nhiệt đới", "Ảnh hưởng của biển giảm dần từ tây sang đông", "Do không có gió", "Do toàn bộ châu Âu là núi cao"],
+        d: 1
+    },
+    {
+        q: "Vì sao cuộc khởi nghĩa Lam Sơn nhận được sự ủng hộ rộng rãi của nhân dân?",
+        a: ["Chỉ tập trung bảo vệ quyền lợi quý tộc", "Không có sự tham gia của nhân dân", "Có mục tiêu giải phóng dân tộc và đường lối phù hợp", "Do quân Minh tự nguyện rút lui ngay từ đầu"],
+        d: 2
+    },
+    {
+        q: "Tại sao ven biển phía tây Nam Mỹ có hoang mạc A-ta-ca-ma?",
+        a: ["Do có dòng biển nóng", "Do mưa quanh năm", "Do nằm gần Bắc Cực", "Do ảnh hưởng dòng biển lạnh Pê-ru và điều kiện khí áp"],
+        d: 3
+    },
+    {
+        q: "Vì sao nhà Lý chủ động tấn công sang đất Tống năm 1075?",
+        a: ["Để phá thế chuẩn bị xâm lược của nhà Tống", "Để mở rộng lãnh thổ đến châu Âu", "Để chiếm toàn bộ Trung Quốc", "Để chấm dứt hoạt động thương mại"],
+        d: 0
+    },
+    {
+        q: "Nguyên nhân nào khiến rừng A-ma-dôn có vai trò quan trọng đối với Trái Đất?",
+        a: ["Là nơi không có sinh vật", "Có đa dạng sinh học lớn và góp phần điều hòa khí hậu", "Là hoang mạc lớn nhất", "Không chịu tác động của con người"],
+        d: 1
+    },
+    {
+        q: "Vì sao cuộc khởi nghĩa Tây Sơn bùng nổ vào thế kỉ XVIII?",
+        a: ["Nền kinh tế phát triển ổn định", "Nhu cầu mở rộng thuộc địa", "Chính quyền phong kiến suy yếu, nhân dân chịu nhiều áp bức", "Do cách mạng công nghiệp"],
+        d: 2
+    },
+    {
+        q: "Tại sao vùng ven biển phía tây châu Âu có khí hậu ôn hòa hơn sâu trong lục địa?",
+        a: ["Do nằm gần xích đạo", "Do không có ánh sáng Mặt Trời", "Do có nhiều hoang mạc", "Do ảnh hưởng của biển và dòng biển nóng Bắc Đại Tây Dương"],
+        d: 3
+    },
+    {
+        q: "Ý nghĩa của chính sách hạn điền dưới thời Hồ Quý Ly là gì?",
+        a: ["Hạn chế tình trạng tập trung quá nhiều ruộng đất vào tay quý tộc", "Tăng quyền sở hữu ruộng đất của quý tộc", "Xóa bỏ hoàn toàn hoạt động nông nghiệp", "Chia ruộng đất cho thương nhân nước ngoài"],
+        d: 0
+    },
+    {
+        q: "Vì sao khu vực Đông Nam Á có nền văn hóa đa dạng?",
+        a: ["Không có giao lưu với bên ngoài", "Là nơi giao thoa của nhiều nền văn minh và cộng đồng dân tộc", "Chỉ chịu ảnh hưởng của một nền văn minh", "Không có hoạt động thương mại"],
+        d: 1
+    },
+    {
+        q: "Vì sao chiến thắng Ngọc Hồi - Đống Đa năm 1789 có ý nghĩa lịch sử to lớn?",
+        a: ["Đánh dấu sự ra đời của nhà Trần", "Mở đầu thời kì Bắc thuộc", "Bảo vệ nền độc lập dân tộc trước cuộc xâm lược của quân Thanh", "Kết thúc cuộc khởi nghĩa Lam Sơn"],
+        d: 2
+    },
+    {
+        q: "Nguyên nhân chủ yếu khiến dân cư châu Âu có xu hướng già hóa là gì?",
+        a: ["Tỉ lệ sinh tăng rất cao", "Tuổi thọ giảm mạnh", "Không có hoạt động y tế", "Tỉ lệ sinh thấp và tuổi thọ trung bình cao"],
+        d: 3
+    },
+    {
+        q: "Vì sao nhà Trần thực hiện kế sách vườn không nhà trống trong kháng chiến?",
+        a: ["Làm cho quân địch thiếu lương thực và gặp khó khăn khi tiến quân", "Để quân địch dễ dàng chiếm kinh thành", "Để ngừng mọi hoạt động kháng chiến", "Để bảo vệ kho lương của quân địch"],
+        d: 0
+    },
+    {
+        q: "Tại sao các nước Bắc Âu có tiềm năng phát triển thủy điện?",
+        a: ["Có khí hậu hoang mạc", "Có địa hình cao, sông ngòi và nguồn nước dồi dào", "Không có núi", "Có lượng mưa bằng không"],
+        d: 1
+    },
+    {
+        q: "Tác động quan trọng của các phát kiến địa lí đối với lịch sử thế giới là gì?",
+        a: ["Làm biến mất các đại dương", "Chấm dứt mọi hoạt động giao thương", "Mở rộng hiểu biết địa lí và thúc đẩy giao lưu giữa các châu lục", "Làm các quốc gia ngừng phát triển"],
+        d: 2
+    },
+    {
+        q: "Vì sao vùng Nam Á có mật độ dân số cao?",
+        a: ["Toàn bộ là hoang mạc", "Không có đồng bằng", "Khí hậu quanh năm đóng băng", "Có đồng bằng rộng, điều kiện sản xuất và sinh sống thuận lợi"],
+        d: 3
+    },
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.75;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 75% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi7_kho.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi7.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

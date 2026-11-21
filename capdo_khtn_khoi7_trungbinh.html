@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHTN KHỐI 7 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #333;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_khtn_khoi7.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ KHTN KHỐI 7 - CHẾ ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+    {
+        q: "Ở người, nơi diễn ra sự trao đổi khí là:",
+        a: ["Khoang mũi.", "Phế nang ở phổi.", "Khí quản.", "Phế quản."],
+        d: 1
+    },
+    {
+        q: "Phát biểu nào sau đây không đúng khi nói về vai trò của nước?",
+        a: ["Nước tham gia vào quá trình chuyển hóa vật chất.", "Nước là thành phần cấu trúc tế bào.", "Nước cung cấp năng lượng cho các hoạt động sống.", "Nước giúp duy trì nhiệt độ bình thường của cơ thể."],
+        d: 2
+    },
+    {
+        q: "Cho các nhận định về vai trò của nước: 1. Là thành phần cấu tạo chủ yếu của tế bào và cơ thể. 2. Là nguyên liệu để tổng hợp các chất hữu cơ trong quang hợp. 3. Là dung môi hòa tan nhiều chất. 4. Góp phần vận chuyển các chất và điều hòa thân nhiệt. Số nhận định đúng là",
+        a: ["4.", "3.", "2.", "1."],
+        d: 0
+    },
+    {
+        q: "Nhóm chất nào sau đây không cung cấp năng lượng nhưng rất cần thiết cho cơ thể động vật?",
+        a: ["Vitamin và muối khoáng.", "Carbohydrate và vitamin.", "Protein và muối khoáng.", "Lipid và protein."],
+        d: 0
+    },
+    {
+        q: "Nhóm chất nào sau đây cung cấp năng lượng cho cơ thể động vật?",
+        a: ["Carbohydrate, vitamin và protein.", "Carbohydrate, lipid và protein.", "Protein, vitamin, muối khoáng.", "Lipid, protein, muối khoáng."],
+        d: 1
+    },
+    {
+        q: "Carbohydrate có vai trò nào sau đây trong cơ thể sinh vật?",
+        a: ["Điều hòa các hoạt động sinh lí của tế bào.", "Xúc tác các hoạt động sinh lí của tế bào.", "Vận chuyển các chất dinh dưỡng trong cơ thể.", "Cấu tạo tế bào, cung cấp năng lượng cho cơ thể."],
+        d: 3
+    },
+    {
+        q: "Khi nhiệt độ ngoài môi trường nóng, cơ thể người toát mồ hôi. Trường hợp này thể hiện vai trò nào của nước đối với cơ thể?",
+        a: ["Điều hòa thân nhiệt.", "Vận chuyển các chất.", "Dung môi hòa tan các chất.", "Môi trường diễn ra các phản ứng chuyển hóa."],
+        d: 0
+    },
+    {
+        q: "Các yếu tố ảnh hưởng đến quá trình thoát hơi nước và hấp thụ muối khoáng của cây là",
+        a: ["Ánh sáng, nhiệt độ, độ tơi xốp của đất, độ ẩm, hàm lượng khoáng, độ pH của đất.", "Nhiệt độ, độ tơi xốp của đất, độ ẩm, độ pH của đất.", "Ánh sáng, hàm lượng khoáng, độ pH của đất.", "Độ ẩm, hàm lượng khoáng, độ pH của đất."],
+        d: 0
+    },
+    {
+        q: "Vì sao chúng ta cần cung cấp đủ nước cho cơ thể khi trời nóng hoặc khi vận động mạnh?",
+    a: ["Vì khi đó cơ thể nóng lên rất nhiều. Do đó, cần uống nhiều nước để làm mát cơ thể.", "Vì khi đó cơ thể nóng lên và cần nhiều năng lượng. Do đó, cần uống nhiều nước để chống mệt mỏi, hạn chế tối đa hiện tượng toát mồ hôi.", "Vì khi đó cơ thể cần nhiều chất dinh dưỡng. Do đó, cần uống nhiều nước để tăng cường quá trình.", "Vì khi đó lượng nước thoát ra môi trường nhiều qua hoạt động toát mồ hôi. Do vậy, cần cung cấp đủ nước cho cơ thể để cân bằng lượng nước đã mất đi."],
+        d: 3
+    },
+    {
+        q: "Vì sao mỗi người cần phải có chế độ dinh dưỡng phù hợp?",
+        a: ["Vì mỗi người có mức sống khác nhau.", "Vì thói quen ăn uống của mỗi người khác nhau.", "Do văn hóa vùng miền nên chế độ dinh dưỡng cũng không giống nhau.", "Vì nhu cầu dinh dưỡng của mỗi người khác nhau tùy thuộc vào độ tuổi, giới tính, trạng thái sinh lí."],
+        d: 3
+    },
+    {
+        q: "Trong các chất dinh dưỡng, chất nào cung cấp năng lượng nhiều nhất cho cơ thể?",
+        a: ["Carbohydrate.", "Lipid.", "Protein.", "Vitamin."],
+        d: 1
+    },
+    {
+        q: "Chất nào sau đây là chất vô cơ?",
+        a: ["Protein", "Vitamin", "Muối khoáng", "Lipid"],
+        d: 2
+    },
+    {
+        q: "Chất nào sau đây là chất hữu cơ?",
+        a: ["Nước", "Muối khoáng", "Vitamin", "Carbohydrate"],
+        d: 3
+    },
+    {
+        q: "Cơ quan nào giúp con người nghe được?",
+        a: ["Tai", "Mắt", "Mũi", "Lưỡi"],
+        d: 0
+    },
+    {
+        q: "Cây xanh cần gì để quang hợp?",
+        a: ["Ánh sáng", "Bóng tối", "Đất khô", "Cát"],
+        d: 0
+    },
+    {
+        q: "Động vật nào sau đây thuộc nhóm cá?",
+        a: ["Ếch", "Cá chép", "Rắn", "Chim sẻ"],
+        d: 1
+    },
+    {
+        q: "Mặt Trời mọc ở hướng nào?",
+        a: ["Tây", "Nam", "Bắc", "Đông"],
+        d: 3
+    },
+    {
+        q: "Vật liệu nào thường được dùng làm cửa kính?",
+        a: ["Gỗ", "Nhựa", "Thủy tinh", "Cao su"],
+        d: 2
+    },
+    {
+        q: "Không khí có chứa khí nào nhiều nhất?",
+        a: ["Oxi", "Nitơ", "Cacbonic", "Hiđro"],
+
+    }
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_khtn_khoi7_trungbinh.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_khtn_khoi7.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

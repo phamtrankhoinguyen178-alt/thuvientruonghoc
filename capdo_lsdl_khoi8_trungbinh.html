@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.back:hover {
+    background: #333;
+}
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+.player {
+    color: #2878e8;
+}
+.bot {
+    color: #e74c3c;
+}
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+.result h1 {
+    color: #2878e8;
+}
+.win {
+    color: #2ecc71;
+}
+.lose {
+    color: #e74c3c;
+}
+.draw {
+    color: #f39c12;
+}
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_lsdl_khoi8.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - CHẾ ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+        q: "Tuyên ngôn Độc lập của Mỹ được công bố vào năm nào?",
+        a: ["1776", "1789", "1804", "1815"],
+        d: 0
+    },
+
+    {
+        q: "Đặc điểm nổi bật của địa hình Việt Nam là gì?",
+        a: ["Chủ yếu là đồng bằng", "Đồi núi chiếm phần lớn diện tích", "Chủ yếu là hoang mạc", "Không có núi cao"],
+        d: 1
+    },
+
+    {
+        q: "Cách mạng tư sản Pháp đã lật đổ chế độ nào?",
+        a: ["Chế độ tư bản", "Chế độ xã hội chủ nghĩa", "Chế độ phong kiến chuyên chế", "Chế độ thuộc địa"],
+        d: 2
+    },
+
+    {
+        q: "Hướng nghiêng chung của địa hình Việt Nam là gì?",
+        a: ["Tây sang Đông", "Đông sang Tây", "Bắc xuống Nam", "Nam lên Bắc"],
+        d: 0
+    },
+
+    {
+        q: "Ai là người phát minh ra máy kéo sợi Jenny?",
+        a: ["James Watt", "James Hargreaves", "Edison", "Newton"],
+        d: 1
+    },
+
+    {
+        q: "Gió mùa mùa đông ở miền Bắc nước ta thường có hướng nào?",
+        a: ["Đông Nam", "Tây Nam", "Đông Bắc", "Tây Bắc"],
+        d: 2
+    },
+
+    {
+        q: "Phong trào Cần Vương bùng nổ sau sự kiện nào?",
+        a: ["Chiếu Cần Vương được ban bố", "Pháp rút khỏi Việt Nam", "Nhà Nguyễn thành lập", "Cách mạng tháng Tám"],
+        d: 0
+    },
+
+    {
+        q: "Hai hệ thống sông lớn ở miền Bắc Việt Nam là gì?",
+        a: ["Sông Mã và sông Cả", "Sông Hồng và sông Thái Bình", "Sông Đồng Nai và sông Mê Công", "Sông Thu Bồn và sông Ba"],
+        d: 1
+    },
+
+    {
+        q: "Ai là người lãnh đạo khởi nghĩa Hương Khê?",
+        a: ["Hoàng Hoa Thám", "Trương Định", "Phan Đình Phùng", "Nguyễn Trung Trực"],
+        d: 2
+    },
+
+    {
+        q: "Mùa mưa ở Nam Bộ thường bắt đầu vào khoảng thời gian nào?",
+        a: ["Tháng 1 đến tháng 3", "Tháng 4 đến tháng 10", "Tháng 11 đến tháng 12", "Tháng 12 đến tháng 2"],
+        d: 1
+    },
+
+    {
+        q: "Chiến thắng Cầu Giấy lần thứ hai diễn ra vào năm nào?",
+        a: ["1873", "1874", "1883", "1882"],
+        d: 2
+    },
+
+    {
+        q: "Vùng biển Việt Nam có vai trò quan trọng nào?",
+        a: ["Phát triển kinh tế biển và giao thông hàng hải", "Chỉ dùng để đánh bắt cá", "Không có giá trị kinh tế", "Chỉ phục vụ du lịch"],
+        d: 0
+    },
+
+    {
+        q: "Cuộc khởi nghĩa Yên Thế kéo dài trong khoảng thời gian nào?",
+        a: ["1858 - 1862", "1884 - 1896", "1884 - 1913", "1905 - 1930"],
+        d: 2
+    },
+
+    {
+        q: "Loại gió nào gây mưa nhiều cho Nam Bộ và Tây Nguyên vào mùa hạ?",
+        a: ["Gió mùa Tây Nam", "Gió mùa Đông Bắc", "Gió Tín phong Đông Bắc", "Gió phơn Tây Nam"],
+        d: 0
+    },
+
+    {
+        q: "Phong trào Đông Du đầu thế kỉ XX gắn với nhà yêu nước nào?",
+        a: ["Phan Bội Châu", "Phan Châu Trinh", "Nguyễn Ái Quốc", "Hoàng Hoa Thám"],
+        d: 0
+    },
+
+    {
+        q: "Đặc điểm của mạng lưới sông ngòi Việt Nam là gì?",
+        a: ["Ít sông, không có nước", "Dày đặc và phân bố rộng khắp", "Chỉ tập trung ở miền Bắc", "Chỉ có sông ngắn"],
+        d: 1
+    },
+
+    {
+        q: "Cuộc Cách mạng công nghiệp lần thứ hai gắn liền với nguồn năng lượng nào?",
+        a: ["Than củi", "Sức gió", "Điện và dầu mỏ", "Năng lượng hạt nhân"],
+        d: 2
+    },
+
+    {
+        q: "Loại đất nào chiếm diện tích lớn ở vùng đồi núi nước ta?",
+        a: ["Đất phù sa", "Đất feralit", "Đất mặn", "Đất phèn"],
+        d: 1
+    },
+
+    {
+        q: "Tại sao thực dân Pháp xâm lược Việt Nam năm 1858?",
+        a: ["Mở rộng thuộc địa và tìm kiếm thị trường", "Giúp Việt Nam phát triển kinh tế", "Bảo vệ nền độc lập Việt Nam", "Xây dựng nhà nước phong kiến"],
+        d: 0
+    },
+
+    {
+        q: "Đồng bằng sông Cửu Long được bồi đắp chủ yếu bởi hệ thống sông nào?",
+        a: ["Sông Hồng", "Sông Mê Công", "Sông Mã", "Sông Đồng Nai"],
+        d: 1
+    },
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <div class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        document.querySelectorAll(".answer")[dung]
+            .classList.add("correct");
+    }
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        document.querySelectorAll(".answer")[danhSach[cau].d]
+            .classList.add("correct");
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_lsdl_khoi8_trungbinh.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_lsdl_khoi8.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

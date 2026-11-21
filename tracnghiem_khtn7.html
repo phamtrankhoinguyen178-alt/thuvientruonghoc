@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Công nghệ 7 - Máy Bay</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,#713f12 0%,transparent 25%),
+radial-gradient(circle at 80% 70%,#7c2d12 0%,transparent 30%),
+linear-gradient(135deg,#17100a,#3b1f0b,#451a03);
+color:white;
+}
+
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:#fde68a;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1){top:8%;left:5%}
+.star:nth-child(2){top:20%;left:18%}
+.star:nth-child(3){top:12%;left:35%}
+.star:nth-child(4){top:30%;left:55%}
+.star:nth-child(5){top:10%;left:80%}
+.star:nth-child(6){top:45%;left:8%}
+.star:nth-child(7){top:65%;left:25%}
+.star:nth-child(8){top:75%;left:70%}
+.star:nth-child(9){top:55%;left:90%}
+.star:nth-child(10){top:85%;left:45%}
+.star:nth-child(11){top:35%;left:75%}
+.star:nth-child(12){top:90%;left:10%}
+
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.5)}
+to{opacity:1;transform:scale(1.5)}
+}
+
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.back:hover{
+background:#ea580c;
+transform:translateY(-3px);
+}
+
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:40px;
+text-shadow:
+0 0 10px #fbbf24,
+0 0 25px #f97316,
+0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#fde68a;
+}
+
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.space{
+position:relative;
+height:360px;
+overflow:hidden;
+border-radius:22px;
+background:
+linear-gradient(
+180deg,
+#0c4a6e 0%,
+#075985 40%,
+#164e63 70%,
+#172554 100%
+);
+border:4px solid #f59e0b;
+box-shadow:
+inset 0 0 60px rgba(245,158,11,.25),
+0 10px 35px rgba(0,0,0,.5);
+}
+
+.sun{
+position:absolute;
+width:90px;
+height:90px;
+right:65px;
+top:30px;
+border-radius:50%;
+background:#facc15;
+box-shadow:
+0 0 25px #f59e0b,
+0 0 65px rgba(245,158,11,.8);
+}
+
+.cloud{
+position:absolute;
+width:130px;
+height:38px;
+background:rgba(255,255,255,.8);
+border-radius:50px;
+top:75px;
+left:180px;
+}
+
+.cloud:before,
+.cloud:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.cloud:before{
+width:55px;
+height:55px;
+left:20px;
+top:-25px;
+}
+
+.cloud:after{
+width:65px;
+height:65px;
+left:60px;
+top:-35px;
+}
+
+.cloud2{
+position:absolute;
+width:110px;
+height:32px;
+background:rgba(255,255,255,.65);
+border-radius:50px;
+top:125px;
+right:230px;
+}
+
+.cloud2:before,
+.cloud2:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.cloud2:before{
+width:45px;
+height:45px;
+left:15px;
+top:-20px;
+}
+
+.cloud2:after{
+width:55px;
+height:55px;
+left:50px;
+top:-30px;
+}
+
+.ground{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:90px;
+background:
+linear-gradient(
+180deg,
+transparent,
+rgba(22,101,52,.35)
+),
+repeating-linear-gradient(
+90deg,
+#365314 0 30px,
+#3f6212 30px 60px
+);
+}
+
+.airplane{
+position:absolute;
+left:55px;
+top:115px;
+width:200px;
+height:120px;
+z-index:20;
+transition:left .15s linear;
+animation:planeFloat 1.2s infinite alternate;
+filter:drop-shadow(0 0 12px #fbbf24);
+}
+
+@keyframes planeFloat{
+from{transform:translateY(-5px) rotate(-1deg)}
+to{transform:translateY(5px) rotate(1deg)}
+}
+
+.plane-body{
+position:absolute;
+left:25px;
+top:45px;
+width:145px;
+height:35px;
+background:linear-gradient(180deg,#f8fafc,#94a3b8);
+border:3px solid #475569;
+border-radius:50px;
+}
+
+.plane-nose{
+position:absolute;
+left:155px;
+top:48px;
+width:35px;
+height:29px;
+background:#e2e8f0;
+border-radius:0 50% 50% 0;
+border-top:3px solid #475569;
+border-bottom:3px solid #475569;
+}
+
+.wing{
+position:absolute;
+left:65px;
+top:25px;
+width:95px;
+height:60px;
+background:#64748b;
+clip-path:polygon(0 50%,100% 0,75% 50%,100% 100%);
+}
+
+.wing2{
+position:absolute;
+left:65px;
+top:60px;
+width:95px;
+height:55px;
+background:#475569;
+clip-path:polygon(0 50%,100% 100%,75% 50%,100% 0);
+}
+
+.tail{
+position:absolute;
+left:35px;
+top:18px;
+width:45px;
+height:50px;
+background:#94a3b8;
+clip-path:polygon(0 100%,40% 0,100% 100%);
+}
+
+.window{
+position:absolute;
+left:90px;
+top:52px;
+width:19px;
+height:19px;
+border-radius:50%;
+background:#38bdf8;
+border:3px solid #334155;
+box-shadow:0 0 12px #38bdf8;
+z-index:5;
+}
+
+.window2{
+position:absolute;
+left:118px;
+top:52px;
+width:19px;
+height:19px;
+border-radius:50%;
+background:#38bdf8;
+border:3px solid #334155;
+box-shadow:0 0 12px #38bdf8;
+z-index:5;
+}
+
+.engine{
+position:absolute;
+left:5px;
+top:48px;
+width:35px;
+height:28px;
+background:#334155;
+border-radius:10px;
+}
+
+.fire{
+position:absolute;
+left:-25px;
+top:53px;
+width:45px;
+height:18px;
+background:linear-gradient(90deg,#ef4444,#facc15,transparent);
+clip-path:polygon(100% 0,0 50%,100% 100%);
+animation:fire .2s infinite alternate;
+}
+
+@keyframes fire{
+from{transform:scaleX(.8)}
+to{transform:scaleX(1.2)}
+}
+
+.obstacle{
+display:none;
+position:absolute;
+right:80px;
+top:145px;
+width:140px;
+height:140px;
+z-index:15;
+animation:obstacleMove .7s infinite alternate;
+}
+
+.obstacle.show{
+display:block;
+}
+
+@keyframes obstacleMove{
+from{transform:rotate(-4deg) translateY(-5px)}
+to{transform:rotate(5deg) translateY(5px)}
+}
+
+.cloud-obstacle{
+position:absolute;
+width:130px;
+height:70px;
+bottom:0;
+background:rgba(255,255,255,.9);
+border-radius:60px;
+box-shadow:0 0 25px rgba(255,255,255,.4);
+}
+
+.cloud-obstacle:before,
+.cloud-obstacle:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.cloud-obstacle:before{
+width:65px;
+height:65px;
+left:15px;
+top:-35px;
+}
+
+.cloud-obstacle:after{
+width:75px;
+height:75px;
+left:55px;
+top:-45px;
+}
+
+.start-area{
+text-align:center;
+margin:25px 0;
+}
+
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#f59e0b,#ea580c);
+box-shadow:
+0 8px 0 #9a3412,
+0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+
+.start:hover{
+transform:translateY(-3px);
+box-shadow:
+0 11px 0 #9a3412,
+0 18px 35px rgba(0,0,0,.5);
+}
+
+.start:active{
+transform:translateY(5px);
+box-shadow:0 3px 0 #9a3412;
+}
+
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#fef3c7;
+}
+
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#facc15,#f97316,#dc2626);
+box-shadow:0 0 15px #f59e0b;
+transition:.5s;
+}
+
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#fde68a;
+}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+
+.overlay.show{
+display:block;
+}
+
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#fff7ed,#ffedd5);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#431407;
+}
+
+.question-box.show{
+display:block;
+animation:popup .3s forwards;
+}
+
+@keyframes popup{
+to{
+transform:translate(-50%,-50%) scale(1);
+}
+}
+
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#c2410c;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #fed7aa;
+border-radius:14px;
+background:#fff;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#431407;
+}
+
+.answer:hover{
+transform:translateX(5px);
+border-color:#f97316;
+background:#ffedd5;
+}
+
+.answer.selected{
+background:#fed7aa;
+border-color:#ea580c;
+box-shadow:0 0 0 3px rgba(234,88,12,.12);
+}
+
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#f59e0b,#ea580c);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(234,88,12,.35);
+}
+
+.check:hover{
+transform:translateY(-2px);
+}
+
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+from{
+transform:translate(-50%,-50%) scale(.5);
+opacity:0;
+}
+to{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+.result h2{
+font-size:38px;
+color:#c2410c;
+margin:0 0 20px;
+}
+
+.result.lose h2{
+color:#ef4444;
+}
+
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#334155;
+}
+
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#f59e0b,#ea580c);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#facc15;
+text-shadow:0 0 20px #f97316;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+
+@keyframes correctEffect{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:0;
+}
+40%{
+transform:translate(-50%,-50%) scale(1.3);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-100%) scale(1);
+opacity:0;
+}
+}
+
+@media(max-width:700px){
+
+h1{
+font-size:28px;
+margin-top:75px;
+}
+
+.info{
+font-size:16px;
+}
+
+.game{
+width:96%;
+padding:12px;
+}
+
+.space{
+height:260px;
+}
+
+.airplane{
+top:80px;
+transform:scale(.75);
+transform-origin:left center;
+}
+
+.obstacle{
+right:10px;
+top:105px;
+transform:scale(.7);
+}
+
+.sun{
+width:55px;
+height:55px;
+right:30px;
+top:20px;
+}
+
+.question-box{
+padding:20px;
+}
+
+.question-box h2{
+font-size:21px;
+}
+
+.question{
+font-size:18px;
+}
+
+.answer{
+font-size:16px;
+padding:12px;
+}
+
+.result h2{
+font-size:30px;
+}
+
+.result p{
+font-size:18px;
+}
+
+.back{
+padding:9px 14px;
+font-size:14px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi7tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>✈️ TRẮC NGHIỆM CÔNG NGHỆ 7</h1>
+
+<div class="info">
+🚀 TRÒ CHƠI MÁY BAY - CHINH PHỤC KIẾN THỨC CÔNG NGHỆ
+</div>
+
+<div class="game">
+
+<div class="space">
+
+<div class="sun"></div>
+<div class="cloud"></div>
+<div class="cloud2"></div>
+<div class="ground"></div>
+
+<div class="airplane" id="airplane">
+
+<div class="fire"></div>
+<div class="engine"></div>
+<div class="tail"></div>
+<div class="wing"></div>
+<div class="wing2"></div>
+<div class="plane-body"></div>
+<div class="plane-nose"></div>
+<div class="window"></div>
+<div class="window2"></div>
+
+</div>
+
+<div class="obstacle" id="obstacle">
+
+<div class="cloud-obstacle"></div>
+
+</div>
+
+</div>
+
+<div class="start-area">
+
+<button class="start" id="startButton" onclick="startGame()">
+✈️ BẮT ĐẦU BAY
+</button>
+
+</div>
+
+<div class="progress-text" id="progressText">
+☁️ Chưa bắt đầu
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để cất cánh!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+
+<h2>☁️ MÂY CẢN ĐƯỜNG!</h2>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+
+<button class="check" onclick="checkAnswer()">
+✈️ TRẢ LỜI
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText"></p>
+
+<button class="again" onclick="startGame()">
+🔄 BAY LẠI
+</button>
+
+</div>
+
+<script>
+
+const questionBank=[
+
+["Công nghệ là gì?",["Tập hợp các phương pháp, quy trình và kỹ thuật nhằm tạo ra sản phẩm","Một môn thể thao","Một loại trò chơi","Một loại cây"],0],
+
+["Vai trò của công nghệ đối với đời sống là gì?",["Giúp nâng cao chất lượng cuộc sống","Chỉ dùng để giải trí","Không có vai trò","Chỉ dùng trong trường học"],0],
+
+["Nghề nào sau đây thuộc lĩnh vực công nghệ?",["Kỹ sư cơ khí","Ca sĩ","Vận động viên","Nhà văn"],0],
+
+["Kĩ thuật là gì?",["Việc ứng dụng kiến thức để thiết kế và tạo ra sản phẩm","Một môn nghệ thuật","Một trò chơi","Một loại thức ăn"],0],
+
+["Trồng trọt là ngành sản xuất có vai trò chủ yếu là:",["Cung cấp lương thực, thực phẩm","Sản xuất máy tính","Xây dựng nhà ở","Sản xuất ô tô"],0],
+
+["Đất trồng gồm những thành phần chính nào?",["Phần rắn, phần lỏng và phần khí","Chỉ có nước","Chỉ có không khí","Chỉ có chất rắn"],0],
+
+["Độ phì nhiêu của đất là khả năng của đất:",["Cung cấp nước, chất dinh dưỡng và các điều kiện cần thiết cho cây","Chỉ giữ nước","Chỉ giữ không khí","Chỉ tạo ra ánh sáng"],0],
+
+["Đất trồng có vai trò gì đối với cây?",["Cung cấp nước, chất dinh dưỡng và giúp cây đứng vững","Chỉ cung cấp ánh sáng","Chỉ cung cấp oxygen","Không có vai trò"],0],
+
+["Biện pháp cải tạo đất chua thường là:",["Bón vôi","Tưới dầu","Đốt đất","Không làm gì"],0],
+
+["Phân bón có tác dụng chủ yếu là:",["Cung cấp chất dinh dưỡng cho cây","Làm cây mất nước","Làm đất cứng hơn","Làm cây không phát triển"],0],
+
+["Phân hữu cơ có nguồn gốc chủ yếu từ:",["Chất thải và xác động vật, thực vật","Đá tự nhiên","Kim loại","Nhựa"],0],
+
+["Phân đạm cung cấp chủ yếu nguyên tố:",["Nitrogen","Phosphorus","Potassium","Calcium"],0],
+
+["Phân lân cung cấp chủ yếu nguyên tố:",["Phosphorus","Nitrogen","Oxygen","Hydrogen"],0],
+
+["Phân kali cung cấp chủ yếu nguyên tố:",["Potassium","Nitrogen","Carbon","Iron"],0],
+
+["Giống cây trồng là:",["Quần thể cây có đặc điểm giống nhau và có giá trị sử dụng","Một loại phân bón","Một loại đất","Một dụng cụ lao động"],0],
+
+["Hạt giống tốt cần có đặc điểm:",["Chất lượng tốt, sức nảy mầm cao","Bị sâu bệnh","Mốc và hỏng","Không có khả năng nảy mầm"],0],
+
+["Gieo hạt đúng thời vụ giúp:",["Cây sinh trưởng và phát triển thuận lợi","Cây luôn bị sâu bệnh","Cây không cần nước","Cây không cần ánh sáng"],0],
+
+["Khi gieo hạt cần chú ý điều gì?",["Độ sâu, khoảng cách và mật độ gieo","Chỉ màu sắc của hạt","Chỉ kích thước đất","Không cần chú ý"],0],
+
+["Tưới nước cho cây nhằm:",["Cung cấp nước cần thiết cho cây","Làm cây chết","Làm đất khô","Ngăn cây quang hợp"],0],
+
+["Bón phân hợp lí giúp cây:",["Sinh trưởng và phát triển tốt","Không cần ánh sáng","Không cần nước","Ngừng phát triển"],0],
+
+["Sâu bệnh hại cây trồng gây:",["Giảm năng suất và chất lượng nông sản","Tăng năng suất trong mọi trường hợp","Làm cây lớn nhanh hơn","Không ảnh hưởng đến cây"],0],
+
+["Biện pháp phòng trừ sâu bệnh bằng cách sử dụng thiên địch gọi là:",["Biện pháp sinh học","Biện pháp hóa học","Biện pháp cơ học","Biện pháp thủ công"],0],
+
+["Khi sử dụng thuốc bảo vệ thực vật cần:",["Tuân thủ đúng hướng dẫn và đảm bảo an toàn","Tăng liều tùy ý","Phun gần nguồn nước","Không cần bảo hộ"],0],
+
+["Thu hoạch đúng thời điểm giúp:",["Đảm bảo năng suất và chất lượng nông sản","Làm giảm chất lượng","Làm cây ngừng sinh trưởng ngay lập tức","Không có tác dụng"],0],
+
+["Bảo quản nông sản nhằm:",["Hạn chế hao hụt và giữ chất lượng","Làm nông sản nhanh hỏng","Tăng sâu bệnh","Làm mất chất dinh dưỡng hoàn toàn"],0],
+
+["Chăn nuôi là ngành sản xuất:",["Vật nuôi và các sản phẩm từ vật nuôi","Máy móc","Đồ điện tử","Vật liệu xây dựng"],0],
+
+["Vật nuôi cung cấp sản phẩm nào?",["Thịt, trứng, sữa","Sắt và thép","Xi măng","Nhựa"],0],
+
+["Giống vật nuôi là:",["Quần thể vật nuôi có đặc điểm giống nhau và di truyền ổn định","Một loại thức ăn","Một loại chuồng","Một loại thuốc"],0],
+
+["Thức ăn chăn nuôi cung cấp cho vật nuôi:",["Năng lượng và chất dinh dưỡng","Ánh sáng","Điện năng","Kim loại"],0],
+
+["Chất dinh dưỡng cần thiết cho vật nuôi gồm:",["Protein, lipid, carbohydrate, vitamin và khoáng chất","Chỉ nước","Chỉ muối","Chỉ vitamin"],0],
+
+["Chuồng nuôi cần đảm bảo:",["Sạch sẽ, thông thoáng và phù hợp với vật nuôi","Luôn tối và ẩm ướt","Không cần vệ sinh","Không cần thông thoáng"],0],
+
+["Vệ sinh chuồng nuôi có tác dụng:",["Hạn chế dịch bệnh","Làm vật nuôi yếu hơn","Tăng mầm bệnh","Không có tác dụng"],0],
+
+["Phòng bệnh cho vật nuôi quan trọng vì:",["Giúp vật nuôi khỏe mạnh và hạn chế dịch bệnh","Làm giảm sức khỏe","Không ảnh hưởng","Chỉ làm tăng chi phí"],0],
+
+["Tiêm vaccine cho vật nuôi nhằm:",["Tạo khả năng miễn dịch phòng bệnh","Làm vật nuôi tăng cân ngay","Thay thế thức ăn","Làm vật nuôi không cần nước"],0],
+
+["Thủy sản là các loài động vật, thực vật:",["Sống trong môi trường nước","Chỉ sống trên cạn","Chỉ sống trên cây","Chỉ sống trong đất"],0],
+
+["Nuôi trồng thủy sản có vai trò:",["Cung cấp thực phẩm và nguyên liệu","Chỉ để trang trí","Không có giá trị kinh tế","Chỉ dùng làm cảnh"],0],
+
+["Môi trường nước nuôi thủy sản cần:",["Sạch và phù hợp với loài nuôi","Ô nhiễm nặng","Không cần oxygen","Có nhiều rác"],0],
+
+["Rừng có vai trò quan trọng trong việc:",["Bảo vệ đất, nước và điều hòa khí hậu","Làm tăng xói mòn","Làm ô nhiễm không khí","Làm giảm đa dạng sinh học"],0],
+
+["Rừng phòng hộ có tác dụng:",["Bảo vệ đất và nguồn nước, hạn chế thiên tai","Chỉ cung cấp gỗ","Chỉ để làm cảnh","Không có tác dụng"],0],
+
+["Rừng đặc dụng chủ yếu để:",["Bảo tồn thiên nhiên và nghiên cứu khoa học","Sản xuất đồ điện tử","Nuôi cá","Xây dựng nhà máy"],0],
+
+["Khai thác rừng cần thực hiện:",["Hợp lí và gắn với bảo vệ, phát triển rừng","Chặt phá tùy ý","Không cần trồng lại","Chặt toàn bộ rừng"],0],
+
+["Trồng rừng có tác dụng:",["Tăng diện tích rừng và bảo vệ môi trường","Làm giảm oxygen","Tăng xói mòn","Làm mất đất"],0],
+
+["Lâm nghiệp có liên quan đến:",["Quản lí, bảo vệ và phát triển rừng","Sản xuất máy tính","Xây dựng cầu","Nuôi gia súc"],0],
+
+["Công nghệ sau thu hoạch nhằm:",["Bảo quản và chế biến nông sản","Làm cây phát triển","Tạo giống vật nuôi","Xây dựng nhà ở"],0],
+
+["Chế biến nông sản giúp:",["Nâng cao giá trị và kéo dài thời gian sử dụng","Làm sản phẩm luôn hỏng nhanh","Giảm chất lượng trong mọi trường hợp","Không có tác dụng"],0],
+
+["Một trong những nguyên tắc sử dụng thuốc bảo vệ thực vật an toàn là:",["Đúng thuốc, đúng lúc, đúng liều lượng và đúng cách","Dùng càng nhiều càng tốt","Không cần đọc hướng dẫn","Phun tùy ý"],0],
+
+["Sản xuất nông nghiệp công nghệ cao thường sử dụng:",["Khoa học kỹ thuật và công nghệ hiện đại","Chỉ lao động thủ công","Không sử dụng máy móc","Chỉ sử dụng công cụ thô sơ"],0],
+
+["Nhà kính trong trồng trọt giúp:",["Kiểm soát một số điều kiện môi trường cho cây","Làm cây không cần nước","Ngăn cây quang hợp","Làm đất biến thành đá"],0],
+
+["Tưới nhỏ giọt có ưu điểm:",["Tiết kiệm nước và cung cấp nước phù hợp cho cây","Làm lãng phí nước","Không cung cấp nước cho cây","Chỉ dùng cho vật nuôi"],0],
+
+["Ứng dụng cảm biến trong nông nghiệp giúp:",["Theo dõi và kiểm soát các điều kiện môi trường","Làm cây ngừng phát triển","Thay thế hoàn toàn cây trồng","Không có tác dụng"],0],
+
+["Công nghệ sinh học có thể được ứng dụng trong:",["Chọn tạo giống và sản xuất chế phẩm sinh học","Chỉ xây dựng nhà cửa","Chỉ sản xuất ô tô","Chỉ chế tạo điện thoại"],0],
+
+["Nông nghiệp bền vững hướng tới:",["Sản xuất hiệu quả gắn với bảo vệ tài nguyên và môi trường","Khai thác tài nguyên không giới hạn","Tăng ô nhiễm","Phá rừng"],0],
+
+["Một trong những cách bảo vệ môi trường trong trồng trọt là:",["Sử dụng phân bón và thuốc bảo vệ thực vật hợp lí","Lạm dụng thuốc hóa học","Đốt rác bừa bãi","Xả chất thải xuống sông"],0],
+
+["Sử dụng tiết kiệm tài nguyên trong sản xuất nông nghiệp giúp:",["Giảm tác động đến môi trường","Tăng lãng phí","Làm đất bạc màu nhanh hơn","Tăng ô nhiễm"],0],
+
+["Công nghệ góp phần phát triển nông nghiệp bằng cách:",["Tăng năng suất, chất lượng và hiệu quả sản xuất","Làm giảm năng suất","Loại bỏ mọi cây trồng","Không cần con người"],0],
+
+["Mục tiêu của sản xuất nông nghiệp là:",["Tạo ra sản phẩm phục vụ nhu cầu con người","Chỉ tạo ra chất thải","Không cần sản phẩm","Chỉ phục vụ giải trí"],0],
+
+["An toàn lao động trong sản xuất nông nghiệp cần:",["Sử dụng đúng dụng cụ và trang bị bảo hộ phù hợp","Làm việc bất cẩn","Không cần bảo hộ","Sử dụng máy móc tùy ý"],0],
+
+["Khi sử dụng máy móc nông nghiệp cần:",["Tuân thủ hướng dẫn và quy tắc an toàn","Tự ý tháo bộ phận bảo vệ","Vận hành tùy ý","Không cần kiểm tra máy"],0],
+
+["Công nghệ giúp con người:",["Giải quyết nhiều vấn đề trong sản xuất và đời sống","Không cần học tập","Không cần lao động","Không cần bảo vệ môi trường"],0]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let planePosition=55;
+let planeTimer=null;
+let obstacleTimer=null;
+
+function startGame(){
+
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+planePosition=55;
+
+document.getElementById("airplane").style.left=planePosition+"px";
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+
+document.getElementById("startButton").innerHTML="🔄 BAY LẠI";
+
+document.getElementById("status").innerHTML=
+"✈️ Máy bay đang cất cánh và tiến vào bầu trời...";
+
+let shuffled=[...questionBank];
+
+shuffled.sort(()=>Math.random()-.5);
+
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+clearInterval(planeTimer);
+clearTimeout(obstacleTimer);
+
+planeTimer=setInterval(movePlane,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+
+}
+
+function movePlane(){
+
+if(!gameRunning||waiting)return;
+
+planePosition+=2;
+
+let width=document.querySelector(".space").clientWidth;
+
+if(planePosition>width-230){
+planePosition=55;
+}
+
+document.getElementById("airplane").style.left=
+planePosition+"px";
+
+}
+
+function showObstacle(){
+
+if(!gameRunning)return;
+
+waiting=true;
+
+document.getElementById("obstacle").classList.add("show");
+
+document.getElementById("status").innerHTML=
+"☁️ MÂY DÀY PHÍA TRƯỚC! Hãy trả lời câu hỏi Công nghệ 7!";
+
+clearInterval(planeTimer);
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=gameQuestions[currentQuestion];
+
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML=
+"Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+
+});
+
+document.getElementById("answers").innerHTML=html;
+
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function correctEffect(){
+
+const effect=document.createElement("div");
+
+effect.className="correct-effect";
+effect.innerHTML="✈️ CHÍNH XÁC!";
+
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},800);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+
+alert("⚠️ Hãy chọn một đáp án!");
+
+return;
+
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+
+loseGame();
+
+return;
+
+}
+
+correctEffect();
+
+currentQuestion++;
+
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+updateProgress();
+
+if(currentQuestion>=10){
+
+winGame();
+
+return;
+
+}
+
+waiting=false;
+
+document.getElementById("status").innerHTML=
+"✅ Chính xác! Máy bay tiếp tục hành trình...";
+
+planeTimer=setInterval(movePlane,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML=
+"☁️ Đã vượt qua "+currentQuestion+"/10 chướng ngại vật";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(planeTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML=
+"💥 MÁY BAY GẶP NẠN!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Bạn đã trả lời sai!<br><br>"+
+"☁️ Bạn đã vượt qua "+
+currentQuestion+
+"/10 chướng ngại vật.<br><br>"+
+"📚 Hãy ôn lại kiến thức Công nghệ 7 và thử lại!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(planeTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("progressText").innerHTML=
+"🏆 HOÀN THÀNH 10/10!";
+
+document.getElementById("status").innerHTML=
+"🚀 Bạn đã chinh phục thành công bầu trời Công nghệ 7!";
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("resultTitle").innerHTML=
+"🏆 CHINH PHỤC BẦU TRỜI!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"✈️ Bạn đã vượt qua cả 10 chướng ngại vật!<br><br>"+
+"🔧 Bạn đã hoàn thành màn chơi Trắc nghiệm Công nghệ 7!";
+
+}
+
+</script>
+
+</body>
+</html>
