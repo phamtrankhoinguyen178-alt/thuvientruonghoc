@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -8,434 +7,435 @@
 <title>Thư viện THCS Quảng Trạch</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#f2f2f2;
+body {
+    background: #f2f2f2;
+    color: #222;
 }
 
-.visitor-counter{
-    position:fixed;
-    left:20px;
-    bottom:20px;
-    background:linear-gradient(135deg,#0b2a88,#2563eb);
-    color:white;
-    padding:13px 18px;
-    border-radius:30px;
-    font-size:15px;
-    font-weight:bold;
-    box-shadow:0 4px 12px rgba(0,0,0,0.2);
-    z-index:9998;
+header {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
 }
 
-.visitor-counter strong{
-    color:#ffd700;
-    margin-left:5px;
+.topbar {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 20px;
 }
 
-header{
-    background:#ffffff;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+.auth-buttons {
+    display: flex;
+    gap: 10px;
 }
 
-.topbar{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 20px;
+.auth-buttons a {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    transition: .3s;
 }
 
-.logo{
-    font-size:36px;
-    font-weight:bold;
-    color:#0b2a88;
+.login-btn {
+    background: #0b2a88;
 }
 
-.logo span{
-    color:#ff6a00;
+.register-btn {
+    background: #ff6a00;
 }
 
-.login-btn{
-    background:#ff6a00;
-    color:white;
-    padding:10px 25px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-    font-weight:bold;
+.auth-buttons a:hover {
+    opacity: .85;
+    transform: translateY(-2px);
 }
 
-nav{
-    background:white;
-    border-top:1px solid #eee;
+nav {
+    background: white;
+    border-top: 1px solid #eee;
 }
 
-nav ul{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:center;
-    list-style:none;
+nav ul {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    list-style: none;
 }
 
-nav ul li{
-    padding:18px 25px;
-    position:relative;
+nav ul li {
+    position: relative;
+    padding: 18px 22px;
 }
 
-nav ul li a{
-    text-decoration:none;
-    color:#222;
-    font-weight:bold;
-    font-size:20px;
-    transition:0.3s;
+nav ul li a {
+    text-decoration: none;
+    color: #222;
+    font-size: 18px;
+    font-weight: bold;
+    transition: .3s;
 }
 
-nav ul li a:hover{
-    color:#ff6a00;
+nav ul li a:hover {
+    color: #ff6a00;
 }
 
-.dropdown-menu{
-    display:none;
-    position:absolute;
-    top:100%;
-    left:0;
-    background:white;
-    min-width:220px;
-    list-style:none;
-    padding:0;
-    margin:0;
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
-    z-index:999;
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 210px;
+    list-style: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+    z-index: 1000;
 }
 
-.dropdown-menu li{
-    padding:0;
-    border-bottom:1px solid #eee;
+.dropdown-menu li {
+    padding: 0;
+    border-bottom: 1px solid #eee;
 }
 
-.dropdown-menu li a{
-    display:block;
-    padding:14px 18px;
-    font-size:16px;
-    font-weight:normal;
-    color:#333;
+.dropdown-menu li a {
+    display: block;
+    padding: 13px 18px;
+    font-size: 15px;
+    font-weight: normal;
 }
 
-.dropdown-menu li a:hover{
-    background:#ff6a00;
-    color:white;
+.dropdown-menu li a:hover {
+    background: #ff6a00;
+    color: white;
 }
 
-.dropdown:hover .dropdown-menu{
-    display:block;
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 
-.banner{
+.banner {
     background:
-    linear-gradient(rgba(0,50,180,0.8),rgba(0,20,100,0.8)),
+    linear-gradient(rgba(0,50,180,.8),rgba(0,20,100,.8)),
     url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da");
 
-    background-size:cover;
-    background-position:center;
-    text-align:center;
-    padding:100px 20px;
-    color:white;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 90px 20px;
+    color: white;
 }
 
-.banner h1{
-    font-size:50px;
-    margin-bottom:15px;
+.banner h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
 }
 
-.banner h1 span{
-    color:#ffd700;
+.banner h1 span {
+    color: #ffd700;
 }
 
-.banner p{
-    font-size:18px;
-    margin-bottom:35px;
+.banner p {
+    font-size: 18px;
+    margin-bottom: 25px;
 }
 
-/* THANH CHẠY CÂU NÓI */
-.quote-run{
-    width:100%;
-    overflow:hidden;
-    margin-top:30px;
-    padding:15px 0;
-    background:white;
+.quote-run {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 30px;
+    padding: 15px 0;
+    background: white;
 }
 
-.quote-text{
-    display:flex;
-    width:max-content;
-    animation:quoteMove 30s linear infinite;
+.quote-text {
+    display: flex;
+    width: max-content;
+    animation: quoteMove 35s linear infinite;
 }
 
-.quote-text span{
-    color:#0b2a88;
-    font-size:18px;
-    font-weight:bold;
-    white-space:nowrap;
-    margin-right:80px;
+.quote-text span {
+    color: #0b2a88;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 80px;
 }
 
-@keyframes quoteMove{
-    from{
-        transform:translateX(100%);
+@keyframes quoteMove {
+    from {
+        transform: translateX(0);
     }
-    to{
-        transform:translateX(-100%);
+    to {
+        transform: translateX(-50%);
     }
 }
 
-.main{
-    max-width:1200px;
-    margin:25px auto;
-    display:flex;
-    gap:20px;
+.main {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 0 15px;
+    display: flex;
+    gap: 20px;
 }
 
-.sidebar{
-    width:260px;
-    background:white;
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: white;
 }
 
-.sidebar h3{
-    background:#ff6a00;
-    color:white;
-    padding:15px;
+.sidebar h3 {
+    background: #ff6a00;
+    color: white;
+    padding: 15px;
 }
 
-.sidebar ul{
-    list-style:none;
+.sidebar ul {
+    list-style: none;
 }
 
-.sidebar ul li{
-    border-bottom:1px solid #eee;
+.sidebar ul li {
+    border-bottom: 1px solid #eee;
 }
 
-.sidebar ul li a{
-    display:block;
-    padding:14px;
-    text-decoration:none;
-    color:#333;
+.sidebar ul li a {
+    display: block;
+    padding: 14px;
+    text-decoration: none;
+    color: #333;
 }
 
-.sidebar ul li a:hover{
-    background:#f5f5f5;
+.sidebar ul li a:hover {
+    background: #f5f5f5;
+    color: #ff6a00;
 }
 
-.content{
-    flex:1;
+.content {
+    flex: 1;
+    min-width: 0;
 }
 
-.section-title{
-    background:white;
-    padding:15px;
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:15px;
-    border-left:5px solid #ff6a00;
+.section-title {
+    background: white;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border-left: 5px solid #ff6a00;
 }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
 }
 
-.card{
-    background:white;
-    padding:10px;
-    border-radius:5px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+.card {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+    transition: .3s;
 }
 
-.card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
+.card:hover {
+    transform: translateY(-5px);
 }
 
-.card h4{
-    margin-top:10px;
-    font-size:15px;
-    color:#333;
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
 }
 
-footer{
-    background:#0b2a88;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:30px;
+.card h4 {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #333;
 }
 
-footer p{
-    margin-top:10px;
+footer {
+    background: #0b2a88;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+    margin-top: 30px;
 }
 
-/* AI */
-.ai-button{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    background:#10a37f;
-    color:white;
-    padding:15px 20px;
-    border-radius:50px;
-    cursor:pointer;
-    font-weight:bold;
-    z-index:9999;
+footer p {
+    margin-top: 10px;
 }
 
-.ai-box{
-    display:none;
-    position:fixed;
-    right:20px;
-    bottom:80px;
-    width:350px;
-    background:white;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,0.3);
-    overflow:hidden;
-    z-index:9999;
+.ai-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #10a37f;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 3px 10px rgba(0,0,0,.2);
 }
 
-.ai-header{
-    background:#202123;
-    color:white;
-    padding:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.ai-box {
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 85px;
+    width: 350px;
+    max-width: calc(100% - 30px);
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,.3);
+    overflow: hidden;
+    z-index: 9999;
 }
 
-.ai-chat{
-    height:300px;
-    overflow-y:auto;
-    padding:10px;
-    color:black;
+.ai-header {
+    background: #202123;
+    color: white;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.ai-chat p{
-    margin-bottom:12px;
-    overflow-wrap:anywhere;
+.ai-chat {
+    height: 300px;
+    overflow-y: auto;
+    padding: 12px;
+    color: black;
 }
 
-.ai-input{
-    display:flex;
-    border-top:1px solid #ddd;
+.ai-chat p {
+    margin-bottom: 12px;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
 }
 
-.ai-input input{
-    flex:1;
-    padding:10px;
-    border:none;
-    outline:none;
+.ai-input {
+    display: flex;
+    border-top: 1px solid #ddd;
 }
 
-.ai-input button{
-    width:70px;
-    border:none;
-    background:#10a37f;
-    color:white;
-    cursor:pointer;
+.ai-input input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border: none;
+    outline: none;
 }
 
-.auth-buttons{
-    display:flex;
-    gap:10px;
-    align-items:center;
+.ai-input button {
+    width: 70px;
+    border: none;
+    background: #10a37f;
+    color: white;
+    cursor: pointer;
 }
 
-.auth-buttons a{
-    text-decoration:none;
-    padding:10px 18px;
-    border-radius:6px;
-    font-weight:bold;
-    font-size:15px;
-    transition:0.3s;
+.visitor-counter {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    background: linear-gradient(135deg,#0b2a88,#2563eb);
+    color: white;
+    padding: 13px 18px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    z-index: 9998;
 }
 
-.auth-buttons .login-btn{
-    background:#0b2a88;
-    color:white;
+.visitor-counter strong {
+    color: #ffd700;
+    margin-left: 5px;
 }
 
-.register-btn{
-    background:#ff6a00;
-    color:white;
-}
-
-.auth-buttons a:hover{
-    transform:translateY(-2px);
-    opacity:0.85;
-}
-
-@media(max-width:900px){
-
-    .main{
-        flex-direction:column;
-        padding:0 15px;
-    }
-
-    .sidebar{
-        width:100%;
+@media(max-width: 900px) {
+    .main {
+        flex-direction: column;
     }
 
-    .cards{
-        grid-template-columns:repeat(2,1fr);
+    .sidebar {
+        width: 100%;
     }
 
-    nav ul{
-        flex-wrap:wrap;
+    .cards {
+        grid-template-columns: repeat(2, minmax(0,1fr));
     }
 
-    .banner h1{
-        font-size:32px;
+    nav ul {
+        flex-wrap: wrap;
     }
 
+    .banner h1 {
+        font-size: 32px;
+    }
 }
 
-@media(max-width:500px){
-
-    .cards{
-        grid-template-columns:1fr;
+@media(max-width: 500px) {
+    .cards {
+        grid-template-columns: 1fr;
     }
 
-    .ai-box{
-        width:calc(100% - 30px);
-        right:15px;
+    .topbar {
+        justify-content: center;
     }
 
-    .visitor-counter{
-        left:10px;
-        bottom:15px;
-        font-size:12px;
-        padding:10px 12px;
+    .auth-buttons a {
+        padding: 9px 12px;
+        font-size: 13px;
     }
 
-    .ai-button{
-        right:10px;
-        bottom:15px;
-        padding:12px 15px;
+    nav ul li {
+        padding: 11px;
     }
 
-    nav ul li{
-        padding:12px;
+    nav ul li a {
+        font-size: 14px;
     }
 
-    nav ul li a{
-        font-size:15px;
+    .banner h1 {
+        font-size: 27px;
+    }
+
+    .banner p {
+        font-size: 15px;
+    }
+
+    .ai-box {
+        right: 15px;
+        bottom: 80px;
+        width: calc(100% - 30px);
+    }
+
+    .visitor-counter {
+        left: 10px;
+        bottom: 15px;
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
+    .ai-button {
+        right: 10px;
+        bottom: 15px;
+        padding: 12px 15px;
     }
 }
 </style>
@@ -488,7 +488,6 @@ footer p{
 
     </div>
 
-    <!-- MENU -->
     <nav>
 
         <ul>
@@ -566,15 +565,17 @@ footer p{
         <div class="quote-text">
 
             <span>“Điều tuyệt vời nhất của việc học là không ai có thể lấy nó ra khỏi bạn.”</span>
-
             <span>“Học, học nữa, học mãi.”</span>
-
             <span>“Thất bại là mẹ thành công.”</span>
-
             <span>“Kiến thức hôm nay là sức mạnh ngày mai.”</span>
-
             <span>“Chăm chỉ là chìa khóa của thành công.”</span>
+            <span>“Mỗi ngày học một điều mới.”</span>
 
+            <span>“Điều tuyệt vời nhất của việc học là không ai có thể lấy nó ra khỏi bạn.”</span>
+            <span>“Học, học nữa, học mãi.”</span>
+            <span>“Thất bại là mẹ thành công.”</span>
+            <span>“Kiến thức hôm nay là sức mạnh ngày mai.”</span>
+            <span>“Chăm chỉ là chìa khóa của thành công.”</span>
             <span>“Mỗi ngày học một điều mới.”</span>
 
         </div>
@@ -590,23 +591,10 @@ footer p{
         <h3>DANH MỤC</h3>
 
         <ul>
-
-            <li>
-                <a href="hoctap.html">📚 Học tập</a>
-            </li>
-
-            <li>
-                <a href="tailieu.html">📄 Tài liệu</a>
-            </li>
-
-            <li>
-                <a href="tracnghiem.html">📝 Trắc nghiệm</a>
-            </li>
-
-            <li>
-                <a href="thidau.html">🏆 Thi đấu</a>
-            </li>
-
+            <li><a href="hoctap.html">📚 Học tập</a></li>
+            <li><a href="tailieu.html">📄 Tài liệu</a></li>
+            <li><a href="tracnghiem.html">📝 Trắc nghiệm</a></li>
+            <li><a href="thidau.html">🏆 Thi đấu</a></li>
         </ul>
 
     </div>
@@ -620,27 +608,27 @@ footer p{
         <div class="cards">
 
             <div class="card">
-                <img src="https://picsum.photos/300/200?1">
+                <img src="https://picsum.photos/300/200?1" alt="Tài liệu Toán 6">
                 <h4>Bài 1: Tập hợp số tự nhiên - Toán 6</h4>
             </div>
 
             <div class="card">
-                <img src="https://picsum.photos/300/200?4">
+                <img src="https://picsum.photos/300/200?4" alt="Tài liệu Toán">
                 <h4>Dạng bài phân số nâng cao</h4>
             </div>
 
             <div class="card">
-                <img src="https://picsum.photos/300/200?5">
+                <img src="https://picsum.photos/300/200?5" alt="Đề thi Toán 7">
                 <h4>Đề thi HK1 môn Toán 7</h4>
             </div>
 
             <div class="card">
-                <img src="https://picsum.photos/300/200?6">
+                <img src="https://picsum.photos/300/200?6" alt="KHTN 6">
                 <h4>Bài giảng KHTN 6</h4>
             </div>
 
             <div class="card">
-                <img src="https://picsum.photos/300/200?7">
+                <img src="https://picsum.photos/300/200?7" alt="Địa lí 7">
                 <h4>Trắc nghiệm Địa Lí 7</h4>
             </div>
 
@@ -674,30 +662,30 @@ footer p{
 </div>
 
 <script>
-
 const aiBox = document.getElementById('aiBox');
 const chatArea = document.getElementById('chatArea');
 const questionInput = document.getElementById('question');
 
-function openAI(){
+function openAI() {
     aiBox.style.display = 'block';
+    questionInput.focus();
 }
 
-function closeAI(){
+function closeAI() {
     aiBox.style.display = 'none';
 }
 
-function handleKeyPress(e){
-    if(e.key === 'Enter'){
+function handleKeyPress(e) {
+    if (e.key === 'Enter') {
         sendAI();
     }
 }
 
-async function sendAI(){
+async function sendAI() {
 
     const query = questionInput.value.trim();
 
-    if(!query) return;
+    if (!query) return;
 
     const userP = document.createElement('p');
     userP.textContent = 'Bạn: ' + query;
@@ -711,69 +699,67 @@ async function sendAI(){
 
     chatArea.scrollTop = chatArea.scrollHeight;
 
-    try{
+    try {
 
-        const response = await fetch('/api/chat',{
-
-            method:'POST',
-
-            headers:{
-                'Content-Type':'application/json'
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-
-            body:JSON.stringify({
-                message:query
+            body: JSON.stringify({
+                message: query
             })
-
         });
 
-        if(!response.ok){
-            throw new Error('Backend AI chưa kết nối');
+        if (!response.ok) {
+            throw new Error('Máy chủ trả về lỗi HTTP ' + response.status);
         }
 
         const data = await response.json();
 
         aiP.textContent =
-            'AI: ' + (data.reply || data.response || data.text || 'Chưa có phản hồi.');
+            'AI: ' + (
+                data.reply ||
+                data.response ||
+                data.text ||
+                'Chưa có phản hồi.'
+            );
 
-    }
-    catch(error){
+    } catch (error) {
 
-        console.error(error);
+        console.error('Lỗi AI:', error);
 
         aiP.textContent =
-            'AI: Chưa kết nối được máy chủ AI.';
+            'AI: Không kết nối được máy chủ. Nếu bạn đang dùng GitHub Pages, cần triển khai backend riêng để sử dụng AI.';
 
     }
 
     chatArea.scrollTop = chatArea.scrollHeight;
 }
 
-(function(){
+(function() {
 
     const hienThi = document.getElementById('visitor-count');
 
+    if (!hienThi) return;
+
     let daChay = false;
 
-    function hienThiLuotTruyCap(){
+    function kiemTraGoatCounter() {
 
-        if(daChay) return;
-
-        if(
+        if (
             window.goatcounter &&
             typeof window.goatcounter.visit_count === 'function'
-        ){
+        ) {
+
+            if (daChay) return;
 
             daChay = true;
 
             window.goatcounter.visit_count({
-
-                path:'TOTAL',
-
-                append:'#visitor-count',
-
-                no_branding:true
-
+                path: 'TOTAL',
+                append: '#visitor-count',
+                no_branding: true
             });
 
             return true;
@@ -782,27 +768,26 @@ async function sendAI(){
         return false;
     }
 
-    const timer = setInterval(function(){
+    const timer = setInterval(function() {
 
-        if(hienThiLuotTruyCap()){
+        if (kiemTraGoatCounter()) {
             clearInterval(timer);
         }
 
-    },100);
+    }, 200);
 
-    setTimeout(function(){
+    setTimeout(function() {
 
         clearInterval(timer);
 
-        if(!daChay){
-            hienThi.textContent = 'Chưa tải được';
-            console.error('Không tải được GoatCounter');
+        if (!daChay) {
+            hienThi.textContent = 'Không tải được';
+            console.error('Không tải được bộ đếm GoatCounter');
         }
 
-    },15000);
+    }, 15000);
 
 })();
-
 </script>
 
 <script
