@@ -1,0 +1,694 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm KHTN 8 - Tàu Vũ Trụ</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,#14532d 0%,transparent 25%),
+radial-gradient(circle at 80% 70%,#064e3b 0%,transparent 30%),
+linear-gradient(135deg,#020617,#052e16,#064e3b);
+color:white;
+}
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:#bbf7d0;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+.star:nth-child(1){top:8%;left:5%}
+.star:nth-child(2){top:20%;left:18%}
+.star:nth-child(3){top:12%;left:35%}
+.star:nth-child(4){top:30%;left:55%}
+.star:nth-child(5){top:10%;left:80%}
+.star:nth-child(6){top:45%;left:8%}
+.star:nth-child(7){top:65%;left:25%}
+.star:nth-child(8){top:75%;left:70%}
+.star:nth-child(9){top:55%;left:90%}
+.star:nth-child(10){top:85%;left:45%}
+.star:nth-child(11){top:35%;left:75%}
+.star:nth-child(12){top:90%;left:10%}
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.5)}
+to{opacity:1;transform:scale(1.5)}
+}
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+.back:hover{background:#16a34a;transform:translateY(-3px)}
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:40px;
+text-shadow:0 0 10px #4ade80,0 0 25px #22c55e,0 5px 15px rgba(0,0,0,.5);
+}
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#bbf7d0;
+}
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.space{
+position:relative;
+height:360px;
+overflow:hidden;
+border-radius:22px;
+background:linear-gradient(180deg,#052e16 0%,#166534 40%,#14532d 70%,#020617 100%);
+border:4px solid #22c55e;
+box-shadow:inset 0 0 60px rgba(34,197,94,.25),0 10px 35px rgba(0,0,0,.5);
+}
+.planet{
+position:absolute;
+width:100px;
+height:100px;
+right:65px;
+top:35px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#bef264,#65a30d 50%,#365314 85%);
+box-shadow:0 0 25px #84cc16,0 0 65px rgba(132,204,22,.7);
+}
+.cloud{
+position:absolute;
+width:130px;
+height:38px;
+background:rgba(255,255,255,.7);
+border-radius:50px;
+top:75px;
+left:180px;
+}
+.cloud:before,.cloud:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+.cloud:before{width:55px;height:55px;left:20px;top:-25px}
+.cloud:after{width:65px;height:65px;left:60px;top:-35px}
+.ground{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:65px;
+background:linear-gradient(180deg,transparent,rgba(21,128,61,.5)),repeating-linear-gradient(90deg,#166534 0 30px,#15803d 30px 60px);
+}
+.rocket{
+position:absolute;
+left:55px;
+top:110px;
+width:150px;
+height:150px;
+z-index:20;
+transition:left .15s linear;
+animation:rocketFloat 1.2s infinite alternate;
+filter:drop-shadow(0 0 12px #4ade80);
+}
+@keyframes rocketFloat{
+from{transform:translateY(-5px) rotate(-2deg)}
+to{transform:translateY(5px) rotate(2deg)}
+}
+.rocket-body{
+position:absolute;
+left:40px;
+top:15px;
+width:65px;
+height:110px;
+background:linear-gradient(90deg,#e2e8f0,#fff,#94a3b8);
+border:3px solid #475569;
+border-radius:50% 50% 15px 15px;
+}
+.rocket-head{
+position:absolute;
+left:40px;
+top:0;
+width:65px;
+height:55px;
+background:#ef4444;
+border:3px solid #7f1d1d;
+border-radius:50% 50% 0 0;
+}
+.rocket-window{
+position:absolute;
+left:59px;
+top:48px;
+width:28px;
+height:28px;
+border-radius:50%;
+background:#38bdf8;
+border:4px solid #334155;
+box-shadow:0 0 15px #38bdf8;
+z-index:5;
+}
+.fin1,.fin2{
+position:absolute;
+top:90px;
+width:35px;
+height:45px;
+background:#ef4444;
+border:3px solid #7f1d1d;
+}
+.fin1{left:15px;clip-path:polygon(100% 0,100% 100%,0 100%)}
+.fin2{left:95px;clip-path:polygon(0 0,100% 100%,0 100%)}
+.fire{
+position:absolute;
+left:57px;
+top:120px;
+width:32px;
+height:40px;
+background:linear-gradient(180deg,#facc15,#f97316,#ef4444);
+clip-path:polygon(0 0,100% 0,50% 100%);
+animation:fire .2s infinite alternate;
+}
+@keyframes fire{
+from{transform:scaleY(.8)}
+to{transform:scaleY(1.2)}
+}
+.obstacle{
+display:none;
+position:absolute;
+right:80px;
+top:145px;
+width:140px;
+height:140px;
+z-index:15;
+animation:obstacleMove .7s infinite alternate;
+}
+.obstacle.show{display:block}
+@keyframes obstacleMove{
+from{transform:rotate(-4deg) translateY(-5px)}
+to{transform:rotate(5deg) translateY(5px)}
+}
+.obstacle-rock{
+position:absolute;
+width:120px;
+height:110px;
+top:15px;
+left:10px;
+background:linear-gradient(135deg,#94a3b8,#475569,#1e293b);
+border:3px solid #cbd5e1;
+border-radius:40% 60% 45% 55%;
+box-shadow:0 0 25px rgba(255,255,255,.3);
+}
+.obstacle-rock:before,.obstacle-rock:after{
+content:"";
+position:absolute;
+background:#64748b;
+border-radius:50%;
+}
+.obstacle-rock:before{width:25px;height:20px;left:25px;top:25px}
+.obstacle-rock:after{width:18px;height:15px;right:20px;bottom:25px}
+.start-area{text-align:center;margin:25px 0}
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#22c55e,#15803d);
+box-shadow:0 8px 0 #14532d,0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+.start:hover{transform:translateY(-3px)}
+.start:active{transform:translateY(5px)}
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#dcfce7;
+}
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#4ade80,#22c55e,#a3e635);
+box-shadow:0 0 15px #22c55e;
+transition:.5s;
+}
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#bbf7d0;
+}
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+.overlay.show{display:block}
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#14532d;
+}
+.question-box.show{display:block;animation:popup .3s forwards}
+@keyframes popup{
+to{transform:translate(-50%,-50%) scale(1)}
+}
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#15803d;
+}
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #bbf7d0;
+border-radius:14px;
+background:#fff;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#14532d;
+}
+.answer:hover{transform:translateX(5px);border-color:#22c55e;background:#f0fdf4}
+.answer.selected{
+background:#bbf7d0;
+border-color:#16a34a;
+box-shadow:0 0 0 3px rgba(22,163,74,.12);
+}
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#22c55e,#15803d);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+.check:hover{transform:translateY(-2px)}
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+@keyframes resultShow{
+from{transform:translate(-50%,-50%) scale(.5);opacity:0}
+to{transform:translate(-50%,-50%) scale(1);opacity:1}
+}
+.result h2{font-size:38px;color:#15803d;margin:0 0 20px}
+.result.lose h2{color:#ef4444}
+.result p{font-size:21px;line-height:1.6;color:#334155}
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#22c55e,#15803d);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#4ade80;
+text-shadow:0 0 20px #22c55e;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+@keyframes correctEffect{
+0%{transform:translate(-50%,-50%) scale(.4);opacity:0}
+40%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+100%{transform:translate(-50%,-100%) scale(1);opacity:0}
+}
+@media(max-width:700px){
+h1{font-size:28px;margin-top:75px}
+.info{font-size:16px}
+.game{width:96%;padding:12px}
+.space{height:260px}
+.rocket{top:65px;transform:scale(.75);transform-origin:left center}
+.obstacle{right:10px;top:95px;transform:scale(.7)}
+.planet{width:60px;height:60px;right:25px;top:20px}
+.question-box{padding:20px}
+.question-box h2{font-size:21px}
+.question{font-size:18px}
+.answer{font-size:16px;padding:12px}
+.result h2{font-size:30px}
+.result p{font-size:18px}
+.back{padding:9px 14px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi8tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🔬 TRẮC NGHIỆM KHTN 8</h1>
+
+<div class="info">
+🚀 TRÒ CHƠI TÀU VŨ TRỤ - KHÁM PHÁ THẾ GIỚI KHOA HỌC
+</div>
+
+<div class="game">
+<div class="space">
+<div class="planet"></div>
+<div class="cloud"></div>
+<div class="ground"></div>
+
+<div class="rocket" id="rocket">
+<div class="fire"></div>
+<div class="fin1"></div>
+<div class="fin2"></div>
+<div class="rocket-body"></div>
+<div class="rocket-head"></div>
+<div class="rocket-window"></div>
+</div>
+
+<div class="obstacle" id="obstacle">
+<div class="obstacle-rock"></div>
+</div>
+</div>
+
+<div class="start-area">
+<button class="start" id="startButton" onclick="startGame()">🚀 BẮT ĐẦU PHIÊU LƯU</button>
+</div>
+
+<div class="progress-text" id="progressText">🌍 Chưa bắt đầu</div>
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="status" id="status">Hãy bấm BẮT ĐẦU để khám phá vũ trụ khoa học!</div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+<h2>🔬 THỬ THÁCH KHOA HỌC!</h2>
+<div class="question" id="question"></div>
+<div id="answers"></div>
+<button class="check" onclick="checkAnswer()">🚀 TRẢ LỜI</button>
+</div>
+
+<div class="result" id="result">
+<h2 id="resultTitle"></h2>
+<p id="resultText"></p>
+<button class="again" onclick="startGame()">🔄 CHƠI LẠI</button>
+</div>
+
+<script>
+const questionBank=[
+["Đơn vị đo khối lượng riêng trong hệ SI là gì?",["kg/m³","N/m²","m/s","J"],0],
+["Công thức tính khối lượng riêng là gì?",["D=m/V","D=V/m","D=m×V","D=F/S"],0],
+["Áp suất được tính bằng công thức nào?",["p=F/S","p=F×S","p=S/F","p=m/V"],0],
+["Đơn vị của áp suất là gì?",["Pascal (Pa)","Kilogram (kg)","Mét (m)","Jun (J)"],0],
+["Áp suất chất lỏng phụ thuộc vào yếu tố nào?",["Độ sâu và trọng lượng riêng của chất lỏng","Màu sắc chất lỏng","Hình dạng bình בלבד","Nhiệt độ phòng בלבד"],0],
+["Lực đẩy Archimedes có phương và chiều như thế nào?",["Phương thẳng đứng, chiều từ dưới lên","Phương ngang","Phương thẳng đứng, chiều từ trên xuống","Theo mọi hướng"],0],
+["Điều kiện để vật nổi trên mặt chất lỏng là gì?",["Khối lượng riêng của vật nhỏ hơn chất lỏng","Khối lượng riêng của vật lớn hơn chất lỏng","Vật không có khối lượng","Vật không chiếm thể tích"],0],
+["Moment lực phụ thuộc vào yếu tố nào?",["Độ lớn của lực và cánh tay đòn","Màu sắc của vật","Nhiệt độ môi trường","Khối lượng riêng của không khí"],0],
+["Dụng cụ nào sau đây là đòn bẩy?",["Kéo","Bóng đèn","Nhiệt kế","Pin"],0],
+["Điện trở có tác dụng gì trong mạch điện?",["Cản trở dòng điện","Tạo ra ánh sáng mặt trời","Lưu trữ nước","Đo nhiệt độ"],0],
+["Đơn vị đo cường độ dòng điện là gì?",["Ampe (A)","Vôn (V)","Ôm (Ω)","Oát (W)"],0],
+["Dụng cụ dùng để đo cường độ dòng điện là gì?",["Ampe kế","Vôn kế","Nhiệt kế","Lực kế"],0],
+["Dụng cụ dùng để đo hiệu điện thế là gì?",["Vôn kế","Ampe kế","Cân","Đồng hồ"],0],
+["Vật liệu nào dẫn điện tốt?",["Đồng","Cao su","Nhựa","Thủy tinh"],0],
+["Chất nào sau đây là chất cách điện?",["Cao su","Đồng","Nhôm","Sắt"],0],
+["Khi mắc ampe kế vào mạch điện, cần mắc như thế nào?",["Mắc nối tiếp với thiết bị cần đo","Mắc song song với nguồn điện","Mắc tùy ý","Không cần nối dây"],0],
+["Khi mắc vôn kế để đo hiệu điện thế hai đầu bóng đèn, cần mắc như thế nào?",["Mắc song song với bóng đèn","Mắc nối tiếp với bóng đèn","Mắc vào vỏ bóng đèn","Không cần mắc vào mạch"],0],
+["Nhiệt độ là đại lượng cho biết điều gì?",["Mức độ nóng hay lạnh của vật","Khối lượng của vật","Thể tích của vật","Tốc độ chuyển động"],0],
+["Dụng cụ thường dùng để đo nhiệt độ là gì?",["Nhiệt kế","Lực kế","Ampe kế","Cân"],0],
+["Nhiệt năng của một vật là gì?",["Tổng động năng của các phân tử cấu tạo nên vật","Khối lượng của vật","Thể tích của vật","Áp suất của vật"],0],
+["Sự truyền nhiệt bằng các dòng chất lỏng hoặc chất khí gọi là gì?",["Đối lưu","Dẫn nhiệt","Bức xạ nhiệt","Bay hơi"],0],
+["Hình thức truyền nhiệt có thể xảy ra trong chân không là gì?",["Bức xạ nhiệt","Dẫn nhiệt","Đối lưu","Dẫn điện"],0],
+["Oxygen chiếm khoảng bao nhiêu phần trăm thể tích không khí?",["21%","78%","1%","50%"],0],
+["Khí chiếm phần lớn thể tích không khí là gì?",["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],0],
+["Oxygen cần thiết cho quá trình nào?",["Hô hấp và sự cháy","Đông đặc","Ngưng tụ","Hòa tan muối"],0],
+["Khí carbon dioxide có công thức hóa học là gì?",["CO₂","O₂","H₂","N₂"],0],
+["Dấu hiệu nào thường cho thấy có phản ứng hóa học xảy ra?",["Có chất mới tạo thành","Chỉ thay đổi vị trí","Chỉ thay đổi hình dạng","Chỉ thay đổi kích thước"],0],
+["Chất tham gia phản ứng hóa học được gọi là gì?",["Chất phản ứng","Sản phẩm","Dung môi","Chất xúc tác"],0],
+["Chất tạo thành sau phản ứng hóa học được gọi là gì?",["Sản phẩm","Chất phản ứng","Nguyên tử","Phân tử ban đầu"],0],
+["Định luật bảo toàn khối lượng cho biết điều gì?",["Tổng khối lượng chất tham gia bằng tổng khối lượng sản phẩm","Khối lượng luôn tăng","Khối lượng luôn giảm","Khối lượng biến mất"],0],
+["Dung dịch là gì?",["Hỗn hợp đồng nhất của chất tan và dung môi","Hỗn hợp các chất không trộn lẫn","Một chất tinh khiết","Một loại khí"],0],
+["Nồng độ phần trăm của dung dịch cho biết điều gì?",["Số gam chất tan có trong 100 gam dung dịch","Số gam dung môi trong 1 lít","Thể tích bình chứa","Nhiệt độ dung dịch"],0],
+["Acid thường làm quỳ tím chuyển sang màu gì?",["Đỏ","Xanh","Vàng","Không đổi màu"],0],
+["Dung dịch base làm quỳ tím chuyển sang màu gì?",["Xanh","Đỏ","Trắng","Đen"],0],
+["Muối ăn có công thức hóa học là gì?",["NaCl","HCl","NaOH","CO₂"],0],
+["Kim loại thường có tính chất nào?",["Dẫn điện và dẫn nhiệt tốt","Không dẫn điện","Dễ tan hoàn toàn trong nước","Không có ánh kim"],0],
+["Oxit là hợp chất gồm những nguyên tố nào?",["Oxygen và một nguyên tố khác","Hai nguyên tố kim loại","Hydrogen và nitrogen","Chỉ có oxygen"],0],
+["Cơ thể người cần chất dinh dưỡng để làm gì?",["Cung cấp năng lượng và xây dựng cơ thể","Chỉ tạo màu da","Chỉ làm tăng chiều cao","Không có vai trò"],0],
+["Hệ tiêu hóa có chức năng chính là gì?",["Biến đổi thức ăn và hấp thụ chất dinh dưỡng","Vận chuyển máu","Trao đổi khí","Điều khiển vận động"],0],
+["Cơ quan nào thuộc hệ hô hấp?",["Phổi","Tim","Dạ dày","Thận"],0],
+["Cơ quan nào bơm máu đi khắp cơ thể?",["Tim","Phổi","Gan","Dạ dày"],0],
+["Máu có chức năng nào?",["Vận chuyển oxygen và chất dinh dưỡng","Tiêu hóa thức ăn","Tạo xương","Lọc không khí"],0],
+["Hệ bài tiết nước tiểu có vai trò gì?",["Loại bỏ chất thải qua nước tiểu","Tiêu hóa protein","Trao đổi khí","Vận chuyển thức ăn"],0],
+["Đơn vị cấu tạo và chức năng cơ bản của cơ thể sống là gì?",["Tế bào","Cơ quan","Hệ cơ quan","Mô"],0],
+["Hệ thần kinh có vai trò gì?",["Điều khiển và phối hợp hoạt động cơ thể","Tiêu hóa thức ăn","Vận chuyển oxygen","Lọc máu"],0],
+["Vitamin có vai trò gì đối với cơ thể?",["Điều hòa hoạt động sống","Chỉ cung cấp năng lượng","Thay thế hoàn toàn protein","Không cần thiết"],0],
+["Chất dinh dưỡng nào giúp xây dựng và sửa chữa cơ thể?",["Protein","Nước","Muối khoáng","Vitamin"],0],
+["Sinh sản ở sinh vật có ý nghĩa gì?",["Duy trì sự tồn tại của loài","Làm cá thể ngừng lớn","Làm mất nguồn thức ăn","Ngăn sinh vật phát triển"],0],
+["Môi trường sống của sinh vật là gì?",["Nơi sinh vật sống và chịu tác động của các yếu tố xung quanh","Chỉ là nơi có nước","Chỉ là nơi có ánh sáng","Chỉ là nơi có đất"],0],
+["Hệ sinh thái gồm những thành phần nào?",["Sinh vật và môi trường sống của chúng","Chỉ có động vật","Chỉ có thực vật","Chỉ có đất và nước"],0],
+["Quang hợp ở thực vật cần những yếu tố nào?",["Ánh sáng, nước và carbon dioxide","Chỉ oxygen","Chỉ đất","Chỉ nitrogen"],0],
+["Sản phẩm chính của quá trình quang hợp là gì?",["Chất hữu cơ và oxygen","Carbon dioxide và nước","Muối và nitrogen","Chỉ nhiệt năng"],0],
+["Chất diệp lục có vai trò gì?",["Hấp thụ năng lượng ánh sáng","Hấp thụ âm thanh","Tạo ra nước","Hấp thụ oxygen"],0],
+["Sinh vật sản xuất trong hệ sinh thái thường là gì?",["Thực vật xanh","Động vật ăn thịt","Nấm","Vi khuẩn phân giải"],0],
+["Chuỗi thức ăn bắt đầu thường từ nhóm nào?",["Sinh vật sản xuất","Sinh vật tiêu thụ bậc cao","Động vật ăn thịt","Sinh vật kí sinh"],0],
+["Đa dạng sinh học có vai trò gì?",["Duy trì cân bằng sinh thái","Làm môi trường ô nhiễm hơn","Làm mất nguồn thức ăn","Không có ý nghĩa"],0],
+["Biện pháp nào giúp bảo vệ đa dạng sinh học?",["Bảo vệ môi trường sống và hạn chế săn bắt trái phép","Phá rừng","Xả chất thải ra sông","Khai thác động vật tùy ý"],0],
+["Tài nguyên thiên nhiên cần được sử dụng như thế nào?",["Hợp lí và tiết kiệm","Lãng phí","Khai thác không giới hạn","Không cần bảo vệ"],0],
+["Ô nhiễm môi trường có thể gây ra hậu quả nào?",["Ảnh hưởng xấu đến sức khỏe và hệ sinh thái","Làm môi trường luôn sạch hơn","Tăng đa dạng sinh học trong mọi trường hợp","Không ảnh hưởng đến sinh vật"],0],
+["Biện pháp nào góp phần giảm ô nhiễm không khí?",["Trồng cây và hạn chế khí thải","Đốt rác bừa bãi","Tăng sử dụng nhiên liệu hóa thạch","Phá rừng"],0],
+["Năng lượng tái tạo là nguồn năng lượng nào?",["Năng lượng mặt trời","Than đá","Dầu mỏ","Khí tự nhiên"],0]
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let rocketPosition=55;
+let rocketTimer=null;
+let obstacleTimer=null;
+
+function startGame(){
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+rocketPosition=55;
+document.getElementById("rocket").style.left=rocketPosition+"px";
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+document.getElementById("startButton").innerHTML="🔄 BAY LẠI";
+document.getElementById("status").innerHTML="🚀 Tàu vũ trụ đang tiến vào không gian khoa học...";
+let shuffled=[...questionBank];
+shuffled.sort(()=>Math.random()-.5);
+gameQuestions=shuffled.slice(0,10);
+updateProgress();
+clearInterval(rocketTimer);
+clearTimeout(obstacleTimer);
+rocketTimer=setInterval(moveRocket,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+}
+
+function moveRocket(){
+if(!gameRunning||waiting)return;
+rocketPosition+=2;
+let width=document.querySelector(".space").clientWidth;
+if(rocketPosition>width-190)rocketPosition=55;
+document.getElementById("rocket").style.left=rocketPosition+"px";
+}
+
+function showObstacle(){
+if(!gameRunning)return;
+waiting=true;
+document.getElementById("obstacle").classList.add("show");
+document.getElementById("status").innerHTML="☄️ VẬT CẢN KHÔNG GIAN! Hãy giải thử thách KHTN 8!";
+clearInterval(rocketTimer);
+showQuestion();
+}
+
+function showQuestion(){
+let q=gameQuestions[currentQuestion];
+selectedAnswer=null;
+document.getElementById("question").innerHTML="Câu "+(currentQuestion+1)+": "+q[0];
+let html="";
+q[1].forEach((answer,index)=>{
+html+=`<button class="answer" onclick="selectAnswer(${index})">${String.fromCharCode(65+index)}. ${answer}</button>`;
+});
+document.getElementById("answers").innerHTML=html;
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+}
+
+function selectAnswer(index){
+selectedAnswer=index;
+document.querySelectorAll(".answer").forEach(button=>button.classList.remove("selected"));
+document.querySelectorAll(".answer")[index].classList.add("selected");
+}
+
+function correctEffect(){
+const effect=document.createElement("div");
+effect.className="correct-effect";
+effect.innerHTML="🚀 CHÍNH XÁC!";
+document.body.appendChild(effect);
+setTimeout(()=>effect.remove(),800);
+}
+
+function checkAnswer(){
+if(selectedAnswer===null){
+alert("⚠️ Hãy chọn một đáp án!");
+return;
+}
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+loseGame();
+return;
+}
+correctEffect();
+currentQuestion++;
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+updateProgress();
+if(currentQuestion>=10){
+winGame();
+return;
+}
+waiting=false;
+document.getElementById("status").innerHTML="✅ Chính xác! Tàu vũ trụ tiếp tục hành trình...";
+rocketTimer=setInterval(moveRocket,100);
+obstacleTimer=setTimeout(showObstacle,5000);
+}
+
+function updateProgress(){
+document.getElementById("progressBar").style.width=(currentQuestion/10*100)+"%";
+document.getElementById("progressText").innerHTML="🌍 Đã vượt qua "+currentQuestion+"/10 thử thách khoa học";
+}
+
+function loseGame(){
+gameRunning=false;
+waiting=false;
+clearInterval(rocketTimer);
+clearTimeout(obstacleTimer);
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+document.getElementById("resultTitle").innerHTML="💥 TÀU VŨ TRỤ GẶP SỰ CỐ!";
+document.getElementById("resultText").innerHTML="❌ Bạn đã trả lời sai!<br><br>🌍 Bạn đã vượt qua "+currentQuestion+"/10 thử thách.<br><br>📚 Hãy ôn lại kiến thức KHTN 8 và thử lại!";
+}
+
+function winGame(){
+gameRunning=false;
+waiting=false;
+clearInterval(rocketTimer);
+clearTimeout(obstacleTimer);
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("progressBar").style.width="100%";
+document.getElementById("progressText").innerHTML="🏆 HOÀN THÀNH 10/10!";
+document.getElementById("status").innerHTML="🔬 Bạn đã chinh phục thành công thế giới KHTN 8!";
+document.getElementById("result").style.display="block";
+document.getElementById("resultTitle").innerHTML="🏆 NHÀ KHOA HỌC TÀI BA!";
+document.getElementById("resultText").innerHTML="🎉 XUẤT SẮC!<br><br>🚀 Bạn đã vượt qua cả 10 thử thách!<br><br>🔬 Bạn đã hoàn thành màn chơi Trắc nghiệm KHTN 8!";
+}
+</script>
+</body>
+</html>

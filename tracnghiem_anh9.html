@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Tiếng Anh 9 - Tàu Không Gian</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 20% 20%,#26356f 0%,transparent 25%),radial-gradient(circle at 80% 70%,#391b68 0%,transparent 30%),linear-gradient(135deg,#050816,#111b42,#240b3b);color:white}
+.star{position:fixed;width:3px;height:3px;background:white;border-radius:50%;animation:twinkle 2s infinite alternate}
+.star:nth-child(1){top:8%;left:5%}.star:nth-child(2){top:20%;left:18%}.star:nth-child(3){top:12%;left:35%}.star:nth-child(4){top:30%;left:55%}.star:nth-child(5){top:10%;left:80%}.star:nth-child(6){top:45%;left:8%}.star:nth-child(7){top:65%;left:25%}.star:nth-child(8){top:75%;left:70%}.star:nth-child(9){top:55%;left:90%}.star:nth-child(10){top:85%;left:45%}.star:nth-child(11){top:35%;left:75%}.star:nth-child(12){top:90%;left:10%}
+@keyframes twinkle{from{opacity:.2;transform:scale(.5)}to{opacity:1;transform:scale(1.5)}}
+.back{position:fixed;top:18px;left:18px;z-index:500;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:bold;color:white;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);transition:.3s}
+.back:hover{background:#7c3aed;transform:translateY(-3px)}
+h1{text-align:center;margin:70px 10px 8px;font-size:40px;text-shadow:0 0 10px #38bdf8,0 0 25px #6366f1,0 5px 15px rgba(0,0,0,.5)}
+.info{text-align:center;font-size:20px;font-weight:bold;margin-bottom:25px;color:#c4b5fd}
+.game{width:94%;max-width:1150px;margin:auto;padding:22px;border-radius:28px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(12px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.space{position:relative;height:360px;overflow:hidden;border-radius:22px;background:radial-gradient(circle at 20% 30%,#ffffff 0 1px,transparent 2px),radial-gradient(circle at 70% 20%,#ffffff 0 1px,transparent 2px),radial-gradient(circle at 85% 70%,#ffffff 0 1px,transparent 2px),linear-gradient(135deg,#030712,#0f172a,#1e1b4b);background-size:auto,auto,auto,cover;border:4px solid #6366f1;box-shadow:inset 0 0 60px rgba(99,102,241,.35),0 10px 35px rgba(0,0,0,.5)}
+.planet{position:absolute;width:115px;height:115px;right:55px;bottom:30px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#93c5fd,#2563eb 45%,#172554 80%);box-shadow:0 0 20px #60a5fa,0 0 50px rgba(37,99,235,.7)}
+.planet-ring{position:absolute;width:180px;height:45px;right:22px;bottom:65px;border:5px solid rgba(196,181,253,.7);border-radius:50%;transform:rotate(-15deg)}
+.spaceship{position:absolute;left:55px;top:125px;width:180px;height:110px;z-index:20;transition:left .15s linear;animation:shipFloat 1.2s infinite alternate;filter:drop-shadow(0 0 12px #38bdf8)}
+@keyframes shipFloat{from{transform:translateY(-4px) rotate(-1deg)}to{transform:translateY(5px) rotate(1deg)}}
+.ship-body{position:absolute;left:30px;top:30px;width:115px;height:48px;background:linear-gradient(180deg,#f8fafc,#94a3b8);border:3px solid #64748b;border-radius:50% 55% 45% 50%}
+.ship-nose{position:absolute;left:135px;top:34px;width:35px;height:40px;background:#e2e8f0;border-radius:0 50% 50% 0}
+.ship-wing1{position:absolute;left:55px;top:62px;width:70px;height:35px;background:#475569;clip-path:polygon(0 0,100% 100%,25% 75%)}
+.ship-wing2{position:absolute;left:55px;top:12px;width:70px;height:35px;background:#475569;clip-path:polygon(0 100%,100% 0,25% 25%)}
+.ship-window,.ship-window2{position:absolute;top:38px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#e0f2fe,#0ea5e9);border:3px solid #334155;z-index:3;box-shadow:0 0 12px #38bdf8}
+.ship-window{left:75px}.ship-window2{left:105px}
+.fire{position:absolute;left:0;top:42px;width:40px;height:22px;background:linear-gradient(90deg,#f97316,#facc15,transparent);clip-path:polygon(100% 0,0 50%,100% 100%);animation:fire .2s infinite alternate}
+@keyframes fire{from{transform:scaleX(.8)}to{transform:scaleX(1.2)}}
+.asteroid{display:none;position:absolute;right:80px;top:125px;width:130px;height:130px;z-index:15;animation:asteroidMove .7s infinite alternate}
+.asteroid.show{display:block}
+@keyframes asteroidMove{from{transform:rotate(0deg) translateY(-5px)}to{transform:rotate(8deg) translateY(5px)}}
+.rock{position:absolute;width:100px;height:100px;background:radial-gradient(circle at 30% 25%,#94a3b8,#475569 35%,#1e293b 80%);border:5px solid #0f172a;clip-path:polygon(30% 0,70% 8%,100% 35%,85% 75%,60% 100%,20% 90%,0 55%,8% 20%);box-shadow:0 0 20px rgba(148,163,184,.4),inset 10px 10px 20px rgba(255,255,255,.1)}
+.crater{position:absolute;border-radius:50%;background:#1e293b;box-shadow:inset 3px 3px 6px rgba(0,0,0,.6)}
+.crater1{width:25px;height:18px;left:25px;top:30px}.crater2{width:18px;height:14px;left:60px;top:55px}.crater3{width:20px;height:15px;left:40px;top:75px}
+.start-area{text-align:center;margin:25px 0}
+.start{border:none;padding:16px 42px;border-radius:50px;font-size:22px;font-weight:bold;color:white;cursor:pointer;background:linear-gradient(135deg,#2563eb,#7c3aed);box-shadow:0 8px 0 #312e81,0 15px 30px rgba(0,0,0,.4);transition:.2s}
+.start:hover{transform:translateY(-3px);box-shadow:0 11px 0 #312e81,0 18px 35px rgba(0,0,0,.5)}
+.start:active{transform:translateY(5px);box-shadow:0 3px 0 #312e81}
+.progress-text{text-align:center;font-size:21px;font-weight:bold;margin-bottom:10px;color:#e0e7ff}
+.progress{width:100%;height:25px;padding:3px;border-radius:30px;background:rgba(255,255,255,.15);overflow:hidden}
+.progress-bar{height:100%;width:0;border-radius:30px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);box-shadow:0 0 15px #818cf8;transition:.5s}
+.status{text-align:center;font-size:20px;font-weight:bold;margin-top:15px;min-height:28px;color:#c4b5fd}
+.overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(2,6,23,.8);backdrop-filter:blur(6px)}
+.overlay.show{display:block}
+.question-box{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);width:92%;max-width:730px;padding:30px;border-radius:28px;background:linear-gradient(135deg,#ffffff,#eef2ff);box-shadow:0 30px 90px rgba(0,0,0,.7);color:#0f172a}
+.question-box.show{display:block;animation:popup .3s forwards}
+@keyframes popup{to{transform:translate(-50%,-50%) scale(1)}}
+.question-box h2{text-align:center;margin-top:0;font-size:27px;color:#4f46e5}
+.question{font-size:21px;font-weight:bold;line-height:1.5;margin:20px 0}
+.answer{display:block;width:100%;padding:15px 18px;margin:11px 0;border:2px solid #e2e8f0;border-radius:14px;background:#f8fafc;font-size:18px;text-align:left;cursor:pointer;transition:.2s;color:#1e293b}
+.answer:hover{transform:translateX(5px);border-color:#6366f1;background:#eef2ff}
+.answer.selected{background:#dbeafe;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.check{display:block;margin:22px auto 0;padding:14px 36px;border:none;border-radius:50px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;font-size:19px;font-weight:bold;cursor:pointer;box-shadow:0 8px 20px rgba(79,70,229,.35)}
+.result{display:none;position:fixed;z-index:300;left:50%;top:50%;transform:translate(-50%,-50%);width:90%;max-width:580px;padding:45px 30px;border-radius:30px;background:white;text-align:center;box-shadow:0 30px 90px rgba(0,0,0,.7);animation:resultShow .4s}
+@keyframes resultShow{from{transform:translate(-50%,-50%) scale(.5);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.result h2{font-size:38px;color:#4f46e5;margin:0 0 20px}
+.result.lose h2{color:#ef4444}
+.result p{font-size:21px;line-height:1.6;color:#334155}
+.again{padding:15px 35px;border:none;border-radius:50px;background:linear-gradient(135deg,#f97316,#ef4444);color:white;font-size:19px;font-weight:bold;cursor:pointer}
+.correct-effect{position:fixed;z-index:1000;left:50%;top:50%;transform:translate(-50%,-50%);font-size:55px;font-weight:bold;color:#38bdf8;text-shadow:0 0 20px #818cf8;pointer-events:none;animation:correctEffect .8s forwards}
+@keyframes correctEffect{0%{transform:translate(-50%,-50%) scale(.4);opacity:0}40%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-100%) scale(1);opacity:0}}
+@media(max-width:700px){h1{font-size:28px;margin-top:75px}.info{font-size:16px}.game{width:96%;padding:12px}.space{height:260px}.spaceship{top:90px;transform:scale(.75);transform-origin:left center}.asteroid{right:10px;top:80px;transform:scale(.7)}.planet{width:75px;height:75px;right:20px;bottom:15px}.planet-ring{width:115px;height:30px;right:0;bottom:35px}.question-box{padding:20px}.question-box h2{font-size:21px}.question{font-size:18px}.answer{font-size:16px;padding:12px}.result h2{font-size:30px}.result p{font-size:18px}.back{padding:9px 14px;font-size:14px}}
+</style>
+</head>
+<body>
+
+<div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+<div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+<div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+
+<a href="khoi9tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🚀 TRẮC NGHIỆM TIẾNG ANH 9</h1>
+<div class="info">🌌 TRÒ CHƠI TÀU KHÔNG GIAN - CHINH PHỤC VŨ TRỤ</div>
+
+<div class="game">
+<div class="space">
+<div class="planet"></div>
+<div class="planet-ring"></div>
+<div class="spaceship" id="spaceship">
+<div class="fire"></div>
+<div class="ship-wing1"></div>
+<div class="ship-wing2"></div>
+<div class="ship-body"></div>
+<div class="ship-nose"></div>
+<div class="ship-window"></div>
+<div class="ship-window2"></div>
+</div>
+<div class="asteroid" id="asteroid">
+<div class="rock">
+<div class="crater crater1"></div>
+<div class="crater crater2"></div>
+<div class="crater crater3"></div>
+</div>
+</div>
+</div>
+
+<div class="start-area">
+<button class="start" id="startButton" onclick="startGame()">🚀 BẮT ĐẦU PHI HÀNH</button>
+</div>
+
+<div class="progress-text" id="progressText">🌌 Chưa bắt đầu</div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="status" id="status">Hãy bấm BẮT ĐẦU để khám phá vũ trụ!</div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+<h2>☄️ THIÊN THẠCH CẢN ĐƯỜNG!</h2>
+<div class="question" id="question"></div>
+<div id="answers"></div>
+<button class="check" onclick="checkAnswer()">🚀 TRẢ LỜI</button>
+</div>
+
+<div class="result" id="result">
+<h2 id="resultTitle"></h2>
+<p id="resultText"></p>
+<button class="again" onclick="startGame()">🔄 PHI HÀNH LẠI</button>
+</div>
+
+<script>
+const questionBank=[
+["If I ___ enough money, I would travel around the world.",["have","had","will have","am having"],1],
+["If she studies hard, she ___ the examination.",["passes","passed","will pass","would pass"],2],
+["If I were you, I ___ more carefully.",["drive","will drive","would drive","driving"],2],
+["Unless you hurry, you ___ the bus.",["miss","will miss","missed","would miss"],1],
+["I wish I ___ speak English fluently.",["can","could","will","am"],1],
+["She wishes she ___ a bigger house.",["has","have","had","will have"],2],
+["He has lived in this city ___ 2018.",["for","since","during","from"],1],
+["We have studied English ___ six years.",["since","for","at","in"],1],
+["I have never ___ to Singapore.",["be","been","being","was"],1],
+["Have you finished your homework ___?",["already","yet","just","ever"],1],
+["The report ___ by the students yesterday.",["writes","wrote","was written","is writing"],2],
+["English ___ in many countries around the world.",["speaks","is spoken","spoke","speaking"],1],
+["The classroom ___ every day.",["cleans","is cleaned","cleaned","clean"],1],
+["This bridge ___ ten years ago.",["built","was built","is built","builds"],1],
+["The new school ___ next year.",["will build","will be built","built","is building"],1],
+["The girl ___ won the first prize is my sister.",["which","who","where","whose"],1],
+["This is the house ___ my grandfather was born.",["who","which","where","when"],2],
+["The book ___ I borrowed is very interesting.",["who","where","which","whose"],2],
+["The man ___ car was stolen called the police.",["who","whose","which","where"],1],
+["Do you know the reason ___ she left early?",["where","when","why","who"],2],
+["Although it was raining, we ___ to school.",["go","went","going","goes"],1],
+["He was tired, ___ he continued working.",["because","so","but","although"],2],
+["She stayed at home ___ she was ill.",["because","although","but","so"],0],
+["We should save energy ___ protect the environment.",["so that","in order to","because","although"],1],
+["You should turn off the lights ___ leaving the room.",["before","after","because","although"],1],
+["The air is becoming ___ polluted.",["more and more","most and most","much and much","many and many"],0],
+["The more you practise, ___ you become.",["good","better","the better","best"],2],
+["This is the ___ interesting book I have read.",["more","most","much","many"],1],
+["My city is much ___ than it was ten years ago.",["modern","more modern","most modern","the modern"],1],
+["The weather is getting ___ and colder.",["cold","colder","coldest","more cold"],1],
+["He speaks English very ___.",["good","well","better","best"],1],
+["She is a ___ student.",["carefully","careful","care","more carefully"],1],
+["The film was so ___ that we watched it twice.",["interest","interested","interesting","interestingly"],2],
+["I was ___ by the news.",["surprising","surprised","surprise","surprisingly"],1],
+["We are looking forward to ___ you again.",["see","seeing","saw","seen"],1],
+["My father suggested ___ a new computer.",["buy","buying","to buy","bought"],1],
+["She is interested in ___ traditional food.",["cook","cooked","cooking","to cook"],2],
+["Would you mind ___ the door?",["open","opening","to open","opened"],1],
+["He used to ___ to school by bicycle.",["go","going","went","goes"],0],
+["I am used to ___ up early.",["get","getting","got","gets"],1],
+["You should avoid ___ too much fast food.",["eat","eating","to eat","ate"],1],
+["My teacher advised me ___ harder.",["study","studying","to study","studied"],2],
+["She asked me where I ___.",["live","lived","living","am living"],1],
+["He said that he ___ busy.",["is","was","are","be"],1],
+["The teacher told us ___ quiet.",["be","being","to be","been"],2],
+["My mother asked me ___ the dishes.",["wash","washing","to wash","washed"],2],
+["Could you tell me where the post office ___?",["is","are","was","be"],0],
+["I don't know ___ he is absent today.",["what","why","who","which"],1],
+["It is important ___ English every day.",["practise","practising","to practise","practised"],2],
+["She is old enough ___ on her own.",["travel","travelling","to travel","travelled"],2],
+["The Internet allows us ___ information quickly.",["find","finding","to find","found"],2],
+["Teenagers should use social media ___.",["responsible","responsibly","responsibility","respond"],1],
+["We should not share personal information ___ strangers.",["with","to","at","from"],0],
+["Online learning gives students more ___.",["flexible","flexibility","flexibly","flex"],1],
+["Artificial intelligence is changing the way we ___.",["live","lives","living","lived"],0],
+["Technology has made communication much ___.",["easy","easily","easier","easiest"],2],
+["A healthy lifestyle includes regular exercise and a balanced ___.",["diet","food","meal","dish"],0],
+["You should get enough sleep to stay ___.",["health","healthy","healthily","unhealthy"],1],
+["Eating too much sugar can be ___ to your health.",["harm","harmful","harmless","harmfully"],1],
+["Regular exercise helps us keep ___.",["fit","fitness","fitting","fitted"],0],
+["We should eat more fruit and vegetables because they are rich ___ vitamins.",["at","in","on","for"],1],
+["Air pollution has a negative effect ___ human health.",["in","at","on","for"],2],
+["We can reduce waste by ___ reusable bags.",["use","using","used","uses"],1],
+["Renewable energy sources include solar and ___ energy.",["wind","plastic","coal","oil"],0],
+["Solar panels convert sunlight ___ electricity.",["into","at","for","with"],0],
+["Deforestation can lead to soil ___.",["erosion","pollution","protection","solution"],0],
+["Planting trees helps protect the ___.",["environment","environmental","environmentally","environmentalist"],0],
+["Natural disasters can cause serious ___.",["damage","damaged","damaging","damages"],0],
+["People should prepare emergency supplies ___ a disaster.",["before","because","although","unless"],0],
+["The earthquake caused a lot of ___.",["destroy","destruction","destructive","destroying"],1],
+["When a storm comes, people should stay ___.",["indoors","outdoors","outside","away"],0],
+["We should listen to weather ___ to prepare for storms.",["forecast","forecasts","forecasting","forecasted"],0],
+["Many people move to cities in search of better job ___.",["opportunities","opportunity","opportune","opportunely"],0],
+["Urbanisation can create problems such as traffic ___.",["congest","congestion","congested","congesting"],1],
+["The population of big cities is increasing ___.",["rapid","rapidly","rapidity","more rapid"],1],
+["Living in the countryside is often more ___ than living in a city.",["peace","peaceful","peacefully","peaceless"],1],
+["A good public transport system can reduce traffic ___.",["congest","congestion","congested","congesting"],1],
+["The local people are very friendly and ___.",["hospitality","hospitable","hospitably","hospital"],1],
+["The village is famous ___ its traditional crafts.",["for","with","at","on"],0],
+["We should preserve our cultural ___.",["heritage","heritages","hereditary","inherit"],0],
+["Many tourists are attracted ___ the beautiful scenery.",["by","with","at","for"],0],
+["Traditional festivals help people maintain their ___.",["identity","identical","identify","identification"],0],
+["The festival is held ___ the beginning of spring.",["in","at","on","for"],1],
+["The Mid-Autumn Festival is celebrated ___ the eighth lunar month.",["at","on","in","to"],2],
+["Children enjoy ___ lanterns during the festival.",["make","making","made","to making"],1],
+["The festival attracts thousands of ___.",["visitor","visitors","visiting","visited"],1],
+["A person who visits a place for pleasure is a ___.",["tour","tourist","tourism","touring"],1],
+["The opposite of 'ancient' is ___.",["modern","old","historic","traditional"],0],
+["The opposite of 'generous' is ___.",["kind","selfish","helpful","friendly"],1],
+["The opposite of 'expand' is ___.",["increase","reduce","develop","grow"],1],
+["The opposite of 'convenient' is ___.",["useful","comfortable","inconvenient","suitable"],2],
+["The word 'preserve' is closest in meaning to ___.",["protect","destroy","forget","waste"],0],
+["The word 'pollution' is related to the ___.",["environment","education","entertainment","technology"],0],
+["If people recycle more, they ___ less rubbish.",["produce","produced","will produce","would produce"],2],
+["If I had a computer, I ___ online lessons.",["attend","will attend","would attend","attended"],2],
+["Unless we protect forests, many animals ___ their homes.",["lose","will lose","lost","would lose"],1],
+["I wish I ___ more time to learn new skills.",["have","had","will have","am having"],1],
+["She wishes she ___ live closer to her school.",["can","could","will","must"],1],
+["The students ___ English when the teacher came in.",["study","studied","were studying","are studying"],2],
+["While I ___ home, I met an old friend.",["walk","walked","was walking","am walking"],2],
+["At 9 p.m. yesterday, my family ___ television.",["watched","was watching","were watching","watch"],2],
+["I was cooking dinner when the phone ___.",["rings","rang","ringing","was ring"],1],
+["The more carefully you listen, ___ you understand.",["the more","more","most","the most"],0],
+["She is one of ___ students in my class.",["good","better","the best","best"],2],
+["Neither my brother nor I ___ interested in football.",["am","is","are","be"],0],
+["Both Lan and Hoa ___ good at English.",["is","am","are","be"],2],
+["There is too ___ traffic in the city centre.",["many","much","few","several"],1],
+["There are too ___ motorbikes on the road.",["much","many","little","any"],1],
+["We haven't got ___ time left.",["many","much","a few","several"],1],
+["Would you like ___ orange juice?",["some","any","many","few"],0],
+["There are ___ students in the library today.",["a little","a few","much","any"],1],
+["I prefer travelling by train ___ travelling by bus.",["than","to","from","with"],1],
+["She is responsible ___ organising the school event.",["for","to","with","at"],0],
+["We should take part ___ community activities.",["in","on","at","for"],0],
+["My sister is keen ___ learning foreign languages.",["in","on","at","for"],1],
+["He spends a lot of time ___ video games.",["play","playing","to play","played"],1],
+["The teacher encouraged us ___ questions.",["ask","asking","to ask","asked"],2],
+["The book ___ by my teacher is very useful.",["recommend","recommended","recommending","recommends"],1],
+["This is the village ___ my grandparents live.",["who","which","where","whose"],2],
+["The woman ___ daughter won the prize is my neighbour.",["who","whose","which","where"],1],
+["A person ___ helps others is kind.",["who","which","where","when"],0],
+["The museum, ___ was built in 1900, is very famous.",["who","where","which","whose"],2],
+["We should learn about other cultures ___ understand them better.",["so that","in order to","because","although"],1],
+["The film was so ___ that everyone enjoyed it.",["bore","boring","bored","boredom"],1],
+["I was very ___ when I received the good news.",["exciting","excited","excite","excitedly"],1],
+["This exercise is ___ than the previous one.",["difficult","more difficult","most difficult","the difficult"],1],
+["The city has become ___ crowded over the years.",["increasing","increasingly","increase","increased"],1],
+["Learning a foreign language requires time and ___.",["patient","patience","patiently","patients"],1],
+["We need to improve our communication ___.",["skill","skills","skilled","skilful"],1],
+["The Internet is a useful source of ___.",["inform","information","informative","informed"],1],
+["It is necessary to protect endangered ___.",["species","special","specific","specially"],0],
+["The government is trying to find a solution ___ air pollution.",["to","for","with","at"],0],
+["Many students find it difficult to ___ a balance between study and leisure.",["make","do","keep","take"],0]
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let shipPosition=55;
+let shipTimer=null;
+let asteroidTimer=null;
+
+function startGame(){
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+shipPosition=55;
+document.getElementById("spaceship").style.left=shipPosition+"px";
+document.getElementById("asteroid").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+document.getElementById("startButton").innerHTML="🔄 PHI HÀNH LẠI";
+document.getElementById("status").innerHTML="🚀 Tàu không gian đang bay qua vũ trụ...";
+let shuffled=[...questionBank];
+shuffled.sort(()=>Math.random()-.5);
+gameQuestions=shuffled.slice(0,10);
+updateProgress();
+clearInterval(shipTimer);
+clearTimeout(asteroidTimer);
+shipTimer=setInterval(moveShip,100);
+asteroidTimer=setTimeout(showAsteroid,5000);
+}
+
+function moveShip(){
+if(!gameRunning||waiting)return;
+shipPosition+=2;
+let width=document.querySelector(".space").clientWidth;
+if(shipPosition>width-220)shipPosition=55;
+document.getElementById("spaceship").style.left=shipPosition+"px";
+}
+
+function showAsteroid(){
+if(!gameRunning)return;
+waiting=true;
+document.getElementById("asteroid").classList.add("show");
+document.getElementById("status").innerHTML="☄️ THIÊN THẠCH PHÍA TRƯỚC! Hãy trả lời câu hỏi!";
+clearInterval(shipTimer);
+showQuestion();
+}
+
+function showQuestion(){
+let q=gameQuestions[currentQuestion];
+selectedAnswer=null;
+document.getElementById("question").innerHTML="Câu "+(currentQuestion+1)+": "+q[0];
+let html="";
+q[1].forEach((answer,index)=>{
+html+=`<button class="answer" onclick="selectAnswer(${index})">${String.fromCharCode(65+index)}. ${answer}</button>`;
+});
+document.getElementById("answers").innerHTML=html;
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+}
+
+function selectAnswer(index){
+selectedAnswer=index;
+document.querySelectorAll(".answer").forEach(button=>button.classList.remove("selected"));
+document.querySelectorAll(".answer")[index].classList.add("selected");
+}
+
+function correctEffect(){
+const effect=document.createElement("div");
+effect.className="correct-effect";
+effect.innerHTML="🚀 CHÍNH XÁC!";
+document.body.appendChild(effect);
+setTimeout(()=>effect.remove(),800);
+}
+
+function checkAnswer(){
+if(selectedAnswer===null){
+alert("⚠️ Hãy chọn một đáp án!");
+return;
+}
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+loseGame();
+return;
+}
+correctEffect();
+currentQuestion++;
+document.getElementById("asteroid").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+updateProgress();
+if(currentQuestion>=10){
+winGame();
+return;
+}
+waiting=false;
+document.getElementById("status").innerHTML="✅ Chính xác! Tàu tiếp tục xuyên qua vũ trụ...";
+shipTimer=setInterval(moveShip,100);
+asteroidTimer=setTimeout(showAsteroid,5000);
+}
+
+function updateProgress(){
+document.getElementById("progressBar").style.width=(currentQuestion/10*100)+"%";
+document.getElementById("progressText").innerHTML="🌌 Đã vượt qua "+currentQuestion+"/10 thiên thạch";
+}
+
+function loseGame(){
+gameRunning=false;
+waiting=false;
+clearInterval(shipTimer);
+clearTimeout(asteroidTimer);
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("asteroid").classList.remove("show");
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+document.getElementById("resultTitle").innerHTML="💥 TÀU VŨ TRỤ GẶP NẠN!";
+document.getElementById("resultText").innerHTML="❌ Bạn đã trả lời sai!<br><br>☄️ Bạn đã vượt qua "+currentQuestion+"/10 thiên thạch.<br><br>🚀 Hãy ôn lại kiến thức Tiếng Anh 9 và thử phi hành lần nữa!";
+}
+
+function winGame(){
+gameRunning=false;
+waiting=false;
+clearInterval(shipTimer);
+clearTimeout(asteroidTimer);
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("asteroid").classList.remove("show");
+document.getElementById("progressBar").style.width="100%";
+document.getElementById("progressText").innerHTML="🏆 HOÀN THÀNH 10/10!";
+document.getElementById("status").innerHTML="🌌 Bạn đã chinh phục thành công vũ trụ Tiếng Anh 9!";
+document.getElementById("result").style.display="block";
+document.getElementById("resultTitle").innerHTML="🏆 CHINH PHỤC VŨ TRỤ!";
+document.getElementById("resultText").innerHTML="🎉 XUẤT SẮC!<br><br>🚀 Bạn đã vượt qua cả 10 thiên thạch!<br><br>🇬🇧 Bạn đã hoàn thành màn chơi Trắc nghiệm Tiếng Anh 9!";
+}
+</script>
+</body>
+</html>

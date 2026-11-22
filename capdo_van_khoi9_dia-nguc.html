@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngữ văn 9 - Địa ngục</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #141e30, #4b134f, #c31432);
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.top {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 18px;
+    background: rgba(0,0,0,0.45);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 25px 10px;
+    color: #ffd700;
+    text-shadow: 0 0 12px red;
+}
+
+#game {
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 25px;
+    background: rgba(0,0,0,0.45);
+    border-radius: 20px;
+    width: 92%;
+}
+
+#question {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.answer {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: #222;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover:not(:disabled) {
+    background: #ffd700;
+    transform: scale(1.02);
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+#timer {
+    color: #ffd700;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#result {
+    display: none;
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 30px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 20px;
+    width: 92%;
+}
+
+.result-button {
+    padding: 13px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #ffd700;
+    color: #222;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.result-button:hover {
+    background: orange;
+}
+
+.back {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    padding: 10px 15px;
+    background: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#progress {
+    margin-top: 15px;
+    color: #ddd;
+}
+</style>
+</head>
+
+<body>
+
+<a href="khoi9.html" class="back">⬅ Quay lại</a>
+
+<div class="top">
+    <div>👤 Bạn: <span id="score">0</span> điểm</div>
+    <div>⏱️ Bạn: <span id="playerTimer">15</span>s</div>
+    <div>🤖 Bot: <span id="botScore">0</span> điểm</div>
+    <div>⏱️ Bot: <span id="botTimer">15</span>s</div>
+</div>
+
+<h1>🔥 NGỮ VĂN 9 - CẤP ĐỘ ĐỊA NGỤC 🔥</h1>
+
+<div id="game">
+    <div id="progress">Câu 1 / 10</div>
+    <div id="timer">⏳ Thời gian: 15 giây</div>
+    <div id="question"></div>
+    <div id="answers"></div>
+</div>
+
+<div id="result">
+    <h1 id="resultTitle"></h1>
+    <h2 id="finalScore"></h2>
+    <p id="comment"></p>
+    <button class="result-button" onclick="location.reload()">🔄 Chơi lại</button>
+    <button class="result-button" onclick="location.href='capdo_van_khoi9.html'">🏠 Chọn cấp độ</button>
+    <button class="result-button" onclick="location.href='khoi9.html'">⬅ Trang khối 9</button>
+</div>
+
+<script>
+const questions = [
+{
+q: "Trong đoạn trích Kiều ở lầu Ngưng Bích, nghệ thuật nổi bật nhất được Nguyễn Du sử dụng để miêu tả tâm trạng Thúy Kiều là gì?",
+a: ["Miêu tả hành động", "Tả cảnh ngụ tình", "Đối thoại trực tiếp", "Kể chuyện theo ngôi thứ nhất"],
+c: 1
+},
+{
+q: "Trong Truyện Kiều, giá trị nhân đạo được thể hiện tập trung nhất qua phương diện nào?",
+a: ["Ca ngợi quyền lực của đồng tiền", "Đề cao lễ giáo phong kiến", "Thương cảm cho số phận con người và lên án thế lực chà đạp con người", "Ca ngợi chiến tranh"],
+c: 2
+},
+{
+q: "Nhận xét nào chính xác nhất về nghệ thuật miêu tả nhân vật của Nguyễn Du trong Truyện Kiều?",
+a: ["Chỉ sử dụng ngoại hình", "Kết hợp miêu tả ngoại hình, hành động, ngôn ngữ và nội tâm", "Chỉ dùng lời kể", "Không chú trọng tâm lí nhân vật"],
+c: 1
+},
+{
+q: "Trong bài thơ Đồng chí, hình ảnh 'Đầu súng trăng treo' có ý nghĩa gì?",
+a: ["Chỉ miêu tả cảnh vật ban đêm", "Biểu tượng cho sự kết hợp giữa hiện thực chiến đấu và vẻ đẹp tâm hồn lãng mạn", "Thể hiện sự sợ hãi của người lính", "Miêu tả một cuộc hành quân"],
+c: 1
+},
+{
+q: "Điểm đặc sắc trong kết cấu bài thơ Ánh trăng của Nguyễn Duy là gì?",
+a: ["Kể theo trình tự thời gian từ quá khứ đến hiện tại, kết thúc bằng sự thức tỉnh", "Kể theo trình tự đảo ngược hoàn toàn", "Chỉ miêu tả thiên nhiên", "Không có sự thay đổi cảm xúc"],
+c: 0
+},
+{
+q: "Trong Ánh trăng, hình ảnh vầng trăng ở cuối bài thơ chủ yếu tượng trưng cho điều gì?",
+a: ["Sự giàu sang", "Quá khứ nghĩa tình và lời nhắc nhở về lòng biết ơn", "Sự cô đơn tuyệt đối", "Niềm vui chiến thắng"],
+c: 1
+},
+{
+q: "Trong bài thơ Sang thu, hình ảnh 'Sấm cũng bớt bất ngờ / Trên hàng cây đứng tuổi' còn gợi liên tưởng đến điều gì?",
+a: ["Sự thay đổi của thời tiết בלבד", "Những con người từng trải, vững vàng trước biến động cuộc đời", "Tuổi trẻ sôi nổi", "Sự kết thúc của mùa đông"],
+c: 1
+},
+{
+q: "Nội dung chính của bài thơ Mùa xuân nho nhỏ là gì?",
+a: ["Khát vọng sống có ích, cống hiến cho cuộc đời và đất nước", "Nỗi buồn trước sự chia xa", "Lời phê phán chiến tranh", "Tình cảm gia đình"],
+c: 0
+},
+{
+q: "Trong bài thơ Viếng lăng Bác, hình ảnh 'mặt trời trong lăng' có ý nghĩa biểu tượng gì?",
+a: ["Chỉ ánh sáng tự nhiên", "Khẳng định công lao và sự vĩ đại của Bác Hồ", "Miêu tả thời tiết", "Thể hiện sự chuyển mùa"],
+c: 1
+},
+{
+q: "Truyện ngắn Làng của Kim Lân chủ yếu khám phá điều gì?",
+a: ["Tình yêu đôi lứa", "Tình yêu làng quê gắn bó sâu sắc với tình yêu nước và lòng yêu kháng chiến", "Cuộc sống thành thị", "Sự giàu nghèo trong xã hội"],
+c: 1
+},
+{
+q: "Trong truyện ngắn Làng, tình huống ông Hai nghe tin làng Chợ Dầu theo giặc có tác dụng gì?",
+a: ["Chỉ tạo tiếng cười", "Thử thách và làm bộc lộ sâu sắc tình yêu làng, tình yêu nước của nhân vật", "Giới thiệu cảnh vật", "Không ảnh hưởng đến diễn biến truyện"],
+c: 1
+},
+{
+q: "Trong truyện Lặng lẽ Sa Pa, nhân vật anh thanh niên đại diện cho vẻ đẹp nào?",
+a: ["Lối sống ích kỉ", "Tinh thần trách nhiệm, yêu nghề và âm thầm cống hiến", "Khát vọng nổi tiếng", "Sự thờ ơ với cộng đồng"],
+c: 1
+},
+{
+q: "Trong Chiếc lược ngà, chiếc lược ngà trở thành biểu tượng cho điều gì?",
+a: ["Sự giàu có", "Tình cha con sâu nặng và khát vọng đoàn tụ", "Sự chia rẽ gia đình", "Cuộc sống vật chất"],
+c: 1
+},
+{
+q: "Điểm đặc sắc trong nghệ thuật xây dựng tình huống truyện Chiếc lược ngà là gì?",
+a: ["Tình huống đơn giản, không có mâu thuẫn", "Tình huống éo le, làm nổi bật tình cha con trong hoàn cảnh chiến tranh", "Chỉ tập trung vào thiên nhiên", "Không có yếu tố bất ngờ"],
+c: 1
+},
+{
+q: "Trong văn bản Bàn về đọc sách, Chu Quang Tiềm nhấn mạnh điều gì?",
+a: ["Đọc càng nhiều càng tốt mà không cần chọn lọc", "Đọc sách cần có phương pháp, chọn lọc và suy ngẫm", "Chỉ nên đọc sách giải trí", "Không cần ghi nhớ kiến thức"],
+c: 1
+},
+{
+q: "Luận điểm trong văn bản nghị luận có vai trò gì?",
+a: ["Làm văn bản dài hơn", "Thể hiện tư tưởng, quan điểm chính cần làm sáng tỏ", "Thay thế hoàn toàn dẫn chứng", "Chỉ dùng để mở bài"],
+c: 1
+},
+{
+q: "Khi phân tích một hình ảnh thơ giàu tính biểu tượng, thao tác nào là cần thiết nhất?",
+a: ["Chỉ chép lại câu thơ", "Làm rõ nghĩa tả thực, nghĩa biểu tượng và tác dụng trong mạch cảm xúc", "Không cần đặt trong ngữ cảnh", "Chỉ nhận xét số chữ"],
+c: 1
+},
+{
+q: "Sự khác biệt cơ bản giữa lời dẫn trực tiếp và lời dẫn gián tiếp là gì?",
+a: ["Lời dẫn trực tiếp giữ nguyên lời nói hoặc ý nghĩ được dẫn; lời dẫn gián tiếp thuật lại có điều chỉnh", "Hai loại hoàn toàn giống nhau", "Lời dẫn gián tiếp luôn đặt trong ngoặc kép", "Lời dẫn trực tiếp không cần dấu câu"],
+c: 0
+},
+{
+q: "Trong văn bản tự sự, việc lựa chọn ngôi kể có tác dụng quan trọng nào?",
+a: ["Không ảnh hưởng đến câu chuyện", "Chi phối điểm nhìn, cách kể và mức độ bộc lộ cảm xúc", "Chỉ quyết định độ dài văn bản", "Chỉ dùng để miêu tả cảnh"],
+c: 1
+},
+{
+q: "Một bài nghị luận văn học thuyết phục cần có yếu tố nào?",
+a: ["Chỉ có cảm xúc cá nhân", "Luận điểm rõ ràng, lí lẽ hợp lí, dẫn chứng tiêu biểu và phân tích sâu sắc", "Nhiều câu cảm thán", "Chép lại toàn bộ tác phẩm"],
+c: 1
+}
+];
+
+let score = 0;
+let botScore = 0;
+let index = 0;
+let playerTime = 15;
+let botTime = 15;
+let playerInterval;
+let botInterval;
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+const selectedQuestions = questions
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 10);
+
+function loadQuestion() {
+    if (index >= selectedQuestions.length) {
+        endGame();
+        return;
+    }
+
+    clearInterval(playerInterval);
+    clearInterval(botInterval);
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+    playerTime = 15;
+    botTime = 15;
+
+    document.getElementById("playerTimer").textContent = playerTime;
+    document.getElementById("botTimer").textContent = botTime;
+    document.getElementById("timer").textContent = "⏳ Thời gian: 15 giây";
+    document.getElementById("progress").textContent =
+        "Câu " + (index + 1) + " / 10";
+
+    const q = selectedQuestions[index];
+
+    document.getElementById("question").textContent = q.q;
+
+    const answers = document.getElementById("answers");
+    answers.innerHTML = "";
+
+    q.a.forEach((answer, i) => {
+        const btn = document.createElement("button");
+        btn.className = "answer";
+        btn.textContent = String.fromCharCode(65 + i) + ". " + answer;
+        btn.onclick = () => checkAnswer(i);
+        answers.appendChild(btn);
+    });
+
+    startPlayerTimer();
+    startBotTimer();
+}
+
+function startPlayerTimer() {
+    playerInterval = setInterval(() => {
+        if (daTraLoi) return;
+
+        playerTime--;
+        document.getElementById("playerTimer").textContent = playerTime;
+        document.getElementById("timer").textContent =
+            "⏳ Thời gian: " + playerTime + " giây";
+
+        if (playerTime <= 0) {
+            clearInterval(playerInterval);
+            daTraLoi = true;
+            disableAnswers();
+        }
+    }, 1000);
+}
+
+function startBotTimer() {
+    botInterval = setInterval(() => {
+        botTime--;
+        document.getElementById("botTimer").textContent = botTime;
+
+        if (botTime <= 0) {
+            clearInterval(botInterval);
+            botTraLoi();
+        }
+    }, 1000);
+}
+
+function checkAnswer(choice) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(playerInterval);
+
+    const q = selectedQuestions[index];
+    const buttons = document.querySelectorAll(".answer");
+
+    if (choice === q.c) {
+        score++;
+        document.getElementById("score").textContent = score;
+        buttons[choice].style.background = "#4caf50";
+        buttons[choice].style.color = "white";
+    } else {
+        buttons[choice].style.background = "#f44336";
+        buttons[choice].style.color = "white";
+        buttons[q.c].style.background = "#4caf50";
+        buttons[q.c].style.color = "white";
+    }
+
+    buttons.forEach(btn => btn.disabled = true);
+}
+
+function disableAnswers() {
+    document.querySelectorAll(".answer").forEach(btn => {
+        btn.disabled = true;
+    });
+}
+
+function botTraLoi() {
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    // Cấp độ Địa ngục: Bot có 95% khả năng trả lời đúng
+    if (Math.random() < 0.95) {
+        botScore++;
+        document.getElementById("botScore").textContent = botScore;
+    }
+
+    setTimeout(() => {
+        index++;
+        loadQuestion();
+    }, 1000);
+}
+
+function endGame() {
+    clearInterval(playerInterval);
+    clearInterval(botInterval);
+
+    document.getElementById("game").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    let title = "";
+    let comment = "";
+
+    if (score > botScore) {
+        title = "🏆 BẠN ĐÃ ĐÁNH BẠI BOT!";
+        comment = "Xuất sắc! Bạn đã vượt qua thử thách Địa ngục!";
+    } else if (score < botScore) {
+        title = "🤖 BOT ĐÃ CHIẾN THẮNG!";
+        comment = "Bot quá mạnh! Hãy ôn tập kiến thức và thử lại nhé!";
+    } else {
+        title = "🤝 HAI BÊN HÒA NHAU!";
+        comment = "Một trận đấu cân tài cân sức!";
+    }
+
+    document.getElementById("resultTitle").textContent = title;
+    document.getElementById("finalScore").textContent =
+        "Bạn: " + score + " điểm | Bot: " + botScore + " điểm";
+    document.getElementById("comment").textContent = comment;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHTN KHỐI 9 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover:not(:disabled) {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    color: #2878e8;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_khtn_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ KHTN KHỐI 9 - CHẾ ĐỘ KHÓ
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+    q: "Một vật có khối lượng 2 kg được nâng lên độ cao 5 m. Lấy g = 10 N/kg. Thế năng trọng trường của vật là bao nhiêu?",
+    a: ["10 J", "25 J", "50 J", "100 J"],
+    d: 3
+},
+{
+    q: "Một máy có công suất 500 W hoạt động trong 2 phút. Công máy thực hiện được là bao nhiêu?",
+    a: ["1000 J", "6000 J", "30000 J", "60000 J"],
+    d: 3
+},
+{
+    q: "Một dây dẫn có điện trở 10 Ω được mắc vào nguồn điện 20 V. Nhiệt lượng tỏa ra trong 5 giây là bao nhiêu?",
+    a: ["20 J", "100 J", "200 J", "400 J"],
+    d: 2
+},
+{
+    q: "Hai điện trở 4 Ω và 8 Ω mắc song song. Điện trở tương đương là bao nhiêu?",
+    a: ["12 Ω", "4 Ω", "8 Ω", "8/3 Ω"],
+    d: 3
+},
+{
+    q: "Một bóng đèn có công suất 60 W hoạt động liên tục trong 2 giờ. Điện năng tiêu thụ là bao nhiêu?",
+    a: ["0,12 kWh", "1,2 kWh", "12 kWh", "120 kWh"],
+    d: 0
+},
+{
+    q: "Khi tăng chiều dài dây dẫn lên 2 lần và giữ nguyên vật liệu, tiết diện, điện trở dây dẫn thay đổi thế nào?",
+    a: ["Giảm 2 lần", "Tăng 2 lần", "Tăng 4 lần", "Không đổi"],
+    d: 1
+},
+{
+    q: "Một vật đặt trước thấu kính hội tụ ở vị trí ngoài khoảng tiêu cự. Ảnh có thể thu được trên màn chắn là ảnh gì?",
+    a: ["Ảnh ảo", "Ảnh thật", "Ảnh luôn cùng chiều", "Không tạo ảnh"],
+    d: 1
+},
+{
+    q: "Khi vật đặt trong khoảng tiêu cự của thấu kính hội tụ, ảnh thu được có đặc điểm nào?",
+    a: ["Ảnh thật, ngược chiều", "Ảnh ảo, cùng chiều và lớn hơn vật", "Ảnh thật, cùng chiều", "Ảnh ảo, nhỏ hơn vật"],
+    d: 1
+},
+{
+    q: "Hiện tượng phản xạ toàn phần xảy ra khi ánh sáng truyền theo chiều nào?",
+    a: [
+        "Từ môi trường chiết quang hơn sang môi trường chiết quang kém hơn và góc tới đủ lớn",
+        "Từ không khí vào nước với mọi góc tới",
+        "Từ môi trường kém chiết quang sang môi trường chiết quang hơn",
+        "Chỉ xảy ra trong chân không"
+    ],
+    d: 0
+},
+{
+    q: "Khi mắc các điện trở nối tiếp, điện trở tương đương được tính bằng công thức nào?",
+    a: ["R = R1.R2", "R = R1 + R2 + ...", "1/R = R1 + R2", "R = R1/R2"],
+    d: 1
+},
+{
+    q: "Kim loại nào phản ứng với dung dịch HCl loãng giải phóng khí hydrogen?",
+    a: ["Cu", "Ag", "Zn", "Au"],
+    d: 2
+},
+{
+    q: "Cho kẽm tác dụng với dung dịch hydrochloric acid. Sản phẩm của phản ứng là gì?",
+    a: [
+        "ZnCl2 và H2",
+        "ZnO và H2O",
+        "ZnSO4 và H2",
+        "Zn(OH)2 và HCl"
+    ],
+    d: 0
+},
+{
+    q: "Trong phản ứng hóa học, tổng khối lượng các chất trước và sau phản ứng có quan hệ thế nào?",
+    a: [
+        "Khối lượng sau luôn lớn hơn",
+        "Khối lượng trước luôn lớn hơn",
+        "Tổng khối lượng được bảo toàn",
+        "Khối lượng luôn bằng 0"
+    ],
+    d: 2
+},
+{
+    q: "Chất nào sau đây có thể làm mất màu dung dịch bromine?",
+    a: ["Methane", "Ethylene", "Carbon dioxide", "Water"],
+    d: 1
+},
+{
+    q: "Công thức phân tử của methane là gì?",
+    a: ["C2H4", "C2H2", "CH4", "C6H6"],
+    d: 2
+},
+{
+    q: "Phản ứng giữa acid và carbonate thường tạo ra sản phẩm khí nào?",
+    a: ["Oxygen", "Hydrogen", "Carbon dioxide", "Nitrogen"],
+    d: 2
+},
+{
+    q: "Trong quá trình giảm phân, số lượng nhiễm sắc thể trong tế bào con so với tế bào mẹ ban đầu thường như thế nào?",
+    a: [
+        "Giữ nguyên",
+        "Giảm đi một nửa",
+        "Tăng gấp đôi",
+        "Tăng gấp bốn"
+    ],
+    d: 1
+},
+{
+    q: "Một cơ thể có kiểu gene Aa tạo ra những loại giao tử nào khi giảm phân bình thường?",
+    a: ["AA và aa", "Chỉ Aa", "A và a", "AA, Aa và aa"],
+    d: 2
+},
+{
+    q: "Theo quy luật phân li của Mendel, khi lai hai cơ thể dị hợp tử Aa × Aa, tỉ lệ kiểu gene ở đời con là gì?",
+    a: ["1AA : 1Aa", "3AA : 1aa", "1AA : 2Aa : 1aa", "1Aa : 1aa"],
+    d: 2
+},
+{
+    q: "Trong chuỗi thức ăn, sinh vật sản xuất thường là nhóm sinh vật nào?",
+    a: ["Động vật ăn thịt", "Thực vật xanh", "Động vật phân giải", "Động vật ăn cỏ"],
+    d: 1
+}
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <button class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </button>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+    let buttons = document.querySelectorAll(".answer");
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        buttons[dung].classList.add("correct");
+    }
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        let buttons = document.querySelectorAll(".answer");
+        buttons[danhSach[cau].d].classList.add("correct");
+
+        buttons.forEach(btn => btn.disabled = true);
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    // Cấp độ khó: Bot có 75% xác suất trả lời đúng
+    let dung = Math.random() < 0.75;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 75% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_khtn_khoi9_kho.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_khtn_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiếng Anh 9 - Dễ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 10px 18px;
+    background: white;
+    color: #2878e8;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 3px 8px #0002;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.answer.disabled {
+    pointer-events: none;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    font-size: 36px;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result h2 {
+    margin: 12px;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #155bb5;
+}
+
+@media(max-width:600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 14px;
+        gap: 5px;
+    }
+
+    .time {
+        padding: 9px 4px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+
+    .answer {
+        font-size: 16px;
+    }
+
+    .result {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<a class="back" href="capdo_anh_khoi9.html">
+    ⬅ Quay về
+</a>
+
+<div class="top">
+
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ Bạn: <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ TIẾNG ANH KHỐI 9 - DỄ
+    </div>
+
+    <div id="game" class="card">
+
+        <div class="question" id="question"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="status" id="status">
+            🤖 Bot đang suy nghĩ...
+        </div>
+
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/20
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+
+{
+    q: "Choose the correct form: My father _____ to work every day.",
+    a: ["go", "goes", "going", "gone"],
+    d: 1
+},
+
+{
+    q: "What is the past form of 'buy'?",
+    a: ["Buyed", "Bought", "Buying", "Buys"],
+    d: 1
+},
+
+{
+    q: "Choose the correct word: She is good _____ English.",
+    a: ["at", "on", "in", "for"],
+    d: 0
+},
+
+{
+    q: "What is the opposite of 'modern'?",
+    a: ["New", "Old-fashioned", "Popular", "Beautiful"],
+    d: 1
+},
+
+{
+    q: "Choose the correct answer: They _____ in this city since 2020.",
+    a: ["live", "lived", "have lived", "are living"],
+    d: 2
+},
+
+{
+    q: "What does 'environment' mean?",
+    a: ["Môi trường", "Giáo dục", "Kinh tế", "Văn hóa"],
+    d: 0
+},
+
+{
+    q: "Choose the correct form: If I _____ rich, I would travel around the world.",
+    a: ["am", "was", "were", "be"],
+    d: 2
+},
+
+{
+    q: "Which word means 'ô nhiễm'?",
+    a: ["Population", "Pollution", "Solution", "Tradition"],
+    d: 1
+},
+
+{
+    q: "Choose the correct answer: English _____ all over the world.",
+    a: ["speaks", "is spoken", "spoke", "speaking"],
+    d: 1
+},
+
+{
+    q: "What is the comparative form of 'good'?",
+    a: ["Gooder", "More good", "Best", "Better"],
+    d: 3
+},
+
+{
+    q: "Choose the correct answer: I wish I _____ a new computer.",
+    a: ["have", "had", "has", "having"],
+    d: 1
+},
+
+{
+    q: "What does 'traditional' mean?",
+    a: ["Hiện đại", "Truyền thống", "Khác biệt", "Nổi tiếng"],
+    d: 1
+},
+
+{
+    q: "Choose the correct form: She enjoys _____ to music.",
+    a: ["listen", "listens", "listening", "to listening"],
+    d: 2
+},
+
+{
+    q: "Choose the correct answer: He asked me where I _____.",
+    a: ["live", "lived", "living", "am live"],
+    d: 1
+},
+
+{
+    q: "What is the plural form of 'city'?",
+    a: ["Citys", "Cities", "Cityes", "City"],
+    d: 1
+},
+
+{
+    q: "Choose the correct answer: We _____ dinner when he arrived.",
+    a: ["have", "had", "were having", "are having"],
+    d: 2
+},
+
+{
+    q: "Which word means 'di sản'?",
+    a: ["Heritage", "Journey", "Traffic", "Village"],
+    d: 0
+},
+
+{
+    q: "Choose the correct answer: The man _____ lives next door is a doctor.",
+    a: ["which", "who", "where", "when"],
+    d: 1
+},
+
+{
+    q: "Choose the correct form: You should _____ more water.",
+    a: ["drink", "drinks", "drinking", "drank"],
+    d: 0
+},
+
+{
+    q: "Which sentence is grammatically correct?",
+    a: [
+        "She have visited Hanoi.",
+        "She has visit Hanoi.",
+        "She has visited Hanoi.",
+        "She visiting Hanoi."
+    ],
+    d: 2
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+
+danhSach = danhSach.slice(0, 20);
+
+let cau = 0;
+
+let diemBan = 0;
+let diemBot = 0;
+
+let thoiGianBan = 15;
+
+let timerBan;
+let timerBot;
+let timerChuyenCau;
+
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+
+    thoiGianBan = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = 15;
+
+    document.getElementById("question").innerText =
+        danhSach[cau].q;
+
+    document.getElementById("status").innerText =
+        "🤖 Bot đang suy nghĩ...";
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+
+        html += `
+            <div class="answer"
+                onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </div>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timerBan);
+    clearTimeout(timerBot);
+    clearTimeout(timerChuyenCau);
+
+    timerBan = setInterval(() => {
+
+        thoiGianBan--;
+
+        document.getElementById("timer").innerText =
+            thoiGianBan;
+
+        if (thoiGianBan <= 0) {
+
+            clearInterval(timerBan);
+
+            hetThoiGian();
+
+        }
+
+    }, 1000);
+
+    timerBot = setTimeout(() => {
+
+        botTraLoi();
+
+    }, 10000);
+
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timerBan);
+
+    let dung = danhSach[cau].d;
+
+    if (chon === dung) {
+
+        diemBan++;
+
+        element.classList.add("correct");
+
+    } else {
+
+        element.classList.add("wrong");
+
+        document.querySelectorAll(".answer")[dung]
+        .classList.add("correct");
+
+    }
+
+    document.getElementById("playerScore").innerText =
+        diemBan;
+
+    document.getElementById("status").innerText =
+        "👤 Bạn đã trả lời! Bot vẫn đang suy nghĩ...";
+
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    document.querySelectorAll(".answer")[dung]
+    .classList.add("correct");
+
+    document.getElementById("status").innerText =
+        "⏰ Bạn hết thời gian! Bot vẫn đang suy nghĩ...";
+
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+
+        diemBot++;
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời đúng!";
+
+    } else {
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời sai!";
+
+    }
+
+    document.getElementById("botScore").innerText =
+        diemBot;
+
+    timerChuyenCau = setTimeout(() => {
+
+        cau++;
+
+        if (cau >= 20) {
+
+            ketThucTran();
+
+        } else {
+
+            hienThiCau();
+
+        }
+
+    }, 1000);
+
+}
+
+function ketThucTran() {
+
+    clearInterval(timerBan);
+    clearTimeout(timerBot);
+    clearTimeout(timerChuyenCau);
+
+    document.getElementById("game").style.display =
+        "none";
+
+    document.querySelector(".info").style.display =
+        "none";
+
+    document.querySelector(".title").style.display =
+        "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có cùng số điểm.</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🎯 Bot có 50% xác suất trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.reload()">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi9.html'">
+            🏠 Về chọn môn
+        </button>
+
+    `;
+
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

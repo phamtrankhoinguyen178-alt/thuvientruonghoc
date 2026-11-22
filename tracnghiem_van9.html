@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Ngữ Văn 9 - Lái máy bay</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(#55c8ff,#d8f5ff);
+    overflow-x:hidden;
+    text-align:center;
+    color:#17456b;
+}
+
+header{
+    padding:20px 10px;
+}
+
+h1{
+    color:#075985;
+    font-size:30px;
+    text-shadow:2px 2px white;
+}
+
+header p{
+    margin-top:8px;
+    font-size:16px;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#075985;
+    color:white;
+    padding:11px 18px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    z-index:20;
+}
+
+.game{
+    width:90%;
+    max-width:900px;
+    margin:20px auto;
+    background:rgba(255,255,255,0.85);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+}
+
+.sky{
+    height:270px;
+    position:relative;
+    overflow:hidden;
+    border-radius:15px;
+    background:linear-gradient(#36b9f5,#c7efff);
+    border:3px solid white;
+}
+
+.sun{
+    position:absolute;
+    top:25px;
+    right:55px;
+    width:65px;
+    height:65px;
+    background:#ffe45c;
+    border-radius:50%;
+    box-shadow:0 0 35px #fff1a6;
+}
+
+.cloud{
+    position:absolute;
+    font-size:55px;
+    animation:cloudMove 15s linear infinite;
+}
+
+.cloud1{
+    top:45px;
+    left:10%;
+}
+
+.cloud2{
+    top:145px;
+    left:65%;
+    animation-delay:-7s;
+}
+
+.cloud3{
+    top:15px;
+    left:85%;
+    animation-delay:-3s;
+}
+
+@keyframes cloudMove{
+    from{transform:translateX(0);}
+    to{transform:translateX(-180px);}
+}
+
+.plane{
+    position:absolute;
+    left:10%;
+    top:105px;
+    font-size:65px;
+    z-index:5;
+    transition:all 0.6s;
+    animation:planeFloat 1.5s ease-in-out infinite;
+}
+
+@keyframes planeFloat{
+    0%,100%{transform:translateY(0) rotate(-3deg);}
+    50%{transform:translateY(-10px) rotate(3deg);}
+}
+
+.obstacle{
+    position:absolute;
+    right:-80px;
+    top:95px;
+    font-size:65px;
+    animation:obstacleMove 5s linear infinite;
+}
+
+@keyframes obstacleMove{
+    from{right:-80px;}
+    to{right:100%;}
+}
+
+.progress-box{
+    margin:18px 0;
+    background:#dbeafe;
+    height:15px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:#16a34a;
+    transition:width 0.4s;
+}
+
+.info{
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:15px 0;
+    font-weight:bold;
+    color:#075985;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    padding:13px 22px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:bold;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.04);
+}
+
+.start{
+    background:#0284c7;
+    color:white;
+    margin:15px;
+}
+
+.question-box{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 3px 12px #b7d9e8;
+}
+
+.question{
+    font-size:19px;
+    font-weight:bold;
+    color:#075985;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+.answers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.answer{
+    background:#e0f2fe;
+    color:#075985;
+    border:2px solid #7dd3fc;
+    min-height:55px;
+}
+
+.answer:hover{
+    background:#bae6fd;
+}
+
+.answer:disabled{
+    cursor:not-allowed;
+    opacity:0.8;
+}
+
+.correct{
+    background:#86efac !important;
+    border-color:#16a34a !important;
+    color:#14532d !important;
+}
+
+.wrong{
+    background:#fecaca !important;
+    border-color:#dc2626 !important;
+    color:#7f1d1d !important;
+}
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding:25px;
+    background:#fff;
+    border-radius:15px;
+}
+
+.result h2{
+    color:#0284c7;
+    margin-bottom:12px;
+}
+
+.restart{
+    background:#16a34a;
+    color:white;
+    margin-top:15px;
+}
+
+@media(max-width:600px){
+    h1{font-size:23px;}
+    .answers{grid-template-columns:1fr;}
+    .game{width:95%;padding:12px;}
+    .back{position:static;display:inline-block;margin-top:10px;}
+}
+</style>
+</head>
+
+<body>
+
+<a href="khoi9tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<header>
+    <h1>📚 TRẮC NGHIỆM NGỮ VĂN 9</h1>
+    <p>✈️ Vượt qua thử thách tri thức - Chinh phục bầu trời văn học!</p>
+</header>
+
+<div class="game">
+
+    <div class="sky">
+        <div class="sun"></div>
+        <div class="cloud cloud1">☁️</div>
+        <div class="cloud cloud2">☁️</div>
+        <div class="cloud cloud3">☁️</div>
+        <div class="plane" id="plane">✈️</div>
+        <div class="obstacle" id="obstacle">☁️</div>
+    </div>
+
+    <div class="info">
+        <div>📖 Câu hỏi: <span id="questionNumber">0/10</span></div>
+        <div>⭐ Điểm: <span id="score">0</span></div>
+    </div>
+
+    <div class="progress-box">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <button class="start" id="startButton" onclick="startGame()">🚀 BẮT ĐẦU CHƠI</button>
+
+    <div class="question-box" id="questionBox">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="result" id="result">
+        <h2 id="resultTitle"></h2>
+        <p id="resultText"></p>
+        <button class="restart" onclick="startGame()">🔄 Chơi lại</button>
+    </div>
+
+</div>
+
+<script>
+const questionBank = [
+
+["Tác giả của tác phẩm Truyện Kiều là ai?",["Nguyễn Du","Nguyễn Trãi","Nguyễn Đình Chiểu","Hồ Xuân Hương"],0],
+["Truyện Kiều còn có tên gọi khác là gì?",["Đoạn trường tân thanh","Chinh phụ ngâm","Cung oán ngâm khúc","Lục Vân Tiên"],0],
+["Truyện Kiều được viết bằng thể thơ nào?",["Lục bát","Song thất lục bát","Thất ngôn bát cú","Tự do"],0],
+["Nhân vật chính trong Truyện Kiều là ai?",["Thúy Kiều","Thúy Vân","Kim Trọng","Từ Hải"],0],
+["Truyện Kiều gồm bao nhiêu câu thơ?",["3254 câu","3000 câu","3500 câu","4000 câu"],0],
+["Tác giả của tác phẩm Lục Vân Tiên là ai?",["Nguyễn Đình Chiểu","Nguyễn Du","Nguyễn Trãi","Phạm Ngũ Lão"],0],
+["Lục Vân Tiên được sáng tác bằng thể thơ nào?",["Lục bát","Thất ngôn","Song thất lục bát","Thơ tự do"],0],
+["Nhân vật Lục Vân Tiên đại diện cho phẩm chất nào?",["Trọng nghĩa khinh tài","Ích kỉ","Tham lam","Hèn nhát"],0],
+["Tác giả của tác phẩm Đồng chí là ai?",["Chính Hữu","Tố Hữu","Phạm Tiến Duật","Huy Cận"],0],
+["Bài thơ Đồng chí viết về tình cảm nào?",["Tình đồng đội","Tình cảm gia đình","Tình yêu quê hương","Tình bạn tuổi học trò"],0],
+["Bài thơ Đoàn thuyền đánh cá là của tác giả nào?",["Huy Cận","Chế Lan Viên","Tố Hữu","Xuân Diệu"],0],
+["Bài thơ Bếp lửa do ai sáng tác?",["Bằng Việt","Chính Hữu","Huy Cận","Nguyễn Khoa Điềm"],0],
+["Hình ảnh bếp lửa trong bài thơ Bếp lửa gợi lên điều gì?",["Tình bà cháu và tình yêu gia đình","Sự giàu có","Cuộc sống thành thị","Niềm vui chiến thắng"],0],
+["Tác giả bài thơ Ánh trăng là ai?",["Nguyễn Duy","Hữu Thỉnh","Tố Hữu","Thanh Hải"],0],
+["Bài thơ Ánh trăng nhắc nhở con người về điều gì?",["Lòng biết ơn và sự thủy chung","Sự giàu sang","Lòng kiêu hãnh","Sự ganh đua"],0],
+["Tác giả bài thơ Sang thu là ai?",["Hữu Thỉnh","Nguyễn Duy","Bằng Việt","Chính Hữu"],0],
+["Bài thơ Sang thu viết về thời điểm nào?",["Khoảnh khắc giao mùa từ hạ sang thu","Mùa đông","Mùa xuân","Mùa hè"],0],
+["Tác giả bài thơ Nói với con là ai?",["Y Phương","Hữu Thỉnh","Nguyễn Duy","Tế Hanh"],0],
+["Bài thơ Nói với con thể hiện tình cảm gì?",["Tình cha con và niềm tự hào về quê hương","Tình yêu đôi lứa","Tình bạn","Tình yêu thiên nhiên"],0],
+["Tác giả bài thơ Mùa xuân nho nhỏ là ai?",["Thanh Hải","Tố Hữu","Huy Cận","Xuân Diệu"],0],
+["Mùa xuân nho nhỏ thể hiện ước nguyện nào?",["Được cống hiến cho cuộc đời","Được sống giàu sang","Được đi du lịch","Được nổi tiếng"],0],
+["Tác giả truyện ngắn Làng là ai?",["Kim Lân","Nam Cao","Ngô Tất Tố","Nguyễn Minh Châu"],0],
+["Nhân vật chính trong truyện ngắn Làng là ai?",["Ông Hai","Ông Sáu","Anh thanh niên","Lão Hạc"],0],
+["Tình cảm nổi bật của ông Hai trong truyện Làng là gì?",["Tình yêu làng gắn với tình yêu nước","Tình yêu tiền bạc","Sự ích kỉ","Lòng ganh ghét"],0],
+["Tác giả truyện Chiếc lược ngà là ai?",["Nguyễn Quang Sáng","Kim Lân","Nguyễn Thành Long","Tô Hoài"],0],
+["Nhân vật ông Sáu trong Chiếc lược ngà là ai?",["Người cha","Người ông","Người anh","Người bạn"],0],
+["Chiếc lược ngà thể hiện tình cảm nào?",["Tình cha con sâu nặng","Tình thầy trò","Tình bạn","Tình yêu quê hương"],0],
+["Tác giả truyện Lặng lẽ Sa Pa là ai?",["Nguyễn Thành Long","Kim Lân","Nguyễn Quang Sáng","Nam Cao"],0],
+["Nhân vật anh thanh niên trong Lặng lẽ Sa Pa làm công việc gì?",["Công tác khí tượng kiêm vật lí địa cầu","Giáo viên","Bác sĩ","Nhà văn"],0],
+["Truyện Bến quê là của tác giả nào?",["Nguyễn Minh Châu","Nguyễn Thành Long","Kim Lân","Nam Cao"],0],
+["Tác phẩm Bến quê gợi suy ngẫm về điều gì?",["Những giá trị bình dị, gần gũi trong cuộc sống","Sự giàu có","Cuộc sống xa hoa","Danh vọng"],0],
+["Thành phần biệt lập tình thái dùng để làm gì?",["Thể hiện cách nhìn của người nói đối với sự việc","Gọi đáp","Bộc lộ cảm xúc","Bổ sung chú thích"],0],
+["Thành phần biệt lập cảm thán dùng để làm gì?",["Bộc lộ tâm lí của người nói","Gọi đáp","Bổ sung ý nghĩa cho danh từ","Liên kết câu"],0],
+["Thành phần biệt lập gọi - đáp có chức năng gì?",["Tạo lập hoặc duy trì quan hệ giao tiếp","Bộc lộ cảm xúc","Thể hiện độ tin cậy","Bổ sung chú thích"],0],
+["Thành phần biệt lập phụ chú có tác dụng gì?",["Bổ sung một số chi tiết cho nội dung câu","Thể hiện cảm xúc","Gọi đáp","Nêu câu hỏi"],0],
+["Phép liên kết nào sử dụng từ ngữ đồng nghĩa, trái nghĩa hoặc cùng trường liên tưởng?",["Phép liên tưởng","Phép nối","Phép lặp","Phép thế"],0],
+["Phép lặp trong liên kết câu là gì?",["Lặp lại từ ngữ đã xuất hiện","Dùng từ nối","Thay thế bằng đại từ","Dùng từ đồng nghĩa"],0],
+["Nghị luận về một vấn đề tư tưởng, đạo lí thường bàn về điều gì?",["Những quan niệm, phẩm chất và cách sống","Một sự kiện lịch sử בלבד","Một câu chuyện tưởng tượng","Một cảnh thiên nhiên"],0],
+["Yếu tố quan trọng trong bài văn nghị luận là gì?",["Luận điểm, lí lẽ và bằng chứng","Chỉ có miêu tả","Chỉ có hội thoại","Chỉ có cảm xúc"],0],
+["Điển cố, điển tích thường được sử dụng nhằm mục đích gì?",["Gợi nhắc những câu chuyện, sự kiện hoặc nhân vật xưa","Tạo tiếng cười đơn thuần","Kể về tương lai","Thay thế dấu câu"],0]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let score=0;
+let playing=false;
+let answered=false;
+
+function shuffle(array){
+    let result=[...array];
+    for(let i=result.length-1;i>0;i--){
+        let j=Math.floor(Math.random()*(i+1));
+        [result[i],result[j]]=[result[j],result[i]];
+    }
+    return result;
+}
+
+function startGame(){
+    gameQuestions=shuffle(questionBank).slice(0,10);
+    currentQuestion=0;
+    score=0;
+    playing=true;
+    answered=false;
+
+    document.getElementById("score").textContent=score;
+    document.getElementById("questionNumber").textContent="0/10";
+    document.getElementById("progress").style.width="0%";
+    document.getElementById("questionBox").style.display="block";
+    document.getElementById("result").style.display="none";
+    document.getElementById("startButton").style.display="none";
+    document.getElementById("plane").style.left="10%";
+
+    showQuestion();
+}
+
+function showQuestion(){
+    if(!playing)return;
+
+    answered=false;
+
+    let q=gameQuestions[currentQuestion];
+
+    document.getElementById("question").textContent=
+        "Câu "+(currentQuestion+1)+": "+q[0];
+
+    document.getElementById("questionNumber").textContent=
+        currentQuestion+"/10";
+
+    let answers=document.getElementById("answers");
+    answers.innerHTML="";
+
+    q[1].forEach((answer,index)=>{
+        let button=document.createElement("button");
+        button.className="answer";
+        button.textContent=String.fromCharCode(65+index)+". "+answer;
+        button.onclick=()=>checkAnswer(index,button);
+        answers.appendChild(button);
+    });
+}
+
+function checkAnswer(index,button){
+    if(!playing || answered)return;
+
+    answered=true;
+
+    let q=gameQuestions[currentQuestion];
+    let buttons=document.querySelectorAll(".answer");
+
+    buttons.forEach((btn,i)=>{
+        btn.disabled=true;
+        if(i===q[2]){
+            btn.classList.add("correct");
+        }
+    });
+
+    if(index===q[2]){
+        score++;
+        document.getElementById("score").textContent=score;
+        document.getElementById("plane").style.left=
+            Math.min(10+(currentQuestion+1)*8,85)+"%";
+
+        button.classList.add("correct");
+        document.getElementById("progress").style.width=
+            ((currentQuestion+1)/10*100)+"%";
+
+        setTimeout(()=>{
+            nextQuestion();
+        },900);
+
+    }else{
+        button.classList.add("wrong");
+
+        setTimeout(()=>{
+            endGame(false);
+        },1000);
+    }
+}
+
+function nextQuestion(){
+    if(!playing)return;
+
+    currentQuestion++;
+
+    if(currentQuestion>=10){
+        endGame(true);
+    }else{
+        showQuestion();
+    }
+}
+
+function endGame(win){
+    playing=false;
+
+    document.getElementById("questionBox").style.display="none";
+    document.getElementById("result").style.display="block";
+    document.getElementById("startButton").style.display="inline-block";
+
+    if(win){
+        document.getElementById("resultTitle").textContent="🎉 CHIẾN THẮNG!";
+        document.getElementById("resultText").textContent=
+            "Chúc mừng! Bạn đã hoàn thành chuyến bay với "+score+"/10 câu đúng.";
+        document.getElementById("plane").style.left="85%";
+    }else{
+        document.getElementById("resultTitle").textContent="✈️ CHUYẾN BAY KẾT THÚC!";
+        document.getElementById("resultText").textContent=
+            "Bạn đã trả lời sai. Số câu đúng: "+score+"/10. Hãy thử lại nhé!";
+    }
+}
+
+</script>
+
+</body>
+</html>

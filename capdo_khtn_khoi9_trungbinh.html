@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHTN KHỐI 9 - Thi đấu với Bot</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 3px 10px #0003;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player {
+    color: #2878e8;
+}
+
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.main {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f5f7ff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover:not(:disabled) {
+    background: #dce8ff;
+    transform: scale(1.02);
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.answer.correct {
+    background: #b8f5c5;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #ffc4c4;
+    border-color: #e74c3c;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+}
+
+.result {
+    display: none;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px #0003;
+}
+
+.result h1 {
+    color: #2878e8;
+}
+
+.win {
+    color: #2ecc71;
+}
+
+.lose {
+    color: #e74c3c;
+}
+
+.draw {
+    color: #f39c12;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2878e8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+@media(max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back" onclick="location.href='capdo_khtn_khoi9.html'">
+    ⬅ Quay về
+</button>
+
+<div class="top">
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
+</div>
+
+<div class="main">
+
+    <div class="title">
+        ⚔️ KHTN KHỐI 9 - CHẾ ĐỘ TRUNG BÌNH
+    </div>
+
+    <div id="game" class="card">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+const cauHoi = [
+{
+    q: "Một vật chịu tác dụng của lực 20 N và dịch chuyển 5 m theo hướng của lực. Công của lực là bao nhiêu?",
+    a: ["4 J", "25 J", "100 J", "200 J"],
+    d: 2
+},
+{
+    q: "Một máy thực hiện công 600 J trong 10 giây. Công suất của máy là bao nhiêu?",
+    a: ["60 W", "6000 W", "610 W", "6 W"],
+    d: 0
+},
+{
+    q: "Một điện trở có giá trị 6 Ω được mắc vào nguồn điện 12 V. Cường độ dòng điện chạy qua điện trở là bao nhiêu?",
+    a: ["0,5 A", "2 A", "6 A", "72 A"],
+    d: 1
+},
+{
+    q: "Hai điện trở 3 Ω và 6 Ω mắc nối tiếp. Điện trở tương đương bằng bao nhiêu?",
+    a: ["2 Ω", "3 Ω", "9 Ω", "18 Ω"],
+    d: 2
+},
+{
+    q: "Hai điện trở 6 Ω và 3 Ω mắc song song. Điện trở tương đương là bao nhiêu?",
+    a: ["9 Ω", "2 Ω", "3 Ω", "18 Ω"],
+    d: 1
+},
+{
+    q: "Một bóng đèn hoạt động ở hiệu điện thế 12 V và có dòng điện 2 A chạy qua. Công suất của đèn là bao nhiêu?",
+    a: ["6 W", "10 W", "14 W", "24 W"],
+    d: 3
+},
+{
+    q: "Khi tia sáng truyền từ nước ra không khí, tia khúc xạ thường lệch như thế nào so với pháp tuyến?",
+    a: ["Lệch xa pháp tuyến", "Lệch gần pháp tuyến", "Không đổi hướng trong mọi trường hợp", "Luôn phản xạ hoàn toàn"],
+    d: 0
+},
+{
+    q: "Ảnh của một vật qua thấu kính phân kì trong trường hợp vật thật có đặc điểm nào?",
+    a: ["Ảnh thật, ngược chiều", "Ảnh ảo, cùng chiều và nhỏ hơn vật", "Ảnh thật, cùng chiều", "Ảnh luôn lớn hơn vật"],
+    d: 1
+},
+{
+    q: "Khi ánh sáng trắng đi qua lăng kính, hiện tượng nào xảy ra?",
+    a: ["Phản xạ toàn phần", "Tán sắc ánh sáng", "Nhiễu xạ âm", "Dẫn điện"],
+    d: 1
+},
+{
+    q: "Trong các kim loại sau, kim loại nào có tính dẫn điện tốt nhất?",
+    a: ["Sắt", "Nhôm", "Bạc", "Chì"],
+    d: 2
+},
+{
+    q: "Dãy kim loại nào được sắp xếp theo chiều hoạt động hóa học giảm dần?",
+    a: ["Cu, Fe, Mg, Na", "Na, Mg, Fe, Cu", "Fe, Na, Cu, Mg", "Mg, Cu, Na, Fe"],
+    d: 1
+},
+{
+    q: "Kim loại tác dụng với oxygen thường tạo thành loại hợp chất nào?",
+    a: ["Muối", "Base", "Oxide", "Acid"],
+    d: 2
+},
+{
+    q: "Sản phẩm của phản ứng giữa acid và base thường là gì?",
+    a: ["Muối và nước", "Kim loại và oxygen", "Acid và oxygen", "Chỉ có khí hydrogen"],
+    d: 0
+},
+{
+    q: "Chất nào sau đây là muối?",
+    a: ["HCl", "NaOH", "NaCl", "H2SO4"],
+    d: 2
+},
+{
+    q: "Khí carbon dioxide được tạo ra trong quá trình nào sau đây?",
+    a: ["Quang hợp", "Hô hấp tế bào", "Hấp thụ nước", "Thoát hơi nước"],
+    d: 1
+},
+{
+    q: "Quang hợp ở thực vật chủ yếu diễn ra trong bào quan nào?",
+    a: ["Ti thể", "Nhân tế bào", "Lục lạp", "Ribosome"],
+    d: 2
+},
+{
+    q: "Ở người, quá trình trao đổi khí diễn ra chủ yếu tại đâu?",
+    a: ["Khí quản", "Phế nang", "Thanh quản", "Khoang mũi"],
+    d: 1
+},
+{
+    q: "Đơn phân cấu tạo nên phân tử protein là gì?",
+    a: ["Nucleotide", "Amino acid", "Glucose", "Glycerol"],
+    d: 1
+},
+{
+    q: "Trong phân tử DNA, adenine liên kết bổ sung với loại nucleotide nào?",
+    a: ["Guanine", "Cytosine", "Thymine", "Uracil"],
+    d: 2
+},
+{
+    q: "Kiểu gene là gì?",
+    a: ["Tập hợp các allele trong tế bào của cơ thể", "Đặc điểm hình thái bên ngoài", "Môi trường sống của sinh vật", "Tập hợp các cơ quan trong cơ thể"],
+    d: 0
+}
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+let thoiGian = 15;
+let daTraLoi = false;
+let timer;
+
+function hienThiCau() {
+    daTraLoi = false;
+    thoiGian = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = thoiGian;
+    document.getElementById("question").innerText = danhSach[cau].q;
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+        html += `
+            <button class="answer" onclick="traLoi(${i}, this)">
+                ${String.fromCharCode(65 + i)}. ${x}
+            </button>
+        `;
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timer);
+
+    timer = setInterval(() => {
+        thoiGian--;
+
+        document.getElementById("timer").innerText = thoiGian;
+
+        if (thoiGian <= 0) {
+            clearInterval(timer);
+            ketThucCau();
+        }
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+    clearInterval(timer);
+
+    let dung = danhSach[cau].d;
+    let buttons = document.querySelectorAll(".answer");
+
+    if (chon === dung) {
+        diemBan++;
+        element.classList.add("correct");
+    } else {
+        element.classList.add("wrong");
+        buttons[dung].classList.add("correct");
+    }
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    document.getElementById("playerScore").innerText = diemBan;
+
+    ketThucCau();
+}
+
+function ketThucCau() {
+    if (!daTraLoi) {
+        daTraLoi = true;
+
+        let buttons = document.querySelectorAll(".answer");
+        buttons[danhSach[cau].d].classList.add("correct");
+
+        buttons.forEach(btn => btn.disabled = true);
+    }
+
+    setTimeout(() => {
+        botTraLoi();
+    }, 700);
+}
+
+function botTraLoi() {
+    // Cấp độ trung bình: Bot có 50% xác suất trả lời đúng
+    let dung = Math.random() < 0.5;
+
+    if (dung) {
+        diemBot++;
+    }
+
+    document.getElementById("botScore").innerText = diemBot;
+
+    cau++;
+
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
+}
+
+function ketThucTran() {
+    clearInterval(timer);
+
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+        `;
+    } else if (diemBan < diemBot) {
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>Bot đã chiến thắng lần này.</p>
+        `;
+    } else {
+        ketQua = `
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
+        `;
+    }
+
+    result.innerHTML = `
+        ${ketQua}
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+        <p>Bot có 50% xác suất trả lời đúng mỗi câu.</p>
+        <br>
+        <button onclick="location.href='capdo_khtn_khoi9_trungbinh.html'">
+            Chơi lại
+        </button>
+        <button onclick="location.href='capdo_khtn_khoi9.html'">
+            Về chọn chế độ
+        </button>
+    `;
+}
+
+hienThiCau();
+</script>
+
+</body>
+</html>

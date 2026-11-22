@@ -1,0 +1,899 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Toán 9 - Đua xe</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#2193b0,#6dd5ed);
+    overflow-x:hidden;
+}
+
+.back{
+    position:fixed;
+    top:15px;
+    left:15px;
+    background:#ff6a00;
+    color:white;
+    padding:10px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    z-index:100;
+}
+
+h1{
+    text-align:center;
+    color:white;
+    margin-top:65px;
+    font-size:38px;
+}
+
+.info{
+    text-align:center;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.game{
+    width:95%;
+    max-width:1100px;
+    margin:auto;
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.road{
+    position:relative;
+    height:300px;
+    overflow:hidden;
+    border-radius:15px;
+    background:#555;
+    border:6px solid #333;
+}
+
+.road::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    height:10px;
+    background:repeating-linear-gradient(to right,white 0px,white 60px,transparent 60px,transparent 120px);
+}
+
+.grass1,.grass2{
+    position:absolute;
+    width:100%;
+    height:45px;
+    background:#38a852;
+    z-index:2;
+}
+
+.grass1{top:0;}
+.grass2{bottom:0;}
+
+.car{
+    position:absolute;
+    left:60px;
+    top:112px;
+    width:110px;
+    height:65px;
+    z-index:10;
+    transition:left .15s linear;
+}
+
+.car-body{
+    position:absolute;
+    left:5px;
+    top:20px;
+    width:100px;
+    height:38px;
+    background:#e53935;
+    border-radius:12px 20px 8px 8px;
+}
+
+.car-top{
+    position:absolute;
+    left:28px;
+    top:2px;
+    width:55px;
+    height:30px;
+    background:#e53935;
+    border-radius:20px 20px 0 0;
+}
+
+.window{
+    position:absolute;
+    left:38px;
+    top:7px;
+    width:35px;
+    height:18px;
+    background:#81d4fa;
+    border-radius:8px 8px 2px 2px;
+}
+
+.wheel{
+    position:absolute;
+    width:24px;
+    height:24px;
+    background:#111;
+    border-radius:50%;
+    bottom:0;
+}
+
+.wheel1{left:18px;}
+.wheel2{right:15px;}
+
+.light{
+    position:absolute;
+    right:3px;
+    top:30px;
+    width:8px;
+    height:10px;
+    background:#fff176;
+    border-radius:3px;
+}
+
+.rock{
+    display:none;
+    position:absolute;
+    right:70px;
+    top:112px;
+    width:75px;
+    height:65px;
+    z-index:9;
+}
+
+.rock.show{display:block;}
+
+.rock-shape{
+    width:70px;
+    height:55px;
+    background:#777;
+    border-radius:45% 55% 50% 40%;
+    border:5px solid #444;
+    transform:rotate(-10deg);
+}
+
+.start-area{
+    text-align:center;
+    margin:20px 0;
+}
+
+.start{
+    background:#00a86b;
+    color:white;
+    border:none;
+    padding:15px 35px;
+    border-radius:12px;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.start:hover{
+    background:#008f5a;
+    transform:scale(1.05);
+}
+
+.progress-box{margin:15px 0;}
+
+.progress-text{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    color:#185a9d;
+    margin-bottom:10px;
+}
+
+.progress{
+    width:100%;
+    height:20px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#00a86b;
+    transition:.4s;
+}
+
+.status{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    color:#ff6a00;
+    min-height:25px;
+}
+
+.question-box{
+    display:none;
+    position:fixed;
+    z-index:200;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:700px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 50px rgba(0,0,0,.5);
+}
+
+.question-box.show{display:block;}
+
+.question-box h2{
+    text-align:center;
+    color:#185a9d;
+}
+
+.question{
+    font-size:23px;
+    font-weight:bold;
+    line-height:1.5;
+    margin:20px 0;
+}
+
+.answer{
+    display:block;
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:2px solid #ddd;
+    border-radius:10px;
+    background:#f8f8f8;
+    text-align:left;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.answer:hover{
+    background:#e3f2fd;
+    border-color:#2196f3;
+}
+
+.answer.selected{
+    background:#bbdefb;
+    border-color:#1976d2;
+}
+
+.check{
+    display:block;
+    margin:20px auto 0;
+    padding:13px 30px;
+    border:none;
+    border-radius:10px;
+    background:#00a86b;
+    color:white;
+    font-size:19px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.result{
+    display:none;
+    position:fixed;
+    z-index:300;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:550px;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 15px 50px rgba(0,0,0,.5);
+}
+
+.result h2{
+    font-size:35px;
+    color:#00a86b;
+}
+
+.result.lose h2{color:#e53935;}
+
+.result p{font-size:21px;}
+
+.again{
+    background:#ff6a00;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:10px;
+    font-size:19px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:150;
+}
+
+.overlay.show{display:block;}
+
+@media(max-width:600px){
+    h1{font-size:27px;}
+    .road{height:230px;}
+    .car,.rock{top:80px;}
+    .question-box{padding:20px;}
+    .question{font-size:19px;}
+    .answer{font-size:16px;}
+}
+</style>
+</head>
+
+<body>
+
+<a href="khoi9tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🚗 TRẮC NGHIỆM TOÁN 9</h1>
+
+<div class="info">
+🎮 TRÒ CHƠI ĐUA XE - VƯỢT CHƯỚNG NGẠI VẬT
+</div>
+
+<div class="game">
+
+    <div class="road">
+        <div class="grass1"></div>
+        <div class="grass2"></div>
+
+        <div class="car" id="car">
+            <div class="car-body"></div>
+            <div class="car-top"></div>
+            <div class="window"></div>
+            <div class="wheel wheel1"></div>
+            <div class="wheel wheel2"></div>
+            <div class="light"></div>
+        </div>
+
+        <div class="rock" id="rock">
+            <div class="rock-shape"></div>
+        </div>
+    </div>
+
+    <div class="start-area">
+        <button class="start" id="startButton" onclick="startGame()">
+            ▶ BẮT ĐẦU
+        </button>
+    </div>
+
+    <div class="progress-box">
+        <div class="progress-text" id="progressText">
+            🏁 Chưa bắt đầu
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="status" id="status">
+        Hãy bấm BẮT ĐẦU để chơi!
+    </div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+    <h2>🪨 CHƯỚNG NGẠI VẬT!</h2>
+    <div class="question" id="question"></div>
+    <div id="answers"></div>
+
+    <button class="check" onclick="checkAnswer()">
+        ✅ TRẢ LỜI
+    </button>
+</div>
+
+<div class="result" id="result">
+    <h2 id="resultTitle"></h2>
+    <p id="resultText"></p>
+
+    <button class="again" onclick="startGame()">
+        🔄 CHƠI LẠI
+    </button>
+</div>
+
+<script>
+
+const questionBank = [
+
+{
+q:"Căn bậc hai số học của 81 là:",
+a:["7","8","9","10"],
+c:2
+},
+
+{
+q:"Giá trị của √144 là:",
+a:["10","11","12","14"],
+c:2
+},
+
+{
+q:"Rút gọn √50 ta được:",
+a:["2√5","5√2","10√2","25√2"],
+c:1
+},
+
+{
+q:"Điều kiện xác định của √(x - 3) là:",
+a:["x < 3","x ≤ 3","x > 3","x ≥ 3"],
+c:3
+},
+
+{
+q:"Rút gọn √(9x²) với x ≥ 0 là:",
+a:["3x","9x","3x²","9x²"],
+c:0
+},
+
+{
+q:"Kết quả của √12 + √27 là:",
+a:["3√3","4√3","5√3","6√3"],
+c:2
+},
+
+{
+q:"Giá trị của √(25/49) là:",
+a:["5/7","7/5","25/7","5/49"],
+c:0
+},
+
+{
+q:"Trục căn thức ở mẫu của 1/√3 ta được:",
+a:["√3","√3/3","3√3","1/3"],
+c:1
+},
+
+{
+q:"Nghiệm của phương trình 2x - 6 = 0 là:",
+a:["1","2","3","4"],
+c:2
+},
+
+{
+q:"Nghiệm của phương trình 3x + 9 = 0 là:",
+a:["-3","-2","2","3"],
+c:0
+},
+
+{
+q:"Hệ phương trình x + y = 5 và x - y = 1 có nghiệm là:",
+a:["(2;3)","(3;2)","(4;1)","(1;4)"],
+c:1
+},
+
+{
+q:"Hệ phương trình 2x + y = 7 và x + y = 5 có nghiệm là:",
+a:["(1;4)","(2;3)","(3;2)","(4;1)"],
+c:1
+},
+
+{
+q:"Phương trình bậc nhất hai ẩn có dạng:",
+a:["ax + by = c","ax² + bx + c = 0","ax + b = 0","x² + y² = 1"],
+c:0
+},
+
+{
+q:"Nghiệm của phương trình x² - 9 = 0 là:",
+a:["x = 3","x = -3","x = ±3","x = 9"],
+c:2
+},
+
+{
+q:"Phương trình x² - 5x + 6 = 0 có hai nghiệm là:",
+a:["1 và 6","2 và 3","-2 và -3","1 và 5"],
+c:1
+},
+
+{
+q:"Biệt thức Δ của phương trình ax² + bx + c = 0 là:",
+a:["b² - 4ac","b² + 4ac","a² - 4bc","b - 4ac"],
+c:0
+},
+
+{
+q:"Phương trình x² - 4x + 4 = 0 có nghiệm kép là:",
+a:["x = 1","x = 2","x = 4","x = -2"],
+c:1
+},
+
+{
+q:"Phương trình x² + 1 = 0 có bao nhiêu nghiệm thực?",
+a:["0","1","2","3"],
+c:0
+},
+
+{
+q:"Tổng hai nghiệm của phương trình x² - 7x + 10 = 0 là:",
+a:["5","7","10","-7"],
+c:1
+},
+
+{
+q:"Tích hai nghiệm của phương trình x² - 7x + 10 = 0 là:",
+a:["5","7","10","-10"],
+c:2
+},
+
+{
+q:"Hàm số y = 2x² có đồ thị là:",
+a:["Đường thẳng","Đường tròn","Parabol","Hình chữ nhật"],
+c:2
+},
+
+{
+q:"Đồ thị hàm số y = ax² với a > 0 có bề lõm:",
+a:["Quay xuống dưới","Quay lên trên","Nằm ngang","Không xác định"],
+c:1
+},
+
+{
+q:"Điểm nào thuộc đồ thị hàm số y = x²?",
+a:["(1;2)","(2;4)","(3;6)","(4;8)"],
+c:1
+},
+
+{
+q:"Giá trị của y = -x² tại x = 3 là:",
+a:["9","-9","6","-6"],
+c:1
+},
+
+{
+q:"Phương trình x² - 2x - 3 = 0 có hai nghiệm là:",
+a:["1 và 3","-1 và 3","-1 và -3","1 và -3"],
+c:1
+},
+
+{
+q:"Nếu phương trình bậc hai có Δ > 0 thì phương trình có:",
+a:["Hai nghiệm phân biệt","Nghiệm kép","Vô nghiệm","Vô số nghiệm"],
+c:0
+},
+
+{
+q:"Nếu phương trình bậc hai có Δ = 0 thì phương trình có:",
+a:["Hai nghiệm phân biệt","Nghiệm kép","Vô nghiệm","Vô số nghiệm"],
+c:1
+},
+
+{
+q:"Theo hệ thức Viète, tổng hai nghiệm của ax² + bx + c = 0 là:",
+a:["c/a","-b/a","b/a","-c/a"],
+c:1
+},
+
+{
+q:"Theo hệ thức Viète, tích hai nghiệm của ax² + bx + c = 0 là:",
+a:["-b/a","b/a","c/a","-c/a"],
+c:2
+},
+
+{
+q:"Đường tròn tâm O bán kính R có đường kính bằng:",
+a:["R","2R","3R","R²"],
+c:1
+},
+
+{
+q:"Đường kính của đường tròn là:",
+a:["Dây lớn nhất","Dây nhỏ nhất","Bán kính","Tiếp tuyến"],
+c:0
+},
+
+{
+q:"Tiếp tuyến của đường tròn vuông góc với bán kính tại:",
+a:["Tâm đường tròn","Điểm tiếp xúc","Một điểm bất kỳ","Hai đầu đường kính"],
+c:1
+},
+
+{
+q:"Góc nội tiếp chắn nửa đường tròn có số đo là:",
+a:["30°","45°","60°","90°"],
+c:3
+},
+
+{
+q:"Số đo góc ở tâm bằng:",
+a:["Số đo cung bị chắn","Một nửa cung bị chắn","Hai lần cung bị chắn","Tổng hai bán kính"],
+c:0
+},
+
+{
+q:"Độ dài đường tròn bán kính R được tính bằng:",
+a:["πR","2πR","πR²","4πR"],
+c:1
+},
+
+{
+q:"Diện tích hình tròn bán kính R được tính bằng:",
+a:["2πR","πR²","πd","4πR"],
+c:1
+},
+
+{
+q:"Trong tam giác vuông, sin của một góc nhọn bằng:",
+a:["Cạnh kề / cạnh huyền","Cạnh đối / cạnh huyền","Cạnh đối / cạnh kề","Cạnh huyền / cạnh đối"],
+c:1
+},
+
+{
+q:"Trong tam giác vuông, cos của một góc nhọn bằng:",
+a:["Cạnh kề / cạnh huyền","Cạnh đối / cạnh huyền","Cạnh huyền / cạnh kề","Cạnh đối / cạnh kề"],
+c:0
+},
+
+{
+q:"Trung bình cộng của các số 5, 7, 9 là:",
+a:["6","7","8","9"],
+c:1
+},
+
+{
+q:"Một hộp có 3 viên bi đỏ và 2 viên bi xanh. Xác suất lấy được bi đỏ là:",
+a:["1/5","2/5","3/5","4/5"],
+c:2
+}
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let carPosition=60;
+let carTimer=null;
+let obstacleTimer=null;
+
+function startGame(){
+
+    gameRunning=true;
+    currentQuestion=0;
+    selectedAnswer=null;
+    waiting=false;
+    carPosition=60;
+
+    document.getElementById("car").style.left="60px";
+    document.getElementById("rock").classList.remove("show");
+    document.getElementById("questionBox").classList.remove("show");
+    document.getElementById("result").style.display="none";
+    document.getElementById("overlay").classList.remove("show");
+
+    document.getElementById("startButton").innerHTML="🔄 CHƠI LẠI";
+
+    document.getElementById("status").innerHTML=
+    "🚗 Xe đang chạy... Chướng ngại vật sẽ xuất hiện!";
+
+    let shuffled=[...questionBank];
+    shuffled.sort(()=>Math.random()-0.5);
+    gameQuestions=shuffled.slice(0,10);
+
+    updateProgress();
+
+    clearInterval(carTimer);
+    clearTimeout(obstacleTimer);
+
+    carTimer=setInterval(moveCar,100);
+    obstacleTimer=setTimeout(showObstacle,5000);
+}
+
+function moveCar(){
+
+    if(!gameRunning || waiting){
+        return;
+    }
+
+    carPosition+=2;
+
+    let roadWidth=document.querySelector(".road").clientWidth;
+
+    if(carPosition>roadWidth-170){
+        carPosition=60;
+    }
+
+    document.getElementById("car").style.left=
+    carPosition+"px";
+}
+
+function showObstacle(){
+
+    if(!gameRunning){
+        return;
+    }
+
+    waiting=true;
+
+    document.getElementById("rock").classList.add("show");
+
+    document.getElementById("status").innerHTML=
+    "🪨 Có chướng ngại vật! Hãy trả lời câu hỏi!";
+
+    clearInterval(carTimer);
+
+    showQuestion();
+}
+
+function showQuestion(){
+
+    if(currentQuestion>=10){
+        winGame();
+        return;
+    }
+
+    selectedAnswer=null;
+
+    let q=gameQuestions[currentQuestion];
+
+    document.getElementById("question").innerHTML=
+    "Câu "+(currentQuestion+1)+": "+q.q;
+
+    let answerHTML="";
+
+    q.a.forEach((answer,index)=>{
+
+        answerHTML+=`
+            <button class="answer"
+            onclick="selectAnswer(${index})">
+            ${String.fromCharCode(65+index)}. ${answer}
+            </button>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML=answerHTML;
+
+    document.getElementById("overlay").classList.add("show");
+    document.getElementById("questionBox").classList.add("show");
+}
+
+function selectAnswer(index){
+
+    selectedAnswer=index;
+
+    let buttons=document.querySelectorAll(".answer");
+
+    buttons.forEach(function(button){
+        button.classList.remove("selected");
+    });
+
+    buttons[index].classList.add("selected");
+}
+
+function checkAnswer(){
+
+    if(selectedAnswer===null){
+        alert("⚠️ Hãy chọn một đáp án!");
+        return;
+    }
+
+    let correct=gameQuestions[currentQuestion].c;
+
+    if(selectedAnswer!==correct){
+        loseGame();
+        return;
+    }
+
+    currentQuestion++;
+
+    document.getElementById("rock").classList.remove("show");
+    document.getElementById("questionBox").classList.remove("show");
+    document.getElementById("overlay").classList.remove("show");
+
+    updateProgress();
+
+    if(currentQuestion>=10){
+        winGame();
+        return;
+    }
+
+    waiting=false;
+
+    document.getElementById("status").innerHTML=
+    "✅ Chính xác! Xe tiếp tục chạy...";
+
+    carTimer=setInterval(moveCar,100);
+    obstacleTimer=setTimeout(showObstacle,5000);
+}
+
+function updateProgress(){
+
+    let percent=(currentQuestion/10)*100;
+
+    document.getElementById("progressBar").style.width=
+    percent+"%";
+
+    document.getElementById("progressText").innerHTML=
+    "🏁 Đã vượt qua "+currentQuestion+"/10 chướng ngại vật";
+}
+
+function loseGame(){
+
+    gameRunning=false;
+    waiting=false;
+
+    clearInterval(carTimer);
+    clearTimeout(obstacleTimer);
+
+    document.getElementById("questionBox").classList.remove("show");
+    document.getElementById("overlay").classList.remove("show");
+    document.getElementById("rock").classList.remove("show");
+
+    document.getElementById("result").style.display="block";
+    document.getElementById("result").classList.add("lose");
+
+    document.getElementById("resultTitle").innerHTML=
+    "💥 GAME OVER!";
+
+    document.getElementById("resultText").innerHTML=
+    "❌ Bạn đã trả lời sai!<br><br>"+
+    "🏁 Bạn vượt qua được "+
+    currentQuestion+
+    "/10 chướng ngại vật.";
+}
+
+function winGame(){
+
+    gameRunning=false;
+    waiting=false;
+
+    clearInterval(carTimer);
+    clearTimeout(obstacleTimer);
+
+    document.getElementById("questionBox").classList.remove("show");
+    document.getElementById("overlay").classList.remove("show");
+    document.getElementById("rock").classList.remove("show");
+
+    document.getElementById("progressBar").style.width="100%";
+
+    document.getElementById("progressText").innerHTML=
+    "🏆 Hoàn thành 10/10!";
+
+    document.getElementById("status").innerHTML=
+    "🎉 Bạn đã hoàn thành màn chơi!";
+
+    document.getElementById("result").style.display="block";
+    document.getElementById("result").classList.remove("lose");
+
+    document.getElementById("resultTitle").innerHTML=
+    "🏆 CHIẾN THẮNG!";
+
+    document.getElementById("resultText").innerHTML=
+    "🎉 Tuyệt vời!<br><br>"+
+    "Bạn đã vượt qua cả 10 chướng ngại vật!<br>"+
+    "⭐ Bạn đã hoàn thành màn chơi Toán 9.";
+}
+
+</script>
+
+</body>
+</html>

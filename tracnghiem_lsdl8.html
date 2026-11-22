@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Lịch sử và Địa lí 8 - Cuộc Phiêu Lưu Vũ Trụ</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 20% 20%,#1e3a8a 0%,transparent 25%),
+radial-gradient(circle at 80% 70%,#581c87 0%,transparent 30%),
+linear-gradient(135deg,#020617,#111827,#312e81);
+color:white;
+}
+
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1){top:8%;left:5%}
+.star:nth-child(2){top:20%;left:18%}
+.star:nth-child(3){top:12%;left:35%}
+.star:nth-child(4){top:30%;left:55%}
+.star:nth-child(5){top:10%;left:80%}
+.star:nth-child(6){top:45%;left:8%}
+.star:nth-child(7){top:65%;left:25%}
+.star:nth-child(8){top:75%;left:70%}
+.star:nth-child(9){top:55%;left:90%}
+.star:nth-child(10){top:85%;left:45%}
+.star:nth-child(11){top:35%;left:75%}
+.star:nth-child(12){top:90%;left:10%}
+
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.5)}
+to{opacity:1;transform:scale(1.5)}
+}
+
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.back:hover{
+background:#7c3aed;
+transform:translateY(-3px);
+}
+
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:38px;
+text-shadow:0 0 10px #a78bfa,0 0 25px #7c3aed,0 5px 15px rgba(0,0,0,.5);
+}
+
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#ddd6fe;
+}
+
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.space{
+position:relative;
+height:380px;
+overflow:hidden;
+border-radius:22px;
+background:
+radial-gradient(circle at 20% 30%,#ffffff 0 1px,transparent 2px),
+radial-gradient(circle at 70% 20%,#c4b5fd 0 1px,transparent 2px),
+radial-gradient(circle at 85% 70%,#ffffff 0 1px,transparent 2px),
+linear-gradient(135deg,#020617,#172554,#4c1d95);
+border:4px solid #7c3aed;
+box-shadow:inset 0 0 60px rgba(124,58,237,.35),0 10px 35px rgba(0,0,0,.5);
+}
+
+.planet{
+position:absolute;
+right:70px;
+bottom:35px;
+width:130px;
+height:130px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#f0abfc,#a855f7 45%,#581c87 80%);
+box-shadow:0 0 25px #c084fc,0 0 70px rgba(192,132,252,.7);
+}
+
+.planet2{
+position:absolute;
+left:500px;
+top:40px;
+width:65px;
+height:65px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#67e8f9,#0891b2 60%,#164e63);
+box-shadow:0 0 30px #22d3ee;
+}
+
+.rocket{
+position:absolute;
+left:55px;
+top:120px;
+width:150px;
+height:100px;
+z-index:20;
+transition:left .15s linear;
+animation:rocketFloat 1s infinite alternate;
+filter:drop-shadow(0 0 12px #a78bfa);
+}
+
+@keyframes rocketFloat{
+from{transform:translateY(-5px)}
+to{transform:translateY(5px)}
+}
+
+.rocket-body{
+position:absolute;
+left:25px;
+top:15px;
+width:100px;
+height:55px;
+background:linear-gradient(180deg,#f8fafc,#94a3b8);
+border:4px solid #475569;
+border-radius:60% 30% 30% 60%;
+}
+
+.rocket-window{
+position:absolute;
+left:55px;
+top:27px;
+width:25px;
+height:25px;
+border-radius:50%;
+background:#38bdf8;
+border:4px solid #1e293b;
+box-shadow:0 0 15px #38bdf8;
+}
+
+.rocket-fin1,.rocket-fin2{
+position:absolute;
+left:35px;
+width:35px;
+height:30px;
+background:#7c3aed;
+}
+
+.rocket-fin1{
+top:55px;
+clip-path:polygon(0 0,100% 0,60% 100%);
+}
+
+.rocket-fin2{
+top:0;
+clip-path:polygon(0 100%,100% 100%,60% 0);
+}
+
+.fire{
+position:absolute;
+left:5px;
+top:30px;
+width:40px;
+height:30px;
+background:linear-gradient(90deg,#f97316,#facc15,transparent);
+clip-path:polygon(100% 50%,0 0,20% 50%,0 100%);
+animation:fire .25s infinite alternate;
+}
+
+@keyframes fire{
+from{transform:scaleX(.8)}
+to{transform:scaleX(1.2)}
+}
+
+.data{
+position:absolute;
+right:230px;
+top:100px;
+font-size:48px;
+animation:dataMove 1.5s infinite alternate;
+}
+
+@keyframes dataMove{
+from{transform:translateY(0);opacity:.5}
+to{transform:translateY(-20px);opacity:1}
+}
+
+.obstacle{
+display:none;
+position:absolute;
+right:300px;
+bottom:110px;
+width:100px;
+height:100px;
+z-index:25;
+}
+
+.obstacle.show{display:block}
+
+.meteor{
+width:90px;
+height:90px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 25%,#d6d3d1,#78716c 50%,#292524);
+box-shadow:0 0 20px #f97316,0 0 40px rgba(249,115,22,.5);
+animation:meteor 1s infinite alternate;
+}
+
+@keyframes meteor{
+from{transform:rotate(0deg) scale(.95)}
+to{transform:rotate(15deg) scale(1.05)}
+}
+
+.energy{
+display:none;
+position:absolute;
+right:80px;
+bottom:55px;
+font-size:60px;
+z-index:10;
+}
+
+.energy.show{
+display:block;
+animation:energy 1s infinite alternate;
+}
+
+@keyframes energy{
+from{transform:scale(.9)}
+to{transform:scale(1.15)}
+}
+
+.start-area{
+text-align:center;
+margin:25px 0;
+}
+
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+box-shadow:0 8px 0 #312e81,0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+
+.start:hover{transform:translateY(-3px)}
+
+.start:active{
+transform:translateY(5px);
+box-shadow:0 3px 0 #312e81;
+}
+
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#ede9fe;
+}
+
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#22d3ee,#8b5cf6,#c084fc);
+box-shadow:0 0 15px #8b5cf6;
+transition:.5s;
+}
+
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#ddd6fe;
+}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+
+.overlay.show{display:block}
+
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#faf5ff,#ede9fe);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#1e1b4b;
+}
+
+.question-box.show{
+display:block;
+animation:popup .3s forwards;
+}
+
+@keyframes popup{
+to{transform:translate(-50%,-50%) scale(1)}
+}
+
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#6d28d9;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #ddd6fe;
+border-radius:14px;
+background:#fff;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#1e1b4b;
+}
+
+.answer:hover{
+transform:translateX(5px);
+border-color:#7c3aed;
+background:#f5f3ff;
+}
+
+.answer.selected{
+background:#ddd6fe;
+border-color:#7c3aed;
+box-shadow:0 0 0 3px rgba(124,58,237,.12);
+}
+
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+
+@keyframes resultShow{
+from{transform:translate(-50%,-50%) scale(.5);opacity:0}
+to{transform:translate(-50%,-50%) scale(1);opacity:1}
+}
+
+.result h2{
+font-size:38px;
+color:#6d28d9;
+margin:0 0 20px;
+}
+
+.result.lose h2{color:#dc2626}
+
+.result p{
+font-size:21px;
+line-height:1.6;
+color:#312e81;
+}
+
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#c084fc;
+text-shadow:0 0 20px #7c3aed;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+
+@keyframes correctEffect{
+0%{transform:translate(-50%,-50%) scale(.4);opacity:0}
+40%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+100%{transform:translate(-50%,-100%) scale(1);opacity:0}
+}
+
+@media(max-width:700px){
+h1{font-size:27px;margin-top:75px}
+.info{font-size:16px}
+.game{width:96%;padding:12px}
+.space{height:280px}
+.rocket{top:90px;transform:scale(.75);transform-origin:left top}
+.planet{width:80px;height:80px;right:20px;bottom:20px}
+.planet2{left:250px;width:45px;height:45px}
+.obstacle{right:90px;bottom:75px;transform:scale(.7)}
+.question-box{padding:20px}
+.question-box h2{font-size:21px}
+.question{font-size:18px}
+.answer{font-size:16px;padding:12px}
+.result h2{font-size:30px}
+.result p{font-size:18px}
+.back{padding:9px 14px;font-size:14px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+
+<a href="khoi8tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🚀 TRẮC NGHIỆM LỊCH SỬ VÀ ĐỊA LÍ 8</h1>
+
+<div class="info">
+🌍 CUỘC PHIÊU LƯU VŨ TRỤ - KHÁM PHÁ LỊCH SỬ VÀ THẾ GIỚI
+</div>
+
+<div class="game">
+
+<div class="space">
+
+<div class="planet"></div>
+<div class="planet2"></div>
+<div class="data">🌍</div>
+
+<div class="rocket" id="rocket">
+<div class="rocket-body"></div>
+<div class="rocket-window"></div>
+<div class="rocket-fin1"></div>
+<div class="rocket-fin2"></div>
+<div class="fire"></div>
+</div>
+
+<div class="obstacle" id="obstacle">
+<div class="meteor"></div>
+</div>
+
+<div class="energy" id="energy">⚡</div>
+
+</div>
+
+<div class="start-area">
+<button class="start" id="startButton" onclick="startGame()">
+🚀 BẮT ĐẦU PHIÊU LƯU
+</button>
+</div>
+
+<div class="progress-text" id="progressText">
+🌍 Chưa bắt đầu
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="status" id="status">
+Hãy bắt đầu chuyến phiêu lưu khám phá Lịch sử và Địa lí 8!
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+<h2>☄️ THỬ THÁCH LỊCH SỬ VÀ ĐỊA LÍ!</h2>
+<div class="question" id="question"></div>
+<div id="answers"></div>
+<button class="check" onclick="checkAnswer()">🚀 TRẢ LỜI</button>
+</div>
+
+<div class="result" id="result">
+<h2 id="resultTitle"></h2>
+<p id="resultText"></p>
+<button class="again" onclick="startGame()">🔄 PHIÊU LƯU LẠI</button>
+</div>
+
+<script>
+
+const questionBank=[
+
+["Cuộc cách mạng công nghiệp lần thứ nhất bắt đầu ở quốc gia nào?",["Anh","Pháp","Đức","Mĩ"],0],
+["Cách mạng công nghiệp lần thứ nhất diễn ra chủ yếu vào thời gian nào?",["Cuối thế kỉ XVIII - đầu thế kỉ XIX","Đầu thế kỉ XVII","Cuối thế kỉ XIX","Đầu thế kỉ XX"],0],
+["Phát minh nào gắn liền với cuộc cách mạng công nghiệp lần thứ nhất?",["Máy hơi nước","Máy bay","Điện thoại thông minh","Máy tính điện tử"],0],
+["Ai là người cải tiến máy hơi nước nổi tiếng?",["James Watt","Thomas Edison","Alexander Graham Bell","Isaac Newton"],0],
+["Cách mạng công nghiệp lần thứ hai diễn ra chủ yếu vào thời gian nào?",["Cuối thế kỉ XIX - đầu thế kỉ XX","Thế kỉ XV","Thế kỉ XVI","Đầu thế kỉ XVIII"],0],
+["Nguồn năng lượng nào được sử dụng phổ biến trong cách mạng công nghiệp lần thứ hai?",["Điện và dầu mỏ","Sức người","Củi và than củi","Năng lượng gió duy nhất"],0],
+["Cuộc cách mạng công nghiệp lần thứ ba gắn liền với lĩnh vực nào?",["Điện tử và công nghệ thông tin","Máy hơi nước","Luyện kim thủ công","Nông nghiệp nguyên thủy"],0],
+["Cách mạng công nghiệp lần thứ tư còn được gọi là gì?",["Cách mạng công nghiệp 4.0","Cách mạng xanh","Cách mạng tư sản","Cách mạng nông nghiệp"],0],
+["Phong trào Văn hóa Phục hưng bắt nguồn từ quốc gia nào?",["Italia","Anh","Nga","Trung Quốc"],0],
+["Phong trào Văn hóa Phục hưng đề cao điều gì?",["Giá trị con người và tư tưởng nhân văn","Quyền lực tuyệt đối của giáo hội","Chế độ phong kiến","Sự mê tín"],0],
+["Martin Luther gắn liền với phong trào nào?",["Cải cách tôn giáo","Cách mạng công nghiệp","Phong trào giải phóng dân tộc","Phong trào công nhân"],0],
+["Cuộc Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mĩ diễn ra trong khoảng thời gian nào?",["1775 - 1783","1789 - 1799","1914 - 1918","1939 - 1945"],0],
+["Tuyên ngôn Độc lập của nước Mĩ được công bố năm nào?",["1776","1789","1804","1815"],0],
+["Cách mạng tư sản Pháp bùng nổ vào năm nào?",["1789","1776","1848","1871"],0],
+["Sự kiện mở đầu Cách mạng tư sản Pháp là gì?",["Tấn công pháo đài - nhà tù Ba-xti","Thành lập Liên Hợp Quốc","Kí Hiệp ước Véc-xai","Công bố Tuyên ngôn Độc lập của Mĩ"],0],
+["Khẩu hiệu nổi tiếng của Cách mạng tư sản Pháp là gì?",["Tự do - Bình đẳng - Bác ái","Độc lập - Tự do - Hạnh phúc","Hòa bình - Hữu nghị","Đoàn kết - Phát triển"],0],
+["Chủ nghĩa tư bản được xác lập ở châu Âu và Bắc Mĩ chủ yếu sau sự kiện nào?",["Các cuộc cách mạng tư sản","Chiến tranh thế giới thứ nhất","Chiến tranh thế giới thứ hai","Phong trào Văn hóa Phục hưng"],0],
+["Công xã Pa-ri ra đời vào năm nào?",["1871","1789","1848","1917"],0],
+["Quốc tế thứ nhất được thành lập vào năm nào?",["1864","1871","1889","1919"],0],
+["Quốc tế thứ hai được thành lập vào năm nào?",["1889","1864","1871","1914"],0],
+["Thực dân Pháp bắt đầu xâm lược Việt Nam vào năm nào?",["1858","1884","1897","1945"],0],
+["Thực dân Pháp nổ súng xâm lược Việt Nam đầu tiên ở đâu?",["Đà Nẵng","Hà Nội","Huế","Gia Định"],0],
+["Triều đình nhà Nguyễn kí Hiệp ước Nhâm Tuất với Pháp vào năm nào?",["1862","1858","1874","1884"],0],
+["Phong trào Cần Vương bùng nổ vào năm nào?",["1885","1858","1862","1896"],0],
+["Người phát động phong trào Cần Vương là ai?",["Vua Hàm Nghi và Tôn Thất Thuyết","Phan Bội Châu","Phan Châu Trinh","Nguyễn Trường Tộ"],0],
+["Khởi nghĩa Yên Thế do ai lãnh đạo?",["Hoàng Hoa Thám","Phan Đình Phùng","Nguyễn Thiện Thuật","Tôn Thất Thuyết"],0],
+["Phong trào Đông Du do nhà yêu nước nào khởi xướng?",["Phan Bội Châu","Phan Châu Trinh","Nguyễn Ái Quốc","Trương Định"],0],
+["Nguyễn Ái Quốc ra đi tìm đường cứu nước vào năm nào?",["1911","1905","1920","1930"],0],
+["Nguyễn Ái Quốc ra đi tìm đường cứu nước từ địa điểm nào?",["Bến Nhà Rồng","Hà Nội","Huế","Cao Bằng"],0],
+["Đảng Cộng sản Việt Nam được thành lập vào năm nào?",["1930","1925","1935","1945"],0],
+["Người chủ trì Hội nghị thành lập Đảng Cộng sản Việt Nam là ai?",["Nguyễn Ái Quốc","Trần Phú","Lê Hồng Phong","Phạm Văn Đồng"],0],
+["Chiến tranh thế giới thứ nhất diễn ra trong thời gian nào?",["1914 - 1918","1939 - 1945","1900 - 1905","1929 - 1933"],0],
+["Chiến tranh thế giới thứ hai diễn ra trong thời gian nào?",["1939 - 1945","1914 - 1918","1929 - 1933","1946 - 1954"],0],
+["Tổ chức Liên Hợp Quốc được thành lập vào năm nào?",["1945","1919","1939","1954"],0],
+["Châu Á có diện tích lớn thứ mấy trong các châu lục?",["Lớn nhất","Nhỏ nhất","Lớn thứ ba","Lớn thứ tư"],0],
+["Dãy núi cao nhất thế giới nằm ở châu Á là gì?",["Hi-ma-lay-a","An-pơ","An-đét","Rốc-ki"],0],
+["Đỉnh núi cao nhất thế giới là đỉnh nào?",["Everest","Phan Xi Păng","K2","Mont Blanc"],0],
+["Đồng bằng rộng lớn ở phía Bắc châu Á là đồng bằng nào?",["Đồng bằng Tây Xi-bia","Đồng bằng sông Hồng","Đồng bằng sông Cửu Long","Đồng bằng Ấn - Hằng"],0],
+["Khí hậu châu Á phân hóa đa dạng chủ yếu do nguyên nhân nào?",["Lãnh thổ rộng lớn, địa hình và vị trí trải dài","Chỉ do hoạt động con người","Chỉ do dòng biển","Chỉ do độ cao địa hình"],0],
+["Khu vực Đông Nam Á nằm ở đâu?",["Phía đông nam châu Á","Phía tây châu Âu","Phía bắc châu Phi","Phía nam châu Mĩ"],0],
+["Việt Nam nằm trong khu vực khí hậu nào?",["Nhiệt đới ẩm gió mùa","Ôn đới lục địa","Hàn đới","Địa Trung Hải"],0],
+["Địa hình Việt Nam chủ yếu là dạng nào?",["Đồi núi","Đồng bằng","Hoang mạc","Băng hà"],0],
+["Đồi núi chiếm khoảng bao nhiêu diện tích lãnh thổ Việt Nam?",["3/4","1/4","1/2","Toàn bộ"],0],
+["Đồng bằng lớn nhất Việt Nam là đồng bằng nào?",["Đồng bằng sông Cửu Long","Đồng bằng sông Hồng","Đồng bằng ven biển miền Trung","Đồng bằng Thanh Hóa"],0],
+["Đồng bằng sông Hồng được bồi đắp chủ yếu bởi hệ thống sông nào?",["Sông Hồng và sông Thái Bình","Sông Đồng Nai","Sông Mê Công","Sông Mã"],0],
+["Khí hậu Việt Nam có tính chất nào nổi bật?",["Nhiệt đới ẩm gió mùa","Ôn đới hải dương","Hàn đới","Hoang mạc"],0],
+["Gió mùa mùa đông ở miền Bắc nước ta chủ yếu có hướng nào?",["Đông Bắc","Tây Nam","Đông Nam","Tây Bắc"],0],
+["Sông ngòi Việt Nam có đặc điểm nào?",["Mạng lưới dày đặc, nhiều nước và giàu phù sa","Ít sông và khô hạn quanh năm","Chỉ có sông ngắn ở miền Bắc","Không có mùa lũ"],0],
+["Hai hệ thống sông lớn ở Việt Nam là gì?",["Sông Hồng và sông Mê Công","Sông Đà và sông Mã","Sông Cả và sông Thu Bồn","Sông Đồng Nai và sông Ba"],0],
+["Biển Đông có vai trò gì đối với Việt Nam?",["Điều hòa khí hậu, cung cấp tài nguyên và phát triển giao thông","Chỉ dùng để đánh bắt cá","Không ảnh hưởng đến khí hậu","Chỉ có giá trị du lịch"],0],
+["Biện pháp nào góp phần bảo vệ tài nguyên và môi trường biển?",["Không xả rác, hạn chế ô nhiễm và khai thác hợp lí","Đổ chất thải xuống biển","Khai thác hải sản bằng mọi cách","Phá hủy rạn san hô"],0]
+
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+let waiting=false;
+let rocketPosition=55;
+let rocketTimer=null;
+let obstacleTimer=null;
+
+function startGame(){
+
+gameRunning=true;
+waiting=false;
+currentQuestion=0;
+selectedAnswer=null;
+rocketPosition=55;
+
+document.getElementById("rocket").style.left=rocketPosition+"px";
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("energy").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").classList.remove("lose");
+
+document.getElementById("startButton").innerHTML="🔄 PHIÊU LƯU LẠI";
+document.getElementById("status").innerHTML="🚀 Tàu vũ trụ đang khám phá không gian...";
+
+let shuffled=[...questionBank];
+shuffled.sort(()=>Math.random()-.5);
+gameQuestions=shuffled.slice(0,10);
+
+updateProgress();
+
+clearInterval(rocketTimer);
+clearTimeout(obstacleTimer);
+
+rocketTimer=setInterval(moveRocket,100);
+obstacleTimer=setTimeout(showObstacle,4000);
+
+}
+
+function moveRocket(){
+
+if(!gameRunning||waiting)return;
+
+rocketPosition+=2;
+
+let width=document.querySelector(".space").clientWidth;
+
+if(rocketPosition>width-210){
+rocketPosition=55;
+}
+
+document.getElementById("rocket").style.left=rocketPosition+"px";
+
+}
+
+function showObstacle(){
+
+if(!gameRunning)return;
+
+waiting=true;
+
+document.getElementById("obstacle").classList.add("show");
+document.getElementById("status").innerHTML="☄️ Thiên thạch phía trước! Hãy trả lời câu hỏi!";
+
+clearInterval(rocketTimer);
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=gameQuestions[currentQuestion];
+selectedAnswer=null;
+
+document.getElementById("question").innerHTML=
+"Câu "+(currentQuestion+1)+": "+q[0];
+
+let html="";
+
+q[1].forEach((answer,index)=>{
+html+=`
+<button class="answer" onclick="selectAnswer(${index})">
+${String.fromCharCode(65+index)}. ${answer}
+</button>
+`;
+});
+
+document.getElementById("answers").innerHTML=html;
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+
+}
+
+function selectAnswer(index){
+
+selectedAnswer=index;
+
+document.querySelectorAll(".answer").forEach(button=>{
+button.classList.remove("selected");
+});
+
+document.querySelectorAll(".answer")[index].classList.add("selected");
+
+}
+
+function correctEffect(){
+
+const effect=document.createElement("div");
+effect.className="correct-effect";
+effect.innerHTML="🚀 CHÍNH XÁC!";
+document.body.appendChild(effect);
+
+setTimeout(()=>{
+effect.remove();
+},800);
+
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null){
+alert("⚠️ Hãy chọn một đáp án!");
+return;
+}
+
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+loseGame();
+return;
+}
+
+correctEffect();
+currentQuestion++;
+
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+
+updateProgress();
+
+if(currentQuestion>=10){
+winGame();
+return;
+}
+
+waiting=false;
+
+document.getElementById("status").innerHTML=
+"✅ Chính xác! Tàu vũ trụ tiếp tục bay...";
+
+rocketTimer=setInterval(moveRocket,100);
+obstacleTimer=setTimeout(showObstacle,4000);
+
+}
+
+function updateProgress(){
+
+document.getElementById("progressBar").style.width=
+(currentQuestion/10*100)+"%";
+
+document.getElementById("progressText").innerHTML=
+"🚀 Đã vượt qua "+currentQuestion+"/10 thử thách";
+
+}
+
+function loseGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(rocketTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+
+document.getElementById("resultTitle").innerHTML="💥 TÀU VŨ TRỤ GẶP SỰ CỐ!";
+
+document.getElementById("resultText").innerHTML=
+"❌ Bạn đã trả lời sai!<br><br>"+
+"🚀 Bạn đã vượt qua "+currentQuestion+"/10 thử thách.<br><br>"+
+"📚 Hãy ôn lại kiến thức Lịch sử và Địa lí 8 rồi thử lại!";
+
+}
+
+function winGame(){
+
+gameRunning=false;
+waiting=false;
+
+clearInterval(rocketTimer);
+clearTimeout(obstacleTimer);
+
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("obstacle").classList.remove("show");
+document.getElementById("energy").classList.add("show");
+document.getElementById("progressBar").style.width="100%";
+document.getElementById("progressText").innerHTML="🏆 HOÀN THÀNH 10/10!";
+document.getElementById("status").innerHTML="⚡ Bạn đã chinh phục thành công vũ trụ Lịch sử và Địa lí!";
+
+document.getElementById("result").style.display="block";
+document.getElementById("resultTitle").innerHTML="🌌 CHINH PHỤC VŨ TRỤ!";
+
+document.getElementById("resultText").innerHTML=
+"🎉 XUẤT SẮC!<br><br>"+
+"🚀 Bạn đã vượt qua cả 10 thử thách!<br><br>"+
+"🌍 Bạn đã hoàn thành Trắc nghiệm Lịch sử và Địa lí 8!";
+
+}
+
+</script>
+
+</body>
+</html>

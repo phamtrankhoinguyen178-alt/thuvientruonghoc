@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngữ văn 9 - Dễ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #00695c, #00897b, #26a69a);
+    min-height: 100vh;
+}
+
+.top {
+    background: #111;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 3px 15px #000;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.player { color: #4da6ff; }
+.bot { color: #ff3333; }
+
+.time, .bot-time {
+    background: #333;
+    padding: 10px 22px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.bot-time {
+    background: #555;
+}
+
+.main {
+    max-width: 950px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.card {
+    background: #171717;
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px #000;
+    border: 2px solid #00897b;
+}
+
+.question {
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 18px;
+    border: 2px solid #555;
+    border-radius: 12px;
+    background: #242424;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer:hover {
+    background: #004d40;
+    border-color: #00e5ff;
+    transform: scale(1.02);
+}
+
+.answer.correct {
+    background: #155d25;
+    border-color: #2ecc71;
+}
+
+.answer.wrong {
+    background: #700000;
+    border-color: #ff3333;
+}
+
+.answer:disabled {
+    cursor: default;
+}
+
+.status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result {
+    display: none;
+    background: #171717;
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 30px #000;
+    border: 2px solid #00897b;
+}
+
+.result h1 {
+    font-size: 40px;
+}
+
+.win { color: #2ecc71; }
+.lose { color: #ff3333; }
+.draw { color: #f39c12; }
+
+.result h2 {
+    margin: 12px;
+}
+
+.result button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #00897b;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.result button:hover {
+    background: #00bfa5;
+}
+
+@media(max-width:600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        font-size: 15px;
+    }
+
+    .title {
+        font-size: 25px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+    <div class="player">
+        👤 Bạn: <span id="playerScore">0</span>
+    </div>
+
+    <div class="time">
+        ⏱ Bạn: <span id="timer">15</span>s
+    </div>
+
+    <div class="bot">
+        🤖 Bot: <span id="botScore">0</span>
+    </div>
+
+    <div class="bot-time">
+        🤖 Bot: <span id="botTimer">15</span>s
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="title">
+        📚 NGỮ VĂN 9 - CẤP ĐỘ DỄ 📚
+    </div>
+
+    <div id="game" class="card">
+
+        <div class="question" id="question"></div>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="status" id="status">
+            🤖 Bot đang suy nghĩ...
+        </div>
+
+    </div>
+
+    <div class="info">
+        Câu <span id="number">1</span>/10
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const cauHoi = [
+
+{
+q: "Truyện truyền kì thường có đặc điểm nổi bật nào?",
+a: ["Kết hợp yếu tố kì ảo với hiện thực", "Chỉ kể chuyện có thật", "Chỉ miêu tả thiên nhiên", "Không có nhân vật"],
+d: 0
+},
+
+{
+q: "Truyện thơ Nôm thường được viết bằng thể thơ nào?",
+a: ["Thất ngôn bát cú", "Lục bát", "Song thất lục bát", "Thơ tự do"],
+d: 1
+},
+
+{
+q: "Truyện Kiều là tác phẩm của tác giả nào?",
+a: ["Nguyễn Du", "Nguyễn Trãi", "Hồ Xuân Hương", "Nguyễn Khuyến"],
+d: 0
+},
+
+{
+q: "Truyện Kiều có tên gọi khác là gì?",
+a: ["Chinh phụ ngâm", "Đoạn trường tân thanh", "Cung oán ngâm khúc", "Lục Vân Tiên"],
+d: 1
+},
+
+{
+q: "Tác phẩm Lục Vân Tiên do ai sáng tác?",
+a: ["Nguyễn Du", "Nguyễn Đình Chiểu", "Nguyễn Trãi", "Tố Hữu"],
+d: 1
+},
+
+{
+q: "Thơ lục bát gồm những dòng thơ có số tiếng như thế nào?",
+a: ["5 và 7", "6 và 8", "7 và 7", "8 và 8"],
+d: 1
+},
+
+{
+q: "Chủ đề của văn bản là gì?",
+a: ["Vấn đề chính được thể hiện trong văn bản", "Tên tác giả", "Số lượng câu văn", "Nơi xuất bản"],
+d: 0
+},
+
+{
+q: "Biện pháp tu từ ẩn dụ dựa trên mối quan hệ nào?",
+a: ["Quan hệ tương đồng", "Quan hệ đối lập", "Quan hệ liệt kê", "Quan hệ thời gian"],
+d: 0
+},
+
+{
+q: "Hoán dụ là biện pháp tu từ dựa trên mối quan hệ nào?",
+a: ["Tương đồng", "Gần gũi giữa các sự vật", "Đối lập", "Nguyên nhân và kết quả"],
+d: 1
+},
+
+{
+q: "Thành phần biệt lập cảm thán dùng để làm gì?",
+a: ["Bộc lộ cảm xúc của người nói", "Xác định thời gian", "Nêu địa điểm", "Bổ sung chủ ngữ"],
+d: 0
+},
+
+{
+q: "Thành phần biệt lập gọi - đáp được dùng để làm gì?",
+a: ["Miêu tả sự vật", "Tạo lập hoặc duy trì quan hệ giao tiếp", "Kể lại sự việc", "Thể hiện thời gian"],
+d: 1
+},
+
+{
+q: "Phép liên kết lặp là gì?",
+a: ["Lặp lại từ ngữ đã xuất hiện", "Dùng từ trái nghĩa", "Thay đổi chủ đề", "Bỏ toàn bộ từ ngữ"],
+d: 0
+},
+
+{
+q: "Văn bản nghị luận xã hội thường bàn về vấn đề nào?",
+a: ["Các vấn đề trong đời sống xã hội", "Chỉ các hiện tượng thiên nhiên", "Chỉ các nhân vật thần thoại", "Chỉ các sự kiện lịch sử"],
+d: 0
+},
+
+{
+q: "Luận điểm trong bài văn nghị luận là gì?",
+a: ["Ý kiến chính cần làm sáng tỏ", "Một câu kể", "Một đoạn hội thoại", "Một hình ảnh"],
+d: 0
+},
+
+{
+q: "Bằng chứng trong văn nghị luận có tác dụng gì?",
+a: ["Làm sáng tỏ và tăng sức thuyết phục cho luận điểm", "Làm bài văn dài hơn", "Thay thế hoàn toàn luận điểm", "Tạo yếu tố hài hước"],
+d: 0
+},
+
+{
+q: "Đối thoại là hình thức giao tiếp như thế nào?",
+a: ["Một người suy nghĩ", "Trao đổi giữa hai hoặc nhiều người", "Tác giả kể chuyện", "Nhân vật độc thoại nội tâm"],
+d: 1
+},
+
+{
+q: "Độc thoại nội tâm thường thể hiện điều gì?",
+a: ["Suy nghĩ và tâm trạng bên trong nhân vật", "Cuộc trò chuyện giữa hai người", "Lời giới thiệu tác giả", "Lời bình của người đọc"],
+d: 0
+},
+
+{
+q: "Văn bản thông tin chủ yếu nhằm mục đích gì?",
+a: ["Cung cấp thông tin về sự vật, hiện tượng", "Kể chuyện tưởng tượng", "Chỉ bộc lộ cảm xúc", "Tạo tiếng cười"],
+d: 0
+},
+
+{
+q: "Truyện ngắn thường tập trung vào điều gì?",
+a: ["Một tình huống hoặc sự việc nổi bật", "Nhiều thế hệ nhân vật", "Toàn bộ lịch sử một quốc gia", "Chỉ miêu tả thiên nhiên"],
+d: 0
+},
+
+{
+q: "Nghị luận về một tác phẩm văn học cần làm rõ điều gì?",
+a: ["Nội dung và nghệ thuật của tác phẩm", "Chỉ tên tác giả", "Chỉ số trang sách", "Chỉ năm xuất bản"],
+d: 0
+}
+
+];
+
+let danhSach = [...cauHoi];
+
+danhSach.sort(() => Math.random() - 0.5);
+danhSach = danhSach.slice(0, 10);
+
+let cau = 0;
+let diemBan = 0;
+let diemBot = 0;
+
+let thoiGianBan = 15;
+let thoiGianBot = 15;
+
+let timerBan;
+let timerBot;
+let chuyenCau;
+
+let daTraLoi = false;
+let botDaTraLoi = false;
+
+function hienThiCau() {
+
+    daTraLoi = false;
+    botDaTraLoi = false;
+
+    thoiGianBan = 15;
+    thoiGianBot = 15;
+
+    document.getElementById("number").innerText = cau + 1;
+    document.getElementById("timer").innerText = 15;
+    document.getElementById("botTimer").innerText = 15;
+
+    document.getElementById("question").innerText =
+        danhSach[cau].q;
+
+    document.getElementById("status").innerText =
+        "🤖 Bot đang suy nghĩ...";
+
+    let html = "";
+
+    danhSach[cau].a.forEach((x, i) => {
+
+        html += `
+        <button class="answer" onclick="traLoi(${i}, this)">
+            ${String.fromCharCode(65 + i)}. ${x}
+        </button>
+        `;
+
+    });
+
+    document.getElementById("answers").innerHTML = html;
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    timerBan = setInterval(() => {
+
+        thoiGianBan--;
+
+        document.getElementById("timer").innerText =
+            thoiGianBan;
+
+        if (thoiGianBan <= 0) {
+
+            clearInterval(timerBan);
+            hetThoiGian();
+
+        }
+
+    }, 1000);
+
+    timerBot = setInterval(() => {
+
+        thoiGianBot--;
+
+        document.getElementById("botTimer").innerText =
+            thoiGianBot;
+
+        if (thoiGianBot <= 0) {
+
+            clearInterval(timerBot);
+            botTraLoi();
+
+        }
+
+    }, 1000);
+}
+
+function traLoi(chon, element) {
+
+    if (daTraLoi || botDaTraLoi) return;
+
+    daTraLoi = true;
+
+    clearInterval(timerBan);
+
+    let dung = danhSach[cau].d;
+    let cacNut = document.querySelectorAll(".answer");
+
+    if (chon === dung) {
+
+        diemBan++;
+        element.classList.add("correct");
+
+        document.getElementById("status").innerText =
+            "✅ Bạn trả lời chính xác!";
+
+    } else {
+
+        element.classList.add("wrong");
+        cacNut[dung].classList.add("correct");
+
+        document.getElementById("status").innerText =
+            "❌ Bạn trả lời chưa chính xác!";
+
+    }
+
+    cacNut.forEach(nut => nut.disabled = true);
+
+    document.getElementById("playerScore").innerText =
+        diemBan;
+
+}
+
+function hetThoiGian() {
+
+    if (daTraLoi) return;
+
+    daTraLoi = true;
+
+    let dung = danhSach[cau].d;
+
+    let cacNut = document.querySelectorAll(".answer");
+
+    cacNut[dung].classList.add("correct");
+
+    cacNut.forEach(nut => nut.disabled = true);
+
+    document.getElementById("status").innerText =
+        "⏰ Bạn hết thời gian!";
+
+}
+
+function botTraLoi() {
+
+    if (botDaTraLoi) return;
+
+    botDaTraLoi = true;
+
+    let dung = Math.random() < 0.25;
+
+    if (dung) {
+
+        diemBot++;
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời đúng!";
+
+    } else {
+
+        document.getElementById("status").innerText =
+            "🤖 Bot trả lời sai!";
+
+    }
+
+    document.getElementById("botScore").innerText =
+        diemBot;
+
+    setTimeout(() => {
+
+        cau++;
+
+        if (cau >= 10) {
+
+            ketThucTran();
+
+        } else {
+
+            hienThiCau();
+
+        }
+
+    }, 1000);
+}
+
+function ketThucTran() {
+
+    clearInterval(timerBan);
+    clearInterval(timerBot);
+
+    document.getElementById("game").style.display =
+        "none";
+
+    document.querySelector(".info").style.display =
+        "none";
+
+    document.querySelector(".title").style.display =
+        "none";
+
+    let result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    let ketQua = "";
+
+    if (diemBan > diemBot) {
+
+        ketQua = `
+            <h1 class="win">🏆 BẠN THẮNG!</h1>
+            <p>🎉 Bạn đã đánh bại Bot!</p>
+        `;
+
+    } else if (diemBan < diemBot) {
+
+        ketQua = `
+            <h1 class="lose">😢 BẠN THUA!</h1>
+            <p>🤖 Bot đã chiến thắng!</p>
+        `;
+
+    } else {
+
+        ketQua = `
+            <h1 class="draw">🔥 HÒA!</h1>
+            <p>Hai bên có cùng số điểm!</p>
+        `;
+
+    }
+
+    result.innerHTML = `
+
+        ${ketQua}
+
+        <h2>👤 Bạn: ${diemBan} điểm</h2>
+
+        <h2>🤖 Bot: ${diemBot} điểm</h2>
+
+        <p>⏱ Bạn: 15 giây/câu</p>
+
+        <p>🤖 Bot: 15 giây/câu</p>
+
+        <p>📚 Bộ câu hỏi: 20 câu</p>
+
+        <p>🎯 Bot có 25% khả năng trả lời đúng</p>
+
+        <br>
+
+        <button onclick="location.href='capdo_van_khoi9.html'">
+            🔄 Chơi lại
+        </button>
+
+        <button onclick="location.href='khoi9.html'">
+            🏠 Về chọn môn
+        </button>
+
+    `;
+}
+
+hienThiCau();
+
+</script>
+
+</body>
+</html>

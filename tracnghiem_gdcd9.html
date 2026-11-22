@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm GDCD 9 - Khu Vườn Công Dân</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 15% 20%,#166534 0%,transparent 28%),
+radial-gradient(circle at 85% 75%,#854d0e 0%,transparent 30%),
+linear-gradient(135deg,#052e16,#14532d,#422006);
+color:white;
+}
+.leaf{
+position:fixed;
+font-size:25px;
+animation:fall 6s linear infinite;
+opacity:.7;
+z-index:1;
+}
+.leaf:nth-child(1){left:5%;animation-delay:0s}
+.leaf:nth-child(2){left:18%;animation-delay:2s}
+.leaf:nth-child(3){left:35%;animation-delay:4s}
+.leaf:nth-child(4){left:55%;animation-delay:1s}
+.leaf:nth-child(5){left:72%;animation-delay:3s}
+.leaf:nth-child(6){left:90%;animation-delay:5s}
+@keyframes fall{
+0%{top:-50px;transform:rotate(0deg)}
+100%{top:110vh;transform:rotate(360deg)}
+}
+.back{
+position:fixed;
+top:18px;
+left:18px;
+z-index:500;
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+.back:hover{background:#16a34a;transform:translateY(-3px)}
+h1{
+text-align:center;
+margin:70px 10px 8px;
+font-size:40px;
+text-shadow:0 0 10px #86efac,0 0 25px #22c55e,0 5px 15px rgba(0,0,0,.5);
+}
+.info{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-bottom:25px;
+color:#bbf7d0;
+}
+.game{
+width:94%;
+max-width:1150px;
+margin:auto;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(12px);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.farm{
+position:relative;
+height:370px;
+overflow:hidden;
+border-radius:22px;
+border:4px solid #22c55e;
+background:
+linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),
+linear-gradient(180deg,#38bdf8 0%,#7dd3fc 45%,#65a30d 46%,#3f6212 100%);
+background-size:40px 40px,40px 40px,cover;
+box-shadow:inset 0 0 60px rgba(34,197,94,.25),0 10px 35px rgba(0,0,0,.5);
+}
+.sun{
+position:absolute;
+right:60px;
+top:35px;
+width:75px;
+height:75px;
+border-radius:50%;
+background:#fde047;
+box-shadow:0 0 35px #facc15;
+}
+.cloud{
+position:absolute;
+width:100px;
+height:35px;
+border-radius:30px;
+background:rgba(255,255,255,.8);
+}
+.cloud:before,.cloud:after{
+content:"";
+position:absolute;
+background:rgba(255,255,255,.8);
+border-radius:50%;
+}
+.cloud:before{width:45px;height:45px;left:15px;top:-20px}
+.cloud:after{width:55px;height:55px;right:10px;top:-28px}
+.cloud1{left:70px;top:55px}
+.cloud2{left:300px;top:90px;transform:scale(.7)}
+.tree{
+position:absolute;
+bottom:75px;
+width:80px;
+height:150px;
+}
+.tree1{left:35px}
+.tree2{right:250px}
+.trunk{
+position:absolute;
+bottom:0;
+left:32px;
+width:18px;
+height:75px;
+background:#78350f;
+border-radius:8px;
+}
+.crown{
+position:absolute;
+top:0;
+left:0;
+width:80px;
+height:80px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#86efac,#16a34a 55%,#14532d);
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+.field{
+position:absolute;
+left:170px;
+bottom:35px;
+width:440px;
+height:110px;
+background:repeating-linear-gradient(90deg,#713f12 0px,#713f12 28px,#854d0e 29px,#854d0e 55px);
+border:6px solid #a16207;
+border-radius:15px;
+transform:skewX(-5deg);
+}
+.crop{
+position:absolute;
+width:12px;
+height:35px;
+background:#16a34a;
+border-radius:10px;
+}
+.crop:after{
+content:"";
+position:absolute;
+left:-10px;
+top:10px;
+width:32px;
+height:12px;
+border-radius:50%;
+background:#22c55e;
+}
+.crop1{left:210px;bottom:70px}
+.crop2{left:275px;bottom:60px}
+.crop3{left:340px;bottom:75px}
+.crop4{left:405px;bottom:65px}
+.crop5{left:470px;bottom:78px}
+.crop6{left:530px;bottom:60px}
+.barn{
+position:absolute;
+right:45px;
+bottom:65px;
+width:130px;
+height:120px;
+background:#dc2626;
+border:5px solid #991b1b;
+}
+.barn:before{
+content:"";
+position:absolute;
+left:-12px;
+top:-65px;
+width:145px;
+height:90px;
+background:#7f1d1d;
+clip-path:polygon(50% 0,100% 55%,95% 100%,5% 100%,0 55%);
+}
+.barn-door{
+position:absolute;
+left:42px;
+bottom:0;
+width:45px;
+height:65px;
+background:#451a03;
+border:4px solid #292524;
+}
+.farmer{
+position:absolute;
+left:70px;
+bottom:55px;
+width:120px;
+height:190px;
+z-index:20;
+}
+.head{
+position:absolute;
+left:30px;
+top:0;
+width:62px;
+height:62px;
+background:#f3c49b;
+border-radius:50%;
+border:4px solid #78350f;
+}
+.hair{
+position:absolute;
+left:27px;
+top:-3px;
+width:68px;
+height:28px;
+background:#292524;
+border-radius:50% 50% 20% 20%;
+z-index:2;
+}
+.eye1,.eye2{
+position:absolute;
+top:28px;
+width:7px;
+height:7px;
+background:#111827;
+border-radius:50%;
+z-index:4;
+}
+.eye1{left:43px}
+.eye2{left:68px}
+.hat{
+position:absolute;
+left:15px;
+top:-18px;
+width:90px;
+height:32px;
+background:#16a34a;
+border:4px solid #14532d;
+border-radius:50%;
+z-index:5;
+}
+.body{
+position:absolute;
+left:20px;
+top:62px;
+width:80px;
+height:100px;
+background:#2563eb;
+border:5px solid #1e3a8a;
+border-radius:18px 18px 8px 8px;
+}
+.shirt{
+position:absolute;
+left:48px;
+top:72px;
+width:25px;
+height:80px;
+background:#f8fafc;
+z-index:2;
+}
+.arm{
+position:absolute;
+width:23px;
+height:85px;
+background:#f3c49b;
+border-radius:20px;
+z-index:1;
+}
+.arm1{left:3px;top:72px;transform:rotate(35deg)}
+.arm2{right:0;top:72px;transform:rotate(-45deg)}
+.hoe{
+position:absolute;
+right:125px;
+top:155px;
+font-size:65px;
+transform:rotate(-25deg);
+filter:drop-shadow(0 5px 4px rgba(0,0,0,.6));
+}
+.start-area{text-align:center;margin:25px 0}
+.start{
+border:none;
+padding:16px 42px;
+border-radius:50px;
+font-size:22px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,#16a34a,#65a30d);
+box-shadow:0 8px 0 #166534,0 15px 30px rgba(0,0,0,.4);
+transition:.2s;
+}
+.start:hover{transform:translateY(-3px)}
+.start:active{transform:translateY(5px);box-shadow:0 3px 0 #166534}
+.progress-text{
+text-align:center;
+font-size:21px;
+font-weight:bold;
+margin-bottom:10px;
+color:#dcfce7;
+}
+.progress{
+width:100%;
+height:25px;
+padding:3px;
+border-radius:30px;
+background:rgba(255,255,255,.15);
+overflow:hidden;
+}
+.progress-bar{
+height:100%;
+width:0;
+border-radius:30px;
+background:linear-gradient(90deg,#22c55e,#84cc16,#eab308);
+box-shadow:0 0 15px #22c55e;
+transition:.5s;
+}
+.status{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+margin-top:15px;
+min-height:28px;
+color:#bbf7d0;
+}
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+z-index:150;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(6px);
+}
+.overlay.show{display:block}
+.question-box{
+display:none;
+position:fixed;
+z-index:200;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.8);
+width:92%;
+max-width:730px;
+max-height:90vh;
+overflow-y:auto;
+padding:30px;
+border-radius:28px;
+background:linear-gradient(135deg,#ffffff,#f0fdf4);
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+color:#0f172a;
+}
+.question-box.show{display:block;animation:popup .3s forwards}
+@keyframes popup{to{transform:translate(-50%,-50%) scale(1)}}
+.question-box h2{
+text-align:center;
+margin-top:0;
+font-size:27px;
+color:#15803d;
+}
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.5;
+margin:20px 0;
+}
+.answer{
+display:block;
+width:100%;
+padding:15px 18px;
+margin:11px 0;
+border:2px solid #e2e8f0;
+border-radius:14px;
+background:#f8fafc;
+font-size:18px;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+color:#1e293b;
+}
+.answer:hover{transform:translateX(5px);border-color:#22c55e;background:#f0fdf4}
+.answer.selected{
+background:#dcfce7;
+border-color:#16a34a;
+box-shadow:0 0 0 3px rgba(22,163,74,.12);
+}
+.check{
+display:block;
+margin:22px auto 0;
+padding:14px 36px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#16a34a,#65a30d);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(22,163,74,.35);
+}
+.check:hover{transform:translateY(-2px)}
+.result{
+display:none;
+position:fixed;
+z-index:300;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:580px;
+padding:45px 30px;
+border-radius:30px;
+background:white;
+text-align:center;
+box-shadow:0 30px 90px rgba(0,0,0,.7);
+animation:resultShow .4s;
+}
+@keyframes resultShow{
+from{transform:translate(-50%,-50%) scale(.5);opacity:0}
+to{transform:translate(-50%,-50%) scale(1);opacity:1}
+}
+.result h2{font-size:38px;color:#15803d;margin:0 0 20px}
+.result.lose h2{color:#ef4444}
+.result p{font-size:21px;line-height:1.6;color:#334155}
+.again{
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(135deg,#16a34a,#65a30d);
+color:white;
+font-size:19px;
+font-weight:bold;
+cursor:pointer;
+}
+.correct-effect{
+position:fixed;
+z-index:1000;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:#86efac;
+text-shadow:0 0 20px #22c55e;
+pointer-events:none;
+animation:correctEffect .8s forwards;
+}
+@keyframes correctEffect{
+0%{transform:translate(-50%,-50%) scale(.4);opacity:0}
+40%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+100%{transform:translate(-50%,-100%) scale(1);opacity:0}
+}
+@media(max-width:700px){
+h1{font-size:28px;margin-top:75px}
+.info{font-size:16px}
+.game{width:96%;padding:12px}
+.farm{height:290px}
+.field{left:100px;width:280px;height:80px}
+.barn{right:10px;transform:scale(.7);transform-origin:bottom right}
+.tree{transform:scale(.7)}
+.tree1{left:5px}
+.tree2{right:120px}
+.farmer{transform:scale(.7);transform-origin:bottom left;left:15px}
+.hoe{right:30px;top:120px;font-size:45px}
+.question-box{padding:20px}
+.question-box h2{font-size:21px}
+.question{font-size:18px}
+.answer{font-size:16px;padding:12px}
+.result h2{font-size:30px}
+.result p{font-size:18px}
+.back{padding:9px 14px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="leaf">🍃</div>
+<div class="leaf">🌿</div>
+<div class="leaf">🍀</div>
+<div class="leaf">🍃</div>
+<div class="leaf">🌱</div>
+<div class="leaf">🍂</div>
+
+<a href="khoi9tracnghiem.html" class="back">⬅ Quay lại</a>
+
+<h1>🌱 TRẮC NGHIỆM GDCD 9</h1>
+
+<div class="info">
+⚖️ TRÒ CHƠI KHU VƯỜN CÔNG DÂN - CHINH PHỤC KIẾN THỨC GDCD
+</div>
+
+<div class="game">
+<div class="farm">
+<div class="sun"></div>
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<div class="tree tree1">
+<div class="crown"></div>
+<div class="trunk"></div>
+</div>
+
+<div class="tree tree2">
+<div class="crown"></div>
+<div class="trunk"></div>
+</div>
+
+<div class="field"></div>
+
+<div class="crop crop1"></div>
+<div class="crop crop2"></div>
+<div class="crop crop3"></div>
+<div class="crop crop4"></div>
+<div class="crop crop5"></div>
+<div class="crop crop6"></div>
+
+<div class="barn">
+<div class="barn-door"></div>
+</div>
+
+<div class="farmer">
+<div class="hat"></div>
+<div class="hair"></div>
+<div class="head">
+<div class="eye1"></div>
+<div class="eye2"></div>
+</div>
+<div class="body"></div>
+<div class="shirt"></div>
+<div class="arm arm1"></div>
+<div class="arm arm2"></div>
+</div>
+
+<div class="hoe">⚖️</div>
+</div>
+
+<div class="start-area">
+<button class="start" id="startButton" onclick="startGame()">⚖️ BẮT ĐẦU THỬ THÁCH</button>
+</div>
+
+<div class="progress-text" id="progressText">🌿 Chưa bắt đầu</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="status" id="status">
+Hãy bấm BẮT ĐẦU để khám phá kiến thức GDCD 9!
+</div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="question-box" id="questionBox">
+<h2>⚖️ THỬ THÁCH CÔNG DÂN!</h2>
+<div class="question" id="question"></div>
+<div id="answers"></div>
+<button class="check" onclick="checkAnswer()">🌱 TRẢ LỜI</button>
+</div>
+
+<div class="result" id="result">
+<h2 id="resultTitle"></h2>
+<p id="resultText"></p>
+<button class="again" onclick="startGame()">🔄 LÀM LẠI</button>
+</div>
+
+<script>
+const questionBank=[
+["Sống có lí tưởng là:",["Xác định mục đích sống đúng đắn và nỗ lực thực hiện","Chỉ quan tâm đến lợi ích trước mắt","Sống không có mục tiêu","Làm mọi việc theo cảm xúc"],0],
+["Người sống có lí tưởng thường:",["Có mục tiêu rõ ràng và cố gắng đóng góp cho cộng đồng","Chỉ nghĩ đến bản thân","Ngại học tập và lao động","Không quan tâm đến tương lai"],0],
+["Lí tưởng sống của thanh niên Việt Nam là:",["Góp phần xây dựng đất nước giàu mạnh, dân chủ, công bằng, văn minh","Chỉ tìm kiếm lợi ích cá nhân","Không cần học tập","Sống thờ ơ với xã hội"],0],
+["Khoan dung là:",["Tôn trọng, thông cảm và tha thứ cho người khác khi họ biết nhận lỗi, sửa sai","Luôn đồng tình với mọi việc","Che giấu mọi hành vi vi phạm","Không quan tâm đến người khác"],0],
+["Biểu hiện của lòng khoan dung là:",["Biết lắng nghe và cho người khác cơ hội sửa chữa lỗi lầm","Luôn tìm cách trả thù","Chế giễu người mắc lỗi","Không bao giờ tha thứ"],0],
+["Hòa bình là tình trạng:",["Không có chiến tranh hay xung đột vũ trang, con người sống trong an toàn và hợp tác","Các quốc gia thường xuyên gây chiến","Mọi người tranh giành quyền lợi","Xã hội không có quy tắc"],0],
+["Bảo vệ hòa bình là trách nhiệm của:",["Tất cả các quốc gia và mọi người","Chỉ lực lượng quân đội","Chỉ người trưởng thành","Chỉ các tổ chức quốc tế"],0],
+["Việc làm góp phần bảo vệ hòa bình là:",["Giải quyết mâu thuẫn bằng đối thoại và hợp tác","Kích động bạo lực","Phân biệt đối xử","Cổ vũ chiến tranh"],0],
+["Khách quan là:",["Nhìn nhận sự vật, sự việc đúng như thực tế","Đánh giá theo cảm tính","Chỉ tin điều có lợi cho mình","Đánh giá người khác qua vẻ ngoài"],0],
+["Công bằng là:",["Đối xử theo những nguyên tắc chung, không thiên vị","Ưu tiên người thân trong mọi trường hợp","Chỉ bảo vệ người có quyền lực","Phân biệt đối xử giữa mọi người"],0],
+["Hành vi nào thể hiện sự công bằng?",["Đánh giá kết quả học tập dựa trên năng lực và sự cố gắng","Cho điểm cao vì quen biết","Bênh vực bạn dù bạn làm sai","Thiên vị người thân"],0],
+["Tự chủ là:",["Làm chủ suy nghĩ, cảm xúc và hành vi của bản thân","Làm theo mọi lời rủ rê","Không kiểm soát được cảm xúc","Phụ thuộc hoàn toàn vào người khác"],0],
+["Biểu hiện của người tự chủ là:",["Bình tĩnh suy nghĩ trước khi hành động","Nóng giận và hành động thiếu suy nghĩ","Dễ bị lôi kéo","Luôn đổ lỗi cho người khác"],0],
+["Để rèn luyện tính tự chủ, học sinh cần:",["Suy nghĩ trước khi nói và làm, kiên trì thực hiện mục tiêu","Làm theo cảm xúc nhất thời","Tránh nhận trách nhiệm","Luôn phụ thuộc vào bạn bè"],0],
+["Năng động, sáng tạo là:",["Chủ động, linh hoạt và tìm ra cách làm mới hiệu quả","Chỉ làm theo cách cũ","Ngại thay đổi","Không chịu suy nghĩ"],0],
+["Học sinh năng động, sáng tạo thường:",["Tìm tòi phương pháp học tập phù hợp và hiệu quả","Chép bài mà không hiểu","Không tham gia hoạt động","Ngại đặt câu hỏi"],0],
+["Làm việc có năng suất, chất lượng, hiệu quả là:",["Hoàn thành công việc tốt với thời gian và nguồn lực hợp lí","Làm thật nhiều nhưng không quan tâm kết quả","Làm việc qua loa","Kéo dài thời gian không cần thiết"],0],
+["Để làm việc hiệu quả, cần:",["Lập kế hoạch và sử dụng thời gian hợp lí","Làm việc tùy hứng","Không xác định nhiệm vụ","Thường xuyên trì hoãn"],0],
+["Dân chủ là:",["Mọi người được tham gia đóng góp ý kiến vào công việc chung theo quy định","Chỉ một người quyết định mọi việc","Không ai được phát biểu","Mọi người muốn làm gì cũng được"],0],
+["Kỉ luật là:",["Tuân theo những quy định chung đã được thống nhất","Làm việc tùy ý","Không cần chấp hành nội quy","Chỉ thực hiện khi có người kiểm tra"],0],
+["Dân chủ và kỉ luật có mối quan hệ:",["Có mối quan hệ chặt chẽ, bổ sung cho nhau","Hoàn toàn đối lập","Không liên quan đến nhau","Chỉ cần dân chủ, không cần kỉ luật"],0],
+["Bảo vệ môi trường và tài nguyên thiên nhiên là:",["Trách nhiệm của mọi cá nhân, tổ chức và cộng đồng","Việc riêng của cơ quan môi trường","Không cần thiết","Chỉ dành cho người làm nông nghiệp"],0],
+["Hành động nào góp phần bảo vệ tài nguyên thiên nhiên?",["Sử dụng tiết kiệm nước, điện và tài nguyên","Khai thác rừng trái phép","Xả chất thải chưa xử lí","Săn bắt động vật hoang dã"],0],
+["Tình hữu nghị giữa các dân tộc trên thế giới là:",["Quan hệ thân thiện, hợp tác và tôn trọng lẫn nhau","Quan hệ cạnh tranh bằng mọi cách","Sự áp đặt văn hóa","Sự phân biệt giữa các quốc gia"],0],
+["Hợp tác cùng phát triển có nghĩa là:",["Các bên cùng phối hợp, hỗ trợ để đạt mục tiêu chung và cùng có lợi","Một bên áp đặt bên còn lại","Chỉ quan tâm đến lợi ích cá nhân","Không chia sẻ trách nhiệm"],0],
+["Trong học tập, biểu hiện của hợp tác là:",["Cùng trao đổi, phân công nhiệm vụ và hỗ trợ nhau","Giấu tài liệu để bạn không biết","Không tham gia công việc nhóm","Đùn đẩy nhiệm vụ cho người khác"],0],
+["Quyền và nghĩa vụ của công dân trong hôn nhân cần dựa trên nguyên tắc:",["Tự nguyện, tiến bộ, một vợ một chồng, vợ chồng bình đẳng","Ép buộc kết hôn","Phân biệt quyền giữa vợ và chồng","Kết hôn theo sự sắp đặt trái pháp luật"],0],
+["Tảo hôn là:",["Việc lấy vợ, lấy chồng khi một bên hoặc cả hai bên chưa đủ tuổi kết hôn theo quy định pháp luật","Kết hôn tự nguyện khi đủ tuổi","Kết hôn có đăng kí hợp pháp","Việc tìm hiểu trước hôn nhân"],0],
+["Kinh doanh là hoạt động nhằm:",["Thực hiện liên tục một hoặc một số công đoạn từ đầu tư, sản xuất đến tiêu thụ sản phẩm hoặc cung ứng dịch vụ để tìm kiếm lợi nhuận","Chỉ phục vụ nhu cầu giải trí","Không cần tuân thủ pháp luật","Chỉ thực hiện hoạt động từ thiện"],0],
+["Thuế có vai trò:",["Tạo nguồn thu cho ngân sách nhà nước và góp phần điều tiết nền kinh tế","Chỉ làm tăng giá hàng hóa","Không có vai trò đối với xã hội","Chỉ áp dụng với học sinh"],0],
+["Quyền tự do kinh doanh của công dân được thực hiện:",["Theo quy định của pháp luật","Không cần đăng kí trong mọi trường hợp","Không phải nộp thuế","Không chịu sự quản lí của Nhà nước"],0],
+["Vi phạm pháp luật là hành vi:",["Trái pháp luật, có lỗi, do người có năng lực trách nhiệm pháp lí thực hiện","Đúng quy định pháp luật","Được xã hội khuyến khích","Không gây ảnh hưởng và luôn hợp pháp"],0],
+["Trách nhiệm pháp lí được áp dụng nhằm:",["Giáo dục, răn đe và bảo đảm trật tự pháp luật","Khuyến khích vi phạm","Thay thế mọi quy tắc đạo đức","Tạo đặc quyền cho người vi phạm"],0],
+["Công dân có nghĩa vụ:",["Tuân thủ Hiến pháp và pháp luật","Chỉ làm theo sở thích","Không cần quan tâm quyền lợi người khác","Tự đặt ra luật riêng"],0],
+["Khi phát hiện hành vi vi phạm pháp luật, công dân nên:",["Thông báo cho cơ quan hoặc người có trách nhiệm","Cổ vũ hành vi vi phạm","Che giấu người vi phạm","Tự ý xử lí bằng bạo lực"],0]
+];
+
+let gameQuestions=[];
+let currentQuestion=0;
+let selectedAnswer=null;
+let gameRunning=false;
+
+function startGame(){
+gameRunning=true;
+currentQuestion=0;
+selectedAnswer=null;
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").style.display="none";
+document.getElementById("result").classList.remove("lose");
+document.getElementById("startButton").innerHTML="🔄 THỬ THÁCH LẠI";
+document.getElementById("status").innerHTML="🌱 Công dân đang chuẩn bị bước vào thử thách...";
+let shuffled=[...questionBank];
+shuffled.sort(()=>Math.random()-.5);
+gameQuestions=shuffled.slice(0,10);
+updateProgress();
+setTimeout(showQuestion,1200);
+}
+
+function showQuestion(){
+if(!gameRunning)return;
+let q=gameQuestions[currentQuestion];
+selectedAnswer=null;
+document.getElementById("question").innerHTML="Câu "+(currentQuestion+1)+": "+q[0];
+let html="";
+q[1].forEach((answer,index)=>{
+html+=`<button class="answer" onclick="selectAnswer(${index})">${String.fromCharCode(65+index)}. ${answer}</button>`;
+});
+document.getElementById("answers").innerHTML=html;
+document.getElementById("overlay").classList.add("show");
+document.getElementById("questionBox").classList.add("show");
+}
+
+function selectAnswer(index){
+selectedAnswer=index;
+document.querySelectorAll(".answer").forEach(button=>button.classList.remove("selected"));
+document.querySelectorAll(".answer")[index].classList.add("selected");
+}
+
+function correctEffect(){
+const effect=document.createElement("div");
+effect.className="correct-effect";
+effect.innerHTML="🌱 CHÍNH XÁC!";
+document.body.appendChild(effect);
+setTimeout(()=>effect.remove(),800);
+}
+
+function checkAnswer(){
+if(selectedAnswer===null){
+alert("⚠️ Hãy chọn một đáp án!");
+return;
+}
+if(selectedAnswer!==gameQuestions[currentQuestion][2]){
+loseGame();
+return;
+}
+correctEffect();
+currentQuestion++;
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+updateProgress();
+if(currentQuestion>=10){
+winGame();
+return;
+}
+document.getElementById("status").innerHTML="🌿 Chính xác! Bạn đã hoàn thành tốt nhiệm vụ công dân!";
+setTimeout(showQuestion,900);
+}
+
+function updateProgress(){
+document.getElementById("progressBar").style.width=(currentQuestion/10*100)+"%";
+document.getElementById("progressText").innerHTML="🌿 Đã hoàn thành "+currentQuestion+"/10 thử thách";
+}
+
+function loseGame(){
+gameRunning=false;
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("result").style.display="block";
+document.getElementById("result").classList.add("lose");
+document.getElementById("resultTitle").innerHTML="💥 THỬ THÁCH CHƯA HOÀN THÀNH!";
+document.getElementById("resultText").innerHTML="❌ Bạn đã trả lời sai câu hỏi!<br><br>🌿 Bạn đã hoàn thành "+currentQuestion+"/10 thử thách.<br><br>📚 Hãy ôn lại kiến thức GDCD 9 và thử lại nhé!";
+}
+
+function winGame(){
+gameRunning=false;
+document.getElementById("questionBox").classList.remove("show");
+document.getElementById("overlay").classList.remove("show");
+document.getElementById("progressBar").style.width="100%";
+document.getElementById("progressText").innerHTML="🏆 HOÀN THÀNH 10/10 THỬ THÁCH!";
+document.getElementById("status").innerHTML="🌱 Bạn đã chinh phục thành công kiến thức GDCD 9!";
+document.getElementById("result").style.display="block";
+document.getElementById("resultTitle").innerHTML="🏆 CÔNG DÂN XUẤT SẮC!";
+document.getElementById("resultText").innerHTML="🎉 XUẤT SẮC!<br><br>🌿 Bạn đã hoàn thành cả 10 thử thách!<br><br>⚖️ Bạn đã chinh phục kiến thức GDCD 9!<br><br>🌱 Hãy tiếp tục phát huy những phẩm chất tốt đẹp!";
+}
+</script>
+</body>
+</html>
