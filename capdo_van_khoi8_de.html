@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ngữ văn 7 - Dễ</title>
-
+<title>Ngữ văn 8 - Dễ</title>
 <style>
 * {
     box-sizing: border-box;
@@ -13,78 +13,80 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #00695c, #00897b, #26a69a);
+    background: linear-gradient(135deg, #74ebd5, #9face6);
     min-height: 100vh;
 }
 
-.top {
-    background: #111;
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
     color: white;
-    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    box-shadow: 0 3px 15px #000;
+    box-shadow: 0 3px 10px #0003;
     font-size: 20px;
     font-weight: bold;
 }
 
 .player {
-    color: #4da6ff;
+    color: #2878e8;
 }
 
 .bot {
-    color: #ff3333;
+    color: #e74c3c;
 }
 
 .time {
     background: #333;
-    padding: 10px 22px;
+    color: white;
+    padding: 10px 20px;
     border-radius: 12px;
-    min-width: 100px;
-    text-align: center;
-}
-
-.bot-time {
-    background: #555;
-    padding: 10px 22px;
-    border-radius: 12px;
-    min-width: 100px;
-    text-align: center;
 }
 
 .main {
-    max-width: 950px;
+    max-width: 850px;
     margin: 35px auto;
     padding: 20px;
 }
 
 .title {
     text-align: center;
-    color: #fff;
-    font-size: 32px;
-    font-weight: bold;
+    color: white;
+    font-size: 30px;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px #00ffff;
 }
 
 .card {
-    background: #171717;
-    color: white;
+    background: white;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px #000;
-    border: 2px solid #00897b;
+    box-shadow: 0 8px 20px #0003;
 }
 
 .question {
-    font-size: 23px;
+    font-size: 24px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     line-height: 1.5;
+    color: #222;
 }
 
 .answers {
@@ -95,36 +97,32 @@ body {
 
 .answer {
     padding: 18px;
-    border: 2px solid #555;
+    border: 2px solid #ddd;
     border-radius: 12px;
-    background: #242424;
-    color: white;
+    background: #f5f7ff;
     font-size: 18px;
     cursor: pointer;
     transition: 0.2s;
+    text-align: left;
 }
 
 .answer:hover {
-    background: #004d40;
-    border-color: #00e5ff;
+    background: #dce8ff;
     transform: scale(1.02);
 }
 
 .answer.correct {
-    background: #155d25;
+    background: #b8f5c5;
     border-color: #2ecc71;
 }
 
 .answer.wrong {
-    background: #700000;
-    border-color: #ff3333;
+    background: #ffc4c4;
+    border-color: #e74c3c;
 }
 
-.status {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
+.answer:disabled {
+    cursor: not-allowed;
 }
 
 .info {
@@ -137,40 +135,38 @@ body {
 
 .result {
     display: none;
-    background: #171717;
-    color: white;
+    background: white;
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 8px 30px #000;
-    border: 2px solid #00897b;
+    box-shadow: 0 8px 20px #0003;
 }
 
 .result h1 {
-    font-size: 40px;
+    color: #2878e8;
+}
+
+.result p {
+    font-size: 19px;
 }
 
 .win {
-    color: #2ecc71;
+    color: #2ecc71 !important;
 }
 
 .lose {
-    color: #ff3333;
+    color: #e74c3c !important;
 }
 
 .draw {
-    color: #f39c12;
-}
-
-.result h2 {
-    margin: 12px;
+    color: #f39c12 !important;
 }
 
 .result button {
     padding: 13px 25px;
     border: none;
     border-radius: 10px;
-    background: #00897b;
+    background: #2878e8;
     color: white;
     font-size: 17px;
     cursor: pointer;
@@ -178,20 +174,26 @@ body {
 }
 
 .result button:hover {
-    background: #00bfa5;
+    background: #155bb5;
 }
 
-@media(max-width:600px) {
+@media(max-width: 600px) {
     .answers {
         grid-template-columns: 1fr;
     }
 
     .top {
-        font-size: 15px;
+        font-size: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
     }
 
     .title {
-        font-size: 25px;
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
     }
 
     .question {
@@ -203,42 +205,22 @@ body {
 
 <body>
 
+<button class="back" onclick="location.href='capdo_van_khoi8.html'">
+    ⬅ Quay về
+</button>
+
 <div class="top">
-
-    <div class="player">
-        👤 Bạn: <span id="playerScore">0</span>
-    </div>
-
-    <div class="time">
-        ⏱ Bạn: <span id="timer">15</span>s
-    </div>
-
-    <div class="bot">
-        🤖 Bot: <span id="botScore">0</span>
-    </div>
-
-    <div class="bot-time">
-        🤖 Bot: <span id="botTimer">15</span>s
-    </div>
-
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
 </div>
 
 <div class="main">
-
-    <div class="title">
-        📚 NGỮ VĂN 7 - CẤP ĐỘ DỄ 📚
-    </div>
+    <div class="title">📚 NGỮ VĂN 8 - CẤP ĐỘ DỄ</div>
 
     <div id="game" class="card">
-
         <div class="question" id="question"></div>
-
         <div class="answers" id="answers"></div>
-
-        <div class="status" id="status">
-            🤖 Bot đang suy nghĩ...
-        </div>
-
     </div>
 
     <div class="info">
@@ -246,388 +228,250 @@ body {
     </div>
 
     <div id="result" class="result"></div>
-
 </div>
 
 <script>
-
 const cauHoi = [
-
 {
-    q: "Văn bản nghị luận chủ yếu sử dụng phương thức biểu đạt nào?",
-    a: ["Tự sự", "Nghị luận", "Miêu tả", "Biểu cảm"],
+    q: "Tác giả của tác phẩm Tắt đèn là ai?",
+    a: ["Ngô Tất Tố", "Nam Cao", "Kim Lân", "Nguyễn Du"],
+    d: 0
+},
+{
+    q: "Nhân vật chính trong văn bản Tức nước vỡ bờ là ai?",
+    a: ["Chị Dậu", "Ông Hai", "Lão Hạc", "Bé Thu"],
+    d: 0
+},
+{
+    q: "Tác giả của văn bản Trong lòng mẹ là ai?",
+    a: ["Nguyên Hồng", "Nam Cao", "Ngô Tất Tố", "Tô Hoài"],
+    d: 0
+},
+{
+    q: "Văn bản Trong lòng mẹ trích từ tác phẩm nào?",
+    a: ["Những ngày thơ ấu", "Tắt đèn", "Lão Hạc", "Dế Mèn phiêu lưu ký"],
+    d: 0
+},
+{
+    q: "Tác giả của truyện ngắn Lão Hạc là ai?",
+    a: ["Nam Cao", "Nguyễn Du", "Kim Lân", "Ngô Tất Tố"],
+    d: 0
+},
+{
+    q: "Lão Hạc có người bạn thân thiết nào?",
+    a: ["Ông giáo", "Ông Hai", "Anh thanh niên", "Bác lái xe"],
+    d: 0
+},
+{
+    q: "Tác giả của văn bản Tôi đi học là ai?",
+    a: ["Thanh Tịnh", "Nguyên Hồng", "Nam Cao", "Tô Hoài"],
+    d: 0
+},
+{
+    q: "Văn bản Tôi đi học kể về điều gì?",
+    a: ["Kỉ niệm ngày đầu tiên đi học", "Một chuyến đi xa", "Một trận chiến", "Một buổi lao động"],
+    d: 0
+},
+{
+    q: "Thơ lục bát có cấu trúc số tiếng như thế nào?",
+    a: ["6 - 8", "5 - 7", "7 - 7", "8 - 8"],
+    d: 0
+},
+{
+    q: "Một bài thơ thất ngôn bát cú Đường luật có bao nhiêu câu?",
+    a: ["6 câu", "8 câu", "10 câu", "12 câu"],
     d: 1
 },
-
 {
-    q: "Thơ thất ngôn bát cú Đường luật gồm bao nhiêu câu?",
-    a: ["6 câu", "7 câu", "8 câu", "10 câu"],
-    d: 2
+    q: "Từ tượng thanh là từ mô phỏng điều gì?",
+    a: ["Âm thanh", "Hình dáng", "Màu sắc", "Mùi vị"],
+    d: 0
 },
-
 {
-    q: "Mỗi câu trong bài thơ thất ngôn bát cú có bao nhiêu tiếng?",
-    a: ["5 tiếng", "6 tiếng", "7 tiếng", "8 tiếng"],
-    d: 2
+    q: "Từ tượng hình thường gợi tả điều gì?",
+    a: ["Hình ảnh, dáng vẻ và trạng thái", "Âm thanh", "Mùi vị", "Con số"],
+    d: 0
 },
-
 {
-    q: "Thơ tứ tuyệt Đường luật thường có bao nhiêu câu?",
-    a: ["2 câu", "4 câu", "6 câu", "8 câu"],
-    d: 1
+    q: "Biện pháp tu từ so sánh là gì?",
+    a: ["Đối chiếu hai sự vật có nét tương đồng", "Lặp lại từ ngữ", "Gọi vật như người", "Liệt kê sự vật"],
+    d: 0
 },
-
-{
-    q: "Từ tượng hình là những từ gợi tả điều gì?",
-    a: ["Âm thanh", "Hình ảnh, dáng vẻ", "Mùi vị", "Cảm xúc"],
-    d: 1
-},
-
-{
-    q: "Từ tượng thanh là những từ mô phỏng điều gì?",
-    a: ["Hình dáng", "Màu sắc", "Âm thanh", "Tính cách"],
-    d: 2
-},
-
-{
-    q: "Biện pháp tu từ so sánh thường sử dụng từ ngữ nào?",
-    a: ["Nhưng, vì", "Như, tựa, giống", "Nếu, thì", "Và, hoặc"],
-    d: 1
-},
-
 {
     q: "Biện pháp tu từ nhân hóa là gì?",
-    a: ["Gọi hoặc tả sự vật bằng những từ ngữ vốn dùng cho con người", "Phóng đại sự vật", "Lặp lại từ ngữ", "Đảo vị trí từ ngữ"],
+    a: ["Gọi hoặc tả sự vật bằng những từ ngữ vốn dùng cho con người", "So sánh hai sự vật", "Lặp lại âm thanh", "Kể tên sự vật"],
     d: 0
 },
-
 {
-    q: "Điệp ngữ là biện pháp tu từ như thế nào?",
-    a: ["Sử dụng từ trái nghĩa", "Lặp lại từ ngữ hoặc cụm từ", "So sánh hai sự vật", "Nói giảm nói tránh"],
-    d: 1
-},
-
-{
-    q: "Văn bản thông tin thường nhằm mục đích gì?",
-    a: ["Cung cấp thông tin", "Kể chuyện tưởng tượng", "Bộc lộ cảm xúc cá nhân", "Tạo tiếng cười"],
+    q: "Từ ghép là từ được tạo thành như thế nào?",
+    a: ["Kết hợp các tiếng có quan hệ về nghĩa", "Lặp lại âm đầu", "Chỉ có một tiếng", "Kết hợp các dấu câu"],
     d: 0
 },
-
 {
-    q: "Luận điểm trong văn bản nghị luận là gì?",
-    a: ["Ý kiến chính cần làm sáng tỏ", "Một câu chuyện", "Một hình ảnh miêu tả", "Một lời đối thoại"],
+    q: "Thành ngữ là gì?",
+    a: ["Cụm từ cố định có ý nghĩa hoàn chỉnh", "Một loại dấu câu", "Tên một nhân vật", "Một đoạn văn dài"],
     d: 0
 },
-
 {
-    q: "Luận cứ trong văn nghị luận bao gồm những gì?",
-    a: ["Chỉ có cảm xúc", "Lí lẽ và bằng chứng", "Chỉ có hình ảnh", "Chỉ có nhân vật"],
-    d: 1
-},
-
-{
-    q: "Truyện cười thường hướng đến mục đích nào?",
-    a: ["Chỉ để miêu tả thiên nhiên", "Gây cười và phê phán thói hư tật xấu", "Kể về lịch sử", "Giải thích hiện tượng tự nhiên"],
-    d: 1
-},
-
-{
-    q: "Truyện lịch sử thường lấy chất liệu chủ yếu từ đâu?",
-    a: ["Những sự kiện và nhân vật lịch sử", "Thế giới thần tiên", "Cuộc sống tương lai", "Truyện cổ tích"],
+    q: "Tục ngữ thường thể hiện điều gì?",
+    a: ["Kinh nghiệm và nhận xét của nhân dân", "Tên tác giả", "Một câu chuyện tưởng tượng", "Một bài thơ dài"],
     d: 0
 },
-
 {
-    q: "Thành phần biệt lập tình thái thường thể hiện điều gì?",
-    a: ["Thái độ, cách đánh giá của người nói", "Thời gian diễn ra sự việc", "Địa điểm của sự việc", "Hành động của nhân vật"],
+    q: "Câu nghi vấn thường dùng để làm gì?",
+    a: ["Hỏi hoặc thể hiện mục đích khác", "Chỉ kể sự việc", "Chỉ miêu tả", "Chỉ ra lệnh"],
     d: 0
 },
-
 {
-    q: "Câu hỏi tu từ thường được sử dụng nhằm mục đích gì?",
-    a: ["Chỉ để hỏi thông tin", "Khẳng định hoặc bộc lộ cảm xúc", "Thông báo thời gian", "Liệt kê sự vật"],
-    d: 1
-},
-
-{
-    q: "Nghĩa tường minh của câu là gì?",
-    a: ["Nghĩa được thể hiện trực tiếp bằng từ ngữ", "Nghĩa phải suy luận", "Nghĩa hoàn toàn trái ngược", "Nghĩa không liên quan"],
+    q: "Câu cầu khiến thường dùng để làm gì?",
+    a: ["Ra lệnh, yêu cầu hoặc đề nghị", "Kể lại câu chuyện", "Bộc lộ cảm xúc", "Miêu tả cảnh vật"],
     d: 0
 },
-
 {
-    q: "Nghĩa hàm ẩn là gì?",
-    a: ["Nghĩa được nói trực tiếp", "Nghĩa không được diễn đạt trực tiếp nhưng có thể suy ra", "Nghĩa của từng chữ riêng lẻ", "Nghĩa chỉ có trong thơ"],
-    d: 1
-},
-
-{
-    q: "Đối thoại trong văn bản là gì?",
-    a: ["Lời độc thoại của một người", "Cuộc trò chuyện giữa hai hay nhiều người", "Lời miêu tả cảnh vật", "Lời kể của tác giả"],
-    d: 1
-},
-
-{
-    q: "Độc thoại nội tâm là gì?",
-    a: ["Lời nhân vật tự nói với chính mình trong suy nghĩ", "Cuộc trò chuyện giữa nhiều người", "Lời giới thiệu nhân vật", "Lời bình luận của người đọc"],
+    q: "Văn bản nghị luận thường sử dụng những yếu tố nào?",
+    a: ["Luận điểm, lí lẽ và bằng chứng", "Nhân vật và cốt truyện", "Vần và nhịp", "Chỉ có lời thoại"],
     d: 0
-},
-
+}
 ];
 
-let danhSach = [...cauHoi];
-
-danhSach.sort(() => Math.random() - 0.5);
-danhSach = danhSach.slice(0, 10);
-
+let ds = [...cauHoi].sort(() => Math.random() - 0.5).slice(0, 10);
 let cau = 0;
 let diemBan = 0;
 let diemBot = 0;
-
-let thoiGianBan = 15;
-let thoiGianBot = 15;
-
-let timerBan;
-let timerBot;
-
+let tg = 15;
+let timer;
 let daTraLoi = false;
-let botDaTraLoi = false;
 
 function hienThiCau() {
-
+    clearInterval(timer);
     daTraLoi = false;
-    botDaTraLoi = false;
+    tg = 15;
 
-    thoiGianBan = 15;
-    thoiGianBot = 15;
+    document.getElementById("timer").textContent = tg;
+    document.getElementById("playerScore").textContent = diemBan;
+    document.getElementById("botScore").textContent = diemBot;
+    document.getElementById("number").textContent = cau + 1;
 
-    document.getElementById("number").innerText = cau + 1;
-    document.getElementById("timer").innerText = 15;
-    document.getElementById("botTimer").innerText = 15;
+    let c = ds[cau];
 
-    document.getElementById("question").innerText =
-        danhSach[cau].q;
+    document.getElementById("question").textContent =
+        "Câu " + (cau + 1) + "/10: " + c.q;
 
-    document.getElementById("status").innerText =
-        "🤖 Bot đang suy nghĩ...";
+    document.getElementById("answers").innerHTML = c.a.map((x, j) => `
+        <button class="answer" onclick="traLoi(${j}, this)">
+            ${String.fromCharCode(65 + j)}. ${x}
+        </button>
+    `).join("");
 
-    let html = "";
+    timer = setInterval(() => {
+        tg--;
+        document.getElementById("timer").textContent = tg;
 
-    danhSach[cau].a.forEach((x, i) => {
-
-        html += `
-        <div class="answer" onclick="traLoi(${i}, this)">
-            ${String.fromCharCode(65 + i)}. ${x}
-        </div>
-        `;
-
-    });
-
-    document.getElementById("answers").innerHTML = html;
-
-    clearInterval(timerBan);
-    clearInterval(timerBot);
-
-    timerBan = setInterval(() => {
-
-        thoiGianBan--;
-
-        document.getElementById("timer").innerText =
-            thoiGianBan;
-
-        if (thoiGianBan <= 0) {
-
-            clearInterval(timerBan);
-
+        if (tg <= 0) {
             hetThoiGian();
-
         }
-
-    }, 1000);
-
-    timerBot = setInterval(() => {
-
-        thoiGianBot--;
-
-        document.getElementById("botTimer").innerText =
-            thoiGianBot;
-
-        if (thoiGianBot <= 0) {
-
-            clearInterval(timerBot);
-
-            botTraLoi();
-
-        }
-
     }, 1000);
 }
 
-function traLoi(chon, element) {
-
+function traLoi(chon, el) {
     if (daTraLoi) return;
 
     daTraLoi = true;
+    clearInterval(timer);
 
-    clearInterval(timerBan);
+    let c = ds[cau];
+    let nut = document.querySelectorAll(".answer");
 
-    let dung = danhSach[cau].d;
+    nut.forEach(button => button.disabled = true);
 
-    if (chon === dung) {
-
+    if (chon === c.d) {
         diemBan++;
-
-        element.classList.add("correct");
-
+        el.classList.add("correct");
     } else {
-
-        element.classList.add("wrong");
-
-        document.querySelectorAll(".answer")[dung]
-        .classList.add("correct");
-
+        el.classList.add("wrong");
+        nut[c.d].classList.add("correct");
     }
 
-    document.getElementById("playerScore").innerText =
-        diemBan;
+    document.getElementById("playerScore").textContent = diemBan;
 
-    document.getElementById("status").innerText =
-        "👤 Bạn đã trả lời! Bot vẫn đang suy nghĩ...";
-
+    setTimeout(botTraLoi, 700);
 }
 
 function hetThoiGian() {
-
     if (daTraLoi) return;
 
     daTraLoi = true;
+    clearInterval(timer);
 
-    let dung = danhSach[cau].d;
+    let c = ds[cau];
+    let nut = document.querySelectorAll(".answer");
 
-    document.querySelectorAll(".answer")[dung]
-    .classList.add("correct");
+    nut.forEach(button => button.disabled = true);
+    nut[c.d].classList.add("correct");
 
-    document.getElementById("status").innerText =
-        "⏰ Bạn hết thời gian! Bot vẫn đang suy nghĩ...";
-
+    setTimeout(botTraLoi, 700);
 }
 
 function botTraLoi() {
-
-    if (botDaTraLoi) return;
-
-    botDaTraLoi = true;
-
-    let dung = Math.random() < 0.25;
+    let dung = Math.random() < 0.10;
 
     if (dung) {
-
         diemBot++;
-
-        document.getElementById("status").innerText =
-            "🤖 Bot trả lời đúng!";
-
-    } else {
-
-        document.getElementById("status").innerText =
-            "🤖 Bot trả lời sai!";
-
     }
 
-    document.getElementById("botScore").innerText =
-        diemBot;
+    document.getElementById("botScore").textContent = diemBot;
 
-    setTimeout(() => {
+    cau++;
 
-        cau++;
-
-        if (cau >= 10) {
-
-            ketThucTran();
-
-        } else {
-
-            hienThiCau();
-
-        }
-
-    }, 1000);
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
 }
 
 function ketThucTran() {
+    clearInterval(timer);
 
-    clearInterval(timerBan);
-    clearInterval(timerBot);
-
-    document.getElementById("game").style.display =
-        "none";
-
-    document.querySelector(".info").style.display =
-        "none";
-
-    document.querySelector(".title").style.display =
-        "none";
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
 
     let result = document.getElementById("result");
-
     result.style.display = "block";
 
     let ketQua = "";
 
     if (diemBan > diemBot) {
-
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>🎉 Bạn đã đánh bại Bot!</p>
+            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
         `;
-
     } else if (diemBan < diemBot) {
-
         ketQua = `
             <h1 class="lose">😢 BẠN THUA!</h1>
-            <p>🤖 Bot đã chiến thắng!</p>
+            <p>Bot đã chiến thắng lần này.</p>
         `;
-
     } else {
-
         ketQua = `
-            <h1 class="draw">🔥 HÒA!</h1>
-            <p>Hai bên có cùng số điểm!</p>
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
         `;
-
     }
 
     result.innerHTML = `
-
         ${ketQua}
-
         <h2>👤 Bạn: ${diemBan} điểm</h2>
-
         <h2>🤖 Bot: ${diemBot} điểm</h2>
-
-        <p>⏱ Bạn: 15 giây/câu</p>
-
-        <p>🤖 Bot: 15 giây/câu</p>
-
-        <p>📚 Bộ câu hỏi: 100 câu</p>
-
-        <p>🎯 Bot có 25% khả năng trả lời đúng</p>
-
+        <p>🌱 Cấp độ: DỄ</p>
+        <p>Bot có 10% xác suất trả lời đúng mỗi câu.</p>
         <br>
-
-        <button onclick="location.href='capdo_van_khoi7.html'">
-            🔄 Chơi lại
-        </button>
-
-        <button onclick="location.href='khoi7.html'">
-            🏠 Về chọn môn
-        </button>
-
+        <button onclick="location.reload()">🔄 Chơi lại</button>
+        <button onclick="location.href='capdo_van_khoi8.html'">🎚️ Chọn cấp độ</button>
+        <button onclick="location.href='khoi8.html'">🏠 Về chọn môn</button>
     `;
 }
 
 hienThiCau();
-
 </script>
 
 </body>
