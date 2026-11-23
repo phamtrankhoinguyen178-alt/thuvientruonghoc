@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ngữ văn 8 - Khó</title>
+<title>Ngữ văn 8 - Địa ngục</title>
 
 <style>
 * {
@@ -14,7 +13,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #3b0764, #7f1d1d, #111827);
+    background: linear-gradient(135deg, #ff416c, #4b0000);
     min-height: 100vh;
 }
 
@@ -25,14 +24,14 @@ body {
     padding: 11px 18px;
     border: none;
     border-radius: 10px;
-    background: #555;
+    background: #333;
     color: white;
     font-size: 16px;
     cursor: pointer;
 }
 
 .back:hover {
-    background: #333;
+    background: #111;
 }
 
 .top {
@@ -56,7 +55,7 @@ body {
 
 .time {
     background: #333;
-    color: #facc15;
+    color: white;
     padding: 10px 20px;
     border-radius: 12px;
 }
@@ -72,17 +71,19 @@ body {
     color: white;
     font-size: 30px;
     margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px #000;
 }
 
 .card {
     background: white;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 8px 20px #0003;
+    box-shadow: 0 8px 20px #0005;
 }
 
 .question {
-    font-size: 24px;
+    font-size: 23px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 25px;
@@ -101,13 +102,13 @@ body {
     border: 2px solid #ddd;
     border-radius: 12px;
     background: #f5f7ff;
-    font-size: 18px;
+    font-size: 17px;
     cursor: pointer;
     transition: 0.2s;
     text-align: left;
 }
 
-.answer:hover:not(:disabled) {
+.answer:hover {
     background: #dce8ff;
     transform: scale(1.02);
 }
@@ -140,7 +141,7 @@ body {
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 8px 20px #0003;
+    box-shadow: 0 8px 20px #0005;
 }
 
 .result h1 {
@@ -167,7 +168,7 @@ body {
     padding: 13px 25px;
     border: none;
     border-radius: 10px;
-    background: #581c87;
+    background: #2878e8;
     color: white;
     font-size: 17px;
     cursor: pointer;
@@ -175,7 +176,7 @@ body {
 }
 
 .result button:hover {
-    background: #7e22ce;
+    background: #155bb5;
 }
 
 @media(max-width: 600px) {
@@ -198,7 +199,7 @@ body {
     }
 
     .question {
-        font-size: 20px;
+        font-size: 19px;
     }
 }
 </style>
@@ -211,24 +212,14 @@ body {
 </button>
 
 <div class="top">
-    <div class="player">
-        👤 Bạn: <span id="playerScore">0</span>
-    </div>
-
-    <div class="time">
-        ⏱ <span id="timer">15</span>
-    </div>
-
-    <div class="bot">
-        🤖 Bot: <span id="botScore">0</span>
-    </div>
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">10</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
 </div>
 
 <div class="main">
 
-    <div class="title">
-        🔥 NGỮ VĂN 8 - CẤP ĐỘ KHÓ
-    </div>
+    <div class="title">🔥 NGỮ VĂN 8 - CẤP ĐỘ ĐỊA NGỤC 🔥</div>
 
     <div id="game" class="card">
         <div class="question" id="question"></div>
@@ -244,132 +235,209 @@ body {
 </div>
 
 <script>
-const cauHoi=[
+
+const cauHoi = [
+
 {
-    q: "Trong câu 'Mặt trời xuống biển như hòn lửa', biện pháp tu từ nổi bật là gì?",
-    a: ["Nhân hóa", "So sánh", "Nói quá", "Điệp ngữ"],
-    d: 1
-},
-{
-    q: "Câu 'Tiếng suối trong như tiếng hát xa' sử dụng biện pháp tu từ nào?",
-    a: ["So sánh", "Nói giảm", "Nói quá", "Hoán dụ"],
+    q: "Trong văn bản Trong lòng mẹ, tình cảm của bé Hồng dành cho mẹ được thể hiện nổi bật nhất qua điều gì?",
+    a: ["Tình yêu thương mãnh liệt và sự khao khát được gặp mẹ", "Sự thờ ơ với mẹ", "Sự căm ghét gia đình", "Mong muốn rời bỏ mẹ"],
     d: 0
 },
+
 {
-    q: "Trong câu 'Áo chàm đưa buổi phân li', hình ảnh 'áo chàm' có thể được hiểu là gì?",
-    a: ["Hoán dụ chỉ người dân Việt Bắc", "So sánh chỉ màu sắc", "Nói quá về trang phục", "Nhân hóa chiếc áo"],
+    q: "Trong đoạn trích Tức nước vỡ bờ, hành động của chị Dậu thể hiện điều gì?",
+    a: ["Sức phản kháng mạnh mẽ của người phụ nữ nông dân trước áp bức", "Sự cam chịu hoàn toàn", "Thái độ thờ ơ với gia đình", "Sự ham muốn quyền lực"],
     d: 0
 },
+
 {
-    q: "Câu 'Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao' gửi gắm bài học gì?",
-    a: ["Đề cao tinh thần đoàn kết", "Khuyên con người sống ích kỉ", "Đề cao sức mạnh cá nhân tuyệt đối", "Khuyên tránh làm việc chung"],
+    q: "Nhan đề Tức nước vỡ bờ gợi lên quy luật nào?",
+    a: ["Khi bị áp bức đến giới hạn, con người sẽ vùng lên phản kháng", "Con người luôn phải cam chịu", "Người giàu luôn chiến thắng", "Mọi mâu thuẫn đều tự biến mất"],
     d: 0
 },
+
 {
-    q: "Câu 'Gần mực thì đen, gần đèn thì sáng' khuyên con người điều gì?",
-    a: ["Biết lựa chọn môi trường và bạn bè tốt", "Không cần quan tâm đến bạn bè", "Chỉ nên học vào ban đêm", "Không nên giúp đỡ người khác"],
+    q: "Trong văn bản Lão Hạc, việc lão Hạc bán cậu Vàng thể hiện tâm trạng gì?",
+    a: ["Đau đớn, day dứt và thương yêu con vật như người thân", "Vui mừng vì có tiền", "Thờ ơ với con vật", "Tức giận vì mất tài sản"],
     d: 0
 },
+
 {
-    q: "Trong câu 'Trẻ em như búp trên cành', hình ảnh 'búp trên cành' gợi điều gì?",
-    a: ["Sự non trẻ, cần được chăm sóc", "Sự già nua", "Sự mạnh mẽ tuyệt đối", "Sự cô đơn"],
+    q: "Qua nhân vật lão Hạc, Nam Cao muốn làm nổi bật phẩm chất nào của người nông dân?",
+    a: ["Lòng tự trọng, tình yêu thương con và nhân cách trong sạch", "Sự ích kỉ và tham lam", "Thói quen lười biếng", "Sự vô trách nhiệm"],
     d: 0
 },
+
 {
-    q: "Một bài văn nghị luận muốn thuyết phục người đọc cần có yếu tố nào?",
-    a: ["Luận điểm rõ ràng, lí lẽ hợp lí và bằng chứng xác thực", "Chỉ có cảm xúc", "Nhiều câu dài khó hiểu", "Không cần dẫn chứng"],
+    q: "Trong bài thơ Nhớ rừng, hình ảnh con hổ trong vườn bách thú tượng trưng cho điều gì?",
+    a: ["Tâm trạng uất hận và khát vọng tự do của con người mất nước", "Niềm vui trong cuộc sống", "Sự hài lòng với cảnh tù túng", "Tình yêu thiên nhiên yên bình"],
     d: 0
 },
+
 {
-    q: "Khi đưa bằng chứng vào bài nghị luận, cần chú ý điều gì?",
-    a: ["Bằng chứng phù hợp và có liên quan đến luận điểm", "Càng dài càng tốt", "Không cần kiểm chứng", "Chỉ dùng bằng chứng tưởng tượng"],
+    q: "Trong bài thơ Ông đồ, hình ảnh ông đồ thời tàn gợi lên điều gì?",
+    a: ["Nỗi tiếc nuối trước sự mai một của nét đẹp văn hóa truyền thống", "Niềm vui của sự phát triển công nghiệp", "Sự giàu có của ông đồ", "Không khí lễ hội náo nhiệt"],
     d: 0
 },
+
 {
-    q: "Trong đoạn văn diễn dịch, câu chủ đề thường nằm ở đâu?",
-    a: ["Đầu đoạn", "Cuối đoạn", "Giữa hai đoạn", "Không có vị trí xác định"],
+    q: "Bài thơ Quê hương của Tế Hanh chủ yếu thể hiện tình cảm nào?",
+    a: ["Tình yêu quê hương tha thiết và nỗi nhớ quê hương sâu nặng", "Sự chán ghét quê nhà", "Niềm tự hào về thành phố", "Tình cảm với cuộc sống nơi đô thị"],
     d: 0
 },
+
 {
-    q: "Trong đoạn văn quy nạp, câu chủ đề thường nằm ở đâu?",
-    a: ["Đầu đoạn", "Cuối đoạn", "Ngay giữa đoạn", "Ngoài đoạn"],
-    d: 1
-},
-{
-    q: "Đoạn văn song song có đặc điểm nào?",
-    a: ["Các câu cùng làm rõ một chủ đề, không có câu chủ đề bao quát theo kiểu diễn dịch hoặc quy nạp", "Chỉ có một câu", "Luôn có câu chủ đề ở cuối", "Không có nội dung liên kết"],
+    q: "Trong bài thơ Khi con tu hú, tiếng chim tu hú có ý nghĩa gì?",
+    a: ["Gợi mùa hè và khơi dậy khát vọng tự do của người tù cách mạng", "Báo hiệu mùa đông", "Thể hiện niềm vui được tự do", "Gợi sự yên tĩnh tuyệt đối"],
     d: 0
 },
+
 {
-    q: "Khi phân tích tác dụng của biện pháp tu từ, cần nêu điều gì?",
-    a: ["Tên biện pháp, biểu hiện và tác dụng trong ngữ cảnh", "Chỉ cần chép lại câu thơ", "Chỉ nêu tên tác giả", "Chỉ đếm số từ"],
+    q: "Bài thơ Ngắm trăng của Hồ Chí Minh thể hiện điều gì?",
+    a: ["Tình yêu thiên nhiên và phong thái ung dung của người chiến sĩ", "Sự sợ hãi trước thiên nhiên", "Sự chán nản với cuộc sống", "Khát vọng giàu sang"],
     d: 0
 },
+
 {
-    q: "Trong câu 'Những ngôi sao thức ngoài kia', từ 'thức' gợi cách diễn đạt nào?",
-    a: ["Nhân hóa", "Nói giảm", "Liệt kê", "Đảo ngữ"],
+    q: "Trong bài thơ Đi đường, hình ảnh vượt qua nhiều lớp núi mang ý nghĩa biểu tượng gì?",
+    a: ["Con đường đến thành công cần vượt qua khó khăn, thử thách", "Cuộc sống không có trở ngại", "Con người nên tránh mọi thử thách", "Thành công luôn đến dễ dàng"],
     d: 0
 },
+
 {
-    q: "Câu 'Bàn tay ta làm nên tất cả' có thể sử dụng hình ảnh hoán dụ để chỉ điều gì?",
-    a: ["Sức lao động của con người", "Một bộ phận không liên quan", "Một đồ vật vô tri", "Một hiện tượng thời tiết"],
+    q: "Trong văn bản Thuế máu, Nguyễn Ái Quốc chủ yếu tố cáo điều gì?",
+    a: ["Chính sách bóc lột và lừa bịp của thực dân đối với người dân thuộc địa", "Cuộc sống sung túc của người dân", "Sự phát triển giáo dục", "Chính sách bảo vệ quyền lợi thuộc địa"],
     d: 0
 },
+
 {
-    q: "Khi viết bài văn phân tích tác phẩm, phần thân bài cần làm gì?",
-    a: ["Phân tích các khía cạnh nội dung và nghệ thuật bằng lí lẽ, dẫn chứng", "Chỉ kể lại toàn bộ tác phẩm", "Chỉ giới thiệu tên tác giả", "Chỉ nêu cảm nghĩ một câu"],
+    q: "Tác dụng nổi bật của nghệ thuật trào phúng trong văn bản Thuế máu là gì?",
+    a: ["Vạch trần bản chất giả dối, tàn nhẫn của thực dân", "Ca ngợi chính sách thực dân", "Làm cho văn bản trở nên lãng mạn", "Miêu tả thiên nhiên"],
     d: 0
 },
+
 {
-    q: "Mục đích của việc liên kết các câu trong đoạn văn là gì?",
-    a: ["Tạo sự thống nhất và mạch lạc", "Làm các câu rời rạc", "Tăng số lượng dấu câu", "Loại bỏ chủ đề"],
+    q: "Trong văn bản Chiếu dời đô, Lí Công Uẩn đưa ra quyết định dời đô dựa trên cơ sở nào?",
+    a: ["Lịch sử, địa lí và lợi ích lâu dài của đất nước", "Sở thích cá nhân", "Mong muốn mở rộng cung điện", "Lời khuyên của thương nhân"],
     d: 0
 },
+
 {
-    q: "Trong văn bản, từ ngữ liên kết có tác dụng gì?",
-    a: ["Kết nối các câu và các đoạn", "Thay thế toàn bộ nội dung", "Làm mất quan hệ ý nghĩa", "Chỉ dùng để trang trí"],
+    q: "Mục đích chính của văn bản Hịch tướng sĩ là gì?",
+    a: ["Khích lệ lòng yêu nước và tinh thần chiến đấu chống giặc", "Kêu gọi đầu hàng giặc", "Ca ngợi cuộc sống hưởng thụ", "Thông báo việc xây dựng thành trì"],
     d: 0
 },
+
 {
-    q: "Khi viết đoạn văn cảm nhận về nhân vật, điều quan trọng nhất là gì?",
-    a: ["Nhận xét có căn cứ từ chi tiết trong tác phẩm", "Chỉ kể tên nhân vật", "Chép nguyên văn tác phẩm", "Không cần dẫn chứng"],
+    q: "Trong Bình Ngô đại cáo, tư tưởng nhân nghĩa được thể hiện như thế nào?",
+    a: ["Yên dân và trừ bạo, bảo vệ cuộc sống của nhân dân", "Chỉ quan tâm đến quyền lợi vua chúa", "Mở rộng lãnh thổ bằng mọi cách", "Đề cao chiến tranh phi nghĩa"],
     d: 0
 },
+
 {
-    q: "Một kết bài tốt trong bài văn nghị luận thường có nhiệm vụ gì?",
-    a: ["Khẳng định lại vấn đề và mở rộng suy nghĩ phù hợp", "Đưa ra một vấn đề hoàn toàn khác", "Kể thêm một câu chuyện dài không liên quan", "Lặp lại toàn bộ thân bài"],
+    q: "Văn bản Nước Đại Việt ta khẳng định nền độc lập dân tộc dựa trên những yếu tố nào?",
+    a: ["Văn hiến, lãnh thổ, phong tục, lịch sử và chủ quyền riêng", "Chỉ dựa vào quân đội", "Chỉ dựa vào dân số", "Chỉ dựa vào kinh tế"],
     d: 0
 },
+
 {
-    q: "Để đánh giá một tác phẩm văn học toàn diện, cần kết hợp điều gì?",
-    a: ["Nội dung tư tưởng và đặc sắc nghệ thuật", "Chỉ số trang và giá tiền", "Chỉ tên nhân vật", "Chỉ thời điểm xuất bản"],
+    q: "Trong văn nghị luận, luận điểm là gì?",
+    a: ["Ý kiến thể hiện tư tưởng, quan điểm của người viết về vấn đề", "Một câu kể chuyện", "Một hình ảnh miêu tả", "Một từ ngữ biểu cảm"],
+    d: 0
+},
+
+{
+    q: "Bằng chứng trong văn nghị luận cần đáp ứng yêu cầu nào?",
+    a: ["Tiêu biểu, xác thực và phù hợp với luận điểm", "Càng dài càng tốt", "Không cần liên quan đến vấn đề", "Chỉ dựa vào cảm xúc cá nhân"],
+    d: 0
+},
+
+{
+    q: "Biện pháp tu từ nói quá có tác dụng chủ yếu gì?",
+    a: ["Nhấn mạnh đặc điểm, mức độ hoặc tính chất của sự vật, sự việc", "Làm giảm mức độ biểu đạt", "Chỉ dùng để đặt câu hỏi", "Thay thế hoàn toàn phép so sánh"],
+    d: 0
+},
+
+{
+    q: "Biện pháp tu từ nói giảm nói tránh thường được sử dụng nhằm mục đích gì?",
+    a: ["Diễn đạt tế nhị, nhẹ nhàng, tránh gây cảm giác đau buồn hoặc nặng nề", "Làm cho câu văn khó hiểu", "Phóng đại sự việc", "Tạo tiếng cười châm biếm"],
+    d: 0
+},
+
+{
+    q: "Thành phần biệt lập tình thái trong câu dùng để làm gì?",
+    a: ["Thể hiện cách nhìn nhận, đánh giá của người nói đối với sự việc", "Xác định chủ ngữ", "Bổ sung trạng ngữ chỉ thời gian", "Thay thế vị ngữ"],
+    d: 0
+},
+
+{
+    q: "Câu ghép là câu như thế nào?",
+    a: ["Câu có từ hai cụm chủ ngữ - vị ngữ trở lên, không bao chứa nhau", "Câu chỉ có một từ", "Câu không có vị ngữ", "Câu chỉ dùng để hỏi"],
+    d: 0
+},
+
+{
+    q: "Tác dụng của dấu ngoặc kép trong văn bản là gì?",
+    a: ["Đánh dấu lời dẫn trực tiếp hoặc từ ngữ được hiểu theo nghĩa đặc biệt", "Kết thúc mọi đoạn văn", "Ngăn cách các vế câu ghép", "Đánh dấu câu hỏi"],
+    d: 0
+},
+
+{
+    q: "Trong văn bản thuyết minh, việc sử dụng số liệu có tác dụng gì?",
+    a: ["Làm thông tin cụ thể, rõ ràng và tăng tính xác thực", "Làm nội dung thiếu chính xác", "Thay thế toàn bộ lời văn", "Chỉ tạo cảm xúc"],
+    d: 0
+},
+
+{
+    q: "Văn bản thông tin thường có mục đích chính nào?",
+    a: ["Cung cấp, giải thích và truyền đạt thông tin về sự vật, hiện tượng", "Chỉ bộc lộ cảm xúc cá nhân", "Chỉ kể chuyện tưởng tượng", "Chỉ tạo tiếng cười"],
+    d: 0
+},
+
+{
+    q: "Trong truyện, tình huống truyện có vai trò gì?",
+    a: ["Tạo hoàn cảnh để nhân vật bộc lộ tính cách và thúc đẩy diễn biến câu chuyện", "Chỉ giới thiệu tên tác giả", "Thay thế toàn bộ nhân vật", "Chỉ miêu tả phong cảnh"],
+    d: 0
+},
+
+{
+    q: "Ngôi kể thứ nhất trong truyện thường có ưu điểm nào?",
+    a: ["Tạo cảm giác chân thực và giúp thể hiện trực tiếp cảm xúc người kể", "Người kể luôn biết mọi suy nghĩ của tất cả nhân vật", "Không thể bộc lộ cảm xúc", "Chỉ dùng trong văn bản nghị luận"],
+    d: 0
+},
+
+{
+    q: "Trong văn bản nghị luận, thao tác lập luận phân tích có mục đích gì?",
+    a: ["Chia vấn đề thành các phương diện để làm rõ bản chất và nội dung", "Chỉ kể lại sự việc", "Chỉ miêu tả ngoại hình", "Lặp lại nguyên văn luận điểm"],
+    d: 0
+},
+
+{
+    q: "Một đoạn văn diễn dịch có đặc điểm nào?",
+    a: ["Câu chủ đề nằm ở đầu đoạn, các câu sau triển khai làm rõ", "Câu chủ đề nằm ở cuối đoạn", "Không có câu chủ đề", "Các câu không liên quan với nhau"],
     d: 0
 }
+
 ];
 
-let ds = [...cauHoi]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 10);
+let ds = [...cauHoi].sort(() => Math.random() - 0.5).slice(0, 10);
 
 let cau = 0;
 let diemBan = 0;
 let diemBot = 0;
-let tg = 15;
+let tg = 10;
 let timer;
 let daTraLoi = false;
 
 function hienThiCau() {
 
     clearInterval(timer);
-
     daTraLoi = false;
-    tg = 15;
+    tg = 10;
 
     document.getElementById("timer").textContent = tg;
-
     document.getElementById("playerScore").textContent = diemBan;
     document.getElementById("botScore").textContent = diemBot;
-
     document.getElementById("number").textContent = cau + 1;
 
     let c = ds[cau];
@@ -377,12 +445,11 @@ function hienThiCau() {
     document.getElementById("question").textContent =
         "Câu " + (cau + 1) + "/10: " + c.q;
 
-    document.getElementById("answers").innerHTML =
-        c.a.map((x, j) => `
-            <button class="answer" onclick="traLoi(${j}, this)">
-                ${String.fromCharCode(65 + j)}. ${x}
-            </button>
-        `).join("");
+    document.getElementById("answers").innerHTML = c.a.map((x, j) => `
+        <button class="answer" onclick="traLoi(${j}, this)">
+            ${String.fromCharCode(65 + j)}. ${x}
+        </button>
+    `).join("");
 
     timer = setInterval(() => {
 
@@ -402,11 +469,9 @@ function traLoi(chon, el) {
     if (daTraLoi) return;
 
     daTraLoi = true;
-
     clearInterval(timer);
 
     let c = ds[cau];
-
     let nut = document.querySelectorAll(".answer");
 
     nut.forEach(button => button.disabled = true);
@@ -414,13 +479,11 @@ function traLoi(chon, el) {
     if (chon === c.d) {
 
         diemBan++;
-
         el.classList.add("correct");
 
     } else {
 
         el.classList.add("wrong");
-
         nut[c.d].classList.add("correct");
 
     }
@@ -435,11 +498,9 @@ function hetThoiGian() {
     if (daTraLoi) return;
 
     daTraLoi = true;
-
     clearInterval(timer);
 
     let c = ds[cau];
-
     let nut = document.querySelectorAll(".answer");
 
     nut.forEach(button => button.disabled = true);
@@ -451,7 +512,7 @@ function hetThoiGian() {
 
 function botTraLoi() {
 
-    let dung = Math.random() < 0.25;
+    let dung = Math.random() < 0.95;
 
     if (dung) {
         diemBot++;
@@ -462,13 +523,9 @@ function botTraLoi() {
     cau++;
 
     if (cau >= 10) {
-
         ketThucTran();
-
     } else {
-
         hienThiCau();
-
     }
 }
 
@@ -477,11 +534,9 @@ function ketThucTran() {
     clearInterval(timer);
 
     document.getElementById("game").style.display = "none";
-
     document.querySelector(".info").style.display = "none";
 
     let result = document.getElementById("result");
-
     result.style.display = "block";
 
     let ketQua = "";
@@ -489,22 +544,22 @@ function ketThucTran() {
     if (diemBan > diemBot) {
 
         ketQua = `
-            <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>Chúc mừng! Bạn đã đánh bại Bot.</p>
+            <h1 class="win">🏆 CHIẾN THẮNG ĐỊA NGỤC!</h1>
+            <p>Thật xuất sắc! Bạn đã vượt qua thử thách khó nhất.</p>
         `;
 
     } else if (diemBan < diemBot) {
 
         ketQua = `
-            <h1 class="lose">🤖 BOT THẮNG!</h1>
-            <p>Bot đã chiến thắng lần này.</p>
+            <h1 class="lose">🔥 BOT CHIẾN THẮNG!</h1>
+            <p>Đây là cấp độ thử thách cao nhất. Hãy tiếp tục luyện tập!</p>
         `;
 
     } else {
 
         ketQua = `
             <h1 class="draw">🤝 HÒA!</h1>
-            <p>Hai bên có số điểm bằng nhau.</p>
+            <p>Bạn đã ngang tài với Bot!</p>
         `;
 
     }
@@ -513,18 +568,15 @@ function ketThucTran() {
         ${ketQua}
 
         <h2>👤 Bạn: ${diemBan} điểm</h2>
-
         <h2>🤖 Bot: ${diemBot} điểm</h2>
 
-        <p>🔥 Cấp độ: KHÓ</p>
-
-        <p>Bot có 25% xác suất trả lời đúng mỗi câu.</p>
+        <p>💀 Cấp độ: ĐỊA NGỤC</p>
+        <p>Thời gian: 10 giây/câu</p>
+        <p>Bot có 95% xác suất trả lời đúng mỗi câu.</p>
 
         <br>
 
-        <button onclick="location.reload()">
-            🔄 Chơi lại
-        </button>
+        <button onclick="location.reload()">🔄 Chơi lại</button>
 
         <button onclick="location.href='capdo_van_khoi8.html'">
             🎚️ Chọn cấp độ
