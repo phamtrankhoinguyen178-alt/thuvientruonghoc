@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -13,69 +14,80 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #00695c, #00897b, #26a69a);
+    background: linear-gradient(135deg, #74ebd5, #9face6);
     min-height: 100vh;
 }
 
-.top {
-    background: #111;
+.back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #555;
     color: white;
-    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back:hover {
+    background: #333;
+}
+
+.top {
+    background: white;
+    padding: 65px 15px 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    box-shadow: 0 3px 15px #000;
+    box-shadow: 0 3px 10px #0003;
     font-size: 20px;
     font-weight: bold;
 }
 
-.player { color: #4da6ff; }
-.bot { color: #ff3333; }
-
-.time, .bot-time {
-    background: #333;
-    padding: 10px 22px;
-    border-radius: 12px;
-    min-width: 100px;
-    text-align: center;
+.player {
+    color: #2878e8;
 }
 
-.bot-time {
-    background: #555;
+.bot {
+    color: #e74c3c;
+}
+
+.time {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
 }
 
 .main {
-    max-width: 950px;
+    max-width: 850px;
     margin: 35px auto;
     padding: 20px;
 }
 
 .title {
     text-align: center;
-    color: #fff;
-    font-size: 32px;
-    font-weight: bold;
+    color: white;
+    font-size: 30px;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px #00ffff;
 }
 
 .card {
-    background: #171717;
-    color: white;
+    background: white;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px #000;
-    border: 2px solid #00897b;
+    box-shadow: 0 8px 20px #0003;
 }
 
 .question {
-    font-size: 23px;
+    font-size: 24px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     line-height: 1.5;
+    color: #222;
 }
 
 .answers {
@@ -86,40 +98,32 @@ body {
 
 .answer {
     padding: 18px;
-    border: 2px solid #555;
+    border: 2px solid #ddd;
     border-radius: 12px;
-    background: #242424;
-    color: white;
+    background: #f5f7ff;
     font-size: 18px;
     cursor: pointer;
     transition: 0.2s;
+    text-align: left;
 }
 
 .answer:hover {
-    background: #004d40;
-    border-color: #00e5ff;
+    background: #dce8ff;
     transform: scale(1.02);
 }
 
 .answer.correct {
-    background: #155d25;
+    background: #b8f5c5;
     border-color: #2ecc71;
 }
 
 .answer.wrong {
-    background: #700000;
-    border-color: #ff3333;
+    background: #ffc4c4;
+    border-color: #e74c3c;
 }
 
 .answer:disabled {
-    cursor: default;
-}
-
-.status {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
+    cursor: not-allowed;
 }
 
 .info {
@@ -132,32 +136,38 @@ body {
 
 .result {
     display: none;
-    background: #171717;
-    color: white;
+    background: white;
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 8px 30px #000;
-    border: 2px solid #00897b;
+    box-shadow: 0 8px 20px #0003;
 }
 
 .result h1 {
-    font-size: 40px;
+    color: #2878e8;
 }
 
-.win { color: #2ecc71; }
-.lose { color: #ff3333; }
-.draw { color: #f39c12; }
+.result p {
+    font-size: 19px;
+}
 
-.result h2 {
-    margin: 12px;
+.win {
+    color: #2ecc71 !important;
+}
+
+.lose {
+    color: #e74c3c !important;
+}
+
+.draw {
+    color: #f39c12 !important;
 }
 
 .result button {
     padding: 13px 25px;
     border: none;
     border-radius: 10px;
-    background: #00897b;
+    background: #2878e8;
     color: white;
     font-size: 17px;
     cursor: pointer;
@@ -165,20 +175,26 @@ body {
 }
 
 .result button:hover {
-    background: #00bfa5;
+    background: #155bb5;
 }
 
-@media(max-width:600px) {
+@media(max-width: 600px) {
     .answers {
         grid-template-columns: 1fr;
     }
 
     .top {
-        font-size: 15px;
+        font-size: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
     }
 
     .title {
-        font-size: 25px;
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 20px;
     }
 
     .question {
@@ -190,42 +206,23 @@ body {
 
 <body>
 
+<button class="back" onclick="location.href='capdo_van_khoi9.html'">
+    ⬅ Quay về
+</button>
+
 <div class="top">
-
-    <div class="player">
-        👤 Bạn: <span id="playerScore">0</span>
-    </div>
-
-    <div class="time">
-        ⏱ Bạn: <span id="timer">15</span>s
-    </div>
-
-    <div class="bot">
-        🤖 Bot: <span id="botScore">0</span>
-    </div>
-
-    <div class="bot-time">
-        🤖 Bot: <span id="botTimer">15</span>s
-    </div>
-
+    <div class="player">👤 Bạn: <span id="playerScore">0</span></div>
+    <div class="time">⏱ <span id="timer">15</span></div>
+    <div class="bot">🤖 Bot: <span id="botScore">0</span></div>
 </div>
 
 <div class="main">
 
-    <div class="title">
-        📚 NGỮ VĂN 9 - CẤP ĐỘ KHÓ 📚
-    </div>
+    <div class="title">📚 NGỮ VĂN 9 - CẤP ĐỘ KHÓ</div>
 
     <div id="game" class="card">
-
         <div class="question" id="question"></div>
-
         <div class="answers" id="answers"></div>
-
-        <div class="status" id="status">
-            🤖 Bot đang suy nghĩ...
-        </div>
-
     </div>
 
     <div class="info">
@@ -241,249 +238,198 @@ body {
 const cauHoi = [
 
 {
-q: "Trong đoạn trích Kiều ở lầu Ngưng Bích, nghệ thuật tả cảnh ngụ tình được thể hiện rõ nhất qua điều gì?",
-a: ["Cảnh vật phản ánh tâm trạng cô đơn, buồn tủi và lo âu của Thúy Kiều", "Cảnh vật chỉ nhằm giới thiệu địa điểm", "Thiên nhiên được miêu tả hoàn toàn khách quan", "Cảnh vật thể hiện niềm vui của nhân vật"],
-d: 0
+    q: "Trong Truyện Kiều, bút pháp ước lệ tượng trưng được Nguyễn Du sử dụng chủ yếu nhằm mục đích gì?",
+    a: ["Khắc họa vẻ đẹp nhân vật thông qua hình ảnh thiên nhiên mang tính quy ước", "Miêu tả chính xác địa danh", "Kể lại các sự kiện lịch sử", "Tạo yếu tố hài hước"],
+    d: 0
 },
 
 {
-q: "Giá trị hiện thực của Truyện Kiều thể hiện chủ yếu ở phương diện nào?",
-a: ["Phản ánh vẻ đẹp thiên nhiên", "Phản ánh xã hội bất công và số phận đau khổ của con người", "Ca ngợi tầng lớp thống trị", "Miêu tả cuộc sống thần tiên"],
-d: 1
+    q: "Qua đoạn trích Kiều ở lầu Ngưng Bích, nghệ thuật tả cảnh ngụ tình thể hiện rõ nhất điều gì?",
+    a: ["Tâm trạng cô đơn, buồn tủi và nỗi nhớ của Thúy Kiều", "Niềm vui đoàn tụ", "Sự giàu có của gia đình Kiều", "Không khí vui tươi của lễ hội"],
+    d: 0
 },
 
 {
-q: "Trong đoạn trích Chị em Thúy Kiều, Nguyễn Du dự báo điều gì qua vẻ đẹp của Thúy Kiều?",
-a: ["Cuộc sống hoàn toàn bình yên", "Tương lai nhiều sóng gió, bất hạnh", "Cuộc sống giàu sang mãi mãi", "Không có biến cố"],
-d: 1
+    q: "Giá trị nhân đạo nổi bật của Truyện Kiều là gì?",
+    a: ["Trân trọng vẻ đẹp con người, cảm thương số phận bất hạnh và lên án bất công", "Ca ngợi chiến tranh", "Đề cao tiền bạc", "Phê phán tình yêu đôi lứa"],
+    d: 0
 },
 
 {
-q: "Điểm nổi bật trong nghệ thuật xây dựng nhân vật của Nguyễn Du là gì?",
-a: ["Chỉ miêu tả ngoại hình", "Kết hợp miêu tả ngoại hình, hành động, tâm lí và ngôn ngữ", "Chỉ dùng lời kể trực tiếp", "Không thể hiện nội tâm"],
-d: 1
+    q: "Trong bài thơ Đồng chí, cơ sở hình thành tình đồng chí là gì?",
+    a: ["Cùng cảnh ngộ, cùng lí tưởng và nhiệm vụ chiến đấu", "Cùng sở thích giải trí", "Cùng quê hương và nghề nghiệp", "Cùng địa vị xã hội"],
+    d: 0
 },
 
 {
-q: "Trong bài thơ Đồng chí, hình ảnh 'Đầu súng trăng treo' mang ý nghĩa gì?",
-a: ["Chỉ miêu tả vũ khí", "Sự kết hợp giữa hiện thực chiến đấu và vẻ đẹp lãng mạn", "Thể hiện sự sợ hãi", "Miêu tả cảnh thiên nhiên ban ngày"],
-d: 1
+    q: "Hình ảnh 'đầu súng trăng treo' trong bài Đồng chí có ý nghĩa nghệ thuật nổi bật nào?",
+    a: ["Kết hợp chất hiện thực và lãng mạn, biểu tượng cho tâm hồn người lính", "Chỉ miêu tả hoạt động quân sự", "Thể hiện sự nguy hiểm của thiên nhiên", "Miêu tả cảnh sinh hoạt"],
+    d: 0
 },
 
 {
-q: "Trong bài thơ Ánh trăng, sự xuất hiện của vầng trăng ở cuối bài có ý nghĩa gì?",
-a: ["Chỉ báo hiệu thời gian ban đêm", "Gợi nhắc con người về quá khứ nghĩa tình và sự thủy chung", "Thể hiện sự giàu sang", "Miêu tả thiên nhiên đơn thuần"],
-d: 1
+    q: "Trong bài thơ Bài thơ về tiểu đội xe không kính, giọng điệu nổi bật của tác phẩm là gì?",
+    a: ["Trẻ trung, ngang tàng, sôi nổi và giàu chất lính", "Buồn bã, bi lụy", "Trang nghiêm, cổ kính", "Châm biếm và cay nghiệt"],
+    d: 0
 },
 
 {
-q: "Trong bài thơ Sang thu, hình ảnh 'Sấm cũng bớt bất ngờ trên hàng cây đứng tuổi' còn gợi liên tưởng gì?",
-a: ["Con người trưởng thành, từng trải sẽ bình tĩnh hơn trước biến động", "Thiên nhiên không còn tồn tại", "Mùa hè bắt đầu", "Cây cối ngừng phát triển"],
-d: 0
+    q: "Qua hình ảnh người lính lái xe, Phạm Tiến Duật muốn làm nổi bật phẩm chất nào?",
+    a: ["Lòng dũng cảm, tinh thần lạc quan và ý chí chiến đấu", "Sự giàu có và quyền lực", "Tính ích kỉ", "Sự sợ hãi trước khó khăn"],
+    d: 0
 },
 
 {
-q: "Thông điệp nổi bật trong bài thơ Mùa xuân nho nhỏ là gì?",
-a: ["Sống chỉ vì lợi ích cá nhân", "Sống đẹp, cống hiến âm thầm cho đất nước và cuộc đời", "Tránh tham gia các hoạt động xã hội", "Chỉ quan tâm đến quá khứ"],
-d: 1
+    q: "Trong bài thơ Ánh trăng, tình huống bất ngờ khi mất điện có ý nghĩa gì?",
+    a: ["Tạo cơ hội để nhân vật trữ tình đối diện với quá khứ và nhận ra sự lãng quên", "Thể hiện niềm vui của cuộc sống hiện đại", "Miêu tả sự thay đổi thời tiết", "Tạo không khí vui nhộn"],
+    d: 0
 },
 
 {
-q: "Trong bài thơ Viếng lăng Bác, hình ảnh 'mặt trời trong lăng' là biện pháp tu từ nào?",
-a: ["So sánh", "Ẩn dụ", "Hoán dụ", "Nói quá"],
-d: 1
+    q: "Hình ảnh vầng trăng trong bài Ánh trăng mang ý nghĩa biểu tượng nào?",
+    a: ["Quá khứ nghĩa tình, thiên nhiên và những giá trị thủy chung", "Sự giàu sang", "Quyền lực", "Cuộc sống đô thị"],
+    d: 0
 },
 
 {
-q: "Tác phẩm Làng của Kim Lân thể hiện tình cảm nổi bật nào?",
-a: ["Tình yêu gia đình đơn thuần", "Tình yêu làng quê gắn bó với tình yêu đất nước", "Tình yêu thiên nhiên", "Tình yêu cuộc sống thành thị"],
-d: 1
+    q: "Trong bài thơ Sang thu, hình ảnh 'sấm cũng bớt bất ngờ trên hàng cây đứng tuổi' còn gợi liên tưởng nào?",
+    a: ["Con người từng trải sẽ bình tĩnh hơn trước những biến động cuộc đời", "Mùa hè bắt đầu", "Thiên nhiên không còn tồn tại", "Con người luôn sợ hãi"],
+    d: 0
 },
 
 {
-q: "Tình huống truyện trong tác phẩm Làng có tác dụng gì?",
-a: ["Thử thách tình yêu làng và lòng yêu nước của ông Hai", "Giới thiệu phong cảnh làng quê", "Miêu tả cuộc sống thành thị", "Tạo yếu tố hài hước"],
-d: 0
+    q: "Nét đặc sắc trong nghệ thuật của bài thơ Mùa xuân nho nhỏ là gì?",
+    a: ["Hình ảnh giản dị, giàu sức gợi và giọng thơ tha thiết, chân thành", "Ngôn ngữ khoa học khô khan", "Cốt truyện phức tạp", "Giọng điệu châm biếm"],
+    d: 0
 },
 
 {
-q: "Trong truyện ngắn Lặng lẽ Sa Pa, nhân vật anh thanh niên tiêu biểu cho phẩm chất nào?",
-a: ["Sống ích kỉ và lười biếng", "Yêu nghề, có trách nhiệm và sống có lí tưởng", "Chỉ quan tâm vật chất", "Ngại giao tiếp và thiếu trách nhiệm"],
-d: 1
+    q: "Nhan đề Những ngôi sao xa xôi gợi liên tưởng sâu sắc nhất đến điều gì?",
+    a: ["Vẻ đẹp tâm hồn và phẩm chất cao quý của những cô gái thanh niên xung phong", "Sự giàu sang của nhân vật", "Cuộc sống thành thị", "Những chuyến du lịch"],
+    d: 0
 },
 
 {
-q: "Trong truyện Chiếc lược ngà, chiếc lược có ý nghĩa biểu tượng gì?",
-a: ["Sự giàu có của gia đình", "Tình yêu thương sâu nặng của người cha dành cho con", "Sự chia cách vĩnh viễn", "Kỉ niệm về chiến trường"],
-d: 1
+    q: "Điểm nhìn trần thuật trong truyện Những ngôi sao xa xôi được đặt ở đâu?",
+    a: ["Ngôi thứ nhất, qua lời kể của nhân vật Phương Định", "Ngôi thứ ba toàn tri", "Ngôi thứ hai", "Qua lời kể của Nho"],
+    d: 0
 },
 
 {
-q: "Điểm đặc sắc trong nghệ thuật kể chuyện của Chiếc lược ngà là gì?",
-a: ["Ngôi kể thứ nhất qua nhân vật bác Ba", "Ngôi kể thứ ba toàn tri", "Chỉ dùng lời đối thoại", "Không có người kể chuyện"],
-d: 0
+    q: "Trong truyện ngắn Làng, việc ông Hai nghe tin làng Chợ Dầu theo giặc đã tạo ra tình huống truyện như thế nào?",
+    a: ["Thử thách tình yêu làng và lòng yêu nước của nhân vật", "Tạo tình huống gây cười", "Miêu tả cuộc sống sung túc", "Giới thiệu một chuyến đi xa"],
+    d: 0
 },
 
 {
-q: "Trong văn bản nghị luận, thao tác bác bỏ được sử dụng nhằm mục đích gì?",
-a: ["Khẳng định mọi ý kiến đều đúng", "Phủ nhận những ý kiến sai trái bằng lí lẽ và bằng chứng", "Chỉ kể lại sự việc", "Miêu tả nhân vật"],
-d: 1
+    q: "Nghệ thuật xây dựng nhân vật ông Hai trong truyện Làng có điểm nổi bật nào?",
+    a: ["Miêu tả tâm lí tinh tế qua lời nói, hành động và diễn biến nội tâm", "Chỉ miêu tả ngoại hình", "Chỉ sử dụng lời kể gián tiếp", "Không có diễn biến tâm trạng"],
+    d: 0
 },
 
 {
-q: "Yếu tố nào làm nên sức thuyết phục của một bài nghị luận xã hội?",
-a: ["Luận điểm rõ ràng, lí lẽ chặt chẽ và dẫn chứng xác thực", "Sử dụng nhiều từ ngữ khó", "Viết thật dài", "Không cần dẫn chứng"],
-d: 0
+    q: "Thành phần biệt lập phụ chú có tác dụng gì?",
+    a: ["Bổ sung, giải thích thêm một số thông tin cho câu", "Dùng để hỏi", "Dùng để ra lệnh", "Dùng để kết thúc đoạn văn"],
+    d: 0
 },
 
 {
-q: "Trong phân tích thơ, việc chú ý đến nhịp điệu và vần có ý nghĩa gì?",
-a: ["Giúp nhận ra cách tổ chức âm thanh và cảm xúc của bài thơ", "Chỉ giúp đếm số chữ", "Không có tác dụng", "Chỉ để xác định tên tác giả"],
-d: 0
+    q: "Sự khác nhau cơ bản giữa ẩn dụ và hoán dụ là gì?",
+    a: ["Ẩn dụ dựa trên nét tương đồng, hoán dụ dựa trên quan hệ gần gũi", "Cả hai đều chỉ dựa trên quan hệ đối lập", "Ẩn dụ dựa trên quan hệ thời gian", "Hoán dụ dựa trên quan hệ âm thanh"],
+    d: 0
 },
 
 {
-q: "Sự khác nhau cơ bản giữa lời người kể chuyện và lời nhân vật là gì?",
-a: ["Lời người kể dùng để dẫn dắt câu chuyện, lời nhân vật thể hiện tiếng nói của nhân vật", "Hai loại lời hoàn toàn giống nhau", "Lời nhân vật luôn dài hơn", "Lời người kể chỉ xuất hiện trong thơ"],
-d: 0
+    q: "Trong văn nghị luận, thao tác lập luận bác bỏ nhằm mục đích gì?",
+    a: ["Chỉ ra sự sai lầm, thiếu hợp lí của một ý kiến hoặc quan điểm", "Kể lại một câu chuyện", "Miêu tả nhân vật", "Liệt kê các sự vật"],
+    d: 0
 },
 
 {
-q: "Khi phân tích một chi tiết nghệ thuật đặc sắc trong truyện, cần làm rõ điều gì?",
-a: ["Vị trí, ý nghĩa và tác dụng của chi tiết đối với chủ đề, nhân vật", "Chỉ số lần chi tiết xuất hiện", "Chỉ độ dài của câu văn", "Chỉ tên nhân vật"],
-d: 0
+    q: "Một luận điểm thuyết phục cần đáp ứng yêu cầu nào?",
+    a: ["Rõ ràng, phù hợp vấn đề và được hỗ trợ bằng lí lẽ, bằng chứng", "Càng dài càng tốt", "Chỉ cần có cảm xúc", "Không cần liên quan đến vấn đề"],
+    d: 0
 },
 
 {
-q: "Mối quan hệ giữa chủ đề và tư tưởng của tác phẩm văn học được hiểu như thế nào?",
-a: ["Chủ đề là vấn đề được phản ánh, tư tưởng là nhận thức và thái độ của nhà văn về vấn đề ấy", "Hai khái niệm hoàn toàn không liên quan", "Tư tưởng chỉ là tên tác phẩm", "Chủ đề chỉ là số lượng nhân vật"],
-d: 0
+    q: "Ý nghĩa của việc sử dụng yếu tố biểu cảm trong văn nghị luận là gì?",
+    a: ["Tạo sự đồng cảm và tăng sức thuyết phục cho bài viết", "Thay thế hoàn toàn lí lẽ", "Làm mất tính logic", "Chỉ để tăng số lượng câu"],
+    d: 0
 }
 
 ];
 
-let danhSach = [...cauHoi];
-
-danhSach.sort(() => Math.random() - 0.5);
-danhSach = danhSach.slice(0, 10);
+let ds = [...cauHoi].sort(() => Math.random() - 0.5).slice(0, 10);
 
 let cau = 0;
 let diemBan = 0;
 let diemBot = 0;
-
-let thoiGianBan = 15;
-let thoiGianBot = 15;
-
-let timerBan;
-let timerBot;
-
+let tg = 15;
+let timer;
 let daTraLoi = false;
-let botDaTraLoi = false;
 
 function hienThiCau() {
 
+    clearInterval(timer);
     daTraLoi = false;
-    botDaTraLoi = false;
+    tg = 15;
 
-    thoiGianBan = 15;
-    thoiGianBot = 15;
+    document.getElementById("timer").textContent = tg;
+    document.getElementById("playerScore").textContent = diemBan;
+    document.getElementById("botScore").textContent = diemBot;
+    document.getElementById("number").textContent = cau + 1;
 
-    document.getElementById("number").innerText = cau + 1;
-    document.getElementById("timer").innerText = 15;
-    document.getElementById("botTimer").innerText = 15;
+    let c = ds[cau];
 
-    document.getElementById("question").innerText =
-        danhSach[cau].q;
+    document.getElementById("question").textContent =
+        "Câu " + (cau + 1) + "/10: " + c.q;
 
-    document.getElementById("status").innerText =
-        "🤖 Bot đang suy nghĩ...";
-
-    let html = "";
-
-    danhSach[cau].a.forEach((x, i) => {
-
-        html += `
-        <button class="answer" onclick="traLoi(${i}, this)">
-            ${String.fromCharCode(65 + i)}. ${x}
+    document.getElementById("answers").innerHTML = c.a.map((x, j) => `
+        <button class="answer" onclick="traLoi(${j}, this)">
+            ${String.fromCharCode(65 + j)}. ${x}
         </button>
-        `;
+    `).join("");
 
-    });
+    timer = setInterval(() => {
 
-    document.getElementById("answers").innerHTML = html;
+        tg--;
 
-    clearInterval(timerBan);
-    clearInterval(timerBot);
+        document.getElementById("timer").textContent = tg;
 
-    timerBan = setInterval(() => {
-
-        thoiGianBan--;
-
-        document.getElementById("timer").innerText =
-            thoiGianBan;
-
-        if (thoiGianBan <= 0) {
-
-            clearInterval(timerBan);
+        if (tg <= 0) {
             hetThoiGian();
-
-        }
-
-    }, 1000);
-
-    timerBot = setInterval(() => {
-
-        thoiGianBot--;
-
-        document.getElementById("botTimer").innerText =
-            thoiGianBot;
-
-        if (thoiGianBot <= 0) {
-
-            clearInterval(timerBot);
-            botTraLoi();
-
         }
 
     }, 1000);
 }
 
-function traLoi(chon, element) {
+function traLoi(chon, el) {
 
-    if (daTraLoi || botDaTraLoi) return;
+    if (daTraLoi) return;
 
     daTraLoi = true;
+    clearInterval(timer);
 
-    clearInterval(timerBan);
+    let c = ds[cau];
+    let nut = document.querySelectorAll(".answer");
 
-    let dung = danhSach[cau].d;
-    let cacNut = document.querySelectorAll(".answer");
+    nut.forEach(button => button.disabled = true);
 
-    if (chon === dung) {
+    if (chon === c.d) {
 
         diemBan++;
-
-        element.classList.add("correct");
-
-        document.getElementById("status").innerText =
-            "✅ Bạn trả lời chính xác!";
+        el.classList.add("correct");
 
     } else {
 
-        element.classList.add("wrong");
-
-        cacNut[dung].classList.add("correct");
-
-        document.getElementById("status").innerText =
-            "❌ Bạn trả lời chưa chính xác!";
+        el.classList.add("wrong");
+        nut[c.d].classList.add("correct");
 
     }
 
-    cacNut.forEach(nut => nut.disabled = true);
+    document.getElementById("playerScore").textContent = diemBan;
 
-    document.getElementById("playerScore").innerText =
-        diemBan;
-
+    setTimeout(botTraLoi, 700);
 }
 
 function hetThoiGian() {
@@ -491,78 +437,45 @@ function hetThoiGian() {
     if (daTraLoi) return;
 
     daTraLoi = true;
+    clearInterval(timer);
 
-    let dung = danhSach[cau].d;
+    let c = ds[cau];
+    let nut = document.querySelectorAll(".answer");
 
-    let cacNut = document.querySelectorAll(".answer");
+    nut.forEach(button => button.disabled = true);
 
-    cacNut[dung].classList.add("correct");
+    nut[c.d].classList.add("correct");
 
-    cacNut.forEach(nut => nut.disabled = true);
-
-    document.getElementById("status").innerText =
-        "⏰ Bạn hết thời gian!";
-
+    setTimeout(botTraLoi, 700);
 }
 
 function botTraLoi() {
 
-    if (botDaTraLoi) return;
-
-    botDaTraLoi = true;
-
-    let dung = Math.random() < 0.75;
+    let dung = Math.random() < 0.70;
 
     if (dung) {
-
         diemBot++;
-
-        document.getElementById("status").innerText =
-            "🤖 Bot trả lời đúng!";
-
-    } else {
-
-        document.getElementById("status").innerText =
-            "🤖 Bot trả lời sai!";
-
     }
 
-    document.getElementById("botScore").innerText =
-        diemBot;
+    document.getElementById("botScore").textContent = diemBot;
 
-    setTimeout(() => {
+    cau++;
 
-        cau++;
-
-        if (cau >= 10) {
-
-            ketThucTran();
-
-        } else {
-
-            hienThiCau();
-
-        }
-
-    }, 1000);
+    if (cau >= 10) {
+        ketThucTran();
+    } else {
+        hienThiCau();
+    }
 }
 
 function ketThucTran() {
 
-    clearInterval(timerBan);
-    clearInterval(timerBot);
+    clearInterval(timer);
 
-    document.getElementById("game").style.display =
-        "none";
-
-    document.querySelector(".info").style.display =
-        "none";
-
-    document.querySelector(".title").style.display =
-        "none";
+    document.getElementById("game").style.display = "none";
+    document.querySelector(".info").style.display = "none";
 
     let result = document.getElementById("result");
-
     result.style.display = "block";
 
     let ketQua = "";
@@ -571,51 +484,45 @@ function ketThucTran() {
 
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>🎉 Bạn đã đánh bại Bot!</p>
+            <p>Xuất sắc! Bạn đã đánh bại Bot ở cấp độ khó.</p>
         `;
 
     } else if (diemBan < diemBot) {
 
         ketQua = `
             <h1 class="lose">😢 BẠN THUA!</h1>
-            <p>🤖 Bot đã chiến thắng!</p>
+            <p>Bot đã chiến thắng lần này. Hãy cố gắng hơn nhé!</p>
         `;
 
     } else {
 
         ketQua = `
-            <h1 class="draw">🔥 HÒA!</h1>
-            <p>Hai bên có cùng số điểm!</p>
+            <h1 class="draw">🤝 HÒA!</h1>
+            <p>Hai bên có số điểm bằng nhau.</p>
         `;
 
     }
 
     result.innerHTML = `
-
         ${ketQua}
 
         <h2>👤 Bạn: ${diemBan} điểm</h2>
-
         <h2>🤖 Bot: ${diemBot} điểm</h2>
 
-        <p>⏱ Bạn: 15 giây/câu</p>
-
-        <p>🤖 Bot: 15 giây/câu</p>
-
-        <p>📚 Bộ câu hỏi: 20 câu</p>
-
-        <p>🎯 Bot có 75% khả năng trả lời đúng</p>
+        <p>🔥 Cấp độ: KHÓ</p>
+        <p>Bot có 70% xác suất trả lời đúng mỗi câu.</p>
 
         <br>
 
+        <button onclick="location.reload()">🔄 Chơi lại</button>
+
         <button onclick="location.href='capdo_van_khoi9.html'">
-            🔄 Chơi lại
+            🎚️ Chọn cấp độ
         </button>
 
         <button onclick="location.href='khoi9.html'">
             🏠 Về chọn môn
         </button>
-
     `;
 }
 
