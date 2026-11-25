@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thư viện trường học - hỗ trợ học tập - kết nối yêu thương</title>
+<title>Thư viện trường học - Hỗ trợ học tập - Kết nối yêu thương</title>
 
 <style>
 * {
@@ -33,8 +33,7 @@ header {
     padding: 15px 20px;
 }
 
-.auth-buttons,
-.user-info {
+.auth-buttons, .user-info {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -155,7 +154,6 @@ nav ul li a:hover {
     background:
     linear-gradient(rgba(0,50,180,.8),rgba(0,20,100,.8)),
     url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da");
-
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -262,13 +260,21 @@ nav ul li a:hover {
 .card {
     background: white;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,.1);
     transition: .3s;
+    cursor: pointer;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+
+.card a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
 .card img {
@@ -276,12 +282,18 @@ nav ul li a:hover {
     height: 160px;
     object-fit: cover;
     border-radius: 4px;
+    display: block;
 }
 
 .card h4 {
     margin-top: 10px;
     font-size: 15px;
     color: #333;
+    text-align: center;
+}
+
+.card a:hover h4 {
+    color: #ff6a00;
 }
 
 footer {
@@ -593,37 +605,43 @@ footer p {
         <div class="cards">
 
             <div class="card">
-                <img src="hinhanhbosachgiaokhoamontoan6-9.jpg" alt="Sách bài tập Toán 6-9">
-                <a href="https://nxbgd.vn"></a>
-                <h4>Sách bài tập Toán 6-9</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="hinhanhbosachgiaokhoamontoan6-9.jpg" alt="Sách bài tập Toán 6-9">
+                    <h4>Sách bài tập Toán 6-9</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="sachgiaokhoa8.jpg" alt="Sách giáo khoa 8">
-                <a href="https://nxbgd.vn"></a>
-                <h4>Sách giáo khoa 8</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="sachgiaokhoa8.jpg" alt="Sách giáo khoa 8">
+                    <h4>Sách giáo khoa 8</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="images.jpg" alt="Sách giáo khoa 9">
-                <a href="https://nxbgd.vn"></a>
-                <h4>Sách giáo khoa 9</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="images.jpg" alt="Sách giáo khoa 9">
+                    <h4>Sách giáo khoa 9</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="sachgiaokhoa7.jpg" alt="Sách giáo khoa 7">
-                <a href="https://nxbgd.vn"></a>
-                <h4>Sách giáo khoa 7</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="sachgiaokhoa7.jpg" alt="Sách giáo khoa 7">
+                    <h4>Sách giáo khoa 7</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="sbt6.jpg" alt="Sách bài tập 6">
-                <a href="https://nxbgd.vn"></a>
-                <h4>Sách bài tập 6</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="sbt6.jpg" alt="Sách bài tập 6">
+                    <h4>Sách bài tập 6</h4>
+                </a>
             </div>
 
         </div>
     </div>
+
 </div>
 
 <footer>
