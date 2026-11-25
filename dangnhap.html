@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đăng nhập - Thư viện THCS Quảng Trạch</title>
+<title>Đăng nhập</title>
 
 <style>
 * {
@@ -45,6 +46,7 @@ label {
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
+    color: #444;
 }
 
 input {
@@ -61,6 +63,24 @@ input:focus {
     border-color: #0b2a88;
 }
 
+.password-box {
+    position: relative;
+}
+
+.password-box input {
+    padding-right: 75px;
+}
+
+.toggle {
+    position: absolute;
+    right: 12px;
+    top: 17px;
+    color: #0b2a88;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}
+
 button {
     width: 100%;
     padding: 16px;
@@ -71,6 +91,10 @@ button {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
+}
+
+button:hover {
+    background: #e85d00;
 }
 
 .register {
@@ -101,19 +125,25 @@ button {
 
     <h1>🔑 Đăng nhập</h1>
 
-    <p class="subtitle">
-        Thư viện THCS Quảng Trạch
-    </p>
+    <p class="subtitle">Chào mừng bạn quay trở lại!</p>
 
     <form id="loginForm">
 
-        <label>Email</label>
-        <input type="email" id="email" placeholder="Nhập email" required>
+        <label>Họ và tên</label>
+        <input type="text" id="fullname"
+        placeholder="Nhập họ và tên" required>
 
         <label>Mật khẩu</label>
-        <input type="password" id="password" placeholder="Nhập mật khẩu" required>
 
-        <button type="submit">Đăng nhập</button>
+        <div class="password-box">
+            <input type="password" id="password"
+            placeholder="Nhập mật khẩu" required>
+
+            <span class="toggle"
+            onclick="togglePassword()">Hiện</span>
+        </div>
+
+        <button type="submit">🔑 Đăng nhập</button>
 
     </form>
 
@@ -129,17 +159,32 @@ button {
 </div>
 
 <script>
+
+function togglePassword() {
+    let input = document.getElementById("password");
+    let toggle = document.querySelector(".toggle");
+
+    if (input.type === "password") {
+        input.type = "text";
+        toggle.innerText = "Ẩn";
+    } else {
+        input.type = "password";
+        toggle.innerText = "Hiện";
+    }
+}
+
 document.getElementById("loginForm").addEventListener("submit", function(e) {
 
     e.preventDefault();
 
-    let email = document.getElementById("email").value.trim();
+    let fullname = document.getElementById("fullname").value.trim();
     let password = document.getElementById("password").value;
 
     let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
-    let account = accounts.find(
-        acc => acc.email === email && acc.password === password
+    let account = accounts.find(acc =>
+        acc.fullname.toLowerCase() === fullname.toLowerCase()
+        && acc.password === password
     );
 
     if (account) {
@@ -152,11 +197,12 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 
     } else {
 
-        alert("❌ Email hoặc mật khẩu không đúng!");
+        alert("❌ Họ và tên hoặc mật khẩu không đúng!");
 
     }
 
 });
+
 </script>
 
 </body>

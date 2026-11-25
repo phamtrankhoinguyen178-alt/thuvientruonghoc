@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Thư viện THCS Quảng Trạch</title>
+<title>Thư viện trường học - hỗ trợ học tập - kết nối yêu thương</title>
 
 <style>
 * {
@@ -36,6 +36,7 @@ header {
 .auth-buttons {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .auth-buttons a {
@@ -58,6 +59,34 @@ header {
 .auth-buttons a:hover {
     opacity: .85;
     transform: translateY(-2px);
+}
+
+.user-info {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#welcomeText {
+    color: #0b2a88;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.logout-btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.logout-btn:hover {
+    background: #b71c1c;
 }
 
 nav {
@@ -127,7 +156,6 @@ nav ul li a:hover {
     background:
     linear-gradient(rgba(0,50,180,.8),rgba(0,20,100,.8)),
     url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da");
-
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -223,15 +251,6 @@ nav ul li a:hover {
 .content {
     flex: 1;
     min-width: 0;
-}
-
-.section-title {
-    background: white;
-    padding: 15px;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    border-left: 5px solid #ff6a00;
 }
 
 .cards {
@@ -384,6 +403,19 @@ footer p {
         font-size: 13px;
     }
 
+    .user-info {
+        justify-content: center;
+    }
+
+    #welcomeText {
+        font-size: 14px;
+    }
+
+    .logout-btn {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
     nav ul li {
         padding: 11px;
     }
@@ -406,13 +438,6 @@ footer p {
         width: calc(100% - 30px);
     }
 
-    .visitor-counter {
-        left: 10px;
-        bottom: 15px;
-        font-size: 12px;
-        padding: 10px 12px;
-    }
-
     .ai-button {
         right: 10px;
         bottom: 15px;
@@ -429,7 +454,6 @@ footer p {
 </div>
 
 <div class="ai-box" id="aiBox">
-
     <div class="ai-header">
         <span>🤖 AI Học Tập</span>
         <span style="cursor:pointer" onclick="closeAI()">❌</span>
@@ -448,29 +472,25 @@ footer p {
         >
         <button onclick="sendAI()">Gửi</button>
     </div>
-
 </div>
 
 <header>
 
     <div class="topbar">
 
-        <div class="auth-buttons">
+        <div class="auth-buttons" id="authButtons">
+            <a href="dangnhap.html" class="login-btn">🔑 Đăng nhập</a>
+            <a href="dangky.html" class="register-btn">📝 Đăng ký</a>
+        </div>
 
-            <a href="dangnhap.html" class="login-btn">
-                🔑 Đăng nhập
-            </a>
-
-            <a href="dangky.html" class="register-btn">
-                📝 Đăng ký
-            </a>
-
+        <div class="user-info" id="userInfo">
+            <span id="welcomeText"></span>
+            <button onclick="logout()" class="logout-btn">Đăng xuất</button>
         </div>
 
     </div>
 
     <nav>
-
         <ul>
 
             <li>
@@ -478,42 +498,27 @@ footer p {
             </li>
 
             <li class="dropdown">
-
                 <a href="hoctap.html">HỌC TẬP</a>
-
                 <ul class="dropdown-menu">
                     <li><a href="khoi6hoctap.html">Khối 6</a></li>
                     <li><a href="khoi7hoctap.html">Khối 7</a></li>
                     <li><a href="khoi8hoctap.html">Khối 8</a></li>
                     <li><a href="khoi9hoctap.html">Khối 9</a></li>
                 </ul>
-
             </li>
 
             <li class="dropdown">
-
                 <a href="tailieu.html">TÀI LIỆU</a>
-
-                <ul class="dropdown-menu">
-                    <li><a href="khoi6tailieu.html">Khối 6</a></li>
-                    <li><a href="khoi7tailieu.html">Khối 7</a></li>
-                    <li><a href="khoi8tailieu.html">Khối 8</a></li>
-                    <li><a href="khoi9tailieu.html">Khối 9</a></li>
-                </ul>
-
             </li>
 
             <li class="dropdown">
-
                 <a href="tracnghiem.html">TRẮC NGHIỆM</a>
-
                 <ul class="dropdown-menu">
                     <li><a href="khoi6tracnghiem.html">Khối 6</a></li>
                     <li><a href="khoi7tracnghiem.html">Khối 7</a></li>
                     <li><a href="khoi8tracnghiem.html">Khối 8</a></li>
                     <li><a href="khoi9tracnghiem.html">Khối 9</a></li>
                 </ul>
-
             </li>
 
             <li>
@@ -524,8 +529,17 @@ footer p {
                 <a href="music.html">NHẠC</a>
             </li>
 
-        </ul>
+            <li class="dropdown">
+                <a href="khampha.html">QUẢNG TRỊ MIỀN DI SẢN</a>
+                <ul class="dropdown-menu">
+                    <li><a href="hangsondong.html">Hang Sơn Đoòng</a></li>
+                    <li><a href="truongson.html">Nghĩa trang liệt sĩ Trường Sơn</a></li>
+                    <li><a href="vinhmoc.html">Địa đạo Vĩnh Mốc</a></li>
+                    <li><a href="tcoqtri.html.html">Thành cổ Quảng Trị</a></li>
+                </ul>
+            </li>
 
+        </ul>
     </nav>
 
 </header>
@@ -542,9 +556,7 @@ footer p {
     </p>
 
     <div class="quote-run">
-
         <div class="quote-text">
-
             <span>“Điều tuyệt vời nhất của việc học là không ai có thể lấy nó ra khỏi bạn.”</span>
             <span>“Học, học nữa, học mãi.”</span>
             <span>“Thất bại là mẹ thành công.”</span>
@@ -558,9 +570,7 @@ footer p {
             <span>“Kiến thức hôm nay là sức mạnh ngày mai.”</span>
             <span>“Chăm chỉ là chìa khóa của thành công.”</span>
             <span>“Mỗi ngày học một điều mới.”</span>
-
         </div>
-
     </div>
 
 </section>
@@ -568,7 +578,6 @@ footer p {
 <div class="main">
 
     <div class="sidebar">
-
         <h3>DANH MỤC</h3>
 
         <ul>
@@ -576,8 +585,8 @@ footer p {
             <li><a href="tailieu.html">📄 Tài liệu</a></li>
             <li><a href="tracnghiem.html">📝 Trắc nghiệm</a></li>
             <li><a href="thidau.html">🏆 Thi đấu</a></li>
+            <li><a href="khampha.html">Quảng Trị miền di sản</a></li>
         </ul>
-
     </div>
 
     <div class="content">
@@ -616,63 +625,86 @@ footer p {
 </div>
 
 <footer>
-
-    <p>
-        Kho tài liệu học tập dành cho học sinh THCS từ khối 6 đến khối 9.
-    </p>
-
-    <p>
-        Học tập • Tài liệu • Trắc nghiệm • Nhạc • Thi đấu
-    </p>
-
-   
-
+    <p>Kho tài liệu học tập dành cho học sinh THCS từ khối 6 đến khối 9.</p>
+    <p>Học tập • Tài liệu • Trắc nghiệm • Nhạc • Thi đấu</p>
 </footer>
 
 <script>
-const aiBox = document.getElementById('aiBox');
-const chatArea = document.getElementById('chatArea');
-const questionInput = document.getElementById('question');
+const aiBox = document.getElementById("aiBox");
+const chatArea = document.getElementById("chatArea");
+const questionInput = document.getElementById("question");
+
+function updateLoginStatus() {
+    const authButtons = document.getElementById("authButtons");
+    const userInfo = document.getElementById("userInfo");
+    const welcomeText = document.getElementById("welcomeText");
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    } catch (error) {
+        localStorage.removeItem("currentUser");
+    }
+
+    if (currentUser && currentUser.fullname) {
+        authButtons.style.display = "none";
+        userInfo.style.display = "flex";
+        welcomeText.textContent = "👋 Xin chào, " + currentUser.fullname + "!";
+    } else {
+        authButtons.style.display = "flex";
+        userInfo.style.display = "none";
+    }
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+    alert("Bạn đã đăng xuất thành công!");
+    updateLoginStatus();
+    window.location.href = "index.html";
+}
+
+window.addEventListener("storage", updateLoginStatus);
+
+updateLoginStatus();
 
 function openAI() {
-    aiBox.style.display = 'block';
+    aiBox.style.display = "block";
     questionInput.focus();
 }
 
 function closeAI() {
-    aiBox.style.display = 'none';
+    aiBox.style.display = "none";
 }
 
 function handleKeyPress(e) {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
         sendAI();
     }
 }
 
 async function sendAI() {
-
     const query = questionInput.value.trim();
 
     if (!query) return;
 
-    const userP = document.createElement('p');
-    userP.textContent = 'Bạn: ' + query;
+    const userP = document.createElement("p");
+    userP.textContent = "Bạn: " + query;
     chatArea.appendChild(userP);
 
-    questionInput.value = '';
+    questionInput.value = "";
 
-    const aiP = document.createElement('p');
-    aiP.textContent = 'AI: Đang suy nghĩ...';
+    const aiP = document.createElement("p");
+    aiP.textContent = "AI: Đang suy nghĩ...";
     chatArea.appendChild(aiP);
 
     chatArea.scrollTop = chatArea.scrollHeight;
 
     try {
-
-        const response = await fetch('/api/chat', {
-            method: 'POST',
+        const response = await fetch("/api/chat", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 message: query
@@ -680,82 +712,27 @@ async function sendAI() {
         });
 
         if (!response.ok) {
-            throw new Error('Máy chủ trả về lỗi HTTP ' + response.status);
+            throw new Error("Máy chủ trả về lỗi HTTP " + response.status);
         }
 
         const data = await response.json();
 
-        aiP.textContent =
-            'AI: ' + (
-                data.reply ||
-                data.response ||
-                data.text ||
-                'Chưa có phản hồi.'
-            );
+        aiP.textContent = "AI: " + (
+            data.reply ||
+            data.response ||
+            data.text ||
+            "Chưa có phản hồi."
+        );
 
     } catch (error) {
-
-        console.error('Lỗi AI:', error);
+        console.error("Lỗi AI:", error);
 
         aiP.textContent =
-            'AI: Không kết nối được máy chủ. Nếu bạn đang dùng GitHub Pages, cần triển khai backend riêng để sử dụng AI.';
-
+            "AI: Không kết nối được máy chủ. Nếu bạn đang dùng GitHub Pages, cần triển khai backend riêng để sử dụng AI.";
     }
 
     chatArea.scrollTop = chatArea.scrollHeight;
 }
-
-(function() {
-
-    const hienThi = document.getElementById('visitor-count');
-
-    if (!hienThi) return;
-
-    let daChay = false;
-
-    function kiemTraGoatCounter() {
-
-        if (
-            window.goatcounter &&
-            typeof window.goatcounter.visit_count === 'function'
-        ) {
-
-            if (daChay) return;
-
-            daChay = true;
-
-            window.goatcounter.visit_count({
-                path: 'TOTAL',
-                append: '#visitor-count',
-                no_branding: true
-            });
-
-            return true;
-        }
-
-        return false;
-    }
-
-    const timer = setInterval(function() {
-
-        if (kiemTraGoatCounter()) {
-            clearInterval(timer);
-        }
-
-    }, 200);
-
-    setTimeout(function() {
-
-        clearInterval(timer);
-
-        if (!daChay) {
-            hienThi.textContent = 'Không tải được';
-            console.error('Không tải được bộ đếm GoatCounter');
-        }
-
-    }, 15000);
-
-})();
 </script>
 
 <script
