@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thư viện trường học - hỗ trợ học tập - kết nối yêu thương</title>
+<title>Thư viện trường học - Hỗ trợ học tập - Kết nối yêu thương</title>
 
 <style>
 * {
@@ -25,7 +25,7 @@ header {
 }
 
 .topbar {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
     display: flex;
     justify-content: flex-end;
@@ -33,10 +33,10 @@ header {
     padding: 15px 20px;
 }
 
-.auth-buttons {
+.auth-buttons, .user-info {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
 }
 
 .auth-buttons a {
@@ -63,30 +63,18 @@ header {
 
 .user-info {
     display: none;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-#welcomeText {
-    color: #0b2a88;
     font-weight: bold;
-    font-size: 16px;
+    color: #0b2a88;
 }
 
 .logout-btn {
     background: #e53935;
     color: white;
     border: none;
-    padding: 10px 16px;
+    padding: 10px 15px;
     border-radius: 6px;
-    font-weight: bold;
     cursor: pointer;
-    transition: .3s;
-}
-
-.logout-btn:hover {
-    background: #b71c1c;
+    font-weight: bold;
 }
 
 nav {
@@ -95,22 +83,23 @@ nav {
 }
 
 nav ul {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
     display: flex;
     justify-content: center;
     list-style: none;
+    flex-wrap: wrap;
 }
 
 nav ul li {
     position: relative;
-    padding: 18px 22px;
+    padding: 18px 15px;
 }
 
 nav ul li a {
     text-decoration: none;
     color: #222;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     transition: .3s;
 }
@@ -152,10 +141,21 @@ nav ul li a:hover {
     display: block;
 }
 
+.locked-link {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.locked-link::after {
+    content: " 🔒";
+    font-size: 13px;
+}
+
 .banner {
     background:
     linear-gradient(rgba(0,50,180,.8),rgba(0,20,100,.8)),
     url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da");
+
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -209,17 +209,20 @@ nav ul li a:hover {
 }
 
 .main {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 25px auto;
     padding: 0 15px;
     display: flex;
+    align-items: flex-start;
     gap: 20px;
 }
 
 .sidebar {
-    width: 260px;
+    width: 220px;
     flex-shrink: 0;
     background: white;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .sidebar h3 {
@@ -255,20 +258,28 @@ nav ul li a:hover {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
 
 .card {
     background: white;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,.1);
     transition: .3s;
+    cursor: pointer;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+
+.card a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
 .card img {
@@ -276,12 +287,67 @@ nav ul li a:hover {
     height: 160px;
     object-fit: cover;
     border-radius: 4px;
+    display: block;
 }
 
 .card h4 {
     margin-top: 10px;
     font-size: 15px;
     color: #333;
+    text-align: center;
+}
+
+.card a:hover h4 {
+    color: #ff6a00;
+}
+
+.right-links {
+    width: 230px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: fit-content;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+.right-links h3 {
+    background: #0b2a88;
+    color: white;
+    padding: 14px 10px;
+    text-align: center;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.right-links a {
+    display: block;
+    padding: 15px 10px;
+    margin-bottom: 12px;
+    background: #f0f5ff;
+    border-left: 4px solid #ff6a00;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #0b2a88;
+    font-weight: bold;
+    line-height: 1.5;
+    transition: .3s;
+    font-size: 14px;
+}
+
+.right-links a:hover {
+    background: #0b2a88;
+    color: white;
+    transform: translateX(5px);
+}
+
+.right-links p {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 1.5;
 }
 
 footer {
@@ -367,12 +433,42 @@ footer p {
     cursor: pointer;
 }
 
+@media(max-width: 1100px) {
+    .main {
+        flex-wrap: wrap;
+    }
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .content {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .right-links {
+        width: 100%;
+    }
+
+    .right-links a {
+        display: inline-block;
+        width: 48%;
+        vertical-align: top;
+    }
+}
+
 @media(max-width: 900px) {
     .main {
         flex-direction: column;
     }
 
-    .sidebar {
+    .sidebar,
+    .right-links {
+        width: 100%;
+    }
+
+    .content {
         width: 100%;
     }
 
@@ -380,12 +476,12 @@ footer p {
         grid-template-columns: repeat(2, minmax(0,1fr));
     }
 
-    nav ul {
-        flex-wrap: wrap;
-    }
-
     .banner h1 {
         font-size: 32px;
+    }
+
+    .right-links a {
+        width: 100%;
     }
 }
 
@@ -403,25 +499,12 @@ footer p {
         font-size: 13px;
     }
 
-    .user-info {
-        justify-content: center;
-    }
-
-    #welcomeText {
-        font-size: 14px;
-    }
-
-    .logout-btn {
-        padding: 9px 12px;
-        font-size: 13px;
-    }
-
     nav ul li {
         padding: 11px;
     }
 
     nav ul li a {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .banner h1 {
@@ -442,6 +525,12 @@ footer p {
         right: 10px;
         bottom: 15px;
         padding: 12px 15px;
+    }
+
+    .user-info {
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 13px;
     }
 }
 </style>
@@ -475,17 +564,23 @@ footer p {
 </div>
 
 <header>
-
     <div class="topbar">
 
         <div class="auth-buttons" id="authButtons">
-            <a href="dangnhap.html" class="login-btn">🔑 Đăng nhập</a>
-            <a href="dangky.html" class="register-btn">📝 Đăng ký</a>
+            <a href="dangnhap.html" class="login-btn">
+                🔑 Đăng nhập
+            </a>
+
+            <a href="dangky.html" class="register-btn">
+                📝 Đăng ký
+            </a>
         </div>
 
         <div class="user-info" id="userInfo">
             <span id="welcomeText"></span>
-            <button onclick="logout()" class="logout-btn">Đăng xuất</button>
+            <button onclick="logout()" class="logout-btn">
+                Đăng xuất
+            </button>
         </div>
 
     </div>
@@ -499,6 +594,7 @@ footer p {
 
             <li class="dropdown">
                 <a href="hoctap.html">HỌC TẬP</a>
+
                 <ul class="dropdown-menu">
                     <li><a href="khoi6hoctap.html">Khối 6</a></li>
                     <li><a href="khoi7hoctap.html">Khối 7</a></li>
@@ -507,12 +603,13 @@ footer p {
                 </ul>
             </li>
 
-            <li class="dropdown">
+            <li>
                 <a href="tailieu.html">TÀI LIỆU</a>
             </li>
 
             <li class="dropdown">
                 <a href="tracnghiem.html">TRẮC NGHIỆM</a>
+
                 <ul class="dropdown-menu">
                     <li><a href="khoi6tracnghiem.html">Khối 6</a></li>
                     <li><a href="khoi7tracnghiem.html">Khối 7</a></li>
@@ -531,17 +628,17 @@ footer p {
 
             <li class="dropdown">
                 <a href="khampha.html">QUẢNG TRỊ MIỀN DI SẢN</a>
+
                 <ul class="dropdown-menu">
-                    <li><a href="hangsondong.html">Hang Sơn Đoòng</a></li>
-                    <li><a href="truongson.html">Nghĩa trang liệt sĩ Trường Sơn</a></li>
-                    <li><a href="vinhmoc.html">Địa đạo Vĩnh Mốc</a></li>
-                    <li><a href="tcoqtri.html.html">Thành cổ Quảng Trị</a></li>
+                    <li><a href="hang-son-doong.html">Hang Sơn Đoòng</a></li>
+                    <li><a href="nghia-trang-truong-son.html">Nghĩa trang liệt sĩ Trường Sơn</a></li>
+                    <li><a href="dia-dao-vinh-moc.html">Địa đạo Vĩnh Mốc</a></li>
+                    <li><a href="thanh-co-quang-tri.html">Thành cổ Quảng Trị</a></li>
                 </ul>
             </li>
 
         </ul>
     </nav>
-
 </header>
 
 <section class="banner">
@@ -585,7 +682,8 @@ footer p {
             <li><a href="tailieu.html">📄 Tài liệu</a></li>
             <li><a href="tracnghiem.html">📝 Trắc nghiệm</a></li>
             <li><a href="thidau.html">🏆 Thi đấu</a></li>
-            <li><a href="khampha.html">Quảng Trị miền di sản</a></li>
+            <li><a href="music.html">🎵 Nhạc</a></li>
+            <li><a href="khampha.html">🌍 Quảng Trị miền di sản</a></li>
         </ul>
     </div>
 
@@ -594,39 +692,74 @@ footer p {
         <div class="cards">
 
             <div class="card">
-                <img src="hinhanhbosachgiaokhoamontoan6-9.jpg" alt="Sách bài tập Toán 6-9">
-                <h4>Sách bài tập Toán 6-9</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="sachgiaokhoa8.jpg" alt="Sách giáo khoa 8">
+                    <h4>Sách giáo khoa 8</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="sachgiaokhoa8.jpg" alt="Sách giáo khoa 8">
-                <h4>Sách giáo khoa 8</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="images.jpg" alt="Sách giáo khoa 9">
+                    <h4>Sách giáo khoa 9</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="images.jpg" alt="Sách giáo khoa 9">
-                <h4>Sách giáo khoa 9</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="sachgiaokhoa7.jpg" alt="Sách giáo khoa 7">
+                    <h4>Sách giáo khoa 7</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="sachgiaokhoa7.jpg" alt="Sách giáo khoa 7">
-                <h4>Sách giáo khoa 7</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="sbt6.jpg" alt="Sách giáo khoa 6">
+                    <h4>Sách giáo khoa 6</h4>
+                </a>
             </div>
 
             <div class="card">
-                <img src="sbt6.jpg" alt="Sách bài tập 6">
-                <h4>Sách bài tập 6</h4>
+                <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
+                    <img src="hinhanhbosachgiaokhoamontoan6-9.jpg" alt="Sách bài tập Toán 6-9">
+                    <h4>Sách bài tập Toán 6-9</h4>
+                </a>
             </div>
 
         </div>
 
     </div>
 
+    <aside class="right-links">
+
+        <h3>🌐 LIÊN KẾT GIÁO DỤC</h3>
+
+        <a href="https://quangtri.edu.vn/" target="_blank" rel="noopener noreferrer">
+            🏫 Sở Giáo dục và Đào tạo Quảng Trị
+        </a>
+
+        <a href="https://moet.gov.vn/" target="_blank" rel="noopener noreferrer">
+            📚 Bộ Giáo dục và Đào tạo
+        </a>
+
+        <p>
+            Truy cập các cổng thông tin giáo dục chính thức.
+        </p>
+
+    </aside>
+
 </div>
 
 <footer>
-    <p>Kho tài liệu học tập dành cho học sinh THCS từ khối 6 đến khối 9.</p>
-    <p>Học tập • Tài liệu • Trắc nghiệm • Nhạc • Thi đấu</p>
+
+    <p>
+        Kho tài liệu học tập dành cho học sinh THCS từ khối 6 đến khối 9.
+    </p>
+
+    <p>
+        Học tập • Tài liệu • Trắc nghiệm • Nhạc • Thi đấu
+    </p>
+
 </footer>
 
 <script>
@@ -634,18 +767,67 @@ const aiBox = document.getElementById("aiBox");
 const chatArea = document.getElementById("chatArea");
 const questionInput = document.getElementById("question");
 
+const protectedLinks = [
+    "hoctap.html",
+    "tailieu.html",
+    "tracnghiem.html",
+    "thidau.html",
+    "khoi6hoctap.html",
+    "khoi7hoctap.html",
+    "khoi8hoctap.html",
+    "khoi9hoctap.html",
+    "khoi6tracnghiem.html",
+    "khoi7tracnghiem.html",
+    "khoi8tracnghiem.html",
+    "khoi9tracnghiem.html"
+];
+
+function getCurrentUser() {
+    try {
+        return JSON.parse(localStorage.getItem("currentUser"));
+    } catch (error) {
+        return null;
+    }
+}
+
+function isLoggedIn() {
+    const user = getCurrentUser();
+    return !!(user && user.fullname);
+}
+
+function lockFeatures() {
+    const loggedIn = isLoggedIn();
+
+    document.querySelectorAll("a[href]").forEach(link => {
+        const href = link.getAttribute("href");
+
+        if (!protectedLinks.includes(href)) {
+            return;
+        }
+
+        if (!loggedIn) {
+            link.classList.add("locked-link");
+            link.setAttribute("aria-disabled", "true");
+
+            link.onclick = function(event) {
+                event.preventDefault();
+                alert("🔒 Bạn cần đăng nhập để sử dụng chức năng này!");
+                window.location.href = "dangnhap.html";
+            };
+        } else {
+            link.classList.remove("locked-link");
+            link.removeAttribute("aria-disabled");
+            link.onclick = null;
+        }
+    });
+}
+
 function updateLoginStatus() {
     const authButtons = document.getElementById("authButtons");
     const userInfo = document.getElementById("userInfo");
     const welcomeText = document.getElementById("welcomeText");
 
-    let currentUser = null;
-
-    try {
-        currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    } catch (error) {
-        localStorage.removeItem("currentUser");
-    }
+    const currentUser = getCurrentUser();
 
     if (currentUser && currentUser.fullname) {
         authButtons.style.display = "none";
@@ -655,18 +837,17 @@ function updateLoginStatus() {
         authButtons.style.display = "flex";
         userInfo.style.display = "none";
     }
+
+    lockFeatures();
 }
 
 function logout() {
     localStorage.removeItem("currentUser");
     alert("Bạn đã đăng xuất thành công!");
-    updateLoginStatus();
     window.location.href = "index.html";
 }
 
 window.addEventListener("storage", updateLoginStatus);
-
-updateLoginStatus();
 
 function openAI() {
     aiBox.style.display = "block";
@@ -677,8 +858,8 @@ function closeAI() {
     aiBox.style.display = "none";
 }
 
-function handleKeyPress(e) {
-    if (e.key === "Enter") {
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
         sendAI();
     }
 }
@@ -733,12 +914,8 @@ async function sendAI() {
 
     chatArea.scrollTop = chatArea.scrollHeight;
 }
-</script>
 
-<script
-    data-goatcounter="https://phamtrankhoinguyen.goatcounter.com/count"
-    async
-    src="https://gc.zgo.at/count.js">
+updateLoginStatus();
 </script>
 
 </body>

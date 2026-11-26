@@ -25,7 +25,7 @@ header {
 }
 
 .topbar {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
     display: flex;
     justify-content: flex-end;
@@ -83,22 +83,23 @@ nav {
 }
 
 nav ul {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
     display: flex;
     justify-content: center;
     list-style: none;
+    flex-wrap: wrap;
 }
 
 nav ul li {
     position: relative;
-    padding: 18px 22px;
+    padding: 18px 15px;
 }
 
 nav ul li a {
     text-decoration: none;
     color: #222;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     transition: .3s;
 }
@@ -154,6 +155,7 @@ nav ul li a:hover {
     background:
     linear-gradient(rgba(0,50,180,.8),rgba(0,20,100,.8)),
     url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da");
+
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -207,17 +209,20 @@ nav ul li a:hover {
 }
 
 .main {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 25px auto;
     padding: 0 15px;
     display: flex;
+    align-items: flex-start;
     gap: 20px;
 }
 
 .sidebar {
-    width: 260px;
+    width: 220px;
     flex-shrink: 0;
     background: white;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .sidebar h3 {
@@ -253,7 +258,7 @@ nav ul li a:hover {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
 
@@ -294,6 +299,55 @@ nav ul li a:hover {
 
 .card a:hover h4 {
     color: #ff6a00;
+}
+
+.right-links {
+    width: 230px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: fit-content;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+.right-links h3 {
+    background: #0b2a88;
+    color: white;
+    padding: 14px 10px;
+    text-align: center;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.right-links a {
+    display: block;
+    padding: 15px 10px;
+    margin-bottom: 12px;
+    background: #f0f5ff;
+    border-left: 4px solid #ff6a00;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #0b2a88;
+    font-weight: bold;
+    line-height: 1.5;
+    transition: .3s;
+    font-size: 14px;
+}
+
+.right-links a:hover {
+    background: #0b2a88;
+    color: white;
+    transform: translateX(5px);
+}
+
+.right-links p {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 1.5;
 }
 
 footer {
@@ -379,12 +433,42 @@ footer p {
     cursor: pointer;
 }
 
+@media(max-width: 1100px) {
+    .main {
+        flex-wrap: wrap;
+    }
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .content {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .right-links {
+        width: 100%;
+    }
+
+    .right-links a {
+        display: inline-block;
+        width: 48%;
+        vertical-align: top;
+    }
+}
+
 @media(max-width: 900px) {
     .main {
         flex-direction: column;
     }
 
-    .sidebar {
+    .sidebar,
+    .right-links {
+        width: 100%;
+    }
+
+    .content {
         width: 100%;
     }
 
@@ -392,12 +476,12 @@ footer p {
         grid-template-columns: repeat(2, minmax(0,1fr));
     }
 
-    nav ul {
-        flex-wrap: wrap;
-    }
-
     .banner h1 {
         font-size: 32px;
+    }
+
+    .right-links a {
+        width: 100%;
     }
 }
 
@@ -420,7 +504,7 @@ footer p {
     }
 
     nav ul li a {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .banner h1 {
@@ -558,6 +642,7 @@ footer p {
 </header>
 
 <section class="banner">
+
     <h1>
         HỖ TRỢ HỌC TẬP,
         <span>KẾT NỐI YÊU THƯƠNG</span>
@@ -584,6 +669,7 @@ footer p {
             <span>“Mỗi ngày học một điều mới.”</span>
         </div>
     </div>
+
 </section>
 
 <div class="main">
@@ -602,6 +688,7 @@ footer p {
     </div>
 
     <div class="content">
+
         <div class="cards">
 
             <div class="card">
@@ -627,7 +714,7 @@ footer p {
 
             <div class="card">
                 <a href="https://nxbgd.vn" target="_blank" rel="noopener noreferrer">
-                    <img src="sbt6.jpg" alt="Sách bài tập 6">
+                    <img src="sbt6.jpg" alt="Sách giáo khoa 6">
                     <h4>Sách giáo khoa 6</h4>
                 </a>
             </div>
@@ -640,11 +727,31 @@ footer p {
             </div>
 
         </div>
+
     </div>
+
+    <aside class="right-links">
+
+        <h3>🌐 LIÊN KẾT GIÁO DỤC</h3>
+
+        <a href="https://quangtri.edu.vn/" target="_blank" rel="noopener noreferrer">
+            🏫 Sở Giáo dục và Đào tạo Quảng Trị
+        </a>
+
+        <a href="https://moet.gov.vn/" target="_blank" rel="noopener noreferrer">
+            📚 Bộ Giáo dục và Đào tạo
+        </a>
+
+        <p>
+            Truy cập các cổng thông tin giáo dục chính thức.
+        </p>
+
+    </aside>
 
 </div>
 
 <footer>
+
     <p>
         Kho tài liệu học tập dành cho học sinh THCS từ khối 6 đến khối 9.
     </p>
@@ -652,6 +759,7 @@ footer p {
     <p>
         Học tập • Tài liệu • Trắc nghiệm • Nhạc • Thi đấu
     </p>
+
 </footer>
 
 <script>
