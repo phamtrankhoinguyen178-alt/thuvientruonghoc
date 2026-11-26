@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quảng Trị - Miền Di Sản</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #001b50, #064b83, #087c9c);
+    min-height: 100vh;
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 45px 15px 30px;
+}
+
+header h1 {
+    font-size: 34px;
+    color: #ffd166;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 17px;
+    color: #e0f4ff;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    font-size: 25px;
+    margin: 20px 0 30px;
+    color: #fff;
+}
+
+.title span {
+    color: #ffd166;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: 0.35s;
+    color: #123;
+}
+
+.card:hover {
+    transform: translateY(-9px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: 0.5s;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.image-box {
+    overflow: hidden;
+}
+
+.card-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-content h2 {
+    color: #064b83;
+    font-size: 21px;
+    margin-bottom: 15px;
+}
+
+.card-content a {
+    display: inline-block;
+    padding: 11px 25px;
+    background: linear-gradient(135deg, #ff8c32, #ff5b20);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.card-content a:hover {
+    background: #064b83;
+    transform: scale(1.05);
+}
+
+.back {
+    display: block;
+    width: fit-content;
+    margin: 40px auto;
+    padding: 13px 28px;
+    background: #ffd166;
+    color: #06345a;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.back:hover {
+    background: white;
+    transform: translateY(-3px);
+}
+
+footer {
+    text-align: center;
+    padding: 25px 10px;
+    background: rgba(0,0,0,0.2);
+    color: #d5eaff;
+    font-size: 14px;
+}
+
+@media(max-width: 650px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card img {
+        height: 230px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Quảng Trị Miền Di Sản</h1>
+    <p>Khám phá vẻ đẹp thiên nhiên, lịch sử và văn hóa quê hương</p>
+</header>
+
+<div class="container">
+
+    <h2 class="title">KHÁM PHÁ <span>DI SẢN QUẢNG TRỊ</span></h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="image-box">
+                <img src="hang-son-doong-quang-binh-hang-dong-lon-nhat-the-gioi-hinh4-848x530-16649303939522043678324.webp" alt="Hang Sơn Đoòng">
+            </div>
+            <div class="card-content">
+                <h2>Hang Sơn Đoòng</h2>
+                <a href="hang-son-doong.html">Khám phá ngay</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box">
+                <img src="nghiatranglietsitruong son.webp" alt="Nghĩa trang liệt sĩ Trường Sơn">
+            </div>
+            <div class="card-content">
+                <h2>Nghĩa trang liệt sĩ Trường Sơn</h2>
+                <a href="nghia-trang-truong-son.html">Khám phá ngay</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box">
+                <img src="diadaovinhmoc.jpg" alt="Địa đạo Vĩnh Mốc">
+            </div>
+            <div class="card-content">
+                <h2>Địa đạo Vĩnh Mốc</h2>
+                <a href="dia-dao-vinh-moc.html">Khám phá ngay</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box">
+                <img src="thanhcoquangtri.jpg" alt="Thành cổ Quảng Trị">
+            </div>
+            <div class="card-content">
+                <h2>Thành cổ Quảng Trị</h2>
+                <a href="thanh-co-quang-tri.html">Khám phá ngay</a>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="back">← Quay lại trang chủ</a>
+
+</div>
+
+<footer>
+    <p>2026 - QUẢNG TRỊ MIỀN DI SẢN</p>
+</footer>
+
+</body>
+</html>
