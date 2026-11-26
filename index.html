@@ -533,6 +533,21 @@ footer p {
         font-size: 13px;
     }
 }
+
+#clock{
+    position:fixed;
+    bottom:10px;
+    left:10px;
+    background:rgba(0,0,0,0.75);
+    color:white;
+    padding:10px 16px;
+    border-radius:10px;
+    font-family:Arial;
+    font-size:16px;
+    font-weight:bold;
+    z-index:9999;
+}
+
 </style>
 </head>
 
@@ -916,6 +931,23 @@ async function sendAI() {
 }
 
 updateLoginStatus();
+</script>
+
+<div id="clock"></div>
+<script>
+function updateClock(){
+    const now = new Date();
+    const time = now.toLocaleTimeString('vi-VN',{
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit',
+        hour12:false
+    });
+    document.getElementById('clock').textContent = '🕒 Giờ hiện tại: ' + time;
+}
+
+updateClock();
+setInterval(updateClock,1000);
 </script>
 
 </body>
