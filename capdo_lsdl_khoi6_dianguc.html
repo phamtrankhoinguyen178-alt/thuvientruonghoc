@@ -169,7 +169,7 @@ body {
 <div class="main">
 
     <div class="title">
-        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 6 - CHẾ ĐỘ ĐỊA NGỤC
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 6 - CHẾ ĐỘ BẤT TỬ
     </div>
 
     <div id="game" class="card">
@@ -218,7 +218,7 @@ const cauHoi = [
     },
 
     {
-        q: "Khi đi từ xích đạo về hai cực, nhiệt độ trung bình năm thường thay đổi như thế nào?",
+        q: "Khi đi từ xích đạo về hai cực, nhiệt độ TINH ANH năm thường thay đổi như thế nào?",
         a: ["Tăng dần", "Giảm dần", "Không thay đổi", "Tăng rồi giảm liên tục"],
         d: 1
     },
@@ -422,12 +422,12 @@ function ketThucTran() {
     if (diemBan > diemBot) {
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+            <p>Không thể tin được! Bạn đã đánh bại Bot BẤT TỬ!</p>
         `;
     } else if (diemBan < diemBot) {
         ketQua = `
             <h1 class="lose">🔥 BẠN THUA!</h1>
-            <p>Bot Địa Ngục đã chiến thắng!</p>
+            <p>Bot BẤT TỬ đã chiến thắng!</p>
         `;
     } else {
         ketQua = `

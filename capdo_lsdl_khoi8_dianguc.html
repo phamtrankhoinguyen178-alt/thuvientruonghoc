@@ -169,7 +169,7 @@ body {
 <div class="main">
 
     <div class="title">
-        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - CHẾ ĐỘ ĐỊA NGỤC
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 8 - CHẾ ĐỘ BẤT TỬ
     </div>
 
     <div id="game" class="card">
@@ -194,7 +194,7 @@ const cauHoi = [
     },
 
     {
-        q: "Nếu rừng đầu nguồn bị chặt phá trên diện rộng, hậu quả nào dễ xảy ra?",
+        q: "Nếu rừng đầu nguồn bị chặt phá trên diện rộng, hậu quả nào Tân binh xảy ra?",
         a: ["Giảm nguy cơ lũ lụt", "Tăng khả năng giữ nước", "Đất không bị xói mòn", "Tăng nguy cơ lũ quét, sạt lở và xói mòn đất"],
         d: 3
     },
@@ -266,7 +266,7 @@ const cauHoi = [
     },
 
     {
-        q: "Nếu nhiệt độ tăng và lượng mưa thay đổi thất thường, hoạt động nào dễ bị ảnh hưởng?",
+        q: "Nếu nhiệt độ tăng và lượng mưa thay đổi thất thường, hoạt động nào Tân binh bị ảnh hưởng?",
         a: ["Chỉ hoạt động giao thông", "Chỉ hoạt động thương mại", "Không có hoạt động nào", "Nông nghiệp và nguồn nước"],
         d: 3
     },
@@ -421,12 +421,12 @@ function ketThucTran() {
     if (diemBan > diemBot) {
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+            <p>Không thể tin được! Bạn đã đánh bại Bot BẤT TỬ!</p>
         `;
     } else if (diemBan < diemBot) {
         ketQua = `
             <h1 class="lose">🔥 BẠN THUA!</h1>
-            <p>Bot Địa Ngục đã chiến thắng!</p>
+            <p>Bot BẤT TỬ đã chiến thắng!</p>
         `;
     } else {
         ketQua = `

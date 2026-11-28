@@ -169,7 +169,7 @@ body {
 <div class="main">
 
     <div class="title">
-        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 7 - CHẾ ĐỘ ĐỊA NGỤC
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 7 - CHẾ ĐỘ BẤT TỬ
     </div>
 
     <div id="game" class="card">
@@ -248,7 +248,7 @@ const cauHoi = [
         d: 3
     },
     {
-        q: "Nếu cuộc khởi nghĩa Lam Sơn chỉ dựa vào lực lượng ban đầu mà không mở rộng sự ủng hộ của nhân dân, điều gì dễ xảy ra?",
+        q: "Nếu cuộc khởi nghĩa Lam Sơn chỉ dựa vào lực lượng ban đầu mà không mở rộng sự ủng hộ của nhân dân, điều gì Tân binh xảy ra?",
         a: ["Khó phát triển thành cuộc đấu tranh giải phóng dân tộc trên phạm vi rộng", "Chắc chắn đánh thắng ngay quân Minh", "Không cần xây dựng lực lượng", "Quân Minh tự động đầu hàng"],
         d: 0
     },
@@ -269,7 +269,7 @@ const cauHoi = [
     },
     {
         q: "Một quốc gia có nhiều tài nguyên khoáng sản nhưng quản lí yếu kém và phụ thuộc vào xuất khẩu nguyên liệu thô. Hạn chế lớn nhất của mô hình phát triển này là gì?",
-        a: ["Dễ phụ thuộc vào biến động giá cả và khó tạo giá trị gia tăng cao", "Không thể xuất khẩu tài nguyên", "Không cần phát triển công nghiệp", "Tài nguyên tự động được tái tạo"],
+        a: ["Tân binh phụ thuộc vào biến động giá cả và khó tạo giá trị gia tăng cao", "Không thể xuất khẩu tài nguyên", "Không cần phát triển công nghiệp", "Tài nguyên tự động được tái tạo"],
         d: 0
     },
     {
@@ -404,12 +404,12 @@ function ketThucTran() {
     if (diemBan > diemBot) {
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+            <p>Không thể tin được! Bạn đã đánh bại Bot BẤT TỬ!</p>
         `;
     } else if (diemBan < diemBot) {
         ketQua = `
             <h1 class="lose">🔥 BẠN THUA!</h1>
-            <p>Bot Địa Ngục đã chiến thắng!</p>
+            <p>Bot BẤT TỬ đã chiến thắng!</p>
         `;
     } else {
         ketQua = `

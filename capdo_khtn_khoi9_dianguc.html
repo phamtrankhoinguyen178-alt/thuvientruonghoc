@@ -196,7 +196,7 @@ body {
 <div class="main">
 
     <div class="title">
-        🔥 KHTN KHỐI 9 - CHẾ ĐỘ ĐỊA NGỤC 🔥
+        🔥 KHTN KHỐI 9 - CHẾ ĐỘ BẤT TỬ 🔥
     </div>
 
     <div id="game" class="card">
@@ -427,7 +427,7 @@ function ketThucCau() {
 }
 
 function botTraLoi() {
-    // Cấp độ Địa ngục: Bot có 95% xác suất trả lời đúng
+    // Cấp độ BẤT TỬ: Bot có 95% xác suất trả lời đúng
     let dung = Math.random() < 0.95;
 
     if (dung) {
@@ -459,12 +459,12 @@ function ketThucTran() {
     if (diemBan > diemBot) {
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>Không thể tin được! Bạn đã đánh bại Bot Địa ngục!</p>
+            <p>Không thể tin được! Bạn đã đánh bại Bot BẤT TỬ!</p>
         `;
     } else if (diemBan < diemBot) {
         ketQua = `
             <h1 class="lose">🔥 BOT ĐÃ CHIẾN THẮNG!</h1>
-            <p>Thử thách quá khó! Hãy ôn tập và thử lại nhé!</p>
+            <p>Thử thách quá HUYỀN THOẠI! Hãy ôn tập và thử lại nhé!</p>
         `;
     } else {
         ketQua = `

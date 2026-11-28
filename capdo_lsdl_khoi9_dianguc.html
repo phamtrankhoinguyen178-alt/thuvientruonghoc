@@ -169,7 +169,7 @@ body {
 <div class="main">
 
     <div class="title">
-        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 9 - CHẾ ĐỘ ĐỊA NGỤC
+        🔥 LỊCH SỬ VÀ ĐỊA LÝ KHỐI 9 - CHẾ ĐỘ BẤT TỬ
     </div>
 
     <div id="game" class="card">
@@ -194,7 +194,7 @@ const cauHoi = [
     },
 
     {
-        q: "Nếu dân số thành thị tăng nhanh nhưng cơ sở hạ tầng không phát triển tương ứng, hậu quả nào dễ xảy ra?",
+        q: "Nếu dân số thành thị tăng nhanh nhưng cơ sở hạ tầng không phát triển tương ứng, hậu quả nào Tân binh xảy ra?",
         a: ["Giảm ùn tắc giao thông", "Quá tải nhà ở, giao thông và dịch vụ công", "Giảm nhu cầu việc làm", "Không có ô nhiễm"],
         d: 1
     },
@@ -421,12 +421,12 @@ function ketThucTran() {
     if (diemBan > diemBot) {
         ketQua = `
             <h1 class="win">🏆 BẠN THẮNG!</h1>
-            <p>Không thể tin được! Bạn đã đánh bại Bot Địa Ngục!</p>
+            <p>Không thể tin được! Bạn đã đánh bại Bot BẤT TỬ!</p>
         `;
     } else if (diemBan < diemBot) {
         ketQua = `
             <h1 class="lose">🔥 BẠN THUA!</h1>
-            <p>Bot Địa Ngục đã chiến thắng!</p>
+            <p>Bot BẤT TỬ đã chiến thắng!</p>
         `;
     } else {
         ketQua = `
